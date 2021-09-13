@@ -1,2 +1,2 @@
-# cortex-fronend
+# cortex-frontend
 CORTEX frontend
