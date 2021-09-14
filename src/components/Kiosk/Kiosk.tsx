@@ -1,6 +1,7 @@
 import React, { ReactElement, useState } from 'react'
 import { ReactComponent as Brain } from '../../images/brain.svg'
 import { ReactComponent as Logo } from '../../images/cortex_logo.svg'
+import { IPatient } from '../../types/patientsTypes'
 import { patientsList } from '../../fakeBase'
 import './kiosk.css'
 
@@ -8,6 +9,8 @@ import './kiosk.css'
 export default function Kiosk(): ReactElement {
   const [phoneQuery, setPhoneQuery] = useState('');
   const [welcomeText, setWelcomeText] = useState('Please enter your phone number')
+  const [list, setList] = useState<IPatient[]>([...patientsList])
+  const [filteredPhone, setFilteredPhone] = useState<IPatient[]>([])
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneQuery(e.target.value);
@@ -16,9 +19,10 @@ export default function Kiosk(): ReactElement {
 
   const handleSubmit = () => {
     console.log(phoneQuery);
-    console.log(patientsList);
-    const filteredName = [...patientsList].filter(number => number.phone = phoneQuery)
+    const filteredName = list.filter(number => number.phone === phoneQuery)
     console.log(filteredName);
+    setFilteredPhone(filteredName)
+    console.log(filteredPhone);
 
     // setWelcomeText(`Thanks ${filteredName.name}, have a seat and we’ll call your name shortly.`)
   };
