@@ -4,6 +4,7 @@ import { ReactComponent as Logo } from '../../images/cortex_logo.svg'
 import { IPatient } from '../../types/patientsTypes'
 import { patientsList } from '../../fakeBase'
 import './kiosk.css'
+import { NavLink } from 'react-router-dom'
 
 
 export default function Kiosk(): ReactElement {
@@ -17,10 +18,20 @@ export default function Kiosk(): ReactElement {
   };
   console.log(patientsList);
 
-  const handleSubmit = () => {
+  const linkToRegister = () => {
+    <NavLink to="patient-registration">Registration form</ NavLink>
+  }
+
+  const handleSubmit = (e: { preventDefault: () => void }) => {
     console.log(phoneQuery);
     const filteredName = list.filter(number => number.phone === phoneQuery).map(user => user.name).toString()
-    setWelcomeText(`Thanks ${filteredName}, have a seat and we’ll call your name shortly.`)
+    e.preventDefault();
+    if (filteredName) {
+      setWelcomeText(`Thanks ${filteredName}, have a seat and we’ll call your name shortly.`)
+    } else {
+      setWelcomeText(`No such patience in base. Please fill Register Form`)
+    }
+
   };
 
   return (
@@ -40,6 +51,8 @@ export default function Kiosk(): ReactElement {
           disabled={
             phoneQuery === ""
           } className="kiosk_button">LOGIN</button>
+        <div className="redirect_registr">Not our patient yet? Please fill</div>
+        <NavLink className="form_registr" to="patient-registration">Registration form</ NavLink>
       </form>
     </div>
   )
