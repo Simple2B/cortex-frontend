@@ -1,0 +1,48 @@
+.nav_bar {
+  padding: 50px 0 0 50px;
+  display: flex;
+  align-items: center;
+}
+
+.menu_button {
+  cursor: pointer;
+}
+
+.logo {
+  margin-left: 87px;
+}
+
+.menu_nav {
+  position: absolute;
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  top: 120px;
+  left: 120px;
+  background: black;
+  border: 1px solid #fff;
+  width: 227px;
+  height: 341px;
+  text-align: center;
+  transition: all 1000ms ease;
+  z-index: 10000;
+}
+
+.menu.open {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.nav_item {
+  text-decoration: none;
+  color: #fff;
+  height: 86px;
+  line-height: 86px;
+}
+
+.nav_item:not(:last-child) {
+  border-bottom: 1px solid #fff;
+}
