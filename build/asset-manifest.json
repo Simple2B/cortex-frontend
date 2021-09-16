@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1cc38835.chunk.css",
+    "main.js": "/static/js/main.a661a2a6.chunk.js",
+    "main.js.map": "/static/js/main.a661a2a6.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.7bad36eb.js",
+    "runtime-main.js.map": "/static/js/runtime-main.7bad36eb.js.map",
+    "static/css/2.ecdd39c8.chunk.css": "/static/css/2.ecdd39c8.chunk.css",
+    "static/js/2.284e6df9.chunk.js": "/static/js/2.284e6df9.chunk.js",
+    "static/js/2.284e6df9.chunk.js.map": "/static/js/2.284e6df9.chunk.js.map",
+    "static/js/3.d50e8a57.chunk.js": "/static/js/3.d50e8a57.chunk.js",
+    "static/js/3.d50e8a57.chunk.js.map": "/static/js/3.d50e8a57.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/2.ecdd39c8.chunk.css.map": "/static/css/2.ecdd39c8.chunk.css.map",
+    "static/css/main.1cc38835.chunk.css.map": "/static/css/main.1cc38835.chunk.css.map",
+    "static/js/2.284e6df9.chunk.js.LICENSE.txt": "/static/js/2.284e6df9.chunk.js.LICENSE.txt",
+    "static/media/arrow.caa5000a.svg": "/static/media/arrow.caa5000a.svg",
+    "static/media/brain.607dc858.svg": "/static/media/brain.607dc858.svg",
+    "static/media/cortex_logo.46a622d0.svg": "/static/media/cortex_logo.46a622d0.svg",
+    "static/media/cortex_logo_small.f51f907a.svg": "/static/media/cortex_logo_small.f51f907a.svg",
+    "static/media/lupa.e1e7d576.svg": "/static/media/lupa.e1e7d576.svg",
+    "static/media/menu.4b81e4a8.svg": "/static/media/menu.4b81e4a8.svg",
+    "static/media/kiosk.css": "/static/media/text-back.6fe1b7c0.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7bad36eb.js",
+    "static/css/2.ecdd39c8.chunk.css",
+    "static/js/2.284e6df9.chunk.js",
+    "static/css/main.1cc38835.chunk.css",
+    "static/js/main.a661a2a6.chunk.js"
+  ]
+}
