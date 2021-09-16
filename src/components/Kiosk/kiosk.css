@@ -66,3 +66,52 @@
 .kiosk_button:disabled {
   background: linear-gradient(#bcc7c8 0%, #464c4d 100%);
 }
+
+.redirect_registr {
+  margin: 20px;
+  font-size: 21px;
+  line-height: 25px;
+  text-align: center;
+  color: #fff;
+  opacity: 0.81;
+}
+
+.form_registr {
+  color: #02adc0;
+  font-size: 21px;
+  text-decoration: none;
+}
+
+@media (max-width: 1440px) {
+  .kiosk_image {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .kiosk_image svg {
+    width: 320px;
+    height: auto;
+  }
+
+  .kiosk_input {
+    width: 720px;
+    height: 72px;
+    font-size: 24px;
+  }
+
+  .kiosk_button {
+    width: 350px;
+    height: 76px;
+    font-size: 24px;
+    margin-top: 20px;
+  }
+
+  .kiosk_welcome_text {
+    width: 400px;
+    height: 76px;
+    margin: 20px auto;
+    box-shadow: 0px 14px 15px rgba(0, 0, 0, 0.16);
+    background-image: url('/src/images/text-back.svg');
+  }
+
+}
