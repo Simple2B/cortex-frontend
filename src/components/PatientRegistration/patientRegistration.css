@@ -1,23 +1,23 @@
-.login {
+.registration {
   text-align: center;
 }
 
-.login_image {
+.registration_title {
+  font-size: 52px;
+  text-align: center;
+  color: #fff;
+  margin: 0;
+  margin-bottom: 55px;
   margin-top: 50px;
-  margin-bottom: 50px;
 }
 
-.cortex_logo {
-  margin-bottom: 70px;
-}
-
-.login_form {
+.registration_form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.login_input {
+.registration_input {
   width: 879px;
   height: 84px;
   border-radius: 42px;
@@ -31,7 +31,7 @@
   margin-bottom: 17px;
 }
 
-.login_button {
+.registration_button {
   display: block;
   width: 448px;
   height: 96px;
@@ -44,44 +44,30 @@
   margin-top: 40px;
 }
 
-.login_button:hover {
+.registration_button:hover {
   background: linear-gradient(#02adc0 0%, #053f46 100%);
 }
 
-.login_button:disabled {
+.registration_button:disabled {
   background: linear-gradient(#bcc7c8 0%, #464c4d 100%);
 }
 
 @media (max-width: 1440px) {
-  .login_image {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-  .login_image svg {
-    width: 320px;
-    height: auto;
-  }
-
-  .cortex_logo {
-    margin-bottom: 30px;
-  }
-
-  .cortex_logo svg {
-    width: 600px;
-  }
-
-  .login_input {
-    width: 720px;
-    height: 72px;
+  .registration_input {
+    width: 479px;
+    height: 64px;
     font-size: 24px;
+    text-align: left;
+    color: #fff;
+    opacity: 0.66;
+    padding-left: 30px;
+    margin-bottom: 17px;
   }
 
-  .login_button {
-    width: 350px;
+  .registration_button {
+    width: 348px;
     height: 76px;
     font-size: 24px;
-    margin-top: 30px;
+    margin-top: 40px;
   }
-
 }
