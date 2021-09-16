@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import domain from "../domain.json";
+import domain from "./domain.json";
 
 const token = localStorage.getItem("token") ?? "";
 export const instance: AxiosInstance = axios.create({
