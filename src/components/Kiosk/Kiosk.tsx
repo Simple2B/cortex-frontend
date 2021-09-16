@@ -19,14 +19,9 @@ export default function Kiosk(): ReactElement {
 
   const handleSubmit = () => {
     console.log(phoneQuery);
-    const filteredName = list.filter(number => number.phone === phoneQuery)
-    console.log(filteredName);
-    setFilteredPhone(filteredName)
-    console.log(filteredPhone);
-
-    // setWelcomeText(`Thanks ${filteredName.name}, have a seat and we’ll call your name shortly.`)
+    const filteredName = list.filter(number => number.phone === phoneQuery).map(user => user.name).toString()
+    setWelcomeText(`Thanks ${filteredName}, have a seat and we’ll call your name shortly.`)
   };
-
 
   return (
     <div className="kiosk">
