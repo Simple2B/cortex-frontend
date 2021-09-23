@@ -28,7 +28,7 @@ function App() {
     <div className="App" >
        <Router>
         <Switch>
-        {/*  <Route exact path="/">
+         <Route exact path="/">
             {loggedIn ? (
               <Redirect
                 to={{
@@ -39,21 +39,24 @@ function App() {
             ) : (
                 <Redirect
                   to={{
-                    pathname: "/",
+                    pathname: "/login",
                     state: { path: "/" },
                   }}
                 />
               )}
-          </Route> */}
+          </Route>
 
           <Route exact path="/password-choose/:api_key">
             <PasswordChoose />
           </Route>
+          <Route exact path="/patient-registration">
+            <PatientRegistration />
+          </Route>
 
-          {/* <Route exact path="/">
+          <Route exact path="/login">
             {!loggedIn ? <Login /> : <Redirect to={"/"} />}
-          </Route> */}
-{/*
+          </Route>
+
           <ProtectedRoute
             {...defaultProtectedRouteProps}
             exact path="/kiosk"
@@ -73,12 +76,10 @@ function App() {
             {...defaultProtectedRouteProps}
             exact path="/queue"
             component={Queue}
-          /> */}
+          />
 
 
-          <Route exact path="/patient-registration">
-            <PatientRegistration />
-          </Route>
+          {/*
           <Route exact path="/kiosk">
             <Kiosk />
           </Route>
@@ -93,7 +94,7 @@ function App() {
           </Route>
           <Route exact path="/">
             <Login />
-          </Route>
+          </Route> */}
 
         </Switch>
       </Router>
