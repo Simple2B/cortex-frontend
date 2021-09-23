@@ -10,6 +10,14 @@ const formatRequestBody = (email: string, password: string) => {
   return params;
 };
 
+const formatRequestBodyApiKey = (password: string, api_key: string) => {
+  const params = {
+    password: password,
+    api_key: api_key,
+  };
+  return params;
+};
+
 export const authApi = {
   login: async (email: string, password: string) => {
     const response = await authInstance
@@ -26,10 +34,10 @@ export const authApi = {
       });
     return response;
   },
-  setPassword: async (password: string, api_key: string ) => {
 
+  setPassword: async (password: string, api_key: string ) => {
     const response = await authInstance
-      .post(`api/auth/sing_up`, {password: password, api_key: api_key})
+      .post(`api/auth/sing_up`, formatRequestBodyApiKey(password, api_key))
       .then((res: AxiosResponse<ILoginResponse>) => {
         console.log(`POST [api/sing_up/${api_key}] response received successfully`);
         console.log(res);
