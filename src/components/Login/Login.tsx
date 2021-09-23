@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { authApi } from '../../api/authApi';
 import { ReactComponent as Brain } from '../../images/brain.svg'
 import { ReactComponent as Logo } from '../../images/cortex_logo.svg'
+import { useActions } from '../../redux/useActions';
 import './login.css'
 
 export interface ILogin {
@@ -11,20 +12,21 @@ export interface ILogin {
 }
 
 export default function Login(): ReactElement {
-  const [login, setLogin] = useState<ILogin>({
+  const [ form, setForm ] = useState<ILogin>({
     email: "",
     password: "",
   });
   const history = useHistory();
+  const { login } = useActions();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLogin((prev) => {
+    setForm((prev) => {
       return { ...prev, email: e.target.value };
     });
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLogin((prev) => {
+    setForm((prev) => {
       return { ...prev, password: e.target.value };
     });
   };
@@ -40,9 +42,9 @@ export default function Login(): ReactElement {
 
   const handleSubmit = () => {
     try {
-      loginForm({
-        password: login.password,
-        email: login.email,
+      login({
+        password: form.password,
+        email: form.email,
       });
       history.push('/queue')
     } catch (error: any) {
@@ -67,11 +69,11 @@ export default function Login(): ReactElement {
         <Logo />
       </div>
       <form className="login_form">
-        <input type="email" value={login.email} onChange={handleEmailChange} className="login_input" placeholder="EMAIL" />
-        <input type="password" value={login.password} onChange={handlePasswordChange} className="login_input" placeholder="PASSWORD" />
+        <input type="email" value={form.email} onChange={handleEmailChange} className="login_input" placeholder="EMAIL" />
+        <input type="password" value={form.password} onChange={handlePasswordChange} className="login_input" placeholder="PASSWORD" />
         <button onClick={handleSubmit}
           disabled={
-            login.password === "" || login.email === ""
+            form.password === "" || form.email === ""
           } className="login_button">LOGIN</button>
       </form>
     </div>
