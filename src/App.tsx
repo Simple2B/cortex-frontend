@@ -72,25 +72,25 @@ function App() {
           /> */}
 
 
-          <Route path="/password-choose">
+          <Route exact path="/password-choose">
             <PasswordChoose />
           </Route>
-          <Route path="/patient-registration">
+          <Route exact path="/patient-registration">
             <PatientRegistration />
           </Route>
-          <Route path="/kiosk">
+          <Route exact path="/kiosk">
             <Kiosk />
           </Route>
-          <Route path="/reports">
+          <Route exact path="/reports">
             <Reports />
           </Route>
-          <Route path="/patients">
+          <Route exact path="/patients">
             <Patients />
           </Route>
-          <Route path="/queue">
+          <Route exact path="/queue">
             <Queue />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <Login />
           </Route>
 
