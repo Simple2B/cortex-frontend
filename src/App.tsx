@@ -9,7 +9,7 @@ import './App.css';
 import Kiosk from './components/Kiosk/Kiosk';
 import Login from './components/Login/Login';
 import PasswordChoose from './components/PasswordChoose/PasswordChoose';
-// import PatientRegistration from './components/PatientRegistration/PatientRegistration';
+import PatientRegistration from './components/PatientRegistration/PatientRegistration';
 import Patients from './components/Patients/Patients';
 import Queue from './components/Queue/Queue';
 import Reports from './components/Reports/Reports';
@@ -26,9 +26,9 @@ function App() {
 
   return (
     <div className="App" >
-      <Router>
+       <Router>
         <Switch>
-          <Route exact path="/">
+        {/*  <Route exact path="/">
             {loggedIn ? (
               <Redirect
                 to={{
@@ -44,16 +44,16 @@ function App() {
                   }}
                 />
               )}
-          </Route>
+          </Route> */}
 
           <Route exact path="/password-choose/:api_key">
             <PasswordChoose />
           </Route>
 
-          <Route exact path="/">
+          {/* <Route exact path="/">
             {!loggedIn ? <Login /> : <Redirect to={"/"} />}
-          </Route>
-
+          </Route> */}
+{/*
           <ProtectedRoute
             {...defaultProtectedRouteProps}
             exact path="/kiosk"
@@ -73,9 +73,9 @@ function App() {
             {...defaultProtectedRouteProps}
             exact path="/queue"
             component={Queue}
-          />
+          /> */}
 
-          {/* <Route exact path="/patient-registration">
+          <Route exact path="/patient-registration">
             <PatientRegistration />
           </Route>
           <Route exact path="/kiosk">
@@ -92,7 +92,7 @@ function App() {
           </Route>
           <Route exact path="/">
             <Login />
-          </Route> */}
+          </Route>
 
         </Switch>
       </Router>
