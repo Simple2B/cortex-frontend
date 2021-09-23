@@ -29,9 +29,9 @@ export const authApi = {
   setPassword: async (password: string, api_key: string ) => {
 
     const response = await authInstance
-      .post(`api/password-choose/${api_key}`, {password})
+      .post(`api/sing_up`, {password: password, api_key: api_key})
       .then((res: AxiosResponse<ILoginResponse>) => {
-        console.log(`POST [/password-choose/${api_key}] response received successfully`);
+        console.log(`POST [api/password-choose/${api_key}] response received successfully`);
         console.log(res);
         return res.data;
       })
