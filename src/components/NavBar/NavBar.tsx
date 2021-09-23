@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { ReactComponent as Menu } from '../../images/menu.svg';
 import { ReactComponent as Logo } from '../../images/cortex_logo_small.svg';
 import './navbar.css'
+import { useActions } from '../../redux/useActions';
 
 
 export default function NavBar(): ReactElement {
@@ -13,9 +14,10 @@ export default function NavBar(): ReactElement {
     setSwitchMenu(!switchMenu)
     console.log('click');
   }
-
+  const { logout } = useActions();
   const handlerLogout = () => {
-    localStorage.removeItem("token")
+    logout()
+    // localStorage.removeItem("token")
   }
 
   return (
