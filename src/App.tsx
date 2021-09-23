@@ -47,10 +47,10 @@ function App() {
                 />
               )}
           </Route>
-
-          <Route path="/password-choose/:api_key">
+          <Route path="/password-choose/:api_key" children={<PasswordChoose />} />
+          {/* <Route path="/password-choose/:api_key">
             <PasswordChoose />
-          </Route>
+          </Route> */}
           <Route exact path="/patient-registration">
             <PatientRegistration />
           </Route>
