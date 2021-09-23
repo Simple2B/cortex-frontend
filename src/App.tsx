@@ -24,6 +24,8 @@ function App() {
     authenticationPath: "/login",
   };
 
+  console.log("loggedIn", loggedIn)
+
   return (
     <div className="App" >
        <Router>

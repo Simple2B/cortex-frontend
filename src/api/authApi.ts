@@ -21,7 +21,7 @@ export const authApi = {
       })
       .catch((error: AxiosError<ILoginResponse>) => {
         // place to handle errors and rise custom errors
-        console.log(`POST [/auth/sign_in] error message: ${error.message}`);
+        console.log(`POST [api/auth/sign_in] error message: ${error.message}`);
         throw error.message;
       });
     return response;
@@ -37,7 +37,7 @@ export const authApi = {
       })
       .catch((error: AxiosError<ILoginResponse>) => {
         // place to handle errors and rise custom errors
-        console.log(`POST [/password-choose/${api_key}] error message: ${error.message}`);
+        console.log(`POST [api/password-choose/${api_key}] error message: ${error.message}`);
         throw error.message;
       });
     return response;
