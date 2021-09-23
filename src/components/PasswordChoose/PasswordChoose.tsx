@@ -1,13 +1,15 @@
 import React, { ReactElement, useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { ReactComponent as Brain } from '../../images/brain.svg'
 import { ReactComponent as Logo } from '../../images/cortex_logo.svg'
+import { authApi } from '../../api/authApi';
 
 
 export default function PasswordChoose(): ReactElement {
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [error, setError] = useState<string>('')
+  let { api_key } = useParams<{ api_key: string }>()
 
   const history = useHistory();
 
@@ -24,6 +26,7 @@ export default function PasswordChoose(): ReactElement {
       e.preventDefault();
       setError('Passwords not match')
     } else {
+      authApi.setPassword(password, api_key)
       history.push('/')
     }
 
