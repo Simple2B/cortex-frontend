@@ -14,6 +14,10 @@ export default function NavBar(): ReactElement {
     console.log('click');
   }
 
+  const handlerLogout = () => {
+    localStorage.removeItem("token")
+  }
+
   return (
     <div className="nav_bar">
       <div onClick={handleMenuSwitch} className="menu_button"><Menu /></div>
@@ -21,7 +25,7 @@ export default function NavBar(): ReactElement {
         <NavLink className="nav_item" to="/patients">Patients</NavLink>
         <NavLink className="nav_item" to="/reports">Reports</NavLink>
         <NavLink className="nav_item" to="/kiosk">Kiosk</NavLink>
-        <NavLink className="nav_item" to="/login">Log out</NavLink>
+        <NavLink onClick={handlerLogout} className="nav_item" to="/login">Log out</NavLink>
       </nav>
       <div className="logo"><Logo /></div>
     </div>
