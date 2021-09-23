@@ -27,7 +27,7 @@ export default function NavBar(): ReactElement {
         <NavLink className="nav_item" to="/patients">Patients</NavLink>
         <NavLink className="nav_item" to="/reports">Reports</NavLink>
         <NavLink className="nav_item" to="/kiosk">Kiosk</NavLink>
-        <NavLink onClick={handlerLogout} className="nav_item" to="api/login">Log out</NavLink>
+        <NavLink onClick={handlerLogout} className="nav_item" to="/login">Log out</NavLink>
       </nav>
       <div className="logo"><Logo /></div>
     </div>
