@@ -48,7 +48,7 @@ function App() {
               )}
           </Route>
 
-          <Route exact path="/password-choose/:api_key">
+          <Route path="/password-choose/:api_key">
             <PasswordChoose />
           </Route>
           <Route exact path="/patient-registration">
