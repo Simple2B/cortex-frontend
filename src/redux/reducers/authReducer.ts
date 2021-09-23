@@ -3,6 +3,7 @@ import { AuthAction, AuthActionTypes, IAuthState } from "../../types/authTypes";
 let initialState: IAuthState = (function () {
   const tokenInfo = localStorage.getItem("token");
   if (tokenInfo) {
+
     return {
       loggedIn: true,
     };
