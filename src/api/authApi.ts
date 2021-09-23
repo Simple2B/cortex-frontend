@@ -31,13 +31,13 @@ export const authApi = {
     const response = await authInstance
       .post(`api/auth/sing_up`, {password: password, api_key: api_key})
       .then((res: AxiosResponse<ILoginResponse>) => {
-        console.log(`POST [api/password-choose/${api_key}] response received successfully`);
+        console.log(`POST [api/sing_up/${api_key}] response received successfully`);
         console.log(res);
         return res.data;
       })
       .catch((error: AxiosError<ILoginResponse>) => {
         // place to handle errors and rise custom errors
-        console.log(`POST [api/password-choose/${api_key}] error message: ${error.message}`);
+        console.log(`POST [api/sing_up/${api_key}] error message: ${error.message}`);
         throw error.message;
       });
     return response;
