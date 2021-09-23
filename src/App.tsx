@@ -75,6 +75,7 @@ function App() {
             component={Queue}
           /> */}
 
+
           <Route exact path="/patient-registration">
             <PatientRegistration />
           </Route>
