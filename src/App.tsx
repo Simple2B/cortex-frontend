@@ -28,7 +28,7 @@ function App() {
     <div className="App" >
       <Router>
         <Switch>
-          <Route exact path="/">
+          {/* <Route exact path="/">
             {loggedIn ? (
               <Redirect
                 to={{
@@ -69,10 +69,10 @@ function App() {
             {...defaultProtectedRouteProps}
             exact path="/queue"
             component={Queue}
-          />
+          /> */}
 
 
-          {/* <Route exact path="/password-choose">
+          <Route exact path="/password-choose">
             <PasswordChoose />
           </Route>
           <Route exact path="/patient-registration">
@@ -92,7 +92,7 @@ function App() {
           </Route>
           <Route exact path="/">
             <Login />
-          </Route> */}
+          </Route>
 
         </Switch>
       </Router>
