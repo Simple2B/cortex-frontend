@@ -26,4 +26,20 @@ export const authApi = {
       });
     return response;
   },
+  setPassword: async (password: string, api_key: string ) => {
+
+    const response = await authInstance
+      .post(`/password-choose/${api_key}`, {password})
+      .then((res: AxiosResponse<ILoginResponse>) => {
+        console.log(`POST [/password-choose/${api_key}] response received successfully`);
+        console.log(res);
+        return res.data;
+      })
+      .catch((error: AxiosError<ILoginResponse>) => {
+        // place to handle errors and rise custom errors
+        console.log(`POST [/password-choose/${api_key}] error message: ${error.message}`);
+        throw error.message;
+      });
+    return response;
+  },
 };

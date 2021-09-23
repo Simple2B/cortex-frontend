@@ -9,7 +9,7 @@ import './App.css';
 import Kiosk from './components/Kiosk/Kiosk';
 import Login from './components/Login/Login';
 import PasswordChoose from './components/PasswordChoose/PasswordChoose';
-import PatientRegistration from './components/PatientRegistration/PatientRegistration';
+// import PatientRegistration from './components/PatientRegistration/PatientRegistration';
 import Patients from './components/Patients/Patients';
 import Queue from './components/Queue/Queue';
 import Reports from './components/Reports/Reports';
@@ -28,7 +28,7 @@ function App() {
     <div className="App" >
       <Router>
         <Switch>
-          {/* <Route exact path="/">
+          <Route exact path="/">
             {loggedIn ? (
               <Redirect
                 to={{
@@ -39,14 +39,18 @@ function App() {
             ) : (
                 <Redirect
                   to={{
-                    pathname: "/login",
+                    pathname: "/",
                     state: { path: "/" },
                   }}
                 />
               )}
           </Route>
 
-          <Route exact path="/login">
+          <Route exact path="/password-choose/:api_key">
+            <PasswordChoose />
+          </Route>
+
+          <Route exact path="/">
             {!loggedIn ? <Login /> : <Redirect to={"/"} />}
           </Route>
 
@@ -69,13 +73,9 @@ function App() {
             {...defaultProtectedRouteProps}
             exact path="/queue"
             component={Queue}
-          /> */}
+          />
 
-
-          <Route exact path="/password-choose">
-            <PasswordChoose />
-          </Route>
-          <Route exact path="/patient-registration">
+          {/* <Route exact path="/patient-registration">
             <PatientRegistration />
           </Route>
           <Route exact path="/kiosk">
@@ -92,7 +92,7 @@ function App() {
           </Route>
           <Route exact path="/">
             <Login />
-          </Route>
+          </Route> */}
 
         </Switch>
       </Router>
