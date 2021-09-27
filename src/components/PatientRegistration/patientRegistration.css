@@ -52,6 +52,118 @@
   background: linear-gradient(#bcc7c8 0%, #464c4d 100%);
 }
 
+.checkboxRegisterForms {
+  width: 479px;
+  /* background-color: #00e5ff; */
+  font-size: 16px;
+  text-align: left;
+  padding-left: 15px;
+}
+
+.checkboxOtherRegisterForms {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reqFormTitleText {
+  width: 479px;
+  font-size: 21px;
+  text-align: left;
+  padding-bottom: 10px;
+}
+
+.asterisk {
+  color: red;
+}
+
+/* Customize the label (the container) */
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 19px;
+  color: #707070;
+  letter-spacing: 1.5px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkMark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 27px;
+  width: 27px;
+  background-color: black;
+  border: 1px solid #707070;
+  border-radius: 3px;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkMark {
+  background-color: #a3a3a3;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkMark {
+  background-color: #459CAD;
+}
+
+/* Create the checkMark/indicator (hidden when not checked) */
+.checkMark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkMark when checked */
+.container input:checked ~ .checkMark:after {
+  display: block;
+}
+
+/* Style the checkMark/indicator */
+.container .checkMark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.inputOtherCheckBoxRegForm {
+  width: 75%;
+  background: transparent;
+  font-size: 30px;
+  text-align: left;
+  color: #fff;
+  opacity: 0.66;
+  padding-left: 13px;
+  margin-bottom: 17px;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #707070;
+  background-color: black;
+}
+
 @media (max-width: 1440px) {
   .registration_input {
     width: 479px;
