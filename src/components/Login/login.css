@@ -1,4 +1,5 @@
 .login {
+  width: 100%;
   text-align: center;
 }
 
@@ -18,7 +19,8 @@
 }
 
 .login_input {
-  width: 879px;
+  /* width: 879px; */
+  width: 50%;
   height: 84px;
   border-radius: 42px;
   background: transparent;
