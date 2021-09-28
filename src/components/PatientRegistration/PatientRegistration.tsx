@@ -58,9 +58,9 @@ export default function PatientRegistration(): ReactElement {
     'Nervousness',
     'Midback pain',
   ];
-  const selectedCheckboxes = new Set();
+  // const selectedCheckboxes = new Set();
 
-  const [checkboxes, setCheckboxes] = useState(selectedCheckboxes);
+  const [checkboxes, setCheckboxes] = useState(new Set());
 
   const [isChecked, setChecked] = useState(false);
 
@@ -70,12 +70,13 @@ export default function PatientRegistration(): ReactElement {
     let indexItem: number = itemsConditions.indexOf(item)
     let value: string = itemsConditions[indexItem];
     console.log("value => ", value)
+    const updatedCheckboxes = new Set(checkboxes);
     if (checkboxes.has(label) || label != value) {
-      checkboxes.delete(label);
-      setCheckboxes(checkboxes);
+      updatedCheckboxes.delete(label);
+      setCheckboxes(updatedCheckboxes);
     } else {
-      checkboxes.add(value);
-      setCheckboxes(checkboxes);
+      updatedCheckboxes.add(value);
+      setCheckboxes(updatedCheckboxes);
     }
   }
 
@@ -112,6 +113,7 @@ export default function PatientRegistration(): ReactElement {
             label={label}
             handleCheckboxChange={toggleCheckbox}
             key={label}
+            checked={checkboxes.has(label)}
         />
   )
 
