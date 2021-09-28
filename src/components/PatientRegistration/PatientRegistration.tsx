@@ -58,18 +58,27 @@ export default function PatientRegistration(): ReactElement {
     'Nervousness',
     'Midback pain',
   ];
-  // const selectedCheckboxes = new Set();
 
+  const itemsFollowing = [
+    'Concussion',
+    'Stroke',
+    'Cancer',
+    'Diabetes',
+    'Heart Disease',
+    'Seizures',
+    'Spinal bone fracture',
+    'Scoliosis',
+  ]
   const [checkboxes, setCheckboxes] = useState(new Set());
+
+  const [checkboxesFollowing, setCheckboxesFollowing] = useState(new Set());
 
   const [isChecked, setChecked] = useState(false);
 
   const toggleCheckbox = (label: string) => {
-    console.log("label => ", label)
     let item = label;
     let indexItem: number = itemsConditions.indexOf(item)
     let value: string = itemsConditions[indexItem];
-    console.log("value => ", value)
     const updatedCheckboxes = new Set(checkboxes);
     if (checkboxes.has(label) || label != value) {
       updatedCheckboxes.delete(label);
@@ -80,13 +89,23 @@ export default function PatientRegistration(): ReactElement {
     }
   }
 
+  const toggleCheckboxFollowing = (label: string) => {
+    let item = label;
+    let indexItem: number = itemsFollowing.indexOf(item)
+    let value: string = itemsFollowing[indexItem];
+    const updatedCheckboxes = new Set(checkboxesFollowing);
+    if (checkboxesFollowing.has(label) || label != value) {
+      updatedCheckboxes.delete(label);
+      setCheckboxesFollowing(updatedCheckboxes);
+    } else {
+      updatedCheckboxes.add(value);
+      setCheckboxesFollowing(updatedCheckboxes);
+    }
+  }
+
 
   const handleSubmit = (formSubmitEvent: any) => {
     formSubmitEvent.preventDefault();
-
-    // for (const checkbox of itemsConditions) {
-    //   console.log(checkbox, 'is selected.');
-    // }
 
     const data = {
       firstName: firstName,
@@ -103,6 +122,7 @@ export default function PatientRegistration(): ReactElement {
         conditions: checkboxes,
         otherLabel: isChecked ? otherLabel : '',
       },
+      checkboxesFollowing: checkboxesFollowing,
 
     };
     console.log(data);
@@ -117,14 +137,26 @@ export default function PatientRegistration(): ReactElement {
         />
   )
 
+  const createCheckboxFollowing = (label: string) => (
+    <Checkbox
+            label={label}
+            handleCheckboxChange={toggleCheckboxFollowing}
+            key={label}
+            checked={checkboxesFollowing.has(label)}
+        />
+  )
+
   const createCheckboxes = () => (
     itemsConditions.map(createCheckbox)
+  )
+
+  const createCheckboxesFollowing = () => (
+    itemsFollowing.map(createCheckboxFollowing)
   )
 
   const toggleCheckboxChange = () => {
     setChecked(!isChecked)
   }
-
 
   return (
     <>
@@ -157,6 +189,9 @@ export default function PatientRegistration(): ReactElement {
             </label>
             <input value={otherLabel} onChange={(e) => { setLabelOther(e.target.value) }} className="inputOtherCheckBoxRegForm" placeholder=""/>
           </div>
+
+          <div className="reqFormTitleText">Have you ever had any of the following? <span className="asterisk">*</span></div>
+          {createCheckboxesFollowing()}
 
           <button onClick={handleSubmit} className="registration_button">Registration</button>
         </form>
