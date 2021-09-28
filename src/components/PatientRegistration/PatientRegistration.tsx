@@ -15,6 +15,10 @@ export default function PatientRegistration(): ReactElement {
   const [email, setEmail] = useState('');
   const [referring, setReferring] = useState('');
   const [otherLabel, setLabelOther] = useState('');
+  const [medications, setMedications] = useState('');
+  const [testedPositive, setTestedPositive] = useState('');
+  const [covidVaccine, setCovidVaccine] = useState('');
+
 
   const itemsConditions = [
     'Dizziness',
@@ -123,6 +127,9 @@ export default function PatientRegistration(): ReactElement {
         otherLabel: isChecked ? otherLabel : '',
       },
       checkboxesFollowing: checkboxesFollowing,
+      medications: medications,
+      testedPositive: testedPositive,
+      covidVaccine: covidVaccine,
 
     };
     console.log(data);
@@ -158,6 +165,15 @@ export default function PatientRegistration(): ReactElement {
     setChecked(!isChecked)
   }
 
+
+  const handleChangeTestedPositive = (e: any) => {
+    setTestedPositive(e.target.value)
+  }
+
+  const handleChangCovidVaccine = (e: any) => {
+    setCovidVaccine(e.target.value)
+  }
+
   return (
     <>
       <div className="registration">
@@ -176,6 +192,7 @@ export default function PatientRegistration(): ReactElement {
           <input value={referring} onChange={(e) => { setReferring(e.target.value) }} className="registration_input" placeholder="Who can we thank for referring you?" />
           <div className="reqFormTitleText">Check any conditions you CURRENTLY have <span className="asterisk">*</span></div>
           {createCheckboxes()}
+
           <div className="checkboxRegisterForms checkboxOtherRegisterForms">
             <label className="container">
               <input
@@ -192,6 +209,78 @@ export default function PatientRegistration(): ReactElement {
 
           <div className="reqFormTitleText">Have you ever had any of the following? <span className="asterisk">*</span></div>
           {createCheckboxesFollowing()}
+
+          <input value={medications} onChange={(e) => { setMedications(e.target.value) }} className="registration_input" placeholder="List all current medications" />
+
+          <div className="reqFormTitleText">This question is used for research purposes. Have you tested positive for COVID-19?</div>
+
+          <div className="checkboxRegisterForms">
+            <label className="containerRadiobutton">
+                Yes
+                <input
+                  value="yes"
+                  name="tested_positive"
+                  type="radio"
+                  onChange={handleChangeTestedPositive}
+                />
+                <span className="checkmarkRadiobutton"></span>
+            </label>
+            <label className="containerRadiobutton">
+                No
+                <input
+                  value="no"
+                  name="tested_positive"
+                  type="radio"
+                  onChange={handleChangeTestedPositive}
+                />
+                <span className="checkmarkRadiobutton"></span>
+            </label>
+            <label className="containerRadiobutton">
+                Rather not say
+                <input
+                  value="Rather not say"
+                  name="tested_positive"
+                  type="radio"
+                  onChange={handleChangeTestedPositive}
+                />
+                <span className="checkmarkRadiobutton"></span>
+            </label>
+          </div>
+
+          <div className="reqFormTitleText">This question is used for research purposes on the effects of the COVID-19 vaccine and its potential effects on the brain and nervous system. Have you received the COVID-19 vaccine?<span className="asterisk">*</span></div>
+
+          <div className="checkboxRegisterForms">
+            <label className="containerRadiobutton">
+                Yes
+                <input
+                  value="yes"
+                  name="CovidVaccine"
+                  type="radio"
+                  onChange={handleChangCovidVaccine}
+                />
+                <span className="checkmarkRadiobutton"></span>
+            </label>
+            <label className="containerRadiobutton">
+                No
+                <input
+                  value="no"
+                  name="CovidVaccine"
+                  type="radio"
+                  onChange={handleChangCovidVaccine}
+                />
+                <span className="checkmarkRadiobutton"></span>
+            </label>
+            <label className="containerRadiobutton">
+                Rather not say
+                <input
+                  value="Rather not say"
+                  name="CovidVaccine"
+                  type="radio"
+                  onChange={handleChangCovidVaccine}
+                />
+                <span className="checkmarkRadiobutton"></span>
+            </label>
+          </div>
 
           <button onClick={handleSubmit} className="registration_button">Registration</button>
         </form>
