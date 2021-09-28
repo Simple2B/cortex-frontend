@@ -18,7 +18,8 @@
 }
 
 .registration_input {
-  width: 879px;
+  /* width: 879px; */
+  width: 43.3%;
   height: 84px;
   border-radius: 42px;
   background: transparent;
@@ -33,7 +34,8 @@
 
 .registration_button {
   display: block;
-  width: 448px;
+  /* width: 448px; */
+  width: 24.21%;
   height: 96px;
   border-radius: 48px;
   background: linear-gradient(#00e5ff 0%, #085e67 100%);
@@ -53,7 +55,7 @@
 }
 
 .checkboxRegisterForms {
-  width: 479px;
+  width: 43.3%;
   /* background-color: #00e5ff; */
   font-size: 16px;
   text-align: left;
@@ -67,7 +69,7 @@
 }
 
 .reqFormTitleText {
-  width: 479px;
+  width: 43.3%;
   font-size: 21px;
   text-align: left;
   padding-bottom: 10px;
@@ -166,7 +168,7 @@
 
 @media (max-width: 1440px) {
   .registration_input {
-    width: 479px;
+    /* width: 479px; */
     height: 64px;
     font-size: 24px;
     text-align: left;
@@ -177,9 +179,88 @@
   }
 
   .registration_button {
-    width: 348px;
+    /* width: 348px; */
     height: 76px;
     font-size: 24px;
     margin-top: 40px;
+  }
+
+  .reqFormTitleText {
+    font-size: 19px;
+    padding-bottom: 12px;
+    padding-left: 8px;
+  }
+}
+
+@media (max-width: 540px) {
+  .registration_title {
+    font-size: 32px;
+    text-align: center;
+    color: #fff;
+    margin: 0;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .registration_input {
+    width: 95%;
+    height: 48px;
+    font-size: 16px;
+    text-align: left;
+    color: #fff;
+    opacity: 0.66;
+    padding-left: 30px;
+    margin-bottom: 10px;
+  }
+
+  .registration_button {
+    width: 85%;
+    height: 56px;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+  }
+
+  .checkboxRegisterForms {
+    width: 95%;
+    padding-left: 25px;
+  }
+
+  .inputOtherCheckBoxRegForm {
+    width: 60%;
+    /* background: transparent;
+    font-size: 30px;
+    text-align: left;
+    color: #fff;
+    opacity: 0.66;
+    padding-left: 13px;
+    margin-bottom: 17px;
+    outline: none;
+    border: none;
+    border-bottom: 2px solid #707070;
+    background-color: black; */
+}
+
+  .container {
+    /* width: 95%; */
+    /* display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 19px;
+    color: #707070;
+    letter-spacing: 1.5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; */
+  }
+
+  .reqFormTitleText {
+    width: 98%;
+    font-size: 16px;
+    padding-bottom: 12px;
+    text-align: center;
   }
 }
