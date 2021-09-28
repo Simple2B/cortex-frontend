@@ -1,33 +1,20 @@
-import React from 'react';
+import React, { ReactElement } from 'react'
 
 type MyProps = {
     handleCheckboxChange: Function;
     label: string;
-  };
-  type MyState = {
-    isChecked: boolean;
+    checked: boolean;
   };
 
-class Checkbox extends React.Component<MyProps, MyState> {
-  state: MyState = {
-    isChecked: false,
-  }
+export default function Checkbox(props: MyProps): ReactElement {
 
-  toggleCheckboxChange = () => {
-    const { handleCheckboxChange, label } = this.props;
-
-    this.setState(({ isChecked }) => (
-      {
-        isChecked: !isChecked,
-      }
-    ));
+  const toggleCheckboxChange = () => {
+    const { handleCheckboxChange, label } = props;
 
     handleCheckboxChange(label);
   }
 
-  render() {
-    const { label } = this.props;
-    const { isChecked } = this.state;
+    const { label, checked } = props;
 
     return (
       <div className="checkboxRegisterForms">
@@ -35,8 +22,8 @@ class Checkbox extends React.Component<MyProps, MyState> {
           <input
             type="checkbox"
             value={label}
-            checked={isChecked}
-            onChange={this.toggleCheckboxChange}
+            checked={checked}
+            onChange={toggleCheckboxChange}
           />
 
           <span className="checkMark"></span>
@@ -45,7 +32,4 @@ class Checkbox extends React.Component<MyProps, MyState> {
         </label>
       </div>
     );
-  }
 }
-
-export default Checkbox;
