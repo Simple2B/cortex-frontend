@@ -241,7 +241,10 @@ export default function PatientRegistration(): ReactElement {
         <form className="registration_form">
           <input value={firstName} onChange={(e) => { setName(e.target.value) }} className="registration_input" placeholder="First Name" />
           <input value={lastName} onChange={(e) => { setLastName(e.target.value) }} className="registration_input" placeholder="Last Name" />
-          <input value={dateBirth} onChange={(e) => { setDateBirth(e.target.value) }} className="registration_input" type="date"/>
+          <div className="registration_input">
+            <input value={dateBirth} onChange={(e) => { setDateBirth(e.target.value) }} className="registration_input_data"  type="date"/>
+          </div>
+
           <input value={address} onChange={(e) => { setAddress(e.target.value) }} className="registration_input" placeholder="Address" />
           <input value={city} onChange={(e) => { setCity(e.target.value) }} className="registration_input" placeholder="City" />
           <input value={state} onChange={(e) => { setState(e.target.value) }} className="registration_input" placeholder="State" />
@@ -274,6 +277,7 @@ export default function PatientRegistration(): ReactElement {
           {createCheckboxesFollowing()}
 
           <input value={medications} onChange={(e) => { setMedications(e.target.value) }} className="registration_input" placeholder="List all current medications" />
+          {/* <span className="asterisk">*</span> */}
 
           <div className="reqFormTitleText">This question is used for research purposes. Have you tested positive for COVID-19?</div>
 
@@ -310,8 +314,8 @@ export default function PatientRegistration(): ReactElement {
             </label>
           </div>
 
-          <div className="reqFormTitleText">This question is used for research purposes on the effects of the COVID-19 vaccine and its potential effects on the brain and nervous system. Have you received the COVID-19 vaccine? <span className="asterisk">*</span></div>
-          <div className="reqFormTitleText error">{covidVaccineError}</div>
+          <div className="reqFormTitleText">This question is used for research purposes on the effects of the COVID-19 vaccine and its potential effects on the brain and nervous system. Have you received the COVID-19 vaccine?</div>
+          {/* <div className="reqFormTitleText error">{covidVaccineError}</div> */}
           <div className="checkboxRegisterForms">
             <label className="containerRadiobutton">
                 Yes
