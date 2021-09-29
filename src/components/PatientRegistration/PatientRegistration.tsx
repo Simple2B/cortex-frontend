@@ -343,8 +343,6 @@ export default function PatientRegistration(): ReactElement {
 
           <div className="reqFormTitleText">Relationship to child</div>
           <input value={relationshipChild} onChange={(e) => { setRelationshipChild(e.target.value) }} className="inputRelationshipChild" placeholder=""/>
-
-
           <button onClick={handleSubmit} className="registration_button">Registration</button>
         </form>
       </div>
