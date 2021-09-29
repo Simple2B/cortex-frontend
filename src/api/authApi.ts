@@ -50,4 +50,20 @@ export const authApi = {
       });
     return response;
   },
+
+  registrationClient: async (data: {} ) => {
+    const response = await authInstance
+      .post(`api/registration_client`, data)
+      .then((res: AxiosResponse<ILoginResponse>) => {
+        console.log(`POST [api/registration_client/${data}] response received successfully`);
+        console.log(res);
+        return res.data;
+      })
+      .catch((error: AxiosError<ILoginResponse>) => {
+        // place to handle errors and rise custom errors
+        console.log(`POST [api/registration_client/${data}] error message: ${error.message}`);
+        throw error.message;
+      });
+    return response;
+  },
 };
