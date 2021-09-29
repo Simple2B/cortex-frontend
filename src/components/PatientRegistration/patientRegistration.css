@@ -82,6 +82,15 @@
   color: red;
 }
 
+.error {
+  width: 43.3%;
+  color: red;
+  font-size: 16px;
+  text-align: left;
+  margin: 0;
+  padding-left: 10px;
+}
+
 /* Customize the label (the container) */
 .container, .containerRadiobutton {
   display: block;
@@ -247,6 +256,12 @@
   background-color: black;
 }
 
+.containerCheckboxStressfulLevel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 @media (max-width: 1440px) {
   .registration_input {
     width: 55%;
@@ -280,7 +295,7 @@
   }
 
   .inputOtherCheckBoxRegForm {
-    width: 30%;
+    width: 70%;
 }
 
   .reqFormTitleText {

@@ -24,7 +24,9 @@ export default function PatientRegistration(): ReactElement {
   const [relationshipChild, setRelationshipChild] = useState('');
 
   const [conditionsError, setConditionsError] = useState('');
-
+  const [followingError, setFollowingError] = useState('');
+  const [covidVaccineError, setCovidVaccineError] = useState('');
+  const [stressfulLevelError, setStressfulLevelError] = useState('');
 
   const itemsConditions = [
     'Dizziness',
@@ -142,13 +144,22 @@ export default function PatientRegistration(): ReactElement {
 
     };
 
-    if (data.checkBoxesСonditions.conditions.size == 0) {
+    if (data.checkBoxesСonditions.conditions.size == 0 ) {
       setConditionsError('Some should be chosen')
+    } else if (data.checkboxesFollowing.size == 0) {
+      setFollowingError('Some should be chosen')
+    } else if (covidVaccine === '') {
+      setCovidVaccineError('Something must be marked')
+    } else if (stressfulLevel === undefined) {
+      setStressfulLevelError('Note the level of stress')
+    } else {
+      setConditionsError("");
+      setFollowingError("");
+      setCovidVaccineError("");
+      setStressfulLevelError("");
+      // authApi.registrationClient(data)
+      console.log(data);
     }
-
-    authApi.registrationClient(data)
-
-    console.log(data);
   }
 
 
@@ -220,7 +231,7 @@ export default function PatientRegistration(): ReactElement {
           <input value={referring} onChange={(e) => { setReferring(e.target.value) }} className="registration_input" placeholder="Who can we thank for referring you?" />
           <div className="reqFormTitleText">Check any conditions you CURRENTLY have <span className="asterisk">*</span></div>
 
-          <div className="error">{conditionsError}</div>
+          <div className="reqFormTitleText error">{checkboxes.has("") ? null: conditionsError}</div>
           {createCheckboxes()}
 
           <div className="checkboxRegisterForms checkboxOtherRegisterForms">
@@ -238,6 +249,7 @@ export default function PatientRegistration(): ReactElement {
           </div>
 
           <div className="reqFormTitleText">Have you ever had any of the following? <span className="asterisk">*</span></div>
+          <div className="reqFormTitleText error">{followingError}</div>
           {createCheckboxesFollowing()}
 
           <input value={medications} onChange={(e) => { setMedications(e.target.value) }} className="registration_input" placeholder="List all current medications" />
@@ -278,7 +290,7 @@ export default function PatientRegistration(): ReactElement {
           </div>
 
           <div className="reqFormTitleText">This question is used for research purposes on the effects of the COVID-19 vaccine and its potential effects on the brain and nervous system. Have you received the COVID-19 vaccine? <span className="asterisk">*</span></div>
-
+          <div className="reqFormTitleText error">{covidVaccineError}</div>
           <div className="checkboxRegisterForms">
             <label className="containerRadiobutton">
                 Yes
@@ -313,6 +325,7 @@ export default function PatientRegistration(): ReactElement {
           </div>
 
           <div className="reqFormTitleText">On a scale of 1-10 how stressful has your life been? <span className="asterisk">*</span></div>
+          <div className="reqFormTitleText error">{stressfulLevelError}</div>
 
           <div className="containerCheckboxStressfulLevel">
             <div className="reqFormSubTitleText">Not stressful</div>
