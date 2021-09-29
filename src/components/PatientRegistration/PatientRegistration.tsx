@@ -1,6 +1,7 @@
 import React, { ReactElement, useState, useEffect } from 'react'
 import './patientRegistration.css'
 import Checkbox from './Checkbox';
+import { authApi } from '../../api/authApi';
 
 
 export default function PatientRegistration(): ReactElement {
@@ -21,6 +22,8 @@ export default function PatientRegistration(): ReactElement {
   const [stressfulLevel, setStressfulLevel] = useState<number>();
   const [consentMinorChild, setConsentMinorChild] = useState('');
   const [relationshipChild, setRelationshipChild] = useState('');
+
+  const [conditionsError, setConditionsError] = useState('');
 
 
   const itemsConditions = [
@@ -138,8 +141,16 @@ export default function PatientRegistration(): ReactElement {
       relationshipChild: relationshipChild,
 
     };
+
+    if (data.checkBoxesСonditions.conditions.size == 0) {
+      setConditionsError('Some should be chosen')
+    }
+
+    authApi.registrationClient(data)
+
     console.log(data);
   }
+
 
   const createCheckbox = (label: string) => (
     <Checkbox
@@ -208,6 +219,8 @@ export default function PatientRegistration(): ReactElement {
 
           <input value={referring} onChange={(e) => { setReferring(e.target.value) }} className="registration_input" placeholder="Who can we thank for referring you?" />
           <div className="reqFormTitleText">Check any conditions you CURRENTLY have <span className="asterisk">*</span></div>
+
+          <div className="error">{conditionsError}</div>
           {createCheckboxes()}
 
           <div className="checkboxRegisterForms checkboxOtherRegisterForms">
