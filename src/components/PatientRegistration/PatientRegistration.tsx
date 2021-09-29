@@ -7,7 +7,9 @@ import { authApi } from '../../api/authApi';
 export default function PatientRegistration(): ReactElement {
   const [firstName, setName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [dateBirth, setDateBirth] = useState('');
+
+  // const [startDate, setStartDate] = useState<any>(new Date());
+  const [dateBirth, setDateBirth] = useState<any>(new Date());
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -239,7 +241,7 @@ export default function PatientRegistration(): ReactElement {
         <form className="registration_form">
           <input value={firstName} onChange={(e) => { setName(e.target.value) }} className="registration_input" placeholder="First Name" />
           <input value={lastName} onChange={(e) => { setLastName(e.target.value) }} className="registration_input" placeholder="Last Name" />
-          <input value={dateBirth} onChange={(e) => { setDateBirth(e.target.value) }} className="registration_input" placeholder="Date of Birth"/>
+          <input value={dateBirth} onChange={(e) => { setDateBirth(e.target.value) }} className="registration_input" type="date"/>
           <input value={address} onChange={(e) => { setAddress(e.target.value) }} className="registration_input" placeholder="Address" />
           <input value={city} onChange={(e) => { setCity(e.target.value) }} className="registration_input" placeholder="City" />
           <input value={state} onChange={(e) => { setState(e.target.value) }} className="registration_input" placeholder="State" />
