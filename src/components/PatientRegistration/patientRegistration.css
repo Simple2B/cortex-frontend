@@ -74,6 +74,8 @@
   font-size: 21px;
   text-align: left;
   padding-bottom: 10px;
+  text-indent: 15px;
+  text-align: justify;
 }
 
 .asterisk {
@@ -96,6 +98,24 @@
   user-select: none;
 }
 
+.containerRadiobuttonStressfulLevel {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 20px auto;
+  font-size: 16px;
+}
+
+.level {
+  position: absolute;
+  bottom: 30px;
+  z-index: 10;
+  left: 5px;
+}
 
 /* Hide the browser's default checkbox */
 .container input,  .containerRadiobutton input{
@@ -116,6 +136,11 @@
   background-color: black;
   border: 1px solid #707070;
   border-radius: 3px;
+}
+
+.checkmarkRadiobuttonStressfulLevel {
+  height: 20px;
+  width: 20px;
 }
 
 /* Create a custom radio button */
@@ -171,6 +196,15 @@
   background: white;
 }
 
+.containerRadiobutton  .checkmarkRadiobuttonStressfulLevel:after {
+  top: 5px;
+  left: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
 .inputOtherCheckBoxRegForm {
   width: 75%;
   background: transparent;
@@ -186,8 +220,20 @@
   background-color: black;
 }
 
+.containerCheckboxStressfulLevel {
+  width: 43.3%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reqFormSubTitleText {
+  font-size: 14px;
+}
+
 @media (max-width: 1440px) {
   .registration_input {
+    width: 55%;
     /* width: 479px; */
     height: 64px;
     font-size: 24px;
@@ -199,6 +245,7 @@
   }
 
   .registration_button {
+    width: 40%;
     /* width: 348px; */
     height: 76px;
     font-size: 24px;
@@ -210,9 +257,32 @@
     padding-bottom: 12px;
     padding-left: 8px;
   }
+
+  .checkboxRegisterForms {
+    width: 55%;
+    padding-left: 25px;
+  }
+
+  .inputOtherCheckBoxRegForm {
+    width: 30%;
 }
 
-@media (max-width: 540px) {
+  .reqFormTitleText {
+    width: 58%;
+    font-size: 16px;
+    padding-bottom: 12px;
+    text-align: left;
+  }
+
+  .containerCheckboxStressfulLevel {
+    width: 55%;
+  }
+}
+
+
+
+
+@media (max-width: 768px) {
   .registration_title {
     font-size: 32px;
     text-align: center;
@@ -254,6 +324,10 @@
     width: 98%;
     font-size: 16px;
     padding-bottom: 12px;
-    text-align: center;
+    text-align: left;
+  }
+
+  .containerCheckboxStressfulLevel {
+    width: 95%;
   }
 }

@@ -18,6 +18,7 @@ export default function PatientRegistration(): ReactElement {
   const [medications, setMedications] = useState('');
   const [testedPositive, setTestedPositive] = useState('');
   const [covidVaccine, setCovidVaccine] = useState('');
+  const [stressfulLevel, setStressfulLevel] = useState<number>();
 
 
   const itemsConditions = [
@@ -130,6 +131,7 @@ export default function PatientRegistration(): ReactElement {
       medications: medications,
       testedPositive: testedPositive,
       covidVaccine: covidVaccine,
+      stressfulLevel: stressfulLevel,
 
     };
     console.log(data);
@@ -173,6 +175,13 @@ export default function PatientRegistration(): ReactElement {
   const handleChangCovidVaccine = (e: any) => {
     setCovidVaccine(e.target.value)
   }
+
+  const handleChangStressfulLevel = (e: any) => {
+    setStressfulLevel(e.target.value)
+  }
+
+  const stressLevel = Array.from({length: 10}, (_, i) => i + 1);
+  console.log("stressfulLevel => ", stressLevel)
 
   return (
     <>
@@ -247,7 +256,7 @@ export default function PatientRegistration(): ReactElement {
             </label>
           </div>
 
-          <div className="reqFormTitleText">This question is used for research purposes on the effects of the COVID-19 vaccine and its potential effects on the brain and nervous system. Have you received the COVID-19 vaccine?<span className="asterisk">*</span></div>
+          <div className="reqFormTitleText">This question is used for research purposes on the effects of the COVID-19 vaccine and its potential effects on the brain and nervous system. Have you received the COVID-19 vaccine? <span className="asterisk">*</span></div>
 
           <div className="checkboxRegisterForms">
             <label className="containerRadiobutton">
@@ -281,6 +290,30 @@ export default function PatientRegistration(): ReactElement {
                 <span className="checkmarkRadiobutton"></span>
             </label>
           </div>
+
+          <div className="reqFormTitleText">On a scale of 1-10 how stressful has your life been? <span className="asterisk">*</span></div>
+
+          <div className="containerCheckboxStressfulLevel">
+            <div className="reqFormSubTitleText">Not stressful</div>
+
+            { stressLevel.map((level) => {
+               return <div key={level}>
+                  <label className="containerRadiobutton containerRadiobuttonStressfulLevel">
+                      <div className="level">{level}</div>
+                      <input
+                        value={level}
+                        name="stressfulLevel"
+                        type="radio"
+                        onChange={handleChangStressfulLevel}
+                      />
+                      <span className="checkmarkRadiobutton checkmarkRadiobuttonStressfulLevel"></span>
+                  </label>
+                </div>
+            })
+            }
+            <div className="reqFormSubTitleText">Very stressful</div>
+          </div>
+
 
           <button onClick={handleSubmit} className="registration_button">Registration</button>
         </form>
