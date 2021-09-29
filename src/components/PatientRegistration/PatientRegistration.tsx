@@ -19,6 +19,7 @@ export default function PatientRegistration(): ReactElement {
   const [testedPositive, setTestedPositive] = useState('');
   const [covidVaccine, setCovidVaccine] = useState('');
   const [stressfulLevel, setStressfulLevel] = useState<number>();
+  const [consentMinorChild, setConsentMinorChild] = useState('');
 
 
   const itemsConditions = [
@@ -132,6 +133,7 @@ export default function PatientRegistration(): ReactElement {
       testedPositive: testedPositive,
       covidVaccine: covidVaccine,
       stressfulLevel: stressfulLevel,
+      consentMinorChild: isChecked ? consentMinorChild : '',
 
     };
     console.log(data);
@@ -180,8 +182,12 @@ export default function PatientRegistration(): ReactElement {
     setStressfulLevel(e.target.value)
   }
 
+  const handleChangConsentMinorChild = (e: any) => {
+    toggleCheckboxChange()
+    setConsentMinorChild(e.target.value)
+  }
+
   const stressLevel = Array.from({length: 10}, (_, i) => i + 1);
-  console.log("stressfulLevel => ", stressLevel)
 
   return (
     <>
@@ -313,6 +319,26 @@ export default function PatientRegistration(): ReactElement {
             }
             <div className="reqFormSubTitleText">Very stressful</div>
           </div>
+
+          <div className="reqFormTitleText"> Consent for a minor child
+            <br/>
+            <div className="reqFormSubTitleText">I authorize Doctor to perform diagnostic procedures and render chiropractic care and adjustments to my minor child.</div>
+          </div>
+          <div className="reqFormTitleText">Consent</div>
+
+          <div className="checkboxRegisterForms checkboxOtherRegisterForms">
+            <label className="container">
+              <input
+                type="checkbox"
+                value="I consent"
+                checked={isChecked}
+                onChange={handleChangConsentMinorChild}
+              />
+              <span className="checkMark"></span>
+              I consent
+            </label>
+          </div>
+
 
 
           <button onClick={handleSubmit} className="registration_button">Registration</button>
