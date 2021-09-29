@@ -231,6 +231,22 @@
   font-size: 14px;
 }
 
+.inputRelationshipChild {
+  width: 43.3%;
+  font-size: 21px;
+  text-align: left;
+  background: transparent;
+  font-size: 30px;
+  color: #fff;
+  opacity: 0.66;
+  padding-left: 13px;
+  margin-bottom: 17px;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #707070;
+  background-color: black;
+}
+
 @media (max-width: 1440px) {
   .registration_input {
     width: 55%;
@@ -275,6 +291,9 @@
   }
 
   .containerCheckboxStressfulLevel {
+    width: 55%;
+  }
+  .inputRelationshipChild {
     width: 55%;
   }
 }
@@ -329,5 +348,8 @@
 
   .containerCheckboxStressfulLevel {
     width: 95%;
+  }
+  .inputRelationshipChild {
+    width: 90%;
   }
 }

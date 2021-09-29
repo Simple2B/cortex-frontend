@@ -20,6 +20,7 @@ export default function PatientRegistration(): ReactElement {
   const [covidVaccine, setCovidVaccine] = useState('');
   const [stressfulLevel, setStressfulLevel] = useState<number>();
   const [consentMinorChild, setConsentMinorChild] = useState('');
+  const [relationshipChild, setRelationshipChild] = useState('');
 
 
   const itemsConditions = [
@@ -134,6 +135,7 @@ export default function PatientRegistration(): ReactElement {
       covidVaccine: covidVaccine,
       stressfulLevel: stressfulLevel,
       consentMinorChild: isChecked ? consentMinorChild : '',
+      relationshipChild: relationshipChild,
 
     };
     console.log(data);
@@ -339,6 +341,8 @@ export default function PatientRegistration(): ReactElement {
             </label>
           </div>
 
+          <div className="reqFormTitleText">Relationship to child</div>
+          <input value={relationshipChild} onChange={(e) => { setRelationshipChild(e.target.value) }} className="inputRelationshipChild" placeholder=""/>
 
 
           <button onClick={handleSubmit} className="registration_button">Registration</button>
