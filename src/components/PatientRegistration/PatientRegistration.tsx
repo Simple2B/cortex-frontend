@@ -159,6 +159,27 @@ export default function PatientRegistration(): ReactElement {
       setStressfulLevelError("");
       // authApi.registrationClient(data)
       console.log(data);
+
+      setName('');
+      setLastName('');
+      setDateBirth('');
+      setAddress('');
+      setCity('');
+      setState('');
+      setZip('');
+      setPhone('');
+      setEmail('');
+      setReferring('');
+      setLabelOther('');
+      setMedications('');
+      setTestedPositive('');
+      setCovidVaccine('');
+      setStressfulLevel(undefined);
+      setConsentMinorChild('');
+      setRelationshipChild('');
+      // setChecked(false);
+
+
     }
   }
 
