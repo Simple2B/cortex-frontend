@@ -178,8 +178,6 @@ export default function PatientRegistration(): ReactElement {
       setConsentMinorChild('');
       setRelationshipChild('');
       // setChecked(false);
-
-
     }
   }
 
