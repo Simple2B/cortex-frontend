@@ -18,7 +18,8 @@
 }
 
 .registration_input {
-  width: 879px;
+  /* width: 879px; */
+  width: 43.3%;
   height: 84px;
   border-radius: 42px;
   background: transparent;
@@ -33,7 +34,8 @@
 
 .registration_button {
   display: block;
-  width: 448px;
+  /* width: 448px; */
+  width: 24.21%;
   height: 96px;
   border-radius: 48px;
   background: linear-gradient(#00e5ff 0%, #085e67 100%);
@@ -42,6 +44,7 @@
   font-size: 35px;
   cursor: pointer;
   margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .registration_button:hover {
@@ -52,9 +55,140 @@
   background: linear-gradient(#bcc7c8 0%, #464c4d 100%);
 }
 
+.checkboxRegisterForms {
+  width: 43.3%;
+  /* background-color: #00e5ff; */
+  font-size: 16px;
+  text-align: left;
+  padding-left: 15px;
+}
+
+.checkboxOtherRegisterForms {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reqFormTitleText {
+  width: 43.3%;
+  font-size: 21px;
+  text-align: left;
+  padding-bottom: 10px;
+}
+
+.asterisk {
+  color: red;
+}
+
+/* Customize the label (the container) */
+.container, .containerRadiobutton {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 19px;
+  color: #707070;
+  letter-spacing: 1.5px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+
+/* Hide the browser's default checkbox */
+.container input,  .containerRadiobutton input{
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkMark, .checkmarkRadiobutton {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 27px;
+  width: 27px;
+  background-color: black;
+  border: 1px solid #707070;
+  border-radius: 3px;
+}
+
+/* Create a custom radio button */
+.checkmarkRadiobutton {
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkMark, .containerRadiobutton:hover input ~ .checkmarkRadiobutton {
+  background-color: #a3a3a3;
+}
+
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkMark, .containerRadiobutton input:checked ~ .checkmarkRadiobutton {
+  background-color: #459CAD;
+}
+
+
+/* Create the checkMark/indicator (hidden when not checked) */
+.checkMark:after, .checkmarkRadiobutton:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkMark when checked */
+.container input:checked ~ .checkMark:after, .containerRadiobutton input:checked ~ .checkmarkRadiobutton:after {
+  display: block;
+}
+
+
+/* Style the checkMark/indicator */
+.container .checkMark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/* Style the indicator (dot/circle) */
+.containerRadiobutton .checkmarkRadiobutton:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+.inputOtherCheckBoxRegForm {
+  width: 75%;
+  background: transparent;
+  font-size: 30px;
+  text-align: left;
+  color: #fff;
+  opacity: 0.66;
+  padding-left: 13px;
+  margin-bottom: 17px;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #707070;
+  background-color: black;
+}
+
 @media (max-width: 1440px) {
   .registration_input {
-    width: 479px;
+    /* width: 479px; */
     height: 64px;
     font-size: 24px;
     text-align: left;
@@ -65,9 +199,61 @@
   }
 
   .registration_button {
-    width: 348px;
+    /* width: 348px; */
     height: 76px;
     font-size: 24px;
     margin-top: 40px;
+  }
+
+  .reqFormTitleText {
+    font-size: 19px;
+    padding-bottom: 12px;
+    padding-left: 8px;
+  }
+}
+
+@media (max-width: 540px) {
+  .registration_title {
+    font-size: 32px;
+    text-align: center;
+    color: #fff;
+    margin: 0;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  .registration_input {
+    width: 95%;
+    height: 48px;
+    font-size: 16px;
+    text-align: left;
+    color: #fff;
+    opacity: 0.66;
+    padding-left: 30px;
+    margin-bottom: 10px;
+  }
+
+  .registration_button {
+    width: 85%;
+    height: 56px;
+    font-size: 20px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+  }
+
+  .checkboxRegisterForms {
+    width: 95%;
+    padding-left: 25px;
+  }
+
+  .inputOtherCheckBoxRegForm {
+    width: 60%;
+}
+
+  .reqFormTitleText {
+    width: 98%;
+    font-size: 16px;
+    padding-bottom: 12px;
+    text-align: center;
   }
 }
