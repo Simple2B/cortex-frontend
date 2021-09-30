@@ -299,8 +299,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 1;
   display: block;
   background: url('../../images/calendar_req_form_client.svg') no-repeat;
-  width: 40px;
-  height: 35px;
+  width: 48px;
+  height: 29px;
   border-width: thin;
 }
 
@@ -397,8 +397,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: block;
     opacity: 1;
     background: url('../../images/calendar_req_form_client_mob_v.svg') no-repeat;
-    width: 40px;
-    height: 35px;
+    width: 50px;
+    height: 48px;
     margin-top: 17px;
     border-width: thin;
   }
