@@ -23,13 +23,17 @@
   height: 84px;
   border-radius: 42px;
   background: transparent;
-  border: 2px solid #707070;
+  border: 2px solid #AEF7FF;
   font-size: 35px;
   text-align: left;
   color: #fff;
   opacity: 0.66;
   padding-left: 30px;
   margin-bottom: 17px;
+}
+
+.registration_input::placeholder , .registration_input input::placeholder{
+  color: #AEF7FF;
 }
 
 .registration_button {
@@ -39,7 +43,7 @@
   height: 96px;
   border-radius: 48px;
   background: linear-gradient(#00e5ff 0%, #085e67 100%);
-  border: 1px solid #707070;
+  border: 1px solid #AEF7FF;
   color: white;
   font-size: 35px;
   cursor: pointer;
@@ -74,7 +78,7 @@
   font-size: 21px;
   text-align: left;
   padding-bottom: 10px;
-  text-indent: 15px;
+  text-indent: 5px;
   text-align: justify;
 }
 
@@ -104,8 +108,8 @@
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 19px;
-  color: #707070;
+  font-size: 18px;
+  color: #AEF7FF;
   letter-spacing: 1.5px;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -149,7 +153,7 @@
   height: 27px;
   width: 27px;
   background-color: black;
-  border: 1px solid #707070;
+  border: 1px solid #AEF7FF;
   border-radius: 3px;
 }
 
@@ -231,7 +235,7 @@
   margin-bottom: 17px;
   outline: none;
   border: none;
-  border-bottom: 2px solid #707070;
+  border-bottom: 2px solid #AEF7FF;
   background-color: black;
 }
 
@@ -258,7 +262,7 @@
   margin-bottom: 17px;
   outline: none;
   border: none;
-  border-bottom: 2px solid #707070;
+  border-bottom: 2px solid#AEF7FF;
   background-color: black;
 }
 
@@ -282,7 +286,7 @@
   /* background-color: black; */
   opacity: 1;
   border: none;
-  color: #707070;
+  color: #AEF7FF;
   background-color: black;
   outline: none;
   justify-content: left;
@@ -307,7 +311,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     position: relative;
     font-size: 24px;
     text-align: left;
-    color: #fff;
+    color: #AEF7FF;
     opacity: 0.66;
     padding-left: 30px;
     margin-bottom: 17px;
@@ -382,7 +386,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 16px;
     opacity: 1;
     border: none;
-    color: #707070;
+    color: #AEF7FF;
     background-color: black;
     outline: none;
     justify-content: left;

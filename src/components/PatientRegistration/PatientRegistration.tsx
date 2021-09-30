@@ -31,6 +31,7 @@ export default function PatientRegistration(): ReactElement {
   const [phoneError, setPhoneError] = useState('');
 
   const [emailError, setEmailError] = useState('');
+  const [medicationsError, setMedicationsError] = useState('');
 
 
   const itemsConditions = [
@@ -159,12 +160,15 @@ export default function PatientRegistration(): ReactElement {
       setPhoneError("You must enter phone number")
     } else if (email === "") {
       setEmailError("You must enter phone email")
+    } else if (medications === "") {
+      setMedicationsError("You have enter the medication you are taking")
     } else {
       setConditionsError("");
       setFollowingError("");
       setStressfulLevelError("");
       setPhoneError("");
       setEmailError("");
+      setMedicationsError("");
       // authApi.registrationClient(data)
 
       setName('');
@@ -299,6 +303,7 @@ export default function PatientRegistration(): ReactElement {
             <input value={medications} onChange={(e) => { setMedications(e.target.value) }} className="registration_input_data" placeholder="List all current medications" />
             <span className="asterisk positionAsterisk">*</span>
           </div>
+          <div className="reqFormTitleText error">{medicationsError}</div>
 
 
           <div className="reqFormTitleText">This question is used for research purposes. Have you tested positive for COVID-19?</div>
