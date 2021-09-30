@@ -355,21 +355,24 @@ export default function PatientRegistration(): ReactElement {
           <div className="containerCheckboxStressfulLevel">
             <div className="reqFormSubTitleText">Not stressful</div>
 
-            { stressLevel.map((level) => {
-               return <div key={level}>
-                  <label className="containerRadiobutton containerRadiobuttonStressfulLevel">
-                      <div className="level">{level}</div>
-                      <input
-                        value={level}
-                        name="stressfulLevel"
-                        type="radio"
-                        onChange={handleChangStressfulLevel}
-                      />
-                      <span className="checkmarkRadiobutton checkmarkRadiobuttonStressfulLevel"></span>
-                  </label>
-                </div>
-            })
-            }
+              <div className="reqFormButtonsStressfulLevel">
+                { stressLevel.map((level) => {
+                  return <div key={level}>
+                      <label className="containerRadiobutton containerRadiobuttonStressfulLevel">
+                          <div className="level">{level}</div>
+                          <input
+                            value={level}
+                            name="stressfulLevel"
+                            type="radio"
+                            onChange={handleChangStressfulLevel}
+                          />
+                          <span className="checkmarkRadiobutton checkmarkRadiobuttonStressfulLevel"></span>
+                      </label>
+                    </div>
+                })
+                }
+              </div>
+
             <div className="reqFormSubTitleText">Very stressful</div>
           </div>
 
