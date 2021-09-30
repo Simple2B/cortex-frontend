@@ -262,8 +262,14 @@
   align-items: center;
 }
 
+.reqFormButtonsStressfulLevel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .registration_input_data {
-  width: 43.3%;
+  width: 93%;
   height: 50px;
   margin: 2.5px auto;
   font-size: 22px;
@@ -277,13 +283,14 @@
 
 }
 
+
 input[type="date"]::-webkit-calendar-picker-indicator {
-  color: rgba(0, 0, 0, 0);
+  /* color: rgba(0, 0, 0, 0); */
   opacity: 1;
   display: block;
-  background: url(https://mywildalberta.ca/images/GFX-MWA-Parks-Reservations.png) no-repeat;
-  width: 20px;
-  height: 13px;
+  background: url('../../images/calendar_req_form_client.svg') no-repeat;
+  width: 40px;
+  height: 35px;
   border-width: thin;
 }
 
@@ -378,18 +385,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
-    color: rgba(0, 0, 0, 0);
-    opacity: 1;
     display: block;
-    background: url(https://mywildalberta.ca/images/GFX-MWA-Parks-Reservations.png) no-repeat;
-    width: 20px;
-    height: 13px;
+    opacity: 1;
+    background: url('../../images/calendar_req_form_client_mob_v.svg') no-repeat;
+    width: 40px;
+    height: 35px;
+    margin-top: 17px;
     border-width: thin;
-}
-
-  /* .registration_input_data:last-child {
-    color: #707070;
-  } */
+  }
 
   .registration_button {
     width: 85%;
@@ -415,9 +418,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: left;
   }
 
+  /* .reqFormButtonsStressfulLevel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  } */
+
   .containerCheckboxStressfulLevel {
     width: 95%;
+    flex-direction: column;
   }
+
+  .containerCheckboxStressfulLevel .reqFormSubTitleText {
+    margin-bottom: 25px;
+  }
+
   .inputRelationshipChild {
     width: 90%;
   }
