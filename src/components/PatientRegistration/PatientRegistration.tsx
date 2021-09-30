@@ -3,11 +3,63 @@ import './patientRegistration.css'
 import Checkbox from './Checkbox';
 import { authApi } from '../../api/authApi';
 
+const itemsConditions = [
+  'Dizziness',
+  'Headaches',
+  'Ear infections',
+  'Nausea',
+  'Neck Pain',
+  'Epilepsy',
+  'Chronic sinus',
+  'Migraines',
+  'Anxiety',
+  'Depression',
+  'Throat issues',
+  'Thyroid problems',
+  'Asthma',
+  'Ulcers',
+  'Numbness in hands',
+  'Disc problems',
+  'Infertility',
+  'Menstrual disorders',
+  'High blood pressure',
+  'Heart problems',
+  'Digestive problems',
+  'Kidney problems',
+  'Bladder problems',
+  'Numbness in legs',
+  'Numbness in feet',
+  'Low back pain',
+  'Hip pain',
+  'Shoulder pain',
+  'Obesity',
+  'Hormonal imbalance',
+  'Liver disease',
+  'Chronic fatigue',
+  'Gastric reflux',
+  'Lupus',
+  'Fibromyalgia',
+  'Chest pain',
+  'Trouble concentrating',
+  'Knee pain',
+  'Nervousness',
+  'Midback pain',
+];
+
+const itemsFollowing = [
+  'Concussion',
+  'Stroke',
+  'Cancer',
+  'Diabetes',
+  'Heart Disease',
+  'Seizures',
+  'Spinal bone fracture',
+  'Scoliosis',
+];
 
 export default function PatientRegistration(): ReactElement {
   const [firstName, setName] = useState('');
   const [lastName, setLastName] = useState('');
-
   const [dateBirth, setDateBirth] = useState<any>(Date);
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
@@ -28,68 +80,10 @@ export default function PatientRegistration(): ReactElement {
   const [followingError, setFollowingError] = useState('');
   const [stressfulLevelError, setStressfulLevelError] = useState('');
   const [phoneError, setPhoneError] = useState('');
-
   const [emailError, setEmailError] = useState('');
   const [medicationsError, setMedicationsError] = useState('');
-
-
-  const itemsConditions = [
-    'Dizziness',
-    'Headaches',
-    'Ear infections',
-    'Nausea',
-    'Neck Pain',
-    'Epilepsy',
-    'Chronic sinus',
-    'Migraines',
-    'Anxiety',
-    'Depression',
-    'Throat issues',
-    'Thyroid problems',
-    'Asthma',
-    'Ulcers',
-    'Numbness in hands',
-    'Disc problems',
-    'Infertility',
-    'Menstrual disorders',
-    'High blood pressure',
-    'Heart problems',
-    'Digestive problems',
-    'Kidney problems',
-    'Bladder problems',
-    'Numbness in legs',
-    'Numbness in feet',
-    'Low back pain',
-    'Hip pain',
-    'Shoulder pain',
-    'Obesity',
-    'Hormonal imbalance',
-    'Liver disease',
-    'Chronic fatigue',
-    'Gastric reflux',
-    'Lupus',
-    'Fibromyalgia',
-    'Chest pain',
-    'Trouble concentrating',
-    'Knee pain',
-    'Nervousness',
-    'Midback pain',
-  ];
-
-  const itemsFollowing = [
-    'Concussion',
-    'Stroke',
-    'Cancer',
-    'Diabetes',
-    'Heart Disease',
-    'Seizures',
-    'Spinal bone fracture',
-    'Scoliosis',
-  ]
   const [checkboxes, setCheckboxes] = useState(new Set());
-
   const [checkboxesFollowing, setCheckboxesFollowing] = useState(new Set());
-
   const [isChecked, setChecked] = useState(false);
 
   const toggleCheckbox = (label: string) => {
@@ -104,7 +98,7 @@ export default function PatientRegistration(): ReactElement {
       updatedCheckboxes.add(value);
       setCheckboxes(updatedCheckboxes);
     }
-  }
+  };
 
   const toggleCheckboxFollowing = (label: string) => {
     let item = label;
@@ -118,12 +112,10 @@ export default function PatientRegistration(): ReactElement {
       updatedCheckboxes.add(value);
       setCheckboxesFollowing(updatedCheckboxes);
     }
-  }
-
+  };
 
   const handleSubmit = (formSubmitEvent: any) => {
     formSubmitEvent.preventDefault();
-
     const data = {
       firstName: firstName,
       lastName: lastName,
@@ -134,7 +126,6 @@ export default function PatientRegistration(): ReactElement {
       zip: zip,
       phone: phone,
       email: email,
-
       checkBoxesСonditions: {
         conditions: checkboxes,
         otherLabel: isChecked ? otherLabel : '',
@@ -146,7 +137,6 @@ export default function PatientRegistration(): ReactElement {
       stressfulLevel: stressfulLevel,
       consentMinorChild: isChecked ? consentMinorChild : '',
       relationshipChild: relationshipChild,
-
     };
 
     if (data.checkBoxesСonditions.conditions.size == 0 ) {
@@ -168,7 +158,6 @@ export default function PatientRegistration(): ReactElement {
       setPhoneError("");
       setEmailError("");
       setMedicationsError("");
-      // authApi.registrationClient(data)
 
       setName('');
       setLastName('');
@@ -188,8 +177,8 @@ export default function PatientRegistration(): ReactElement {
       setConsentMinorChild('');
       setRelationshipChild('');
       // setChecked(false);
-
       console.log(data);
+      // authApi.registrationClient(data)
 
     }
   }
@@ -201,7 +190,7 @@ export default function PatientRegistration(): ReactElement {
             key={label}
             checked={checkboxes.has(label)}
         />
-  )
+  );
 
   const createCheckboxFollowing = (label: string) => (
     <Checkbox
@@ -210,7 +199,7 @@ export default function PatientRegistration(): ReactElement {
             key={label}
             checked={checkboxesFollowing.has(label)}
         />
-  )
+  );
 
   const createCheckboxes = () => (
     itemsConditions.map(createCheckbox)
@@ -224,11 +213,11 @@ export default function PatientRegistration(): ReactElement {
     setChecked(!isChecked)
   };
 
-  const handleChangeTestedPositive = (e: any) => {
+  const handleChangeTestedPositive = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setTestedPositive(e.target.value)
   };
 
-  const handleChangCovidVaccine = (e: any) => {
+  const handleChangCovidVaccine = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setCovidVaccine(e.target.value)
   };
 
@@ -236,7 +225,7 @@ export default function PatientRegistration(): ReactElement {
     setStressfulLevel(e.target.value)
   };
 
-  const handleChangConsentMinorChild = (e: any) => {
+  const handleChangConsentMinorChild = (e: React.ChangeEvent<HTMLInputElement>): void => {
     toggleCheckboxChange()
     setConsentMinorChild(e.target.value)
   };
