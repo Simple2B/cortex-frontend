@@ -27,8 +27,11 @@ export default function PatientRegistration(): ReactElement {
 
   const [conditionsError, setConditionsError] = useState('');
   const [followingError, setFollowingError] = useState('');
-  const [covidVaccineError, setCovidVaccineError] = useState('');
   const [stressfulLevelError, setStressfulLevelError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+
+  const [emailError, setEmailError] = useState('');
+
 
   const itemsConditions = [
     'Dizziness',
@@ -150,17 +153,19 @@ export default function PatientRegistration(): ReactElement {
       setConditionsError('Some should be chosen')
     } else if (data.checkboxesFollowing.size == 0) {
       setFollowingError('Some should be chosen')
-    } else if (covidVaccine === '') {
-      setCovidVaccineError('Something must be marked')
     } else if (stressfulLevel === undefined) {
       setStressfulLevelError('Note the level of stress')
+    } else if (phone === "") {
+      setPhoneError("You must enter phone number")
+    } else if (email === "") {
+      setEmailError("You must enter phone email")
     } else {
       setConditionsError("");
       setFollowingError("");
-      setCovidVaccineError("");
       setStressfulLevelError("");
+      setPhoneError("");
+      setEmailError("");
       // authApi.registrationClient(data)
-      console.log(data);
 
       setName('');
       setLastName('');
@@ -180,6 +185,9 @@ export default function PatientRegistration(): ReactElement {
       setConsentMinorChild('');
       setRelationshipChild('');
       // setChecked(false);
+
+      console.log(data);
+
     }
   }
 
@@ -249,8 +257,18 @@ export default function PatientRegistration(): ReactElement {
           <input value={city} onChange={(e) => { setCity(e.target.value) }} className="registration_input" placeholder="City" />
           <input value={state} onChange={(e) => { setState(e.target.value) }} className="registration_input" placeholder="State" />
           <input value={zip} onChange={(e) => { setZip(e.target.value) }} className="registration_input" placeholder="ZIP" />
-          <input value={phone} onChange={(e) => { setPhone(e.target.value) }} className="registration_input" placeholder="Phone Number" />
-          <input value={email} onChange={(e) => { setEmail(e.target.value) }} className="registration_input" placeholder="Email" />
+
+          <div className="registration_input">
+            <input value={phone} onChange={(e) => { setPhone(e.target.value) }} className="registration_input_data" placeholder="Phone Number" />
+            <span className="asterisk positionAsterisk">*</span>
+          </div>
+          <div className="reqFormTitleText error">{phoneError}</div>
+
+          <div className="registration_input">
+            <input value={email} onChange={(e) => { setEmail(e.target.value) }} className="registration_input_data" placeholder="Email" />
+            <span className="asterisk positionAsterisk">*</span>
+          </div>
+          <div className="reqFormTitleText error">{emailError}</div>
 
           <input value={referring} onChange={(e) => { setReferring(e.target.value) }} className="registration_input" placeholder="Who can we thank for referring you?" />
           <div className="reqFormTitleText">Check any conditions you CURRENTLY have <span className="asterisk">*</span></div>
@@ -276,8 +294,12 @@ export default function PatientRegistration(): ReactElement {
           <div className="reqFormTitleText error">{followingError}</div>
           {createCheckboxesFollowing()}
 
-          <input value={medications} onChange={(e) => { setMedications(e.target.value) }} className="registration_input" placeholder="List all current medications" />
-          {/* <span className="asterisk">*</span> */}
+
+          <div className="registration_input">
+            <input value={medications} onChange={(e) => { setMedications(e.target.value) }} className="registration_input_data" placeholder="List all current medications" />
+            <span className="asterisk positionAsterisk">*</span>
+          </div>
+
 
           <div className="reqFormTitleText">This question is used for research purposes. Have you tested positive for COVID-19?</div>
 

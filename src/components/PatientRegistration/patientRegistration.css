@@ -82,6 +82,12 @@
   color: red;
 }
 
+.positionAsterisk {
+  position: absolute;
+  top: -14px;
+  right: .5px;
+}
+
 .error {
   width: 43.3%;
   color: red;
@@ -297,8 +303,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @media (max-width: 1440px) {
   .registration_input {
     width: 55%;
-    /* width: 479px; */
     height: 64px;
+    position: relative;
     font-size: 24px;
     text-align: left;
     color: #fff;
@@ -374,7 +380,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     height: 38px;
     margin: 2.5px auto;
     font-size: 16px;
-    /* background-color: black; */
     opacity: 1;
     border: none;
     color: #707070;
@@ -417,12 +422,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding-bottom: 12px;
     text-align: left;
   }
-
-  /* .reqFormButtonsStressfulLevel {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  } */
 
   .containerCheckboxStressfulLevel {
     width: 95%;
