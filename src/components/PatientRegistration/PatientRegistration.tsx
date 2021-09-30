@@ -8,8 +8,7 @@ export default function PatientRegistration(): ReactElement {
   const [firstName, setName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  // const [startDate, setStartDate] = useState<any>(new Date());
-  const [dateBirth, setDateBirth] = useState<any>(new Date());
+  const [dateBirth, setDateBirth] = useState<any>(Date);
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -151,17 +150,17 @@ export default function PatientRegistration(): ReactElement {
     };
 
     if (data.checkBoxesСonditions.conditions.size == 0 ) {
-      setConditionsError('Some should be chosen')
+      setConditionsError('Some should be chosen');
     } else if (data.checkboxesFollowing.size == 0) {
-      setFollowingError('Some should be chosen')
+      setFollowingError('Some should be chosen');
     } else if (stressfulLevel === undefined) {
-      setStressfulLevelError('Note the level of stress')
+      setStressfulLevelError('Note the level of stress');
     } else if (phone === "") {
-      setPhoneError("You must enter phone number")
+      setPhoneError("You must enter phone number");
     } else if (email === "") {
-      setEmailError("You must enter phone email")
+      setEmailError("You must enter phone email");
     } else if (medications === "") {
-      setMedicationsError("You have enter the medication you are taking")
+      setMedicationsError("You have enter the medication you are taking");
     } else {
       setConditionsError("");
       setFollowingError("");
@@ -195,7 +194,6 @@ export default function PatientRegistration(): ReactElement {
     }
   }
 
-
   const createCheckbox = (label: string) => (
     <Checkbox
             label={label}
@@ -216,33 +214,32 @@ export default function PatientRegistration(): ReactElement {
 
   const createCheckboxes = () => (
     itemsConditions.map(createCheckbox)
-  )
+  );
 
   const createCheckboxesFollowing = () => (
     itemsFollowing.map(createCheckboxFollowing)
-  )
+  );
 
   const toggleCheckboxChange = () => {
     setChecked(!isChecked)
-  }
-
+  };
 
   const handleChangeTestedPositive = (e: any) => {
     setTestedPositive(e.target.value)
-  }
+  };
 
   const handleChangCovidVaccine = (e: any) => {
     setCovidVaccine(e.target.value)
-  }
+  };
 
   const handleChangStressfulLevel = (e: any) => {
     setStressfulLevel(e.target.value)
-  }
+  };
 
   const handleChangConsentMinorChild = (e: any) => {
     toggleCheckboxChange()
     setConsentMinorChild(e.target.value)
-  }
+  };
 
   const stressLevel = Array.from({length: 10}, (_, i) => i + 1);
 
@@ -340,9 +337,7 @@ export default function PatientRegistration(): ReactElement {
                 <span className="checkmarkRadiobutton"></span>
             </label>
           </div>
-
           <div className="reqFormTitleText">This question is used for research purposes on the effects of the COVID-19 vaccine and its potential effects on the brain and nervous system. Have you received the COVID-19 vaccine?</div>
-          {/* <div className="reqFormTitleText error">{covidVaccineError}</div> */}
           <div className="checkboxRegisterForms">
             <label className="containerRadiobutton">
                 Yes
@@ -375,13 +370,10 @@ export default function PatientRegistration(): ReactElement {
                 <span className="checkmarkRadiobutton"></span>
             </label>
           </div>
-
           <div className="reqFormTitleText">On a scale of 1-10 how stressful has your life been? <span className="asterisk">*</span></div>
           <div className="reqFormTitleText error">{stressfulLevelError}</div>
-
           <div className="containerCheckboxStressfulLevel">
             <div className="reqFormSubTitleText">Not stressful</div>
-
               <div className="reqFormButtonsStressfulLevel">
                 { stressLevel.map((level) => {
                   return <div key={level}>
@@ -402,7 +394,6 @@ export default function PatientRegistration(): ReactElement {
 
             <div className="reqFormSubTitleText">Very stressful</div>
           </div>
-
           <div className="reqFormTitleText"> Consent for a minor child
             <br/>
             <div className="reqFormSubTitleText">I authorize Doctor to perform diagnostic procedures and render chiropractic care and adjustments to my minor child.</div>

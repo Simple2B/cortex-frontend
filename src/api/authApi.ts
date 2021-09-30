@@ -21,7 +21,7 @@ const formatRequestBodyApiKey = (password: string, api_key: string) => {
 export const authApi = {
   login: async (email: string, password: string) => {
     const response = await authInstance
-      .post("api/auth/sign_in", formatRequestBody(email, password))
+      .post('api/auth/sign_in', formatRequestBody(email, password))
       .then((res: AxiosResponse<ILoginResponse>) => {
         console.log("POST [/auth/sign_in] response received successfully");
         console.log(res);
@@ -37,7 +37,7 @@ export const authApi = {
 
   setPassword: async (password: string, api_key: string ) => {
     const response = await authInstance
-      .post(`api/auth/sign_up`, formatRequestBodyApiKey(password, api_key))
+      .post('api/auth/sign_up', formatRequestBodyApiKey(password, api_key))
       .then((res: AxiosResponse<ILoginResponse>) => {
         console.log(`POST [api/sing_up/${api_key}] response received successfully`);
         console.log(res);
@@ -53,7 +53,7 @@ export const authApi = {
 
   registrationClient: async (data: {} ) => {
     const response = await authInstance
-      .post(`api/client/registration`, data)
+      .post('api/client/registration', data)
       .then((res: AxiosResponse<ILoginResponse>) => {
         console.log(`POST [api/client/registration/${data}] response received successfully`);
         console.log(res);
