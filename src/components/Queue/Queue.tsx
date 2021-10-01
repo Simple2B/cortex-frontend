@@ -5,7 +5,6 @@ import NavBar from '../NavBar/NavBar';
 import './queue.css'
 
 
-
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<any[]>([])
 
@@ -34,23 +33,14 @@ export default function Queue(): ReactElement {
         </div>
       </div>
       <div className="queue">
-
-
-
         <h1 className="queue_title">The Queue</h1>
-
-
         {queue.map(item => (
-          <div className="queue_list">{item.lastName}, {item.name}</div>
+          <div className="queue_list" key={item}>{item.lastName}, {item.name}</div>
         ))}
-
         <Popup trigger={<button className="queue_add_button">+Add new</button>} modal>
           <div className="modal_window">{patientComponents}</div>
         </Popup>
-
-
       </div>
-
     </>
   )
 }
