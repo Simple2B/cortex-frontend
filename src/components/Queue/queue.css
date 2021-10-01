@@ -161,3 +161,139 @@
   background-color: #fcebeb;
   text-align: center;
 }
+
+@media (max-width: 1440px) {
+  .queue {
+    margin-right: 20%;
+  }
+
+  .rogue {
+    left: 70%;
+  }
+
+  .popup-content  {
+    right: 10%;
+  }
+
+  .button {
+    width: 230px;
+    height: 49px;
+  }
+
+  #button-10 .knobs:before, #button-10 .knobs:after, #button-10 .knobs span {
+    width: 115px;
+    height: 49px;
+    font-size: 16px;
+    line-height: 49px;
+  }
+
+  #button-10 .checkbox:checked+.knobs:before {
+    left: 115px;
+  }
+
+}
+
+@media (max-width: 540px) {
+  .queue {
+    /* margin-top: 20%; */
+    margin-right: 0;
+  }
+
+  .queue_title {
+    font-size: 42px;
+    text-align: center;
+    color: #fff;
+    margin: 0;
+    margin-bottom: 25px;
+    font-size: 30px;
+    letter-spacing: 3px;
+  }
+
+  .queue_add_button {
+    width: 310px;
+    height: 77px;
+    background: transparent;
+    font-weight: bold;
+    border: 2px solid #0ff;
+    box-sizing: border-box;
+    font-size: 30px;
+
+  }
+
+  .queue_list {
+    width: 310px;
+    height: 77px;
+    margin-bottom: 15px;
+    font-size: 25px;
+  }
+
+  .modal_window {
+    width: 310px;
+    height: 410px;
+    padding: 10px;
+    margin-top: 85px;
+  }
+
+  .modal_window .queue_list {
+    width: 295px;
+    margin-bottom: 8px;
+    border: 2px solid #0ff;
+  }
+
+  .rogue {
+    right: 0;
+    top: 5%;
+    margin-bottom: 0;
+  }
+
+  .rogue_mode {
+    font-size: 16px;
+    padding-left: 5px;
+  }
+
+  .button {
+    width: 146px;
+    height: 39px;
+  }
+
+  #button-10 .knobs:before, #button-10 .knobs:after, #button-10 .knobs span {
+    width: 75px;
+    height: 39px;
+    font-size: 16px;
+    line-height: 39px;
+  }
+
+  #button-10 .checkbox:checked+.knobs:before {
+    left: 69px;
+  }
+
+  .popup-content  {
+    right: 0;
+  }
+
+  .nav_bar {
+    padding: 5px 0 0 28px;
+    height: auto;
+  }
+
+  .menu_button svg {
+    width: 30px;
+  }
+
+  .menu {
+    top: 60px;
+    left: 40px;
+    width: 200px;
+    height: 341px;
+    font-size: 26px;
+  }
+
+  .logo {
+    margin-left: 40px
+  }
+
+  .logo svg {
+    width: 200px;
+  }
+
+}
