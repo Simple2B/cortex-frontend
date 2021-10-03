@@ -18,16 +18,16 @@ export default function Queue(): ReactElement {
     setQueue((prev: User[]) => [...prev, patient]);
   };
 
-  const patientComponents = patients.map((item, index )=> (
-    <div className="queue_list" onClick={(e: any) => {
-      const copyListPatients = [...patients];
-      const patient_target = e.target.innerText.split(",");
-      if (patient_target[0].toLowerCase().trim() === copyListPatients[index].lastName.toLowerCase().trim() && patient_target[1].toLowerCase().trim() === copyListPatients[index].name.toLowerCase().trim()) {
-        addPatient({ name: item.name, lastName: item.lastName });
-        setPatients(patients.filter(patient => patient !== item));
-      }
-    }}>{item.lastName}, {item.name}</div>
-  ))
+  // const patientComponents = patients.map((item, index )=> (
+  //   <div className="queue_list" onClick={(e: any) => {
+  //     const copyListPatients = [...patients];
+  //     const patient_target = e.target.innerText.split(",");
+  //     if (patient_target[0].toLowerCase().trim() === copyListPatients[index].lastName.toLowerCase().trim() && patient_target[1].toLowerCase().trim() === copyListPatients[index].name.toLowerCase().trim()) {
+  //       addPatient({ name: item.name, lastName: item.lastName });
+  //       setPatients(patients.filter(patient => patient !== item));
+  //     }
+  //   }}>{item.lastName}, {item.name}</div>
+  // ))
 
   return (
     <>
@@ -44,12 +44,25 @@ export default function Queue(): ReactElement {
       <div className="queue">
         <h1 className="queue_title">The Queue</h1>
         {
-          queue.map(item => (
-            <div className="queue_list">{item.lastName}, {item.name}</div>
+          queue.map((item, index) => (
+            <div className="queue_list" key={index}>{item.lastName}, {item.name}</div>
           ))
         }
         <Popup trigger={<button className="queue_add_button">+Add new</button>} modal>
-          <div className="modal_window">{patientComponents}</div>
+          <div className="modal_window">
+            {
+              patients.map((item, index )=> (
+                <div className="queue_list" onClick={(e: any) => {
+                  const copyListPatients = [...patients];
+                  const patient_target = e.target.innerText.split(",");
+                  if (patient_target[0].toLowerCase().trim() === copyListPatients[index].lastName.toLowerCase().trim() && patient_target[1].toLowerCase().trim() === copyListPatients[index].name.toLowerCase().trim()) {
+                    addPatient({ name: item.name, lastName: item.lastName });
+                    setPatients(patients.filter(patient => patient !== item));
+                  }
+                }}>{item.lastName}, {item.name}</div>
+              ))
+            }
+          </div>
         </Popup>
       </div>
     </>
