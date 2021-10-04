@@ -58,19 +58,17 @@ export const authApi = {
     return response;
   },
 
-  setPassword: async (password: string, api_key: string ) => {
-    const response = await authInstance
+  setPassword: async (password: string, api_key: string ): Promise<void> => {
+    try {
+      const response = await authInstance
       .post('api/auth/sign_up', formatRequestBodyApiKey(password, api_key))
-      .then((res: AxiosResponse<ILoginResponse>) => {
         console.log(`POST [api/sing_up/${api_key}] response received successfully`);
-        return res.data;
-      })
-      .catch((error: AxiosError<ILoginResponse>) => {
-        // place to handle errors and rise custom errors
-        console.log(`POST [api/sing_up/${api_key}] error message: ${error.message}`);
-        throw error.message;
-      });
-    return response;
+      return response.data;
+    } catch (error: any) {
+      // place to handle errors and rise custom errors
+      console.log(`POST [api/sing_up/${api_key}] error message: ${error.message}`);
+      throw error.message;
+    }
   },
 
   registrationClient: async (data: DataClient ) => {
