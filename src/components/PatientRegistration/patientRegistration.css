@@ -23,13 +23,17 @@
   height: 84px;
   border-radius: 42px;
   background: transparent;
-  border: 2px solid #707070;
+  border: 2px solid #AEF7FF;
   font-size: 35px;
   text-align: left;
   color: #fff;
   opacity: 0.66;
   padding-left: 30px;
   margin-bottom: 17px;
+}
+
+.registration_input::placeholder , .registration_input input::placeholder{
+  color: #AEF7FF;
 }
 
 .registration_button {
@@ -39,7 +43,7 @@
   height: 96px;
   border-radius: 48px;
   background: linear-gradient(#00e5ff 0%, #085e67 100%);
-  border: 1px solid #707070;
+  border: 1px solid #AEF7FF;
   color: white;
   font-size: 35px;
   cursor: pointer;
@@ -74,12 +78,27 @@
   font-size: 21px;
   text-align: left;
   padding-bottom: 10px;
-  text-indent: 15px;
+  text-indent: 5px;
   text-align: justify;
 }
 
 .asterisk {
   color: red;
+}
+
+.positionAsterisk {
+  position: absolute;
+  top: -14px;
+  right: .5px;
+}
+
+.error {
+  width: 43.3%;
+  color: red;
+  font-size: 16px;
+  text-align: left;
+  margin: 0;
+  padding-left: 10px;
 }
 
 /* Customize the label (the container) */
@@ -89,8 +108,8 @@
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-size: 19px;
-  color: #707070;
+  font-size: 18px;
+  color: #AEF7FF;
   letter-spacing: 1.5px;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -134,7 +153,7 @@
   height: 27px;
   width: 27px;
   background-color: black;
-  border: 1px solid #707070;
+  border: 1px solid #AEF7FF;
   border-radius: 3px;
 }
 
@@ -216,7 +235,7 @@
   margin-bottom: 17px;
   outline: none;
   border: none;
-  border-bottom: 2px solid #707070;
+  border-bottom: 2px solid #AEF7FF;
   background-color: black;
 }
 
@@ -243,18 +262,56 @@
   margin-bottom: 17px;
   outline: none;
   border: none;
-  border-bottom: 2px solid #707070;
+  border-bottom: 2px solid#AEF7FF;
   background-color: black;
+}
+
+.containerCheckboxStressfulLevel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reqFormButtonsStressfulLevel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.registration_input_data {
+  width: 93%;
+  height: 50px;
+  margin: 2.5px auto;
+  font-size: 22px;
+  /* background-color: black; */
+  opacity: 1;
+  border: none;
+  color: #AEF7FF;
+  background-color: black;
+  outline: none;
+  justify-content: left;
+
+}
+
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  /* color: rgba(0, 0, 0, 0); */
+  opacity: 1;
+  display: block;
+  background: url('../../images/calendar_req_form_client.svg') no-repeat;
+  width: 48px;
+  height: 29px;
+  border-width: thin;
 }
 
 @media (max-width: 1440px) {
   .registration_input {
     width: 55%;
-    /* width: 479px; */
     height: 64px;
+    position: relative;
     font-size: 24px;
     text-align: left;
-    color: #fff;
+    color: #AEF7FF;
     opacity: 0.66;
     padding-left: 30px;
     margin-bottom: 17px;
@@ -280,7 +337,7 @@
   }
 
   .inputOtherCheckBoxRegForm {
-    width: 30%;
+    width: 70%;
 }
 
   .reqFormTitleText {
@@ -322,6 +379,30 @@
     margin-bottom: 10px;
   }
 
+  .registration_input_data {
+    width: 95%;
+    height: 38px;
+    margin: 2.5px auto;
+    font-size: 16px;
+    opacity: 1;
+    border: none;
+    color: #AEF7FF;
+    background-color: black;
+    outline: none;
+    justify-content: left;
+
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: block;
+    opacity: 1;
+    background: url('../../images/calendar_req_form_client_mob_v.svg') no-repeat;
+    width: 50px;
+    height: 48px;
+    margin-top: 17px;
+    border-width: thin;
+  }
+
   .registration_button {
     width: 85%;
     height: 56px;
@@ -348,7 +429,13 @@
 
   .containerCheckboxStressfulLevel {
     width: 95%;
+    flex-direction: column;
   }
+
+  .containerCheckboxStressfulLevel .reqFormSubTitleText {
+    margin-bottom: 25px;
+  }
+
   .inputRelationshipChild {
     width: 90%;
   }
