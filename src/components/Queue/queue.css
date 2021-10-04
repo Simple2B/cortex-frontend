@@ -195,7 +195,7 @@
 
 @media (max-width: 540px) {
   .queue {
-    /* margin-top: 20%; */
+    margin-top: 20%;
     margin-right: 0;
   }
 
@@ -242,13 +242,15 @@
 
   .rogue {
     right: 0;
-    top: 5%;
+    top: 10.5%;
+    left: 10%;
     margin-bottom: 0;
   }
 
   .rogue_mode {
-    font-size: 16px;
+    font-size: 14px;
     padding-left: 5px;
+    width: 100%;
   }
 
   .button {
