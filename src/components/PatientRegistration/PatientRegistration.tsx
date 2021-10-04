@@ -239,8 +239,9 @@ export default function PatientRegistration(): ReactElement {
         <form className="registration_form">
           <input value={firstName} onChange={(e) => { setName(e.target.value) }} className="registration_input" placeholder="First Name" />
           <input value={lastName} onChange={(e) => { setLastName(e.target.value) }} className="registration_input" placeholder="Last Name" />
-          <div className="registration_input">
-            <input value={dateBirth} onChange={(e) => { setDateBirth(e.target.value) }} className="registration_input_data"  type="date"/>
+          <div className="registration_input registration_input_birth">
+            <input value={dateBirth} onChange={(e) => { setDateBirth(e.target.value) }} className="registration_input_data input_birth"  type="date"/>
+            <div className="label_birth">Date of birth</div>
           </div>
 
           <input value={address} onChange={(e) => { setAddress(e.target.value) }} className="registration_input" placeholder="Address" />

@@ -379,6 +379,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-bottom: 10px;
   }
 
+  .registration_input_birth {
+    position: relative;
+  }
+
+  .registration_input_birth .input_birth {
+    color: transparent;
+  }
+
+  .registration_input_birth .label_birth {
+    position: absolute;
+    top: 22%;
+    color: #AEF7FF;
+  }
+
   .registration_input_data {
     width: 95%;
     height: 38px;
