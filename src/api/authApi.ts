@@ -43,19 +43,32 @@ const formatRequestBodyApiKey = (password: string, api_key: string) => {
 };
 
 export const authApi = {
-  login: async (email: string, password: string) => {
-    const response = await authInstance
+  // login: async (email: string, password: string) => {
+  //   const response = await authInstance
+  //     .post('api/auth/sign_in', formatRequestBody(email, password))
+  //     .then((res: AxiosResponse<ILoginResponse>) => {
+  //       console.log("POST [/auth/sign_in] response received successfully");
+  //       return res.data;
+  //     })
+  //     .catch((error: AxiosError<ILoginResponse>) => {
+  //       // place to handle errors and rise custom errors
+  //       console.log(`POST [api/auth/sign_in] error message: ${error.message}`);
+  //       throw error.message;
+  //     });
+  //   return response;
+  // },
+
+  login: async (email: string, password: string): Promise<ILoginResponse> => {
+    try {
+      const response = await authInstance
       .post('api/auth/sign_in', formatRequestBody(email, password))
-      .then((res: AxiosResponse<ILoginResponse>) => {
-        console.log("POST [/auth/sign_in] response received successfully");
-        return res.data;
-      })
-      .catch((error: AxiosError<ILoginResponse>) => {
-        // place to handle errors and rise custom errors
-        console.log(`POST [api/auth/sign_in] error message: ${error.message}`);
-        throw error.message;
-      });
-    return response;
+       console.log("POST [/auth/sign_in] response received successfully");
+      return response.data;
+    } catch (error: any) {
+      // place to handle errors and rise custom errors
+      console.log(`POST [api/auth/sign_in] error message: ${error.message}`);
+      throw error.message;
+    }
   },
 
   setPassword: async (password: string, api_key: string ): Promise<void> => {
@@ -71,18 +84,31 @@ export const authApi = {
     }
   },
 
-  registrationClient: async (data: DataClient ) => {
-    const response = await authInstance
+  // registrationClient: async (data: DataClient ) => {
+  //   const response = await authInstance
+  //     .post('api/client/registration', data)
+  //     .then((res: AxiosResponse<ILoginResponse>) => {
+  //       console.log(`POST [api/client/registration/${data}] response received successfully`);
+  //       return res.data;
+  //     })
+  //     .catch((error: AxiosError<ILoginResponse>) => {
+  //       // place to handle errors and rise custom errors
+  //       console.log(`POST [api/client/registration/${data}] error message: ${error.message}`);
+  //       throw error.message;
+  //     });
+  //   return response;
+  // },
+
+  registrationClient: async (data: DataClient): Promise<void> => {
+    try {
+      const response = await authInstance
       .post('api/client/registration', data)
-      .then((res: AxiosResponse<ILoginResponse>) => {
-        console.log(`POST [api/client/registration/${data}] response received successfully`);
-        return res.data;
-      })
-      .catch((error: AxiosError<ILoginResponse>) => {
-        // place to handle errors and rise custom errors
-        console.log(`POST [api/client/registration/${data}] error message: ${error.message}`);
-        throw error.message;
-      });
-    return response;
+      console.log(`POST [api/client/registration/${data}] response received successfully`);
+      return response.data;
+    } catch (error: any) {
+      // place to handle errors and rise custom errors
+      console.log(`POST [api/client/registration/${data}] error message: ${error.message}`);
+      throw error.message;
+    }
   },
 };
