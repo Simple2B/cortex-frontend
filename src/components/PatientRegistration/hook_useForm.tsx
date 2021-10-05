@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { IPatientForm } from '../../types/patientsTypes';
 
 const defaultPageFormData: IPatientForm = {
@@ -14,6 +14,7 @@ const defaultPageFormData: IPatientForm = {
   referring: "",
   conditions: new Set(""),
   conditionError: "",
+  checkedOtherCondition: false,
   otherCondition: "",
   diseases: new Set(),
   diseaseError: "",
@@ -29,22 +30,9 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
 
     const [values, setValues] = useState<IPatientForm>(initialState);
     const [errors, setErrors] = useState<IPatientForm>(initialState);
-    const [checked, setChecked] = useState(false);
-
-    // const onChangeOtherCondition = (event: any) => {
-    //   if (isChecked){
-    //     setValues(values  => ({ ...values, [event.target.name]: event.target.value }))
-    //   } else {
-    //     setValues(values  => ({ ...values, [event.target.name]: event.target.value }))
-    //   };
-    // };
-
-    // const handleChangeTestedPositive = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    //   setTestedPositive(e.target.value)
-    // };
 
     const toggleCheckboxChange = (event: any) => {
-      setChecked(!checked);
+      setValues(values  => ({ ...values, checkedOtherCondition: !values.checkedOtherCondition}));
     };
 
     const toggleCheckboxConsent = (event: any) => {
@@ -77,8 +65,6 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
 
     };
 
-
-
     const onSubmit = (event: any) => {
       event.preventDefault();
       const errorBuffer = validate(values);
@@ -96,7 +82,7 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
     return {
         toggleCheckboxConsent,
         toggleCheckboxFollowing,
-        checked,
+        // checked,
         toggleCheckboxChange,
         toggleCheckbox,
         onChange,
@@ -105,4 +91,3 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
         values
     }
   };
-
