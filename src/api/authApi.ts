@@ -1,30 +1,8 @@
-import { AxiosError, AxiosResponse } from "axios";
+// import { AxiosError, AxiosResponse } from "axios";
 import { ILoginResponse } from "../types/authTypes";
 import { authInstance } from "./axiosInstance";
+import { IPatientForm } from '../types/patientsTypes';
 
-
-interface DataClient {
-  firstName: string,
-  lastName: string,
-  dateBirth: Date,
-  address: string,
-  city: string,
-  state: string,
-  zip: string,
-  phone: string,
-  email: string,
-  checkBoxesСonditions: {
-    conditions: string,
-    otherLabel: string,
-  },
-  checkboxesFollowing: string,
-  medications: string,
-  testedPositive: string,
-  covidVaccine: string,
-  stressfulLevel: string,
-  consentMinorChild: string,
-  relationshipChild: string,
-};
 
 const formatRequestBody = (email: string, password: string) => {
   const params = {
@@ -70,7 +48,8 @@ export const authApi = {
     }
   },
 
-  registrationClient: async (data: DataClient): Promise<void> => {
+  registrationClient: async (data: IPatientForm): Promise<void> => {
+    console.log('dataReqPatient =>', data);
     try {
       const response = await authInstance
       .post('api/client/registration', data)

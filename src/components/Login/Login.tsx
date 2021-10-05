@@ -19,6 +19,8 @@ export default function Login(): ReactElement {
   const history = useHistory();
   const { login } = useActions();
 
+  const [messageError, setMessageError] = useState("");
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => {
       return { ...prev, email: e.target.value };
@@ -37,7 +39,6 @@ export default function Login(): ReactElement {
     console.log(`token`, token)
     localStorage.setItem("token", token["access_token"]);
     console.log(`Stop login fetch`)
-
   }
 
   const handleSubmit = () => {
@@ -46,10 +47,14 @@ export default function Login(): ReactElement {
         password: form.password,
         email: form.email,
       });
-      history.push('/queue')
+      history.push('/queue');
+      // setMessageError("");
     } catch (error: any) {
       const status = error.status;
+      // setMessageError("Incorrect email or password");
+      console.log(messageError);
       if (status === 401 || status === 403 || status === 404) {
+        setMessageError("Incorrect email or password");
         localStorage.removeItem("token");
         return Promise.reject({
           message: false,
@@ -71,6 +76,7 @@ export default function Login(): ReactElement {
       <form className="login_form">
         <input type="email" value={form.email} onChange={handleEmailChange} className="login_input" placeholder="EMAIL" />
         <input type="password" value={form.password} onChange={handlePasswordChange} className="login_input" placeholder="PASSWORD" />
+        <div className="errorMessage">{messageError}</div>
         <button onClick={handleSubmit}
           disabled={
             form.password === "" || form.email === ""

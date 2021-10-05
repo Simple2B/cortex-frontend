@@ -1,6 +1,8 @@
-import React, { ReactElement, useState, useEffect } from 'react'
+import React, { ReactElement, useContext, useState } from 'react'
 import './patientRegistration.css'
 import Checkbox from './Checkbox';
+import { IPatientForm } from '../../types/patientsTypes';
+import { useForm } from './hook_useForm';
 import { authApi } from '../../api/authApi';
 
 const itemsConditions = [
@@ -57,130 +59,80 @@ const itemsFollowing = [
   'Scoliosis',
 ];
 
+const initialState = {
+        firstName: "",
+        lastName: "",
+        birthday: "",
+        address: "",
+
+        city: "",
+        state: "",
+        zip: "",
+        phone: "",
+        email: "",
+        referring: "",
+        conditions: new Set(""),
+        conditionError: "",
+        otherCondition: "",
+
+        diseases: new Set(""),
+        diseaseError: "",
+
+        medications: "",
+        covidTestedPositive: null,
+        covidVaccine: null,
+        stressfulLevel: "",
+        consentMinorChild: false,
+        relationshipChild: "",
+}
+
+
 export default function PatientRegistration(): ReactElement {
-  const [firstName, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [dateBirth, setDateBirth] = useState<any>(Date);
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [referring, setReferring] = useState('');
-  const [otherLabel, setLabelOther] = useState('');
-  const [medications, setMedications] = useState('');
-  const [testedPositive, setTestedPositive] = useState('');
-  const [covidVaccine, setCovidVaccine] = useState('');
-  const [stressfulLevel, setStressfulLevel] = useState<number>();
-  const [consentMinorChild, setConsentMinorChild] = useState('');
-  const [relationshipChild, setRelationshipChild] = useState('');
 
-  const [conditionsError, setConditionsError] = useState('');
-  const [followingError, setFollowingError] = useState('');
-  const [stressfulLevelError, setStressfulLevelError] = useState('');
-  const [phoneError, setPhoneError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [medicationsError, setMedicationsError] = useState('');
-  const [checkboxes, setCheckboxes] = useState(new Set());
-  const [checkboxesFollowing, setCheckboxesFollowing] = useState(new Set());
-  const [isChecked, setChecked] = useState(false);
 
-  const toggleCheckbox = (label: string) => {
-    let item = label;
-    let indexItem: number = itemsConditions.indexOf(item)
-    let value: string = itemsConditions[indexItem];
-    const updatedCheckboxes = new Set(checkboxes);
-    if (checkboxes.has(label) || label != value) {
-      updatedCheckboxes.delete(label);
-      setCheckboxes(updatedCheckboxes);
-    } else {
-      updatedCheckboxes.add(value);
-      setCheckboxes(updatedCheckboxes);
+  const validateForm = (values: IPatientForm) => {
+    let errors: Partial<IPatientForm> = {};
+    if (values.firstName.trim() === '') {
+        errors.firstName = 'First name must not be empty';
     }
-  };
 
-  const toggleCheckboxFollowing = (label: string) => {
-    let item = label;
-    let indexItem: number = itemsFollowing.indexOf(item)
-    let value: string = itemsFollowing[indexItem];
-    const updatedCheckboxes = new Set(checkboxesFollowing);
-    if (checkboxesFollowing.has(label) || label != value) {
-      updatedCheckboxes.delete(label);
-      setCheckboxesFollowing(updatedCheckboxes);
-    } else {
-      updatedCheckboxes.add(value);
-      setCheckboxesFollowing(updatedCheckboxes);
+    if (values.lastName.trim() === '') {
+      errors.lastName = 'Last name must not be empty';
     }
-  };
 
-  const handleSubmit = (formSubmitEvent: any) => {
-    formSubmitEvent.preventDefault();
-    const data = {
-      firstName: firstName,
-      lastName: lastName,
-      dateBirth: dateBirth,
-      address: address,
-      city: city,
-      state: state,
-      zip: zip,
-      phone: phone,
-      email: email,
-      checkBoxesСonditions: {
-        conditions: checkboxes,
-        otherLabel: isChecked ? otherLabel : '',
-      },
-      checkboxesFollowing: checkboxesFollowing,
-      medications: medications,
-      testedPositive: testedPositive,
-      covidVaccine: covidVaccine,
-      stressfulLevel: stressfulLevel,
-      consentMinorChild: isChecked ? consentMinorChild : '',
-      relationshipChild: relationshipChild,
+    const regexPhoneNumber = new RegExp(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im);
+
+    if (values.phone.trim() === '') {
+      errors.phone = 'Phone must not be empty';
+    } else if (!regexPhoneNumber.test(values.phone)) {
+      errors.phone = 'Incorrect phone number. Must be like xxx-xxx-xxxx' ;
     };
 
-    if (data.checkBoxesСonditions.conditions.size == 0 ) {
-      setConditionsError('Some should be chosen');
-    } else if (data.checkboxesFollowing.size == 0) {
-      setFollowingError('Some should be chosen');
-    } else if (stressfulLevel === undefined) {
-      setStressfulLevelError('Note the level of stress');
-    } else if (phone === "") {
-      setPhoneError("You must enter phone number");
-    } else if (email === "") {
-      setEmailError("You must enter phone email");
-    } else if (medications === "") {
-      setMedicationsError("You have enter the medication you are taking");
-    } else {
-      setConditionsError("");
-      setFollowingError("");
-      setStressfulLevelError("");
-      setPhoneError("");
-      setEmailError("");
-      setMedicationsError("");
+    const regexEmail = new RegExp(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);
 
-      setName('');
-      setLastName('');
-      setDateBirth('');
-      setAddress('');
-      setCity('');
-      setState('');
-      setZip('');
-      setPhone('');
-      setEmail('');
-      setReferring('');
-      setLabelOther('');
-      setMedications('');
-      setTestedPositive('');
-      setCovidVaccine('');
-      setStressfulLevel(undefined);
-      setConsentMinorChild('');
-      setRelationshipChild('');
-      // setChecked(false);
-      console.log(data);
-      // authApi.registrationClient(data)
+    if (values.email.trim() === '') {
+      errors.email = 'Phone must not be empty';
+    } else if (!regexEmail.test(values.email)) {
+      errors.email = 'Incorrect email. Must be like email@email.com' ;
+    };
 
+    if (values.conditions.size === 0) {
+      errors.conditionError = 'Yuo must choose some condition';
     }
+
+    if (values.diseases.size === 0) {
+      errors.diseaseError = 'Yuo must choose some disease';
+    }
+
+    if (values.medications.trim() === '') {
+      errors.medications = 'Medications must not be empty';
+    }
+
+    if (values.stressfulLevel === '') {
+      errors.stressfulLevel = 'Stressfull level must be choose';
+    }
+
+    return errors
   }
 
   const createCheckbox = (label: string) => (
@@ -188,7 +140,7 @@ export default function PatientRegistration(): ReactElement {
             label={label}
             handleCheckboxChange={toggleCheckbox}
             key={label}
-            checked={checkboxes.has(label)}
+            checked={values.conditions.has(label)}
         />
   );
 
@@ -197,9 +149,12 @@ export default function PatientRegistration(): ReactElement {
             label={label}
             handleCheckboxChange={toggleCheckboxFollowing}
             key={label}
-            checked={checkboxesFollowing.has(label)}
+            checked={values.diseases.has(label)}
         />
   );
+
+  const { values, errors, toggleCheckbox, toggleCheckboxFollowing, toggleCheckboxChange, toggleCheckboxConsent, checked, onChange, onSubmit } = useForm(authApi.registrationClient, initialState, validateForm);
+
 
   const createCheckboxes = () => (
     itemsConditions.map(createCheckbox)
@@ -209,89 +164,157 @@ export default function PatientRegistration(): ReactElement {
     itemsFollowing.map(createCheckboxFollowing)
   );
 
-  const toggleCheckboxChange = () => {
-    setChecked(!isChecked)
-  };
-
-  const handleChangeTestedPositive = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setTestedPositive(e.target.value)
-  };
-
-  const handleChangCovidVaccine = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setCovidVaccine(e.target.value)
-  };
-
-  const handleChangStressfulLevel = (e: any) => {
-    setStressfulLevel(e.target.value)
-  };
-
-  const handleChangConsentMinorChild = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    toggleCheckboxChange()
-    setConsentMinorChild(e.target.value)
-  };
-
   const stressLevel = Array.from({length: 10}, (_, i) => i + 1);
 
   return (
     <>
       <div className="registration">
         <h1 className="registration_title">Registration Form</h1>
-        <form className="registration_form">
-          <input value={firstName} onChange={(e) => { setName(e.target.value) }} className="registration_input" placeholder="First Name" />
-          <input value={lastName} onChange={(e) => { setLastName(e.target.value) }} className="registration_input" placeholder="Last Name" />
+        <form onSubmit={onSubmit} noValidate className="registration_form">
+
+          <div className="registration_input">
+            <input
+              name="firstName"
+              value={values.firstName || ''}
+              onChange={onChange}
+              className={`registration_input_data ${errors.firstName && 'is-invalid'}`}
+              placeholder="First Name" />
+            <span className="asterisk positionAsterisk">*</span>
+            { errors.firstName && (
+              <div className="invalid-feedback">
+                {errors.firstName}
+              </div>
+            )}
+          </div>
+
+          <div className="registration_input">
+            <input
+              name="lastName"
+              value={values.lastName || ''}
+              onChange={onChange}
+              className={`registration_input_data ${errors.lastName && 'is-invalid'}`}
+              placeholder="Last Name" />
+            <span className="asterisk positionAsterisk">*</span>
+            { errors.lastName && (
+              <div className="invalid-feedback">
+                {errors.lastName}
+              </div>
+            )}
+          </div>
+
           <div className="registration_input registration_input_birth">
-            <input value={dateBirth} onChange={(e) => { setDateBirth(e.target.value) }} className="registration_input_data input_birth"  type="date"/>
-            <div className="label_birth">Date of birth</div>
+            <input
+              name="birthday"
+              value={values.birthday || ''}
+              onChange={onChange}
+              className={`registration_input_data input_birth`}
+              type="date"
+              placeholder="Date of birth"
+            />
+            {/* <div className="label_birth">
+              {
+                values.birthday ?
+                ""
+                :
+                "Date of birth"
+              }
+            </div> */}
           </div>
 
-          <input value={address} onChange={(e) => { setAddress(e.target.value) }} className="registration_input" placeholder="Address" />
-          <input value={city} onChange={(e) => { setCity(e.target.value) }} className="registration_input" placeholder="City" />
-          <input value={state} onChange={(e) => { setState(e.target.value) }} className="registration_input" placeholder="State" />
-          <input value={zip} onChange={(e) => { setZip(e.target.value) }} className="registration_input" placeholder="ZIP" />
+          <input value={values.address} name="address" onChange={onChange} className="registration_input" placeholder="Address" />
+
+          <input value={values.city} name="city" onChange={onChange} className="registration_input" placeholder="City" />
+
+          <input value={values.state} name="state" onChange={onChange} className="registration_input" placeholder="State" />
+          <input value={values.zip} name="zip" onChange={onChange} className="registration_input" placeholder="ZIP" />
 
           <div className="registration_input">
-            <input value={phone} onChange={(e) => { setPhone(e.target.value) }} className="registration_input_data" placeholder="Phone Number" />
+            <input
+              name="phone"
+              value={values.phone}
+              onChange={onChange}
+              className={`registration_input_data ${errors.phone && 'is-invalid'}`}
+              placeholder="Phone Number" />
             <span className="asterisk positionAsterisk">*</span>
+            { errors.phone && (
+              <div className="invalid-feedback">
+                {errors.phone}
+              </div>
+            )}
           </div>
-          <div className="reqFormTitleText error">{phoneError}</div>
 
           <div className="registration_input">
-            <input value={email} onChange={(e) => { setEmail(e.target.value) }} className="registration_input_data" placeholder="Email" />
+            <input
+              name="email"
+              value={values.email || ''}
+              onChange={onChange}
+              className={`registration_input_data ${errors.email && 'is-invalid'}`}
+              placeholder="Email" />
             <span className="asterisk positionAsterisk">*</span>
+            { errors.email && (
+              <div className="invalid-feedback">
+                {errors.email}
+              </div>
+            )}
           </div>
-          <div className="reqFormTitleText error">{emailError}</div>
 
-          <input value={referring} onChange={(e) => { setReferring(e.target.value) }} className="registration_input" placeholder="Who can we thank for referring you?" />
-          <div className="reqFormTitleText">Check any conditions you CURRENTLY have <span className="asterisk">*</span></div>
+          <input value={values.referring} name="referring" onChange={onChange} className="registration_input" placeholder="Who can we thank for referring you?" />
 
-          <div className="reqFormTitleText error">{checkboxes.has("") ? null: conditionsError}</div>
+
+          <div className={`reqFormTitleText ${errors.conditionError && 'is-invalid'}`}>
+            Check any conditions you CURRENTLY have
+            <span className="asterisk">*</span>
+
+            { errors.conditionError && (
+              <div className="invalid-feedback" style={{display: "block"}}>
+                {errors.conditionError}
+              </div>
+            )}
+          </div>
+
           {createCheckboxes()}
 
+
           <div className="checkboxRegisterForms checkboxOtherRegisterForms">
-            <label className="container">
+            <label className="containerOtherCondition">
               <input
                 type="checkbox"
-                // value={checkLabelOther}
-                checked={isChecked}
+                checked={checked}
                 onChange={toggleCheckboxChange}
               />
               <span className="checkMark"></span>
               Other :
             </label>
-            <input value={otherLabel} onChange={(e) => { setLabelOther(e.target.value) }} className="inputOtherCheckBoxRegForm" placeholder=""/>
+            <input value={values.otherCondition} name="otherCondition" onChange={onChange}  className="inputOtherCheckBoxRegForm" placeholder=""/>
           </div>
 
-          <div className="reqFormTitleText">Have you ever had any of the following? <span className="asterisk">*</span></div>
-          <div className="reqFormTitleText error">{followingError}</div>
+
+          <div className={`reqFormTitleText ${errors.diseaseError && 'is-invalid'}`}>
+              Have you ever had any of the following?
+            <span className="asterisk">*</span>
+
+            { errors.diseaseError && (
+              <div className="invalid-feedback" style={{display: "block"}}>
+                {errors.diseaseError}
+              </div>
+            )}
+          </div>
           {createCheckboxesFollowing()}
 
-
           <div className="registration_input">
-            <input value={medications} onChange={(e) => { setMedications(e.target.value) }} className="registration_input_data" placeholder="List all current medications" />
+            <input
+              name="medications"
+              value={values.medications || ''}
+              onChange={onChange}
+              className={`registration_input_data ${errors.medications && 'is-invalid'}`}
+              placeholder="List all current medications" />
             <span className="asterisk positionAsterisk">*</span>
+            { errors.medications && (
+              <div className="invalid-feedback">
+                {errors.medications}
+              </div>
+            )}
           </div>
-          <div className="reqFormTitleText error">{medicationsError}</div>
-
 
           <div className="reqFormTitleText">This question is used for research purposes. Have you tested positive for COVID-19?</div>
 
@@ -299,69 +322,73 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
                 Yes
                 <input
-                  value="yes"
-                  name="tested_positive"
+                  value="true"
+                  name="covidTestedPositive"
                   type="radio"
-                  onChange={handleChangeTestedPositive}
+                  onChange={onChange}
                 />
                 <span className="checkmarkRadiobutton"></span>
             </label>
             <label className="containerRadiobutton">
                 No
                 <input
-                  value="no"
-                  name="tested_positive"
+                  value="false"
+                  name="covidTestedPositive"
                   type="radio"
-                  onChange={handleChangeTestedPositive}
+                  onChange={onChange}
                 />
                 <span className="checkmarkRadiobutton"></span>
             </label>
             <label className="containerRadiobutton">
                 Rather not say
                 <input
-                  value="Rather not say"
-                  name="tested_positive"
+                  value="null"
+                  name="covidTestedPositive"
                   type="radio"
-                  onChange={handleChangeTestedPositive}
+                  onChange={onChange}
                 />
                 <span className="checkmarkRadiobutton"></span>
             </label>
           </div>
+
+
           <div className="reqFormTitleText">This question is used for research purposes on the effects of the COVID-19 vaccine and its potential effects on the brain and nervous system. Have you received the COVID-19 vaccine?</div>
           <div className="checkboxRegisterForms">
             <label className="containerRadiobutton">
                 Yes
                 <input
-                  value="yes"
+                  value="true"
                   name="CovidVaccine"
                   type="radio"
-                  onChange={handleChangCovidVaccine}
+                  onChange={onChange}
                 />
                 <span className="checkmarkRadiobutton"></span>
             </label>
             <label className="containerRadiobutton">
                 No
                 <input
-                  value="no"
+                  value="false"
                   name="CovidVaccine"
                   type="radio"
-                  onChange={handleChangCovidVaccine}
+                  onChange={onChange}
                 />
                 <span className="checkmarkRadiobutton"></span>
             </label>
             <label className="containerRadiobutton">
                 Rather not say
                 <input
-                  value="Rather not say"
+                  value="null"
                   name="CovidVaccine"
                   type="radio"
-                  onChange={handleChangCovidVaccine}
+                  onChange={onChange}
                 />
                 <span className="checkmarkRadiobutton"></span>
             </label>
           </div>
-          <div className="reqFormTitleText">On a scale of 1-10 how stressful has your life been? <span className="asterisk">*</span></div>
-          <div className="reqFormTitleText error">{stressfulLevelError}</div>
+
+
+          <div className="reqFormTitleText">On a scale of 1-10 how stressfull has your life been? <span className="asterisk">*</span></div>
+          <div className="reqFormTitleText error">{errors.stressfulLevel}</div>
           <div className="containerCheckboxStressfulLevel">
             <div className="reqFormSubTitleText">Not stressful</div>
               <div className="reqFormButtonsStressfulLevel">
@@ -373,7 +400,7 @@ export default function PatientRegistration(): ReactElement {
                             value={level}
                             name="stressfulLevel"
                             type="radio"
-                            onChange={handleChangStressfulLevel}
+                            onChange={onChange}
                           />
                           <span className="checkmarkRadiobutton checkmarkRadiobuttonStressfulLevel"></span>
                       </label>
@@ -384,6 +411,7 @@ export default function PatientRegistration(): ReactElement {
 
             <div className="reqFormSubTitleText">Very stressful</div>
           </div>
+
           <div className="reqFormTitleText"> Consent for a minor child
             <br/>
             <div className="reqFormSubTitleText">I authorize Doctor to perform diagnostic procedures and render chiropractic care and adjustments to my minor child.</div>
@@ -393,10 +421,11 @@ export default function PatientRegistration(): ReactElement {
           <div className="checkboxRegisterForms checkboxOtherRegisterForms">
             <label className="container">
               <input
+                name="consentMinorChild"
                 type="checkbox"
                 value="I consent"
-                checked={isChecked}
-                onChange={handleChangConsentMinorChild}
+                checked={!values.consentMinorChild}
+                onChange={toggleCheckboxConsent}
               />
               <span className="checkMark"></span>
               I consent
@@ -404,8 +433,9 @@ export default function PatientRegistration(): ReactElement {
           </div>
 
           <div className="reqFormTitleText">Relationship to child</div>
-          <input value={relationshipChild} onChange={(e) => { setRelationshipChild(e.target.value) }} className="inputRelationshipChild" placeholder=""/>
-          <button onClick={handleSubmit} className="registration_button">Registration</button>
+          <input name="relationshipChild" value={values.relationshipChild} onChange={onChange} className="inputRelationshipChild" placeholder=""/>
+
+          <button type="submit" className="registration_button">Registration</button>
         </form>
       </div>
     </>
