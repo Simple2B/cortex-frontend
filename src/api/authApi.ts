@@ -20,6 +20,31 @@ const formatRequestBodyApiKey = (password: string, api_key: string) => {
   return params;
 };
 
+interface IPatientFormForBackend {
+  firstName: string,
+  lastName: string,
+  birthday: string,
+  address: string,
+  city: string,
+  state: string,
+  zip: string,
+  phone: string,
+  email: string,
+  referring: string,
+  conditions: Set<string>,
+  // conditionError: string,
+  // checkedOtherCondition: boolean,
+  otherCondition: string,
+  diseases: Set<string>,
+  // diseaseError: string,
+  medications: string,
+  covidTestedPositive: boolean | null,
+  covidVaccine: boolean | null,
+  stressfulLevel: string,
+  // consentMinorChild: boolean,
+  relationshipChild: string,
+}
+
 export const authApi = {
 
   login: async (email: string, password: string): Promise<ILoginResponse> => {
@@ -49,7 +74,11 @@ export const authApi = {
   },
 
   registrationClient: async (data: IPatientForm): Promise<void> => {
+
     console.log('dataReqPatient =>', data);
+    const modifyDataForBackend: Partial<IPatientForm>  = {...data, otherCondition: data.checkedOtherCondition ? data.otherCondition : "", relationshipChild: data.consentMinorChild ? data.relationshipChild : ""};
+    console.log("modifyDataForBackend", modifyDataForBackend);
+
     try {
       const response = await authInstance
       .post('api/client/registration', data)
