@@ -201,8 +201,8 @@
 .container .checkMark:after, .containerOtherCondition  .checkMark:after {
   left: 9px;
   top: 5px;
-  width: 5px;
-  height: 10px;
+  width: 7px;
+  height: 11px;
   border: solid white;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
@@ -295,9 +295,25 @@
   background-color: black;
   outline: none;
   justify-content: left;
-
 }
 
+.registration_input_birth {
+  position: relative;
+}
+
+.registration_input_birth .input_birth {
+  width: 95%;
+  color: transparent;
+}
+
+
+
+.registration_input_birth .label_birth {
+  /* width: 30%; */
+  position: absolute;
+  top: 22%;
+  color: #AEF7FF;
+}
 
 input[type="date"]::-webkit-calendar-picker-indicator {
   /* color: rgba(0, 0, 0, 0); */
@@ -384,7 +400,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     /* margin-bottom: 10px; */
   }
 
-  .registration_input_birth {
+  /* .registration_input_birth {
     position: relative;
   }
 
@@ -392,7 +408,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: transparent;
   }
 
-  /* .registration_input_birth .label_birth{
+  .registration_input_birth .label_birth {
     width: 100%;
     position: absolute;
     top: 22%;
@@ -449,7 +465,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
   .inputOtherCheckBoxRegForm {
-    width: 60%;
+    width: 85%;
 }
 
   .reqFormTitleText {
@@ -470,5 +486,33 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .inputRelationshipChild {
     width: 90%;
+  }
+}
+
+@media (max-width: 414px){
+  .inputOtherCheckBoxRegForm {
+      width: 70%;
+  }
+}
+
+@media (max-width: 375px){
+  .inputOtherCheckBoxRegForm {
+      width: 68%;
+  }
+}
+
+@media (max-width: 320px){
+  .inputOtherCheckBoxRegForm {
+      width: 62%;
+  }
+
+  .containerCheckboxStressfulLevel {
+    width: 95%;
+    flex-direction: column;
+  }
+
+  .containerRadiobutton, .containerOtherCondition {
+    padding-left: 31px;
+    margin-bottom: 12px;
   }
 }
