@@ -32,18 +32,38 @@ interface IPatientFormForBackend {
   email: string,
   referring: string,
   conditions: Set<string>,
-  // conditionError: string,
-  // checkedOtherCondition: boolean,
   otherCondition: string,
   diseases: Set<string>,
-  // diseaseError: string,
   medications: string,
   covidTestedPositive: boolean | null,
   covidVaccine: boolean | null,
   stressfulLevel: string,
-  // consentMinorChild: boolean,
   relationshipChild: string,
 }
+
+const formatRequestData = (modifyDataForBackend: Partial<IPatientForm>) => {
+  const params = {
+    firstName: modifyDataForBackend.firstName,
+    lastName: modifyDataForBackend.lastName,
+    birthday: modifyDataForBackend.birthday,
+    address: modifyDataForBackend.address,
+    city: modifyDataForBackend.city,
+    state: modifyDataForBackend.state,
+    zip: modifyDataForBackend.zip,
+    phone: modifyDataForBackend.phone,
+    email: modifyDataForBackend.email,
+    referring: modifyDataForBackend.referring,
+    conditions: modifyDataForBackend.conditions,
+    otherCondition: modifyDataForBackend.otherCondition,
+    diseases: modifyDataForBackend.diseases,
+    medications: modifyDataForBackend.medications,
+    covidTestedPositive: modifyDataForBackend.covidTestedPositive,
+    covidVaccine: modifyDataForBackend.covidVaccine,
+    stressfulLevel: modifyDataForBackend.stressfulLevel,
+    relationshipChild: modifyDataForBackend.relationshipChild,
+  };
+  return params;
+};
 
 export const authApi = {
 
@@ -73,20 +93,25 @@ export const authApi = {
     }
   },
 
-  registrationClient: async (data: IPatientForm): Promise<void> => {
+  registrationClient: async (data: Partial<IPatientForm>): Promise<void> => {
 
     console.log('dataReqPatient =>', data);
     const modifyDataForBackend: Partial<IPatientForm>  = {...data, otherCondition: data.checkedOtherCondition ? data.otherCondition : "", relationshipChild: data.consentMinorChild ? data.relationshipChild : ""};
+    delete modifyDataForBackend["conditionError"];
+    delete modifyDataForBackend["checkedOtherCondition"];
+    delete modifyDataForBackend["diseaseError"];
+    delete modifyDataForBackend["consentMinorChild"];
+
     console.log("modifyDataForBackend", modifyDataForBackend);
 
     try {
       const response = await authInstance
-      .post('api/client/registration', data)
-      console.log(`POST [api/client/registration/${data}] response received successfully`);
+      .post('api/client/registration', formatRequestData(modifyDataForBackend))
+      console.log(`POST [api/client/registration/${modifyDataForBackend}] response received successfully`);
       return response.data;
     } catch (error: any) {
       // place to handle errors and rise custom errors
-      console.log(`POST [api/client/registration/${data}] error message: ${error.message}`);
+      console.log(`POST [api/client/registration/${modifyDataForBackend}] error message: ${error.message}`);
       throw error.message;
     }
   },
