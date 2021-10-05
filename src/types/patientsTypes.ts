@@ -18,6 +18,7 @@ export interface IPatientForm {
   referring: string,
   conditions: Set<string>,
   conditionError: string,
+  checkedOtherCondition: boolean,
   otherCondition: string,
   diseases: Set<string>,
   diseaseError: string,
