@@ -76,6 +76,35 @@
 
 }
 
+@media (max-width: 768px) {
+  .login_image svg {
+    width: 53%;
+    height: auto;
+  }
+
+  .cortex_logo svg {
+    width: 60%;
+    margin-bottom: 30px;
+    margin-top: 30px;
+  }
+
+  .login_input {
+    width: 80%;
+    height: 75px;
+    font-size: 24px;
+    margin-bottom: 20px;
+
+  }
+
+  .login_button {
+    width: 60%;
+    height: 75px;
+    font-size: 24px;
+    letter-spacing: 5px;
+  }
+
+}
+
 @media (max-width: 540px) {
   .login_image svg {
     width: 55%;
@@ -90,12 +119,42 @@
     width: 90%;
     height: 55px;
     font-size: 20px;
+    margin-bottom: 20px;
+    margin-top: 0;
   }
 
   .login_button {
-    width: 60%;
+    width: 70%;
     height: 55px;
     font-size: 20px;
   }
+}
 
+@media (max-width: 414px) {
+  .login_image svg {
+    width: 60%;
+    height: auto;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+
+  .cortex_logo svg {
+    width: 63%;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  .login_input {
+    width: 90%;
+    height: 50px;
+    font-size: 18px;
+    margin-bottom: 15px;
+    margin-top: 0;
+  }
+
+  .login_button {
+    width: 70%;
+    height: 50px;
+    font-size: 18px;
+  }
 }
