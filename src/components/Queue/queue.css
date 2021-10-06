@@ -3,6 +3,8 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin: 10% 10%;
+  padding-right: 20%;
 }
 
 .queue_title {
@@ -163,10 +165,6 @@
 }
 
 @media (max-width: 1440px) {
-  .queue {
-    margin-right: 20%;
-  }
-
   .rogue {
     left: 70%;
   }
@@ -195,8 +193,8 @@
 
 @media (max-width: 540px) {
   .queue {
-    /* margin-top: 20%; */
-    margin-right: 0;
+    margin: 18% 10%;
+    padding-right: 0;
   }
 
   .queue_title {
@@ -228,7 +226,7 @@
   }
 
   .modal_window {
-    width: 310px;
+    width: 410px;
     height: 410px;
     padding: 10px;
     margin-top: 85px;
@@ -242,13 +240,15 @@
 
   .rogue {
     right: 0;
-    top: 5%;
+    top: 10.5%;
+    left: 10%;
     margin-bottom: 0;
   }
 
   .rogue_mode {
-    font-size: 16px;
+    font-size: 14px;
     padding-left: 5px;
+    width: 100%;
   }
 
   .button {
@@ -296,4 +296,51 @@
     width: 200px;
   }
 
+}
+
+
+@media (max-width: 414px) {
+  .queue {
+    margin: 23% 10%;
+    padding-right: 0;
+  }
+
+  .modal_window {
+    width: 310px;
+    height: 410px;
+    padding: 10px;
+    margin-top: 85px;
+  }
+}
+
+@media (max-width: 375px) {
+  .queue {
+    margin: 25% 10%;
+    padding-right: 0;
+  }
+
+  .modal_window {
+    width: 318px;
+    padding: 10px;
+    margin-top: 130px;
+  }
+
+  .queue_list {
+    width: 275px;
+    height: 60px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    border: 1.5px solid #0ff;
+  }
+
+  .queue_add_button {
+    width: 275px;
+    height: 60px;
+    background: transparent;
+    font-weight: bold;
+    border: 2px solid #0ff;
+    box-sizing: border-box;
+    font-size: 25px;
+
+  }
 }

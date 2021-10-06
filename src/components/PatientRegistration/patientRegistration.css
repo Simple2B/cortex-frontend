@@ -29,7 +29,7 @@
   color: #fff;
   opacity: 0.66;
   padding-left: 30px;
-  margin-bottom: 17px;
+  margin-bottom: 25px;
 }
 
 .registration_input::placeholder , .registration_input input::placeholder{
@@ -86,6 +86,11 @@
   color: red;
 }
 
+.registration_input .invalid-feedback {
+  font-size: 1em;
+  color: red;
+}
+
 .positionAsterisk {
   position: absolute;
   top: -14px;
@@ -102,7 +107,7 @@
 }
 
 /* Customize the label (the container) */
-.container, .containerRadiobutton {
+.container, .containerRadiobutton, .containerOtherCondition {
   display: block;
   position: relative;
   padding-left: 35px;
@@ -137,7 +142,7 @@
 }
 
 /* Hide the browser's default checkbox */
-.container input,  .containerRadiobutton input{
+.container input,  .containerRadiobutton input, .containerOtherCondition input{
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -168,13 +173,13 @@
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkMark, .containerRadiobutton:hover input ~ .checkmarkRadiobutton {
+.container:hover input ~ .checkMark, .containerRadiobutton:hover input ~ .checkmarkRadiobutton, .containerOtherCondition:hover input ~ .checkmarkRadiobutton {
   background-color: #a3a3a3;
 }
 
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkMark, .containerRadiobutton input:checked ~ .checkmarkRadiobutton {
+.container input:checked ~ .checkMark, .containerRadiobutton input:checked ~ .checkmarkRadiobutton, .containerOtherCondition input:checked ~ .checkMark {
   background-color: #459CAD;
 }
 
@@ -187,17 +192,17 @@
 }
 
 /* Show the checkMark when checked */
-.container input:checked ~ .checkMark:after, .containerRadiobutton input:checked ~ .checkmarkRadiobutton:after {
+.container input:checked ~ .checkMark:after, .containerRadiobutton input:checked ~ .checkmarkRadiobutton:after, .containerOtherCondition input:checked ~ .checkMark:after {
   display: block;
 }
 
 
 /* Style the checkMark/indicator */
-.container .checkMark:after {
+.container .checkMark:after, .containerOtherCondition  .checkMark:after {
   left: 9px;
   top: 5px;
-  width: 5px;
-  height: 10px;
+  width: 7px;
+  height: 11px;
   border: solid white;
   border-width: 0 3px 3px 0;
   -webkit-transform: rotate(45deg);
@@ -290,9 +295,25 @@
   background-color: black;
   outline: none;
   justify-content: left;
-
 }
 
+.registration_input_birth {
+  position: relative;
+}
+
+.registration_input_birth .input_birth {
+  width: 95%;
+  color: transparent;
+}
+
+
+
+.registration_input_birth .label_birth {
+  /* width: 30%; */
+  position: absolute;
+  top: 22%;
+  color: #AEF7FF;
+}
 
 input[type="date"]::-webkit-calendar-picker-indicator {
   /* color: rgba(0, 0, 0, 0); */
@@ -314,7 +335,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #AEF7FF;
     opacity: 0.66;
     padding-left: 30px;
-    margin-bottom: 17px;
+    /* margin-bottom: 17px; */
   }
 
   .registration_button {
@@ -376,7 +397,34 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #fff;
     opacity: 0.66;
     padding-left: 30px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+  }
+
+  /* .registration_input_birth {
+    position: relative;
+  }
+
+  .registration_input_birth .input_birth {
+    color: transparent;
+  }
+
+  .registration_input_birth .label_birth {
+    width: 100%;
+    position: absolute;
+    top: 22%;
+    color: #AEF7FF;
+  } */
+
+  .registration_input_birth input[type=data]::placeholder{
+    width: 100%;
+    /* position: absolute; */
+    top: 22%;
+    color: #AEF7FF;
+    background-color: #00e5ff;
+  }
+
+  .registration_input_birth input[type=data] {
+    color: #AEF7FF;
   }
 
   .registration_input_data {
@@ -417,7 +465,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
   .inputOtherCheckBoxRegForm {
-    width: 60%;
+    width: 85%;
 }
 
   .reqFormTitleText {
@@ -438,5 +486,33 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .inputRelationshipChild {
     width: 90%;
+  }
+}
+
+@media (max-width: 414px){
+  .inputOtherCheckBoxRegForm {
+      width: 70%;
+  }
+}
+
+@media (max-width: 375px){
+  .inputOtherCheckBoxRegForm {
+      width: 68%;
+  }
+}
+
+@media (max-width: 320px){
+  .inputOtherCheckBoxRegForm {
+      width: 62%;
+  }
+
+  .containerCheckboxStressfulLevel {
+    width: 95%;
+    flex-direction: column;
+  }
+
+  .containerRadiobutton, .containerOtherCondition {
+    padding-left: 31px;
+    margin-bottom: 12px;
   }
 }

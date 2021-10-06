@@ -31,5 +31,6 @@ export default function Checkbox(props: MyProps): ReactElement {
           {label}
         </label>
       </div>
+
     );
 }
