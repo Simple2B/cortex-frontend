@@ -21,13 +21,13 @@ export default function PasswordChoose(): ReactElement {
     setConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     if (password !== confirmPassword) {
       e.preventDefault();
-      setError('Passwords not match')
+      setError('Passwords not match');
     } else {
-      authApi.setPassword(password, api_key)
-      history.push('/')
+      await authApi.setPassword(password, api_key);
+      history.push('/');
     }
 
   };

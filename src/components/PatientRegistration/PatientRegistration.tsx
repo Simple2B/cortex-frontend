@@ -1,412 +1,505 @@
-import React, { ReactElement, useState, useEffect } from 'react'
-import './patientRegistration.css'
-import Checkbox from './Checkbox';
-import { authApi } from '../../api/authApi';
+import React, { ReactElement, useContext, useState } from "react";
+import "./patientRegistration.css";
+import Checkbox from "./Checkbox";
+import { IPatientForm } from "../../types/patientsTypes";
+import { useForm } from "./hook_useForm";
+import { authApi } from "../../api/authApi";
 
 const itemsConditions = [
-  'Dizziness',
-  'Headaches',
-  'Ear infections',
-  'Nausea',
-  'Neck Pain',
-  'Epilepsy',
-  'Chronic sinus',
-  'Migraines',
-  'Anxiety',
-  'Depression',
-  'Throat issues',
-  'Thyroid problems',
-  'Asthma',
-  'Ulcers',
-  'Numbness in hands',
-  'Disc problems',
-  'Infertility',
-  'Menstrual disorders',
-  'High blood pressure',
-  'Heart problems',
-  'Digestive problems',
-  'Kidney problems',
-  'Bladder problems',
-  'Numbness in legs',
-  'Numbness in feet',
-  'Low back pain',
-  'Hip pain',
-  'Shoulder pain',
-  'Obesity',
-  'Hormonal imbalance',
-  'Liver disease',
-  'Chronic fatigue',
-  'Gastric reflux',
-  'Lupus',
-  'Fibromyalgia',
-  'Chest pain',
-  'Trouble concentrating',
-  'Knee pain',
-  'Nervousness',
-  'Midback pain',
+  "Dizziness",
+  "Headaches",
+  "Ear infections",
+  "Nausea",
+  "Neck Pain",
+  "Epilepsy",
+  "Chronic sinus",
+  "Migraines",
+  "Anxiety",
+  "Depression",
+  "Throat issues",
+  "Thyroid problems",
+  "Asthma",
+  "Ulcers",
+  "Numbness in hands",
+  "Disc problems",
+  "Infertility",
+  "Menstrual disorders",
+  "High blood pressure",
+  "Heart problems",
+  "Digestive problems",
+  "Kidney problems",
+  "Bladder problems",
+  "Numbness in legs",
+  "Numbness in feet",
+  "Low back pain",
+  "Hip pain",
+  "Shoulder pain",
+  "Obesity",
+  "Hormonal imbalance",
+  "Liver disease",
+  "Chronic fatigue",
+  "Gastric reflux",
+  "Lupus",
+  "Fibromyalgia",
+  "Chest pain",
+  "Trouble concentrating",
+  "Knee pain",
+  "Nervousness",
+  "Midback pain",
 ];
 
 const itemsFollowing = [
-  'Concussion',
-  'Stroke',
-  'Cancer',
-  'Diabetes',
-  'Heart Disease',
-  'Seizures',
-  'Spinal bone fracture',
-  'Scoliosis',
+  "Concussion",
+  "Stroke",
+  "Cancer",
+  "Diabetes",
+  "Heart Disease",
+  "Seizures",
+  "Spinal bone fracture",
+  "Scoliosis",
 ];
 
+const initialState = {
+  firstName: "",
+  lastName: "",
+  birthday: "",
+  address: "",
+  city: "",
+  state: "",
+  zip: "",
+  phone: "",
+  email: "",
+  referring: "",
+  conditions: new Set(""),
+  conditionError: "",
+  checkedOtherCondition: false,
+  otherCondition: "",
+  diseases: new Set(""),
+  diseaseError: "",
+  medications: "",
+  covidTestedPositive: null,
+  covidVaccine: null,
+  stressfulLevel: "",
+  consentMinorChild: false,
+  relationshipChild: "",
+};
+
 export default function PatientRegistration(): ReactElement {
-  const [firstName, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [dateBirth, setDateBirth] = useState<any>(Date);
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [zip, setZip] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [referring, setReferring] = useState('');
-  const [otherLabel, setLabelOther] = useState('');
-  const [medications, setMedications] = useState('');
-  const [testedPositive, setTestedPositive] = useState('');
-  const [covidVaccine, setCovidVaccine] = useState('');
-  const [stressfulLevel, setStressfulLevel] = useState<number>();
-  const [consentMinorChild, setConsentMinorChild] = useState('');
-  const [relationshipChild, setRelationshipChild] = useState('');
-
-  const [conditionsError, setConditionsError] = useState('');
-  const [followingError, setFollowingError] = useState('');
-  const [stressfulLevelError, setStressfulLevelError] = useState('');
-  const [phoneError, setPhoneError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [medicationsError, setMedicationsError] = useState('');
-  const [checkboxes, setCheckboxes] = useState(new Set());
-  const [checkboxesFollowing, setCheckboxesFollowing] = useState(new Set());
-  const [isChecked, setChecked] = useState(false);
-
-  const toggleCheckbox = (label: string) => {
-    let item = label;
-    let indexItem: number = itemsConditions.indexOf(item)
-    let value: string = itemsConditions[indexItem];
-    const updatedCheckboxes = new Set(checkboxes);
-    if (checkboxes.has(label) || label != value) {
-      updatedCheckboxes.delete(label);
-      setCheckboxes(updatedCheckboxes);
-    } else {
-      updatedCheckboxes.add(value);
-      setCheckboxes(updatedCheckboxes);
+  const validateForm = (values: IPatientForm) => {
+    let errors: Partial<IPatientForm> = {};
+    if (values.firstName.trim() === "") {
+      errors.firstName = "First name must not be empty";
     }
+
+    if (values.lastName.trim() === "") {
+      errors.lastName = "Last name must not be empty";
+    }
+
+    const regexPhoneNumber = new RegExp(
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+    );
+
+    if (values.phone.trim() === "") {
+      errors.phone = "Phone must not be empty";
+    } else if (!regexPhoneNumber.test(values.phone)) {
+      errors.phone = "Incorrect phone number. Must be like xxx-xxx-xxxx";
+    }
+
+    const regexEmail = new RegExp(
+      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    );
+
+    if (values.email.trim() === "") {
+      errors.email = "Phone must not be empty";
+    } else if (!regexEmail.test(values.email)) {
+      errors.email = "Incorrect email. Must be like email@email.com";
+    }
+
+    if (values.conditions.size === 0) {
+      errors.conditionError = "Yuo must choose some condition";
+    }
+
+    if (values.diseases.size === 0) {
+      errors.diseaseError = "Yuo must choose some disease";
+    }
+
+    if (values.medications.trim() === "") {
+      errors.medications = "Medications must not be empty";
+    }
+
+    if (values.stressfulLevel === "") {
+      errors.stressfulLevel = "Stressfull level must be choose";
+    }
+
+    return errors;
   };
-
-  const toggleCheckboxFollowing = (label: string) => {
-    let item = label;
-    let indexItem: number = itemsFollowing.indexOf(item)
-    let value: string = itemsFollowing[indexItem];
-    const updatedCheckboxes = new Set(checkboxesFollowing);
-    if (checkboxesFollowing.has(label) || label != value) {
-      updatedCheckboxes.delete(label);
-      setCheckboxesFollowing(updatedCheckboxes);
-    } else {
-      updatedCheckboxes.add(value);
-      setCheckboxesFollowing(updatedCheckboxes);
-    }
-  };
-
-  const handleSubmit = (formSubmitEvent: any) => {
-    formSubmitEvent.preventDefault();
-    const data = {
-      firstName: firstName,
-      lastName: lastName,
-      dateBirth: dateBirth,
-      address: address,
-      city: city,
-      state: state,
-      zip: zip,
-      phone: phone,
-      email: email,
-      checkBoxesСonditions: {
-        conditions: checkboxes,
-        otherLabel: isChecked ? otherLabel : '',
-      },
-      checkboxesFollowing: checkboxesFollowing,
-      medications: medications,
-      testedPositive: testedPositive,
-      covidVaccine: covidVaccine,
-      stressfulLevel: stressfulLevel,
-      consentMinorChild: isChecked ? consentMinorChild : '',
-      relationshipChild: relationshipChild,
-    };
-
-    if (data.checkBoxesСonditions.conditions.size == 0 ) {
-      setConditionsError('Some should be chosen');
-    } else if (data.checkboxesFollowing.size == 0) {
-      setFollowingError('Some should be chosen');
-    } else if (stressfulLevel === undefined) {
-      setStressfulLevelError('Note the level of stress');
-    } else if (phone === "") {
-      setPhoneError("You must enter phone number");
-    } else if (email === "") {
-      setEmailError("You must enter phone email");
-    } else if (medications === "") {
-      setMedicationsError("You have enter the medication you are taking");
-    } else {
-      setConditionsError("");
-      setFollowingError("");
-      setStressfulLevelError("");
-      setPhoneError("");
-      setEmailError("");
-      setMedicationsError("");
-
-      setName('');
-      setLastName('');
-      setDateBirth('');
-      setAddress('');
-      setCity('');
-      setState('');
-      setZip('');
-      setPhone('');
-      setEmail('');
-      setReferring('');
-      setLabelOther('');
-      setMedications('');
-      setTestedPositive('');
-      setCovidVaccine('');
-      setStressfulLevel(undefined);
-      setConsentMinorChild('');
-      setRelationshipChild('');
-      // setChecked(false);
-      console.log(data);
-      // authApi.registrationClient(data)
-
-    }
-  }
 
   const createCheckbox = (label: string) => (
     <Checkbox
-            label={label}
-            handleCheckboxChange={toggleCheckbox}
-            key={label}
-            checked={checkboxes.has(label)}
-        />
+      label={label}
+      handleCheckboxChange={toggleCheckbox}
+      key={label}
+      checked={values.conditions.has(label)}
+    />
   );
 
   const createCheckboxFollowing = (label: string) => (
     <Checkbox
-            label={label}
-            handleCheckboxChange={toggleCheckboxFollowing}
-            key={label}
-            checked={checkboxesFollowing.has(label)}
-        />
+      label={label}
+      handleCheckboxChange={toggleCheckboxFollowing}
+      key={label}
+      checked={values.diseases.has(label)}
+    />
   );
 
-  const createCheckboxes = () => (
-    itemsConditions.map(createCheckbox)
-  );
+  const {
+    values,
+    errors,
+    toggleCheckbox,
+    toggleCheckboxFollowing,
+    toggleCheckboxChange,
+    toggleCheckboxConsent,
+    onChange,
+    onSubmit,
+  } = useForm(authApi.registrationClient, initialState, validateForm);
 
-  const createCheckboxesFollowing = () => (
-    itemsFollowing.map(createCheckboxFollowing)
-  );
+  const createCheckboxes = () => itemsConditions.map(createCheckbox);
 
-  const toggleCheckboxChange = () => {
-    setChecked(!isChecked)
-  };
+  const createCheckboxesFollowing = () =>
+    itemsFollowing.map(createCheckboxFollowing);
 
-  const handleChangeTestedPositive = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setTestedPositive(e.target.value)
-  };
-
-  const handleChangCovidVaccine = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setCovidVaccine(e.target.value)
-  };
-
-  const handleChangStressfulLevel = (e: any) => {
-    setStressfulLevel(e.target.value)
-  };
-
-  const handleChangConsentMinorChild = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    toggleCheckboxChange()
-    setConsentMinorChild(e.target.value)
-  };
-
-  const stressLevel = Array.from({length: 10}, (_, i) => i + 1);
+  const stressLevel = Array.from({ length: 10 }, (_, i) => i + 1);
 
   return (
     <>
       <div className="registration">
         <h1 className="registration_title">Registration Form</h1>
-        <form className="registration_form">
-          <input value={firstName} onChange={(e) => { setName(e.target.value) }} className="registration_input" placeholder="First Name" />
-          <input value={lastName} onChange={(e) => { setLastName(e.target.value) }} className="registration_input" placeholder="Last Name" />
+        <form onSubmit={onSubmit} noValidate className="registration_form">
           <div className="registration_input">
-            <input value={dateBirth} onChange={(e) => { setDateBirth(e.target.value) }} className="registration_input_data"  type="date"/>
-          </div>
-
-          <input value={address} onChange={(e) => { setAddress(e.target.value) }} className="registration_input" placeholder="Address" />
-          <input value={city} onChange={(e) => { setCity(e.target.value) }} className="registration_input" placeholder="City" />
-          <input value={state} onChange={(e) => { setState(e.target.value) }} className="registration_input" placeholder="State" />
-          <input value={zip} onChange={(e) => { setZip(e.target.value) }} className="registration_input" placeholder="ZIP" />
-
-          <div className="registration_input">
-            <input value={phone} onChange={(e) => { setPhone(e.target.value) }} className="registration_input_data" placeholder="Phone Number" />
+            <input
+              name="firstName"
+              value={values.firstName || ""}
+              onChange={onChange}
+              className={`registration_input_data ${
+                errors.firstName && "is-invalid"
+              }`}
+              placeholder="First Name"
+            />{" "}
             <span className="asterisk positionAsterisk">*</span>
+            {errors.firstName && (
+              <div className="invalid-feedback">{errors.firstName}</div>
+            )}
           </div>
-          <div className="reqFormTitleText error">{phoneError}</div>
 
           <div className="registration_input">
-            <input value={email} onChange={(e) => { setEmail(e.target.value) }} className="registration_input_data" placeholder="Email" />
+            <input
+              name="lastName"
+              value={values.lastName || ""}
+              onChange={onChange}
+              className={`registration_input_data ${
+                errors.lastName && "is-invalid"
+              }`}
+              placeholder="Last Name"
+            />{" "}
             <span className="asterisk positionAsterisk">*</span>
+            {errors.lastName && (
+              <div className="invalid-feedback">{errors.lastName}</div>
+            )}
           </div>
-          <div className="reqFormTitleText error">{emailError}</div>
 
-          <input value={referring} onChange={(e) => { setReferring(e.target.value) }} className="registration_input" placeholder="Who can we thank for referring you?" />
-          <div className="reqFormTitleText">Check any conditions you CURRENTLY have <span className="asterisk">*</span></div>
+          <div className="registration_input registration_input_birth">
+            <input
+              name="birthday"
+              value={values.birthday || ""}
+              onChange={onChange}
+              className={`registration_input_data input_birth`}
+              type="date"
+            />
+            <div className="label_birth">
+              { values.birthday === "" ?
+                'Date of birth' :
+                values.birthday
+              }
+            </div>
+          </div>
 
-          <div className="reqFormTitleText error">{checkboxes.has("") ? null: conditionsError}</div>
+          <input
+            value={values.address}
+            name="address"
+            onChange={onChange}
+            className="registration_input"
+            placeholder="Address"
+          />
+          <input
+            value={values.city}
+            name="city"
+            onChange={onChange}
+            className="registration_input"
+            placeholder="City"
+          />
+          <input
+            value={values.state}
+            name="state"
+            onChange={onChange}
+            className="registration_input"
+            placeholder="State"
+          />
+          <input
+            value={values.zip}
+            name="zip"
+            onChange={onChange}
+            className="registration_input"
+            placeholder="ZIP"
+          />
+
+          <div className="registration_input">
+            <input
+              name="phone"
+              value={values.phone}
+              onChange={onChange}
+              className={`registration_input_data ${
+                errors.phone && "is-invalid"
+              }`}
+              placeholder="Phone Number"
+            />{" "}
+            <span className="asterisk positionAsterisk">*</span>
+            {errors.phone && (
+              <div className="invalid-feedback">{errors.phone}</div>
+            )}
+          </div>
+
+          <div className="registration_input">
+            <input
+              name="email"
+              value={values.email || ""}
+              onChange={onChange}
+              className={`registration_input_data ${
+                errors.email && "is-invalid"
+              }`}
+              placeholder="Email"
+            />{" "}
+            <span className="asterisk positionAsterisk">*</span>
+            {errors.email && (
+              <div className="invalid-feedback">{errors.email}</div>
+            )}
+          </div>
+
+          <input
+            value={values.referring}
+            name="referring"
+            onChange={onChange}
+            className="registration_input"
+            placeholder="Who can we thank for referring you?"
+          />
+
+          <div
+            className={`reqFormTitleText ${
+              errors.conditionError && "is-invalid"
+            }`}
+          >
+            Check any conditions you CURRENTLY have{" "}
+            <span className="asterisk">*</span>
+            {errors.conditionError && (
+              <div className="invalid-feedback" style={{ display: "block" }}>
+                {errors.conditionError}
+              </div>
+            )}
+          </div>
           {createCheckboxes()}
 
           <div className="checkboxRegisterForms checkboxOtherRegisterForms">
-            <label className="container">
+            <label className="containerOtherCondition">
               <input
                 type="checkbox"
-                // value={checkLabelOther}
-                checked={isChecked}
+                checked={values.checkedOtherCondition}
                 onChange={toggleCheckboxChange}
               />
               <span className="checkMark"></span>
               Other :
             </label>
-            <input value={otherLabel} onChange={(e) => { setLabelOther(e.target.value) }} className="inputOtherCheckBoxRegForm" placeholder=""/>
+            <input
+              value={values.otherCondition}
+              name="otherCondition"
+              onChange={onChange}
+              className="inputOtherCheckBoxRegForm"
+              placeholder=""
+            />
           </div>
 
-          <div className="reqFormTitleText">Have you ever had any of the following? <span className="asterisk">*</span></div>
-          <div className="reqFormTitleText error">{followingError}</div>
+          <div
+            className={`reqFormTitleText ${
+              errors.diseaseError && "is-invalid"
+            }`}
+          >
+            Have you ever had any of the following?{" "}
+            <span className="asterisk">*</span>
+            {errors.diseaseError && (
+              <div className="invalid-feedback" style={{ display: "block" }}>
+                {errors.diseaseError}
+              </div>
+            )}
+          </div>
           {createCheckboxesFollowing()}
 
-
           <div className="registration_input">
-            <input value={medications} onChange={(e) => { setMedications(e.target.value) }} className="registration_input_data" placeholder="List all current medications" />
+            <input
+              name="medications"
+              value={values.medications || ""}
+              onChange={onChange}
+              className={`registration_input_data ${
+                errors.medications && "is-invalid"
+              }`}
+              placeholder="List all current medications"
+            />{" "}
             <span className="asterisk positionAsterisk">*</span>
+            {errors.medications && (
+              <div className="invalid-feedback">{errors.medications}</div>
+            )}
           </div>
-          <div className="reqFormTitleText error">{medicationsError}</div>
 
-
-          <div className="reqFormTitleText">This question is used for research purposes. Have you tested positive for COVID-19?</div>
+          <div className="reqFormTitleText">
+            This question is used for research purposes. Have you tested
+            positive for COVID-19?
+          </div>
 
           <div className="checkboxRegisterForms">
             <label className="containerRadiobutton">
-                Yes
-                <input
-                  value="yes"
-                  name="tested_positive"
-                  type="radio"
-                  onChange={handleChangeTestedPositive}
-                />
-                <span className="checkmarkRadiobutton"></span>
+              Yes
+              <input
+                value="true"
+                name="covidTestedPositive"
+                type="radio"
+                onChange={onChange}
+              />
+              <span className="checkmarkRadiobutton"></span>
             </label>
             <label className="containerRadiobutton">
-                No
-                <input
-                  value="no"
-                  name="tested_positive"
-                  type="radio"
-                  onChange={handleChangeTestedPositive}
-                />
-                <span className="checkmarkRadiobutton"></span>
+              No
+              <input
+                value="false"
+                name="covidTestedPositive"
+                type="radio"
+                onChange={onChange}
+              />
+              <span className="checkmarkRadiobutton"></span>
             </label>
             <label className="containerRadiobutton">
-                Rather not say
-                <input
-                  value="Rather not say"
-                  name="tested_positive"
-                  type="radio"
-                  onChange={handleChangeTestedPositive}
-                />
-                <span className="checkmarkRadiobutton"></span>
+              Rather not say
+              <input
+                value="null"
+                name="covidTestedPositive"
+                type="radio"
+                onChange={onChange}
+              />
+              <span className="checkmarkRadiobutton"></span>
             </label>
           </div>
-          <div className="reqFormTitleText">This question is used for research purposes on the effects of the COVID-19 vaccine and its potential effects on the brain and nervous system. Have you received the COVID-19 vaccine?</div>
+
+          <div className="reqFormTitleText">
+            This question is used for research purposes on the effects of the
+            COVID-19 vaccine and its potential effects on the brain and nervous
+            system. Have you received the COVID-19 vaccine?
+          </div>
           <div className="checkboxRegisterForms">
             <label className="containerRadiobutton">
-                Yes
-                <input
-                  value="yes"
-                  name="CovidVaccine"
-                  type="radio"
-                  onChange={handleChangCovidVaccine}
-                />
-                <span className="checkmarkRadiobutton"></span>
+              Yes
+              <input
+                value="true"
+                name="CovidVaccine"
+                type="radio"
+                onChange={onChange}
+              />
+              <span className="checkmarkRadiobutton"></span>
             </label>
             <label className="containerRadiobutton">
-                No
-                <input
-                  value="no"
-                  name="CovidVaccine"
-                  type="radio"
-                  onChange={handleChangCovidVaccine}
-                />
-                <span className="checkmarkRadiobutton"></span>
+              No
+              <input
+                value="false"
+                name="CovidVaccine"
+                type="radio"
+                onChange={onChange}
+              />
+              <span className="checkmarkRadiobutton"></span>
             </label>
             <label className="containerRadiobutton">
-                Rather not say
-                <input
-                  value="Rather not say"
-                  name="CovidVaccine"
-                  type="radio"
-                  onChange={handleChangCovidVaccine}
-                />
-                <span className="checkmarkRadiobutton"></span>
+              Rather not say
+              <input
+                value="null"
+                name="CovidVaccine"
+                type="radio"
+                onChange={onChange}
+              />
+              <span className="checkmarkRadiobutton"></span>
             </label>
           </div>
-          <div className="reqFormTitleText">On a scale of 1-10 how stressful has your life been? <span className="asterisk">*</span></div>
-          <div className="reqFormTitleText error">{stressfulLevelError}</div>
+
+          <div className="reqFormTitleText">
+            On a scale of 1-10 how stressfull has your life been?{" "}
+            <span className="asterisk">*</span>
+          </div>
+          <div className="reqFormTitleText error">{errors.stressfulLevel}</div>
+
           <div className="containerCheckboxStressfulLevel">
             <div className="reqFormSubTitleText">Not stressful</div>
-              <div className="reqFormButtonsStressfulLevel">
-                { stressLevel.map((level) => {
-                  return <div key={level}>
-                      <label className="containerRadiobutton containerRadiobuttonStressfulLevel">
-                          <div className="level">{level}</div>
-                          <input
-                            value={level}
-                            name="stressfulLevel"
-                            type="radio"
-                            onChange={handleChangStressfulLevel}
-                          />
-                          <span className="checkmarkRadiobutton checkmarkRadiobuttonStressfulLevel"></span>
-                      </label>
-                    </div>
-                })
-                }
-              </div>
-
+            <div className="reqFormButtonsStressfulLevel">
+              {stressLevel.map((level) => {
+                return (
+                  <div key={level}>
+                    <label className="containerRadiobutton containerRadiobuttonStressfulLevel">
+                      <div className="level">{level}</div>
+                      <input
+                        value={level}
+                        name="stressfulLevel"
+                        type="radio"
+                        onChange={onChange}
+                      />
+                      <span className="checkmarkRadiobutton checkmarkRadiobuttonStressfulLevel"></span>
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
             <div className="reqFormSubTitleText">Very stressful</div>
           </div>
-          <div className="reqFormTitleText"> Consent for a minor child
-            <br/>
-            <div className="reqFormSubTitleText">I authorize Doctor to perform diagnostic procedures and render chiropractic care and adjustments to my minor child.</div>
+
+          <div className="reqFormTitleText">
+            {" "}
+            Consent for a minor child
+            <br />
+            <div className="reqFormSubTitleText">
+              I authorize Doctor to perform diagnostic procedures and render
+              chiropractic care and adjustments to my minor child.
+            </div>
           </div>
           <div className="reqFormTitleText">Consent</div>
 
           <div className="checkboxRegisterForms checkboxOtherRegisterForms">
             <label className="container">
               <input
+                name="consentMinorChild"
                 type="checkbox"
-                value="I consent"
-                checked={isChecked}
-                onChange={handleChangConsentMinorChild}
+                // value="I consent"
+                checked={values.consentMinorChild}
+                onChange={toggleCheckboxConsent}
               />
-              <span className="checkMark"></span>
-              I consent
+              <span className="checkMark"></span>I consent
             </label>
           </div>
 
           <div className="reqFormTitleText">Relationship to child</div>
-          <input value={relationshipChild} onChange={(e) => { setRelationshipChild(e.target.value) }} className="inputRelationshipChild" placeholder=""/>
-          <button onClick={handleSubmit} className="registration_button">Registration</button>
+          <input
+            name="relationshipChild"
+            value={values.relationshipChild}
+            onChange={onChange}
+            className="inputRelationshipChild"
+            placeholder=""
+          />
+
+          <button type="submit" className="registration_button">
+            Registration
+          </button>
         </form>
       </div>
     </>
-  )
+  );
 }
