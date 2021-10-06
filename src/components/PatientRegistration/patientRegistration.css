@@ -306,13 +306,12 @@
   color: transparent;
 }
 
-
-
 .registration_input_birth .label_birth {
   /* width: 30%; */
   position: absolute;
   top: 22%;
   color: #AEF7FF;
+  background-color: black;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
