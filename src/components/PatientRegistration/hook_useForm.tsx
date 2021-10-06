@@ -30,6 +30,7 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
 
     const [values, setValues] = useState<IPatientForm>(initialState);
     const [errors, setErrors] = useState<IPatientForm>(initialState);
+    const [submitted, setSubmitted] = useState(false);
 
     const toggleCheckboxChange = (event: any) => {
       setValues(values  => ({ ...values, checkedOtherCondition: !values.checkedOtherCondition}));
@@ -72,22 +73,24 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
 
       if (Object.keys(errorBuffer).length === 0) {
         callback(values);
+        setSubmitted(true);
         setValues(initialState);
         setErrors(initialState);
       } else {
         setErrors(errorBuffer);
+        setSubmitted(false);
       }
     };
 
     return {
         toggleCheckboxConsent,
         toggleCheckboxFollowing,
-        // checked,
         toggleCheckboxChange,
         toggleCheckbox,
         onChange,
         onSubmit,
         errors,
-        values
+        values,
+        submitted
     }
   };
