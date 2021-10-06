@@ -107,7 +107,7 @@ export const authApi = {
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log(`POST: error message => ${error.message}`);
-      console.log("error.response.data);", error.response.data);
+      console.log("error data => ;", error.response.data);
       throw error.message;
     }
   },
