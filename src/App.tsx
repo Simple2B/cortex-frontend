@@ -6,6 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import './App.css';
+import Intake from './components/Intake/Intake';
 import Kiosk from './components/Kiosk/Kiosk';
 import Login from './components/Login/Login';
 import PasswordChoose from './components/PasswordChoose/PasswordChoose';
@@ -78,6 +79,12 @@ function App() {
             {...defaultProtectedRouteProps}
             exact path="/queue"
             component={Queue}
+          />
+
+          <ProtectedRoute
+            {...defaultProtectedRouteProps}
+            exact path="/intake"
+            component={Intake}
           />
 
 
