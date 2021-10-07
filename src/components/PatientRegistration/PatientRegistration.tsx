@@ -1,9 +1,10 @@
 import React, { ReactElement, useContext, useState } from "react";
+import { Redirect } from 'react-router';
 import "./patientRegistration.css";
 import Checkbox from "./Checkbox";
 import { IPatientForm } from "../../types/patientsTypes";
 import { useForm } from "./hook_useForm";
-import { authApi } from "../../api/authApi";
+import { clientApi } from "../../api/clientApi";
 
 const itemsConditions = [
   "Dizziness",
@@ -161,7 +162,8 @@ export default function PatientRegistration(): ReactElement {
     toggleCheckboxConsent,
     onChange,
     onSubmit,
-  } = useForm(authApi.registrationClient, initialState, validateForm);
+    submitted,
+  } = useForm(clientApi.registrationClient, initialState, validateForm);
 
   const createCheckboxes = () => itemsConditions.map(createCheckbox);
 
@@ -169,6 +171,14 @@ export default function PatientRegistration(): ReactElement {
     itemsFollowing.map(createCheckboxFollowing);
 
   const stressLevel = Array.from({ length: 10 }, (_, i) => i + 1);
+
+
+  if (submitted) {
+    return <Redirect push to={{
+      pathname: '/kiosk',
+    }}
+    />
+  }
 
   return (
     <>
