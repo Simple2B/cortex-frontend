@@ -9,7 +9,7 @@ export const instance: AxiosInstance = axios.create({
     Authorization: `Bearer ${token}`,
     "Content-Type": "application/json; charset=utf-8",
     'Access-Control-Allow-Origin' : '*',
-    // 'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+    'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
   },
 });
 
