@@ -1,6 +1,5 @@
 // import { AxiosError, AxiosResponse } from "axios";
-import { ILoginResponse } from "../types/authTypes";
-import { authInstance } from "./axiosInstance";
+import { instance, authInstance } from "./axiosInstance";
 import { IPatientForm } from '../types/patientsTypes';
 
 interface IPatientFormForBackend {
@@ -82,14 +81,15 @@ export const clientApi = {
     console.log('dataReqAddPatient =>', data);
 
     try {
-      const response = await authInstance
+      const response = await instance
       .post('api/client/add_clients_queue', data)
-      console.log(`response received successfully `, response.data);
+      console.log('response received successfully ', response.data);
       return response.data;
     } catch (error: any) {
       // place to handle errors and rise custom errors
-      console.log(`POST: error message => ${error.message}`);
-      console.log("error.response.data => ", error.response.data);
+
+      console.log("error message addClientToQueue => ", new Error(error.message));
+      console.log('POST: error data  addClientToQueue =>', error.message.data);
       throw new Error(error.message);
     }
   },
