@@ -1,7 +1,6 @@
 // import { AxiosError, AxiosResponse } from "axios";
 import { ILoginResponse } from "../types/authTypes";
 import { authInstance } from "./axiosInstance";
-import { IPatientForm } from '../types/patientsTypes';
 
 
 const formatRequestBody = (email: string, password: string) => {

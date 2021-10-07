@@ -91,6 +91,6 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
         onSubmit,
         errors,
         values,
-        submitted
+        submitted,
     }
   };

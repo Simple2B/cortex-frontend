@@ -3,6 +3,7 @@ import Popup from 'reactjs-popup';
 import axios from 'axios';
 import { clientApi } from "../../api/clientApi";
 import NavBar from '../NavBar/NavBar';
+import { instance } from "../../api/axiosInstance";
 import './queue.css'
 
 interface User {
@@ -18,22 +19,48 @@ export default function Queue(): ReactElement {
   const [patients, setPatients] = useState<User[]>([])
 
   useEffect(() => {
-    // // GET request using axios inside useEffect React hook
-    axios.get('https://cortex.simple2b.net/api/client/clients')
-        .then(response => {
-          console.log("clients => ", response.data)
-          setPatients(response.data)
-        });
+      const GetClients = async () => {
+          try {
+            const response = await instance
+            .get('api/client/clients')
+            console.log("clients => ", response.data)
+            // console.log(response.headers);
+            setPatients(response.data)
+
+          } catch (error: any) {
+            // place to handle errors and rise custom errors
+            console.log('POST: error message =>  ', error.message);
+            console.log('error response data clients => ', error.response.data);
+            throw new Error(error.message);
+          }
+        }
+        GetClients();
   }, []);
 
 
   useEffect(() => {
     // // GET request using axios inside useEffect React hook
-    axios.get('https://cortex.simple2b.net/api/client/queue')
-        .then(response => {
-          console.log("queue => ", response.data)
-          setQueue(response.data)
-        });
+    // axios.get('https://cortex.simple2b.net/api/client/queue')
+    //     .then(response => {
+    //       console.log("queue => ", response.data)
+
+    //     });
+
+        const GetClientsForQueue = async () => {
+          try {
+            const response = await instance
+            .get('api/client/queue')
+            console.log("clients in queue => ", response.data)
+            // console.log(response.headers);
+            setQueue(response.data)
+          } catch (error: any) {
+            // place to handle errors and rise custom errors
+            console.log('GET: error message =>  ', new Error(error.message));
+            console.log('error response data queue => ', error.response.data);
+            throw new Error(error.message);
+          }
+        }
+        GetClientsForQueue();
   }, [patients]);
 
   const addPatient = (patient: User) => {
