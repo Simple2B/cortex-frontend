@@ -4,7 +4,7 @@ import "./patientRegistration.css";
 import Checkbox from "./Checkbox";
 import { IPatientForm } from "../../types/patientsTypes";
 import { useForm } from "./hook_useForm";
-import { authApi } from "../../api/authApi";
+import { clientApi } from "../../api/clientApi";
 
 const itemsConditions = [
   "Dizziness",
@@ -163,7 +163,7 @@ export default function PatientRegistration(): ReactElement {
     onChange,
     onSubmit,
     submitted,
-  } = useForm(authApi.registrationClient, initialState, validateForm);
+  } = useForm(clientApi.registrationClient, initialState, validateForm);
 
   const createCheckboxes = () => itemsConditions.map(createCheckbox);
 

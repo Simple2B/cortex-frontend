@@ -1,18 +1,43 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useState, useEffect} from 'react'
 import Popup from 'reactjs-popup';
-import { patientsList } from '../../fakeBase'
+import axios from 'axios';
+import { clientApi } from "../../api/clientApi";
+// import { authInstance } from "../../api/axiosInstance";
+// import { patientsList } from '../../fakeBase'
 import NavBar from '../NavBar/NavBar';
 import './queue.css'
 
 interface User {
-  name: string,
-  lastName: string,
+    id: number,
+    // api_key: string,
+    first_name: string,
+    last_name: string,
+    phone: string,
+    email: string,
 }
-
 
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
-  const [patients, setPatients] = useState(patientsList)
+  const [patients, setPatients] = useState<User[]>([])
+
+  useEffect(() => {
+    // // GET request using axios inside useEffect React hook
+    axios.get('http://127.0.0.1:8000/api/client/clients')
+        .then(response => {
+          console.log("clients => ", response.data)
+          setPatients(response.data)
+        });
+  }, []);
+
+
+  useEffect(() => {
+    // // GET request using axios inside useEffect React hook
+    axios.get('http://127.0.0.1:8000/api/client/queue')
+        .then(response => {
+          console.log("queue => ", response.data)
+          setQueue(response.data)
+        });
+  }, [patients]);
 
   const addPatient = (patient: User) => {
     setQueue((prev: User[]) => [...prev, patient]);
@@ -34,7 +59,7 @@ export default function Queue(): ReactElement {
         <h1 className="queue_title">The Queue</h1>
         {
           queue.map((item, index) => (
-            <div className="queue_list" key={index}>{item.lastName}, {item.name}</div>
+            <div className="queue_list" key={index}>{item.last_name}, {item.first_name}</div>
           ))
         }
         <Popup trigger={<button className="queue_add_button">+Add new</button>} modal>
@@ -44,9 +69,10 @@ export default function Queue(): ReactElement {
                 <div className="queue_list" key={index} onClick={(e: any) => {
                   const copyListPatients = [...patients];
                   const patient_target = e.target.innerText.split(",");
-                    addPatient({ name: item.name, lastName: item.lastName });
+                    clientApi.addClientToQueue(item);
                     setPatients(patients.filter(patient => patient !== item));
-                }}>{item.lastName}, {item.name}</div>
+                    addPatient(item);
+                }}>{item.last_name}, {item.first_name}</div>
               ))
             }
           </div>
