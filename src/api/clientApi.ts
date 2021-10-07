@@ -84,7 +84,7 @@ export const clientApi = {
 
     try {
       const response = await authInstance
-      .post('http://127.0.0.1:8000/api/client/add_clients_queue', data)
+      .post('api/client/add_clients_queue', data)
       console.log(`response received successfully `, response.data);
       return response.data;
     } catch (error: any) {
