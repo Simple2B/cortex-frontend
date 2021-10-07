@@ -22,7 +22,7 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     // // GET request using axios inside useEffect React hook
-    axios.get('http://127.0.0.1:8000/api/client/clients')
+    axios.get('https://cortex.simple2b.net/api/client/clients')
         .then(response => {
           console.log("clients => ", response.data)
           setPatients(response.data)
@@ -32,7 +32,7 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     // // GET request using axios inside useEffect React hook
-    axios.get('http://127.0.0.1:8000/api/client/queue')
+    axios.get('https://cortex.simple2b.net/api/client/queue')
         .then(response => {
           console.log("queue => ", response.data)
           setQueue(response.data)
