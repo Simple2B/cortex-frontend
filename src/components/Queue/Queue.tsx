@@ -2,14 +2,11 @@ import React, { ReactElement, useState, useEffect} from 'react'
 import Popup from 'reactjs-popup';
 import axios from 'axios';
 import { clientApi } from "../../api/clientApi";
-// import { authInstance } from "../../api/axiosInstance";
-// import { patientsList } from '../../fakeBase'
 import NavBar from '../NavBar/NavBar';
 import './queue.css'
 
 interface User {
     id: number,
-    // api_key: string,
     first_name: string,
     last_name: string,
     phone: string,
