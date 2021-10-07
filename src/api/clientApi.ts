@@ -3,23 +3,6 @@ import { ILoginResponse } from "../types/authTypes";
 import { authInstance } from "./axiosInstance";
 import { IPatientForm } from '../types/patientsTypes';
 
-
-const formatRequestBody = (email: string, password: string) => {
-  const params = {
-    email: email,
-    password: password,
-  };
-  return params;
-};
-
-const formatRequestBodyApiKey = (password: string, api_key: string) => {
-  const params = {
-    password: password,
-    api_key: api_key,
-  };
-  return params;
-};
-
 interface IPatientFormForBackend {
   firstName: string,
   lastName: string,
@@ -67,33 +50,16 @@ const formatRequestData = (modifyDataForBackend: IPatientForm): IPatientFormForB
   return params;
 };
 
-export const authApi = {
+interface IClientQueue {
+    id: number,
+    // api_key: string,
+    first_name: string,
+    last_name: string,
+    phone: string,
+    email: string,
+}
 
-  login: async (email: string, password: string): Promise<ILoginResponse> => {
-    try {
-      const response = await authInstance
-      .post('api/auth/sign_in', formatRequestBody(email, password))
-       console.log("POST [/auth/sign_in] response received successfully");
-      return response.data;
-    } catch (error: any) {
-      // place to handle errors and rise custom errors
-      console.log(`POST [api/auth/sign_in] error message: ${error.message}`);
-      throw error.message;
-    }
-  },
-
-  setPassword: async (password: string, api_key: string ): Promise<void> => {
-    try {
-      const response = await authInstance
-      .post('api/auth/sign_up', formatRequestBodyApiKey(password, api_key))
-        console.log(`POST [api/sing_up/${api_key}] response received successfully`);
-      return response.data;
-    } catch (error: any) {
-      // place to handle errors and rise custom errors
-      console.log(`POST [api/sing_up/${api_key}] error message: ${error.message}`);
-      throw error.message;
-    }
-  },
+export const clientApi = {
 
   registrationClient: async (data: IPatientForm): Promise<void> => {
 
@@ -107,24 +73,24 @@ export const authApi = {
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log(`POST: error message => ${error.message}`);
-      console.log("error.response.data);", error.response.data);
+      console.log("error.response.data) => ", error.response.data);
       throw error.message;
     }
   },
 
-  addClientToQueue: async (data: IPatientForm): Promise<void> => {
+  addClientToQueue: async (data: IClientQueue): Promise<void> => {
 
-    console.log('dataReqPatient =>', data);
+    console.log('dataReqAddPatient =>', data);
 
     try {
       const response = await authInstance
-      .post('api/client/registration', formatRequestData(data))
+      .post('http://127.0.0.1:8000/api/client/add_clients_queue', data)
       console.log(`response received successfully `, response.data);
       return response.data;
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log(`POST: error message => ${error.message}`);
-      console.log("error.response.data);", error.response.data);
+      console.log("error.response.data => ", error.response.data);
       throw error.message;
     }
   },
