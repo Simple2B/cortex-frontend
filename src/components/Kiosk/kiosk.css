@@ -115,3 +115,50 @@
   }
 
 }
+
+@media (max-width: 540px) {
+  .kiosk_image {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .kiosk_image svg {
+    width: 70%;
+    height: auto;
+    margin: 5px auto;
+  }
+
+  .kiosk_input {
+    width: 98%;
+    height: 62px;
+    font-size: 22px;
+  }
+
+  .kiosk_button {
+    width: 85%;
+    height: 66px;
+    font-size: 22px;
+    margin-top: 0;
+  }
+
+  .kiosk_welcome_text {
+    width: 98%;
+    height: 20px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    margin-top: 0;
+  }
+
+  .redirect_registr {
+    margin: 0;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+
+  .form_registr {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+}
