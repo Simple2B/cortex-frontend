@@ -18,7 +18,7 @@ interface User {
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
   const [clients, setClients] = useState<User[]>([]);
-  const patients = getClients();
+  let patients = getClients();
 
   function saveClients(clients: User[]): void {
     localStorage.setItem('clients', JSON.stringify(clients));
@@ -40,6 +40,16 @@ export default function Queue(): ReactElement {
       .get('api/client/queue')
       console.log("clients in queue => ", response.data)
       // console.log(response.headers);
+      if (response.data !== []) {
+        console.log(" response.data -> queue  ", response.data);
+        let filterPatients: User[] = [];
+        for (let j = 0; j < response.data.length; j ++ ){
+          filterPatients = patients.filter(client => client.id !== response.data[j].id);
+        }
+        console.log(" filterPatients -> queue  ", filterPatients);
+        saveClients(filterPatients);
+          // setClients(filterPatients);
+      }
       setQueue(response.data);
     } catch (error: any) {
       // place to handle errors and rise custom errors
@@ -56,7 +66,7 @@ export default function Queue(): ReactElement {
       console.log("clients => ", response.data);
       const clients = response.data;
       saveClients(clients);
-      return clients
+      // return clients
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', error.message);
@@ -68,7 +78,8 @@ export default function Queue(): ReactElement {
   useEffect(() => {
     GetClients();
     GetClientsForQueue();
-    setClients(patients)
+
+    setClients(patients);
   }, []);
 
   const addClient = (patient: User) => {
@@ -77,10 +88,10 @@ export default function Queue(): ReactElement {
     console.log("addPatient: clients => ", clients);
     console.log("addPatient: queue => ", queue);
 
-    let filterClients = patients.filter(item => item.id !== patient.id);
+    let filterClients = clients.filter(client => client.id !== patient.id);
     console.log("filterClients => ", filterClients);
     saveClients(filterClients);
-    setClients(filterClients);
+    // setClients(filterClients);
   };
 
   console.log("filtered patients => ", clients);
@@ -112,7 +123,7 @@ export default function Queue(): ReactElement {
                   const copyListPatients = [...clients];
                   const patient_target = e.target.innerText.split(",");
                     clientApi.addClientToQueue(patient);
-                    setClients(clients.filter(client => client !== patient));
+                    // setClients(clients.filter(client => client !== patient));
                     addClient(patient);
                 }}>{patient.last_name}, {patient.first_name}</div>
               ))
