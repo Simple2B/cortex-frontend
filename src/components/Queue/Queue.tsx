@@ -18,13 +18,13 @@ interface User {
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
   const [clients, setClients] = useState<User[]>([]);
-  const patients = getCurrentUser();
+  const patients = getClients();
 
   function saveClients(clients: User[]): void {
     localStorage.setItem('clients', JSON.stringify(clients));
   }
 
- function getCurrentUser(): User[] {
+ function getClients(): User[] {
   const clients: any = localStorage.getItem('clients');
     try {
       const patients = JSON.parse(clients)
@@ -36,12 +36,11 @@ export default function Queue(): ReactElement {
 
   const GetClientsForQueue = async () => {
     try {
-      const response = await instance
+      const response = await instance()
       .get('api/client/queue')
       console.log("clients in queue => ", response.data)
       // console.log(response.headers);
       setQueue(response.data);
-
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', new Error(error.message));
@@ -52,9 +51,9 @@ export default function Queue(): ReactElement {
 
   const GetClients = async () => {
     try {
-      const response = await instance
-      .get('api/client/clients')
-      console.log("clients => ", response.data)
+      const response = await instance()
+      .get('api/client/clients');
+      console.log("clients => ", response.data);
       const clients = response.data;
       saveClients(clients);
       return clients
@@ -78,7 +77,7 @@ export default function Queue(): ReactElement {
     console.log("addPatient: clients => ", clients);
     console.log("addPatient: queue => ", queue);
 
-    const filterClients = clients.filter(item => item.id !== patient.id);
+    let filterClients = patients.filter(item => item.id !== patient.id);
     console.log("filterClients => ", filterClients);
     saveClients(filterClients);
     setClients(filterClients);

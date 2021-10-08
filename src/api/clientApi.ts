@@ -81,7 +81,7 @@ export const clientApi = {
     console.log('dataReqAddPatient =>', data);
 
     try {
-      const response = await instance
+      const response = await instance()
       .post('api/client/add_clients_queue', data)
       console.log('response received successfully ', response.data);
       return response.data;
