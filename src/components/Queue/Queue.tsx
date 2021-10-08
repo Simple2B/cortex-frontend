@@ -18,38 +18,13 @@ interface User {
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
   const [clients, setClients] = useState<User[]>([]);
-  let patients = getClients();
 
-  function saveClients(clients: User[]): void {
-    localStorage.setItem('clients', JSON.stringify(clients));
-  }
-
- function getClients(): User[] {
-  const clients: any = localStorage.getItem('clients');
-    try {
-      const patients = JSON.parse(clients)
-      return patients;
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
-}
-
-  const GetClientsForQueue = async () => {
+  const getClientsForQueue = async () => {
     try {
       const response = await instance()
       .get('api/client/queue')
       console.log("clients in queue => ", response.data)
-      // console.log(response.headers);
-      if (response.data !== []) {
-        console.log(" response.data -> queue  ", response.data);
-        let filterPatients: User[] = [];
-        for (let j = 0; j < response.data.length; j ++ ){
-          filterPatients = patients.filter(client => client.id !== response.data[j].id);
-        }
-        console.log(" filterPatients -> queue  ", filterPatients);
-        saveClients(filterPatients);
-          // setClients(filterPatients);
-      }
+
       setQueue(response.data);
     } catch (error: any) {
       // place to handle errors and rise custom errors
@@ -59,14 +34,12 @@ export default function Queue(): ReactElement {
     }
   };
 
-  const GetClients = async () => {
+  const getClients = async () => {
     try {
       const response = await instance()
       .get('api/client/clients');
       console.log("clients => ", response.data);
-      const clients = response.data;
-      saveClients(clients);
-      // return clients
+      setClients(response.data);
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', error.message);
@@ -76,24 +49,23 @@ export default function Queue(): ReactElement {
   }
 
   useEffect(() => {
-    GetClients();
-    GetClientsForQueue();
-
-    setClients(patients);
+    getClients();
+    getClientsForQueue();
+    // saveClients(patients);
   }, []);
 
   const addClient = (patient: User) => {
     setQueue((prev: User[]) => [...prev, patient]);
-
+    // let patients: User[] = getClients();
     console.log("addPatient: clients => ", clients);
     console.log("addPatient: queue => ", queue);
 
     let filterClients = clients.filter(client => client.id !== patient.id);
     console.log("filterClients => ", filterClients);
-    saveClients(filterClients);
+    setClients(filterClients);
     // setClients(filterClients);
   };
-
+  // let patients: User[] = getClients();
   console.log("filtered patients => ", clients);
 
   return (
@@ -117,8 +89,7 @@ export default function Queue(): ReactElement {
         }
         <Popup trigger={<button className="queue_add_button">+Add new</button>} modal>
           <div className="modal_window">
-            {
-              clients.map((patient, index )=> (
+            { clients.filter(client => !(queue.map(q => q.id)).includes(client.id)).map((patient, index )=> (
                 <div className="queue_list" key={index} onClick={(e: any) => {
                   const copyListPatients = [...clients];
                   const patient_target = e.target.innerText.split(",");
