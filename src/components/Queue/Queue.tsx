@@ -57,7 +57,6 @@ export default function Queue(): ReactElement {
       console.log("clients => ", response.data)
       const clients = response.data;
       saveClients(clients);
-
       return clients
     } catch (error: any) {
       // place to handle errors and rise custom errors
