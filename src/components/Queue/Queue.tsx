@@ -23,7 +23,6 @@ export default function Queue(): ReactElement {
       const response = await instance()
       .get('api/client/queue')
       console.log("clients in queue => ", response.data)
-
       setQueue(response.data);
     } catch (error: any) {
       // place to handle errors and rise custom errors

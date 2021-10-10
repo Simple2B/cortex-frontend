@@ -32,6 +32,28 @@
   background-image: url('/src/images/text-back.svg');
 }
 
+.alert_text {
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}
+.welcome_text {
+  /* position: absolute; */
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  z-index: 1000;
+
+  /* width: 554px; */
+  height: 96px;
+  font-size: 21px;
+  line-height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .kiosk_input {
   width: 448px;
   height: 84px;
@@ -141,7 +163,7 @@
     margin-top: 0;
   }
 
-  .kiosk_welcome_text {
+  .kiosk_welcome_text{
     width: 98%;
     height: 20px;
     margin-bottom: 20px;
