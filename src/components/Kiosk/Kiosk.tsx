@@ -10,6 +10,7 @@ import { instance } from "../../api/axiosInstance";
 export default function Kiosk(): ReactElement {
   const [phoneQuery, setPhoneQuery] = useState('');
   const [welcomeText, setWelcomeText] = useState('Please enter your phone number');
+  const [style, setStyle] = useState(false);
   const [list, setList] = useState<IPatient[]>([]);
   const [filteredPhone, setFilteredPhone] = useState<IPatient[]>([]);
 
@@ -17,7 +18,7 @@ export default function Kiosk(): ReactElement {
     try {
       const response = await instance()
       .get('api/client/clients');
-      console.log("client identify with phone => ", response.data);
+      console.log("clients => ", response.data);
       setList(response.data);
     } catch (error: any) {
       // place to handle errors and rise custom errors
@@ -43,10 +44,15 @@ export default function Kiosk(): ReactElement {
     console.log(phoneQuery);
     const filteredName = list.filter(number => number.phone === phoneQuery).map(user => user.first_name).toString()
     e.preventDefault();
+
     if (filteredName) {
-      setWelcomeText(`Thanks ${filteredName}, have a seat and we’ll call your name shortly.`)
+          setStyle(true);
+          setWelcomeText(`Thanks ${filteredName}, have a seat and we’ll call your name shortly.`);
+          setPhoneQuery('');
+
     } else {
-      setWelcomeText(`No such patience in base. Please fill Register Form`)
+      setStyle(false);
+      setWelcomeText(`No such patience in base. Please fill Register Form`);
     }
 
   };
@@ -59,7 +65,7 @@ export default function Kiosk(): ReactElement {
       <div className="cortex_logo">
         <Logo />
       </div>
-      <div className="kiosk_welcome_text">
+      <div className={!style ? "kiosk_welcome_text" : "alert_text welcome_text"}>
         {welcomeText}
       </div>
       <form className="kiosk_form">
