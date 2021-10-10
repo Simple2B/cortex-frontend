@@ -1,8 +1,10 @@
 export interface IPatient {
-  id: number;
-  name: string;
-  lastName: string;
-  phone: string;
+  id: number,
+  api_key: string,
+  first_name: string,
+  last_name: string,
+  phone: string,
+  email: string,
 };
 
 export interface IPatientForm {
