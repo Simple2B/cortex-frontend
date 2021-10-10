@@ -93,4 +93,18 @@ export const clientApi = {
       throw new Error(error.message);
     }
   },
+
+  // identifyClientWithPhone: async (data: string): Promise<void> => {
+  //   console.log('dataReqIdentifyClient =>', data);
+  //   try {
+  //     const response = await instance()
+  //     .post('api/client/kiosk', data)
+  //     console.log('response received successfully ', response.data);
+  //     return response.data;
+  //   } catch (error: any) {
+  //     console.log("error message addClientToQueue => ", new Error(error.message));
+  //     console.log('POST: error data  addClientToQueue =>', error.message.data);
+  //     throw new Error(error.message);
+  //   }
+  // },
 };
