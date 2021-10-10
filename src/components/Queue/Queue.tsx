@@ -1,6 +1,5 @@
 import React, { ReactElement, useState, useEffect} from 'react'
 import Popup from 'reactjs-popup';
-// import axios from 'axios';
 import { clientApi } from "../../api/clientApi";
 import NavBar from '../NavBar/NavBar';
 import { instance } from "../../api/axiosInstance";
@@ -51,22 +50,11 @@ export default function Queue(): ReactElement {
   useEffect(() => {
     getClients();
     getClientsForQueue();
-    // saveClients(patients);
   }, []);
 
   const addClient = (patient: User) => {
     setQueue((prev: User[]) => [...prev, patient]);
-    // let patients: User[] = getClients();
-    console.log("addPatient: clients => ", clients);
-    console.log("addPatient: queue => ", queue);
-
-    let filterClients = clients.filter(client => client.id !== patient.id);
-    console.log("filterClients => ", filterClients);
-    setClients(filterClients);
-    // setClients(filterClients);
   };
-  // let patients: User[] = getClients();
-  console.log("filtered patients => ", clients);
 
   return (
     <>
@@ -94,7 +82,6 @@ export default function Queue(): ReactElement {
                   const copyListPatients = [...clients];
                   const patient_target = e.target.innerText.split(",");
                     clientApi.addClientToQueue(patient);
-                    // setClients(clients.filter(client => client !== patient));
                     addClient(patient);
                 }}>{patient.last_name}, {patient.first_name}</div>
               ))
