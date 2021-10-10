@@ -1,5 +1,4 @@
 import React, { ReactElement, useEffect, useState } from 'react'
-import { patientsList } from '../../fakeBase'
 import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
 import { IPatient } from '../../types/patientsTypes'
 import NavBar from '../NavBar/NavBar'
@@ -7,14 +6,14 @@ import './patients.css'
 
 
 export default function Patients(): ReactElement {
-  const [query, setQuery] = useState<string>('')
-  const [list, setList] = useState<IPatient[]>([...patientsList])
-  const [filteredList, setFilteredList] = useState<IPatient[]>([])
+  const [query, setQuery] = useState<string>('');
+  const [list, setList] = useState<IPatient[]>([]);
+  const [filteredList, setFilteredList] = useState<IPatient[]>([]);
 
 
   const patientsSearching = (query: string) => {
     const filteredList = [...list]
-      .filter(patient => (patient.name + patient.lastName)
+      .filter(patient => (patient.first_name + patient.last_name)
         .toLowerCase()
         .includes(query.toLowerCase()));
     setQuery(query)
@@ -22,7 +21,7 @@ export default function Patients(): ReactElement {
   }
 
   const patientComponents = filteredList.map(item => (
-    <div className="patients_items">{item.lastName}, {item.name}</div>
+    <div className="patients_items">{item.last_name}, {item.first_name}</div>
   ))
 
   useEffect(() => {
