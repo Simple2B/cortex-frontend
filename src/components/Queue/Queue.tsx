@@ -54,7 +54,7 @@ export default function Queue(): ReactElement {
   useEffect(() => {
     getClients();
     getClientsForQueue();
-    patientsSearching(querySearch)
+    patientsSearching(querySearch);
   }, [querySearch]);
 
   const addClient = (patient: User) => {
@@ -118,6 +118,7 @@ export default function Queue(): ReactElement {
                   ))
                 }
             </div>
+
           </div>
         </Popup>
       </div>
