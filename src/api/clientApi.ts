@@ -5,7 +5,7 @@ import { IPatientForm } from '../types/patientsTypes';
 interface IPatientFormForBackend {
   firstName: string,
   lastName: string,
-  birthday: string,
+  birthday: Date,
   address: string,
   city: string,
   state: string,
