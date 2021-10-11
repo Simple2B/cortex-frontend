@@ -73,15 +73,16 @@
 .modal_window .lists {
   position: relative;
   width: 100%;
-  max-width: 85vw;
+  max-width: 93vw;
   height: 85vh;
-  padding-top: 150px;
+  padding-top: 105px;
   background-color: #303030;
   /* border: 4px solid #0ff; */
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   align-items: center;
+  padding-top: 260px;
 }
 
 .lists .fa-times {
@@ -91,6 +92,31 @@
   color: #0ff;
   z-index: 1000;
   font-size: 38px;
+}
+
+.patients_search {
+  width: 100%;
+  max-width: 93vw;
+  height: 81px;
+  background: #434343;
+  border: none;
+  border-radius: 19px;
+  color: white;
+  font-size: 35px;
+  margin-bottom: 25px;
+  /* padding-left: 110px; */
+}
+
+.input_search {
+  position: absolute;
+  margin-bottom: 25px;
+  top: 150px;
+}
+
+.search_icon {
+  position: absolute;
+  left: 15px;
+  top: 15px;
 }
 
 .rogue {
@@ -273,6 +299,15 @@
     margin-bottom: 8px;
     border: 2px solid #0ff;
   } */
+
+  .lists .fa-times {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #0ff;
+    z-index: 1000;
+    font-size: 24px;
+  }
 
   .rogue {
     right: 0;
