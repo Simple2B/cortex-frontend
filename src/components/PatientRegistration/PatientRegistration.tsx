@@ -153,6 +153,8 @@ export default function PatientRegistration(): ReactElement {
     />
   );
 
+
+
   const {
     values,
     errors,
@@ -164,6 +166,11 @@ export default function PatientRegistration(): ReactElement {
     onChange,
     onSubmit,
   } = useForm(clientApi.registrationClient, initialState, validateForm);
+
+  if (errors) {
+    console.log("errors => ", errors)
+  }
+
 
   const createCheckboxes = () => itemsConditions.map(createCheckbox);
 
@@ -185,7 +192,7 @@ export default function PatientRegistration(): ReactElement {
       <div className="registration">
         <h1 className="registration_title">Registration Form</h1>
         <form onSubmit={onSubmit} noValidate className="registration_form">
-          <div className="registration_input">
+          <div className="registration_input" >
             <input
               name="firstName"
               value={values.firstName || ""}
