@@ -18,6 +18,8 @@ export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
   const [clients, setClients] = useState<User[]>([]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const getClientsForQueue = async () => {
     try {
       const response = await instance()
@@ -76,17 +78,21 @@ export default function Queue(): ReactElement {
             <div className="queue_list" key={index}>{patient.last_name}, {patient.first_name}</div>
           ))
         }
-        <Popup trigger={<button className="queue_add_button">+Add new</button>} modal>
+        <button className="queue_add_button" onClick={() => setIsOpen(true)}>+Add new</button>
+        <Popup open={isOpen} modal>
           <div className="modal_window">
-            { clients.filter(client => !(queue.map(q => q.phone)).includes(client.phone)).map((patient, index )=> (
-                <div className="queue_list" key={index} onClick={(e: any) => {
-                  const copyListPatients = [...clients];
-                  const patient_target = e.target.innerText.split(",");
-                    clientApi.addClientToQueue(patient);
-                    addClient(patient);
-                }}>{patient.last_name}, {patient.first_name}</div>
-              ))
-            }
+            <div className="lists">
+                <i className="fas fa-times" onClick={() => setIsOpen(false)}/>
+                { clients.filter(client => !(queue.map(q => q.phone)).includes(client.phone)).map((patient, index )=> (
+                    <div className="queue_list" key={index} onClick={(e: any) => {
+                      const copyListPatients = [...clients];
+                      const patient_target = e.target.innerText.split(",");
+                        clientApi.addClientToQueue(patient);
+                        addClient(patient);
+                    }}>{patient.last_name}, {patient.first_name}</div>
+                  ))
+                }
+            </div>
           </div>
         </Popup>
       </div>
