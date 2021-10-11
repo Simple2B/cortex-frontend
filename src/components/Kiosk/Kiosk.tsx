@@ -59,6 +59,12 @@ export default function Kiosk(): ReactElement {
         } else {
           setStyle(false);
           setWelcomeText(`No such patience in base. Please fill Register Form`);
+          const interval = setInterval(() => {
+            setStyle(false);
+            setWelcomeText('Please enter your phone number');
+            setPhoneQuery('');
+          }, 3000);
+          return () => clearInterval(interval);
         }
     };
 
