@@ -4,7 +4,7 @@ import { IPatientForm } from '../../types/patientsTypes';
 const defaultPageFormData: IPatientForm = {
   firstName: "",
   lastName: "",
-  birthday: new Date (),
+  birthday: "",
   address: "",
   city: "",
   state: "",

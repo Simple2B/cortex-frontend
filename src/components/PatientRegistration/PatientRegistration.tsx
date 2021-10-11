@@ -63,7 +63,7 @@ const itemsFollowing = [
 const initialState = {
   firstName: "",
   lastName: "",
-  birthday: new Date(),
+  birthday: "",
   address: "",
   city: "",
   state: "",
@@ -223,7 +223,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input registration_input_birth">
             <input
               name="birthday"
-              value={values.birthday.getDate()}
+              // value={values.birthday}
               onChange={onChange}
               className={`registration_input_data input_birth`}
               type="date"
