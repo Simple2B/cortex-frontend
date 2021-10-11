@@ -6,7 +6,7 @@ import { instance } from "../../api/axiosInstance";
 import './queue.css'
 
 interface User {
-    id: number,
+    // id: number,
     api_key: string,
     first_name: string,
     last_name: string,
@@ -55,6 +55,8 @@ export default function Queue(): ReactElement {
     setQueue((prev: User[]) => [...prev, patient]);
   };
 
+  console.log("Queue clients -> ", clients)
+
   return (
     <>
       <NavBar />
@@ -76,7 +78,7 @@ export default function Queue(): ReactElement {
         }
         <Popup trigger={<button className="queue_add_button">+Add new</button>} modal>
           <div className="modal_window">
-            { clients.filter(client => !(queue.map(q => q.id)).includes(client.id)).map((patient, index )=> (
+            { clients.filter(client => !(queue.map(q => q.phone)).includes(client.phone)).map((patient, index )=> (
                 <div className="queue_list" key={index} onClick={(e: any) => {
                   const copyListPatients = [...clients];
                   const patient_target = e.target.innerText.split(",");
