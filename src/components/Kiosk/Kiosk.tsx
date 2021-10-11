@@ -53,7 +53,7 @@ export default function Kiosk(): ReactElement {
           const interval = setInterval(() => {
             setStyle(false);
             setWelcomeText('Please enter your phone number');
-          }, 3000);
+          }, 4000);
           return () => clearInterval(interval);
 
         } else {
@@ -64,7 +64,7 @@ export default function Kiosk(): ReactElement {
           const interval = setInterval(() => {
             setStyle(false);
             setWelcomeText('Please enter your phone number');
-          }, 3000);
+          }, 4000);
           return () => clearInterval(interval);
         }
     };
