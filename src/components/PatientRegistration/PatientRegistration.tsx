@@ -195,7 +195,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input" >
             <input
               name="firstName"
-              value={values.firstName || ""}
+              value={values.firstName.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.firstName && "is-invalid"
@@ -211,7 +211,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input">
             <input
               name="lastName"
-              value={values.lastName || ""}
+              value={values.lastName.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.lastName && "is-invalid"
@@ -227,7 +227,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input registration_input_birth">
             <input
               name="birthday"
-              value={values.birthday || ""}
+              value={values.birthday.trim() || ""}
               onChange={onChange}
               className={`registration_input_data input_birth`}
               type="date"
@@ -241,28 +241,28 @@ export default function PatientRegistration(): ReactElement {
           </div>
 
           <input
-            value={values.address}
+            value={values.address.trim()}
             name="address"
             onChange={onChange}
             className="registration_input"
             placeholder="Address"
           />
           <input
-            value={values.city}
+            value={values.city.trim()}
             name="city"
             onChange={onChange}
             className="registration_input"
             placeholder="City"
           />
           <input
-            value={values.state}
+            value={values.state.trim()}
             name="state"
             onChange={onChange}
             className="registration_input"
             placeholder="State"
           />
           <input
-            value={values.zip}
+            value={values.zip.trim()}
             name="zip"
             onChange={onChange}
             className="registration_input"
@@ -272,7 +272,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input">
             <input
               name="phone"
-              value={values.phone}
+              value={values.phone.trim()}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.phone && "is-invalid"
@@ -288,7 +288,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input">
             <input
               name="email"
-              value={values.email || ""}
+              value={values.email.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.email && "is-invalid"
@@ -302,7 +302,7 @@ export default function PatientRegistration(): ReactElement {
           </div>
 
           <input
-            value={values.referring}
+            value={values.referring.trim()}
             name="referring"
             onChange={onChange}
             className="registration_input"
@@ -361,7 +361,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input">
             <input
               name="medications"
-              value={values.medications || ""}
+              value={values.medications.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.medications && "is-invalid"
@@ -506,7 +506,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="reqFormTitleText">Relationship to child</div>
           <input
             name="relationshipChild"
-            value={values.relationshipChild}
+            value={values.relationshipChild.trim()}
             onChange={onChange}
             className="inputRelationshipChild"
             placeholder=""

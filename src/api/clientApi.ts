@@ -50,7 +50,7 @@ const formatRequestData = (modifyDataForBackend: IPatientForm): IPatientFormForB
 };
 
 interface IClientQueue {
-    id: number,
+    // id: number,
     first_name: string,
     last_name: string,
     phone: string,
