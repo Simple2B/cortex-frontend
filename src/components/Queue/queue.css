@@ -292,13 +292,38 @@
     height: 410px;
     padding: 10px;
     margin-top: 85px;
+  }*/
+
+  .modal_window .lists {
+    padding-top: 200px;
   }
 
-  .modal_window .queue_list {
-    width: 295px;
-    margin-bottom: 8px;
-    border: 2px solid #0ff;
-  } */
+
+  .patients_search {
+    width: 100%;
+    max-width: 90vw;
+    height: 67px;
+    font-size: 25px;
+    margin-bottom: 5px;
+    padding-left: 67px;
+    /* padding-left: 110px; */
+  }
+
+  .input_search {
+    position: absolute;
+    margin-bottom: 5px;
+    top: 100px;
+  }
+
+  .input_search svg {
+    width: 40px;
+  }
+
+  .search_icon {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+  }
 
   .lists .fa-times {
     position: absolute;
@@ -308,6 +333,7 @@
     z-index: 1000;
     font-size: 24px;
   }
+
 
   .rogue {
     right: 0;
