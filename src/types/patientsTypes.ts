@@ -1,5 +1,5 @@
 export interface IPatient {
-  id: number,
+  // id: number,
   api_key: string,
   first_name: string,
   last_name: string,

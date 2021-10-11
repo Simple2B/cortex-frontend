@@ -167,10 +167,6 @@ export default function PatientRegistration(): ReactElement {
     onSubmit,
   } = useForm(clientApi.registrationClient, initialState, validateForm);
 
-  if (errors) {
-    console.log("errors => ", errors)
-  }
-
 
   const createCheckboxes = () => itemsConditions.map(createCheckbox);
 
