@@ -48,14 +48,19 @@ export default function Kiosk(): ReactElement {
     if (filteredName) {
           setStyle(true);
           setWelcomeText(`Thanks ${filteredName}, have a seat and we’ll call your name shortly.`);
-          setPhoneQuery('');
 
-    } else {
-      setStyle(false);
-      setWelcomeText(`No such patience in base. Please fill Register Form`);
-    }
+          const interval = setInterval(() => {
+            setStyle(false);
+            setWelcomeText('Please enter your phone number');
+            setPhoneQuery('');
+          }, 3000);
+          return () => clearInterval(interval);
 
-  };
+        } else {
+          setStyle(false);
+          setWelcomeText(`No such patience in base. Please fill Register Form`);
+        }
+    };
 
   return (
     <div className="kiosk">
