@@ -9,7 +9,7 @@ export interface IPatient {
 export interface IPatientForm {
   firstName: string,
   lastName: string,
-  birthday: Date,
+  birthday: string,
   address: string,
   city: string,
   state: string,
