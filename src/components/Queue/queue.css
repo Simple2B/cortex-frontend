@@ -44,17 +44,75 @@
 }
 
 .modal_window {
-  padding: 30px;
-  width: 800px;
-  height: 500px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
+  justify-content: center;
   align-items: center;
   flex-direction: column;
-  border: 4px solid #0ff;
-  color: #fff;
-  font-size: 38px;
-  background-color: black;
   overflow: scroll;
+}
+
+.client_lists {
+  width: 100%;
+  /* height: 100%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.modal_window .lists {
+  position: relative;
+  width: 100%;
+  max-width: 93vw;
+  height: 95vh;
+  padding-top: 105px;
+  background-color: #303030;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200px;
+}
+
+.lists .fa-times {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  color: #0ff;
+  z-index: 1000;
+  font-size: 38px;
+}
+
+.patients_search {
+  width: 100%;
+  max-width: 93vw;
+  height: 81px;
+  background: #434343;
+  border: none;
+  border-radius: 19px;
+  color: white;
+  font-size: 35px;
+  margin-bottom: 25px;
+  /* padding-left: 110px; */
+}
+
+.input_search {
+  position: absolute;
+  margin-bottom: 25px;
+  top: 65px;
+}
+
+.search_icon {
+  position: absolute;
+  left: 15px;
+  top: 15px;
 }
 
 .rogue {
@@ -225,18 +283,53 @@
     font-size: 25px;
   }
 
-  .modal_window {
+  /* .modal_window {
     width: 410px;
     height: 410px;
     padding: 10px;
     margin-top: 85px;
+  }*/
+
+  .modal_window .lists {
+    padding-top: 200px;
   }
 
-  .modal_window .queue_list {
-    width: 295px;
-    margin-bottom: 8px;
-    border: 2px solid #0ff;
+
+  .patients_search {
+    width: 100%;
+    max-width: 90vw;
+    height: 67px;
+    font-size: 25px;
+    margin-bottom: 5px;
+    padding-left: 67px;
+    /* padding-left: 110px; */
   }
+
+  .input_search {
+    position: absolute;
+    margin-bottom: 5px;
+    top: 100px;
+  }
+
+  .input_search svg {
+    width: 40px;
+  }
+
+  .search_icon {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+  }
+
+  .lists .fa-times {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #0ff;
+    z-index: 1000;
+    font-size: 24px;
+  }
+
 
   .rogue {
     right: 0;
@@ -305,12 +398,12 @@
     padding-right: 0;
   }
 
-  .modal_window {
+  /* .modal_window {
     width: 350px;
     height: 410px;
     padding: 10px;
     margin-top: 85px;
-  }
+  } */
 }
 
 @media (max-width: 375px) {
@@ -319,11 +412,11 @@
     padding-right: 0;
   }
 
-  .modal_window {
+  /* .modal_window {
     width: 318px;
     padding: 10px;
     margin-top: 130px;
-  }
+  } */
 
   .queue_list {
     width: 275px;

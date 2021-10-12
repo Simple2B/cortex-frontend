@@ -3,10 +3,10 @@ import Popup from 'reactjs-popup';
 import { clientApi } from "../../api/clientApi";
 import NavBar from '../NavBar/NavBar';
 import { instance } from "../../api/axiosInstance";
+import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
 import './queue.css'
 
 interface User {
-    // id: number,
     api_key: string,
     first_name: string,
     last_name: string,
@@ -17,6 +17,9 @@ interface User {
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
   const [clients, setClients] = useState<User[]>([]);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [querySearch, setSearchQuery] = useState<string>('');
 
   const getClientsForQueue = async () => {
     try {
@@ -55,7 +58,6 @@ export default function Queue(): ReactElement {
     setQueue((prev: User[]) => [...prev, patient]);
   };
 
-  console.log("Queue clients -> ", clients)
 
   return (
     <>
@@ -76,17 +78,38 @@ export default function Queue(): ReactElement {
             <div className="queue_list" key={index}>{patient.last_name}, {patient.first_name}</div>
           ))
         }
-        <Popup trigger={<button className="queue_add_button">+Add new</button>} modal>
+        <button className="queue_add_button" onClick={() => setIsOpen(true)}>+Add new</button>
+        <Popup open={isOpen} modal>
           <div className="modal_window">
-            { clients.filter(client => !(queue.map(q => q.phone)).includes(client.phone)).map((patient, index )=> (
-                <div className="queue_list" key={index} onClick={(e: any) => {
-                  const copyListPatients = [...clients];
-                  const patient_target = e.target.innerText.split(",");
-                    clientApi.addClientToQueue(patient);
-                    addClient(patient);
-                }}>{patient.last_name}, {patient.first_name}</div>
-              ))
-            }
+
+            <div className="lists">
+                <i className="fas fa-times" onClick={() => setIsOpen(false)}/>
+                <div className="input_search">
+                  <SearchIcon className="search_icon" />
+                  <input value={querySearch} onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                  }} className="patients_search" placeholder="Search" />
+                </div>
+                <div className="client_lists">
+                    { clients.filter(client => !(queue.map(q => q.phone)).includes(client.phone)).filter(client => {
+                      if (querySearch == '') {
+                          return client;
+                      } else if ((client.first_name + client.last_name).toLowerCase().includes(querySearch.toLowerCase())) {
+                        return client;
+                      }
+                      }).map((patient, index )=> (
+                        <div className="queue_list" key={index} onClick={(e: any) => {
+                          const copyListPatients = [...clients];
+                          const patient_target = e.target.innerText.split(",");
+                            clientApi.addClientToQueue(patient);
+                            addClient(patient);
+                        }}>
+                          {patient.last_name}, {patient.first_name}
+                          </div>
+                      ))
+                    }
+                </div>
+            </div>
           </div>
         </Popup>
       </div>
