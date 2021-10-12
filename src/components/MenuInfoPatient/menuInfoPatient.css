@@ -1,4 +1,8 @@
 .menuInfoPatient {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+.menuInfoPatient .menuInfoPatientItem {
+    font-size: 27px;
 }
