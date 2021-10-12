@@ -20,7 +20,6 @@ export default function Queue(): ReactElement {
 
   const [isOpen, setIsOpen] = useState(false);
   const [querySearch, setSearchQuery] = useState<string>('');
-  // const [filteredList, setFilteredList] = useState<User[]>([]);
 
   const getClientsForQueue = async () => {
     try {
@@ -53,25 +52,11 @@ export default function Queue(): ReactElement {
   useEffect(() => {
     getClients();
     getClientsForQueue();
-    // patientsSearching(querySearch);
   }, []);
 
   const addClient = (patient: User) => {
     setQueue((prev: User[]) => [...prev, patient]);
   };
-
-    // const patientsSearching = (query: string) => {
-    //   const filteredList = [...clients]
-    //     .filter(patient => (patient.first_name + patient.last_name)
-    //       .toLowerCase()
-    //       .includes(query.toLowerCase()));
-    //   setSearchQuery(query);
-    //   setFilteredList(filteredList);
-    // }
-
-    // const patientComponents = filteredList.map(item => (
-    //   <div className="patients_items">{item.last_name}, {item.first_name}</div>
-    // ))
 
 
   return (
