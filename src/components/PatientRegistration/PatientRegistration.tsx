@@ -379,7 +379,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Yes
               <input
-                value={'true'}
+                value={'yes'}
                 name="covidTestedPositive"
                 type="radio"
                 onChange={onChange}
@@ -389,7 +389,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               No
               <input
-                value={'false'}
+                value={'no'}
                 name="covidTestedPositive"
                 type="radio"
                 onChange={onChange}
@@ -417,7 +417,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Yes
               <input
-                value={'true'}
+                value={'yes'}
                 name="covidVaccine"
                 type="radio"
                 onChange={onChange}
@@ -427,7 +427,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               No
               <input
-                value={'false'}
+                value={'no'}
                 name="covidVaccine"
                 type="radio"
                 onChange={onChange}
