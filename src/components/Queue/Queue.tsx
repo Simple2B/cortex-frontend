@@ -92,7 +92,7 @@ export default function Queue(): ReactElement {
                 </div>
                 <div className="client_lists">
                     { clients.filter(client => !(queue.map(q => q.phone)).includes(client.phone)).filter(client => {
-                      if (querySearch == '') {
+                      if (querySearch === '') {
                           return client;
                       } else if ((client.first_name + client.last_name).toLowerCase().includes(querySearch.toLowerCase())) {
                         return client;
