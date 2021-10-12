@@ -60,7 +60,7 @@ const itemsFollowing = [
   "Scoliosis",
 ];
 
-const initialState = {
+const initialState: IPatientForm = {
   firstName: "",
   lastName: "",
   birthday: "",
@@ -379,7 +379,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Yes
               <input
-                value="true"
+                value={'true'}
                 name="covidTestedPositive"
                 type="radio"
                 onChange={onChange}
@@ -389,7 +389,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               No
               <input
-                value="false"
+                value={'false'}
                 name="covidTestedPositive"
                 type="radio"
                 onChange={onChange}
@@ -399,7 +399,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Rather not say
               <input
-                value="null"
+                value={'null'}
                 name="covidTestedPositive"
                 type="radio"
                 onChange={onChange}
@@ -417,8 +417,8 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Yes
               <input
-                value="true"
-                name="CovidVaccine"
+                value={'true'}
+                name="covidVaccine"
                 type="radio"
                 onChange={onChange}
               />
@@ -427,8 +427,8 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               No
               <input
-                value="false"
-                name="CovidVaccine"
+                value={'false'}
+                name="covidVaccine"
                 type="radio"
                 onChange={onChange}
               />
@@ -437,8 +437,8 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Rather not say
               <input
-                value="null"
-                name="CovidVaccine"
+                value={'null'}
+                name="covidVaccine"
                 type="radio"
                 onChange={onChange}
               />
