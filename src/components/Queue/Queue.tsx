@@ -7,7 +7,6 @@ import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
 import './queue.css'
 
 interface User {
-    // id: number,
     api_key: string,
     first_name: string,
     last_name: string,
@@ -21,7 +20,7 @@ export default function Queue(): ReactElement {
 
   const [isOpen, setIsOpen] = useState(false);
   const [querySearch, setSearchQuery] = useState<string>('');
-  const [filteredList, setFilteredList] = useState<User[]>([]);
+  // const [filteredList, setFilteredList] = useState<User[]>([]);
 
   const getClientsForQueue = async () => {
     try {
@@ -54,25 +53,25 @@ export default function Queue(): ReactElement {
   useEffect(() => {
     getClients();
     getClientsForQueue();
-    patientsSearching(querySearch);
-  }, [querySearch]);
+    // patientsSearching(querySearch);
+  }, []);
 
   const addClient = (patient: User) => {
     setQueue((prev: User[]) => [...prev, patient]);
   };
 
-    const patientsSearching = (query: string) => {
-      const filteredList = [...clients]
-        .filter(patient => (patient.first_name + patient.last_name)
-          .toLowerCase()
-          .includes(query.toLowerCase()));
-      setSearchQuery(query);
-      setFilteredList(filteredList);
-    }
+    // const patientsSearching = (query: string) => {
+    //   const filteredList = [...clients]
+    //     .filter(patient => (patient.first_name + patient.last_name)
+    //       .toLowerCase()
+    //       .includes(query.toLowerCase()));
+    //   setSearchQuery(query);
+    //   setFilteredList(filteredList);
+    // }
 
-    const patientComponents = filteredList.map(item => (
-      <div className="patients_items">{item.last_name}, {item.first_name}</div>
-    ))
+    // const patientComponents = filteredList.map(item => (
+    //   <div className="patients_items">{item.last_name}, {item.first_name}</div>
+    // ))
 
 
   return (
@@ -106,7 +105,13 @@ export default function Queue(): ReactElement {
                     setSearchQuery(e.target.value);
                   }} className="patients_search" placeholder="Search" />
                 </div>
-                { filteredList.filter(client => !(queue.map(q => q.phone)).includes(client.phone)).map((patient, index )=> (
+                { clients.filter(client => !(queue.map(q => q.phone)).includes(client.phone)).filter(client => {
+                  if (querySearch == '') {
+                      return client;
+                  } else if ((client.first_name + client.last_name).toLowerCase().includes(querySearch.toLowerCase())) {
+                    return client;
+                  }
+                }).map((patient, index )=> (
                     <div className="queue_list" key={index} onClick={(e: any) => {
                       const copyListPatients = [...clients];
                       const patient_target = e.target.innerText.split(",");
@@ -118,7 +123,6 @@ export default function Queue(): ReactElement {
                   ))
                 }
             </div>
-
           </div>
         </Popup>
       </div>
