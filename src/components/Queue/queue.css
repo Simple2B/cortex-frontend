@@ -44,25 +44,22 @@
 }
 
 .modal_window {
-  /* padding: 30px;
-  width: 800px;
-  height: 500px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border: 4px solid #0ff;
-  color: #fff;
-  font-size: 38px;
-  background-color: black;
-  overflow: scroll; */
-
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: scroll;
+}
 
+.client_lists {
+  width: 100%;
+  /* height: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,15 +71,14 @@
   position: relative;
   width: 100%;
   max-width: 93vw;
-  height: 85vh;
+  height: 95vh;
   padding-top: 105px;
   background-color: #303030;
-  /* border: 4px solid #0ff; */
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
-  padding-top: 260px;
+  padding-top: 200px;
 }
 
 .lists .fa-times {
@@ -110,7 +106,7 @@
 .input_search {
   position: absolute;
   margin-bottom: 25px;
-  top: 150px;
+  top: 65px;
 }
 
 .search_icon {
