@@ -7,7 +7,7 @@ import NavBar from '../NavBar/NavBar';
 export default function MenuInfoPatient(): ReactElement {
 
   return (
-    <>
+    <div className="menuInfoPatient_container">
         <div className="menuInfoPatient">
             <div className="menuInfoPatientItem">JOHN</div>
             <div className="menuInfoPatientItem">Care Plan</div>
@@ -16,7 +16,6 @@ export default function MenuInfoPatient(): ReactElement {
             <div className="menuInfoPatientItem">Report</div>
             <div className="menuInfoPatientItem">Account</div>
         </div>
-
-    </>
+    </div>
   )
 }
