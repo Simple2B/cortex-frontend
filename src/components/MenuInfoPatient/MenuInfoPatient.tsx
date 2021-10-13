@@ -3,8 +3,12 @@ import { useLocation } from "react-router-dom";
 import './menuInfoPatient.css';
 import { NavLink } from 'react-router-dom';
 
+interface MyProps {
+  api_key: string
+}
 
-export default function MenuInfoPatient(): ReactElement {
+
+export default function MenuInfoPatient(props: MyProps): ReactElement {
 
       //assigning location variable
       const location = useLocation();
@@ -28,8 +32,8 @@ export default function MenuInfoPatient(): ReactElement {
             <div className={splitLocation[1] === "#" ? "active" : "menuInfoPatientItem"}>
               <NavLink to="#">Notes</NavLink>
             </div>
-            <div className={splitLocation[1] === "intake" ? "active" : "menuInfoPatientItem"}>
-              <NavLink to="/intake">Intake</NavLink>
+            <div className={splitLocation[splitLocation.length - 1] === `${props.api_key}` ? "active" : "menuInfoPatientItem"}>
+              <NavLink to={`/intake/${props.api_key}`}>Intake</NavLink>
             </div>
             <div className={splitLocation[1] === "#" ? "active" : "menuInfoPatientItem"}>
               <NavLink to="#">Report</NavLink>

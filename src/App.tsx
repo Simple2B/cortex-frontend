@@ -83,7 +83,7 @@ function App() {
 
           <ProtectedRoute
             {...defaultProtectedRouteProps}
-            exact path="/intake"
+            exact path="/intake/:api_key"
             component={Intake}
           />
 
