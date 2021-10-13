@@ -5,6 +5,7 @@ import NavBar from '../NavBar/NavBar';
 import { instance } from "../../api/axiosInstance";
 import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
 import './queue.css'
+import { NavLink } from 'react-router-dom';
 
 interface User {
     api_key: string,
@@ -75,7 +76,11 @@ export default function Queue(): ReactElement {
         <h1 className="queue_title">The Queue</h1>
         {
           queue.map((patient, index) => (
-            <div className="queue_list" key={index}>{patient.last_name}, {patient.first_name}</div>
+            <NavLink to={`/intake/${patient.api_key}`}>
+              <div className="queue_list" key={index}>
+                  {patient.last_name}, {patient.first_name}
+              </div>
+            </NavLink>
           ))
         }
         <button className="queue_add_button" onClick={() => setIsOpen(true)}>+Add new</button>
