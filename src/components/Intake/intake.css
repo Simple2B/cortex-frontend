@@ -110,6 +110,17 @@
     font-size: 28px;
 }
 
+.clientIntakeInfo {
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    flex-direction: column;
+}
+
+.clientIntakeInfo div {
+    font-size: 20px;
+}
+
 .intakeInfoText_healthBtn {
     margin-bottom: 30px;
     font-size: 26px;
