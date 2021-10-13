@@ -6,6 +6,7 @@ import { ReactComponent as Logo } from '../../images/cortex_logo.svg';
 import { IPatient } from '../../types/patientsTypes';
 import { NavLink } from 'react-router-dom';
 import { instance } from "../../api/axiosInstance";
+import { stringify } from 'querystring';
 
 
 export default function Kiosk(): ReactElement {
@@ -43,20 +44,27 @@ export default function Kiosk(): ReactElement {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     console.log(phoneQuery);
-    const filteredName = list.filter(number => number.phone === phoneQuery).map(user => user.first_name).toString();
+    // const filteredName = list.filter(number => number.phone === phoneQuery).map(user => user.first_name).toString();
 
     e.preventDefault();
+    let filteredName;
+    let user: IPatient = {api_key: "", first_name: "", last_name: "", phone: "", email: ""};
 
     for (let i = 0; i < list.length; i ++) {
       if(list[i].phone === phoneQuery) {
-        clientApi.addClientToQueue(list[i]);
+        filteredName = list[i].first_name;
+        user = list[i]
       }
     }
 
     if (filteredName) {
+          console.log('filteredName => ', filteredName);
+          console.log('user => ', user);
+
           setStyle(true);
           setWelcomeText(`Thanks ${filteredName}, have a seat and we’ll call your name shortly.`);
           setPhoneQuery('');
+          clientApi.addClientToQueue(user);
 
           const interval = setInterval(() => {
             setStyle(false);
