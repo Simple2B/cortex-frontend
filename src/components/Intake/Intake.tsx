@@ -130,6 +130,19 @@ export default function Intake(): ReactElement {
               <div className="intakeInfoText_health">
                 <i className="fas fa-times"/>
                 <div className="intakeInfoText_healthTitle">Intake</div>
+
+                <div className="clientIntakeInfo">
+                  <div>Referring: {client.referring},</div>
+                  <div>Other condition: {client.otherCondition},</div>
+                  <div>Medications: {client.medications},</div>
+                  <div>Covid tested: {client.covidTestedPositive},</div>
+                  <div>Covid vaccine:  {client.covidVaccine},</div>
+                  <div>Stressfull level: {client.stressfulLevel},</div>
+                  <div>Consent minor child: {client.consentMinorChild},</div>
+                  <div>Relationship child: {client.relationshipChild},</div>
+                </div>
+
+
                 <div className="intakeInfoText_healthBtn">
                   <div className="intake_btn">
                     Consult
