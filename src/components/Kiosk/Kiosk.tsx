@@ -32,7 +32,7 @@ export default function Kiosk(): ReactElement {
 
   useEffect(() => {
     getClients()
-  }, []);
+  }, [list]);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneQuery(e.target.value);
