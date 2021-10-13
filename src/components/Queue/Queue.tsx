@@ -3,17 +3,12 @@ import Popup from 'reactjs-popup';
 import { clientApi } from "../../api/clientApi";
 import NavBar from '../NavBar/NavBar';
 import { instance } from "../../api/axiosInstance";
+import { User } from "../../types/patientsTypes";
 import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
 import './queue.css'
 import { NavLink } from 'react-router-dom';
 
-interface User {
-    api_key: string,
-    first_name: string,
-    last_name: string,
-    phone: string,
-    email: string,
-}
+
 
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
