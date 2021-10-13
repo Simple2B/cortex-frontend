@@ -34,6 +34,7 @@ export default function Login(): ReactElement {
   };
 
   const loginForm = async ({ email, password }: ILogin) => {
+    // console.log("intervalHour", intervalHour);
     console.log(`Start login fetch`)
     const token = await authApi.login(email, password);
     console.log(`token`, token)
@@ -47,6 +48,8 @@ export default function Login(): ReactElement {
         password: form.password,
         email: form.email,
       });
+      const now = new Date();
+      localStorage['dateNow'] = ''+now.getTime();
       history.push('/queue');
       // setMessageError("");
     } catch (error: any) {
