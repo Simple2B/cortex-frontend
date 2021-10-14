@@ -56,6 +56,31 @@ interface IClientQueue {
     email: string,
 }
 
+export interface Client {
+  client : {
+    api_key: string,
+    firstName: string,
+    lastName: string,
+    birthday: string,
+    address: string,
+    city: string,
+    state: string,
+    zip: number,
+    phone: string,
+    email: string,
+    referring: string,
+    // conditions: list[str]
+    otherCondition: string,
+    // diseases: list[str]
+    medications: string,
+    covidTestedPositive: boolean | null,
+    covidVaccine:  boolean | null,
+    stressfulLevel: number,
+    consentMinorChild: boolean,
+    relationshipChild: string,
+  }
+};
+
 export const clientApi = {
 
   registrationClient: async (data: IPatientForm): Promise<void> => {
@@ -92,6 +117,26 @@ export const clientApi = {
       console.log('POST: error data  addClientToQueue =>', error.message.data);
       throw new Error(error.message);
     }
+  },
+
+  getClient: async (api_key: string): Promise<void> => {
+    try {
+      const response = await instance()
+      .get('api/client/clients_intake');
+      for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].api_key === api_key) {
+          console.log("response.data[i] => ", response.data[i]);
+          let client_db = await response.data[i];
+          console.log("client_db intake", client_db);
+          return client_db;
+        }
+      }
+    } catch (error: any) {
+      // place to handle errors and rise custom errors
+      console.log('GET: error message =>  ', error.message);
+      console.log('error response data clients => ', error.response.data);
+      throw new Error(error.message);
+    };
   },
 
   // identifyClientWithPhone: async (data: string): Promise<void> => {
