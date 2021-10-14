@@ -8,7 +8,6 @@
 .menuInfoPatient {
     display: flex;
     justify-content: center;
-<<<<<<< HEAD
     align-items: center;
     height: 100%;
     padding-top: 45px;
@@ -33,10 +32,8 @@
     margin-right: 65px;
     color: #AEF7FF;
     border-bottom: solid #AEF7FF 1px;
-=======
 }
 
 .menuInfoPatient .menuInfoPatientItem {
     font-size: 27px;
->>>>>>> develop
 }

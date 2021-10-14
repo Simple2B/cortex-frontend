@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext, useState } from "react";
+import React, { ReactElement } from "react";
 import { Redirect } from 'react-router';
 import "./patientRegistration.css";
 import Checkbox from "./Checkbox";
@@ -379,11 +379,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Yes
               <input
-<<<<<<< HEAD
                 value={'yes'}
-=======
-                value={'true'}
->>>>>>> varvara/fix/queue
                 name="covidTestedPositive"
                 type="radio"
                 onChange={onChange}
@@ -393,11 +389,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               No
               <input
-<<<<<<< HEAD
                 value={'no'}
-=======
-                value={'false'}
->>>>>>> varvara/fix/queue
                 name="covidTestedPositive"
                 type="radio"
                 onChange={onChange}
@@ -425,11 +417,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Yes
               <input
-<<<<<<< HEAD
                 value={'yes'}
-=======
-                value={'true'}
->>>>>>> varvara/fix/queue
                 name="covidVaccine"
                 type="radio"
                 onChange={onChange}
@@ -439,11 +427,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               No
               <input
-<<<<<<< HEAD
                 value={'no'}
-=======
-                value={'false'}
->>>>>>> varvara/fix/queue
                 name="covidVaccine"
                 type="radio"
                 onChange={onChange}
