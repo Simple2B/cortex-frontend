@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
   Route,
   Redirect,
 } from "react-router-dom";
 import './App.css';
-import Intake from './components/Intake/Intake';
+import Account from './components/ClientInfo/Account/Account';
+import Intake from './components/ClientInfo/Intake/Intake';
 import Kiosk from './components/Kiosk/Kiosk';
 import Login from './components/Login/Login';
 import PasswordChoose from './components/PasswordChoose/PasswordChoose';
@@ -29,8 +28,6 @@ function App() {
 
   return (
     <div className="App" >
-       <Router>
-        <Switch>
          <Route exact path="/">
             {loggedIn ? (
               <Redirect
@@ -83,8 +80,14 @@ function App() {
 
           <ProtectedRoute
             {...defaultProtectedRouteProps}
-            exact path="/intake/:api_key"
+            exact path="/:api_key/intake"
             component={Intake}
+          />
+
+          <ProtectedRoute
+              {...defaultProtectedRouteProps}
+              exact path="/:api_key/account"
+              component={Account}
           />
 
 
@@ -104,10 +107,6 @@ function App() {
           <Route exact path="/">
             <Login />
           </Route> */}
-
-        </Switch>
-      </Router>
-
     </div >
   );
 }
