@@ -71,7 +71,7 @@ export default function Queue(): ReactElement {
         <h1 className="queue_title">The Queue</h1>
         {
           queue.map((patient, index) => (
-            <NavLink to={`/intake/${patient.api_key}`} key={index}>
+            <NavLink to={`/${patient.api_key}/intake`} key={index}>
               <div className="queue_list">
                   {patient.last_name}, {patient.first_name}
               </div>
