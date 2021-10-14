@@ -58,15 +58,12 @@ export default function Intake(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 1];
-  // const [clients, setClients] = useState<Client[]>([]);
   const [client, setClient] = useState<Client>(ClientDefault);
 
   const getClients = async () => {
     try {
       const response = await instance()
       .get('api/client/clients_intake');
-      // setClients(response.data);
-
       for (let i = 0; i < response.data.length; i++) {
         if (response.data[i].api_key === api_key) {
           console.log("response.data[i] => ", response.data[i])
@@ -82,29 +79,16 @@ export default function Intake(): ReactElement {
     };
   };
 
-  // const getClient = () => {
-
-  //   for (let i = 0; i < clients.length; i++) {
-  //     if (clients[i].api_key === api_key) {
-  //       // console.log("clients[i] => ", clients[i])
-  //       let client_db = clients[i]
-  //       setClient(client_db)
-  //     }
-  //   }
-  // }
-
   useEffect(() => {
     getClients();
-    // getClient();
   }, []);
 
-  // console.log("clients intake => ", clients)
   console.log("client intake => ", client)
 
   return (
     <>
         <NavBar />
-        <MenuInfoPatient api_key={api_key}/>
+        <MenuInfoPatient api_key={api_key} name={client.firstName}/>
         <div className="containerIntakeContent">
 
           <div className="coherence">
@@ -123,14 +107,11 @@ export default function Intake(): ReactElement {
               </div>
             </div>
           </div>
-
           <div className="intakeInfo">
             <div className="intakeInfoText">
-
               <div className="intakeInfoText_health">
                 <i className="fas fa-times"/>
                 <div className="intakeInfoText_healthTitle">Intake</div>
-
                 <div className="clientIntakeInfo">
                   <div>Referring: {client.referring},</div>
                   <div>Other condition: {client.otherCondition},</div>
@@ -141,8 +122,6 @@ export default function Intake(): ReactElement {
                   <div>Consent minor child: {client.consentMinorChild},</div>
                   <div>Relationship child: {client.relationshipChild},</div>
                 </div>
-
-
                 <div className="intakeInfoText_healthBtn">
                   <div className="intake_btn">
                     Consult
@@ -157,31 +136,30 @@ export default function Intake(): ReactElement {
               </div>
               <div className="intakeInfoText_results">
                 <div className="results">
+                  <div>63bpm</div>
+                  <div>HR</div>
                 </div>
                 <div className="results">
-
+                  <div>10</div>
+                  <div>Resp</div>
                 </div>
                 <div className="results">
-
+                  <div>98%</div>
+                  <div>SpO2</div>
                 </div>
               </div>
-
             </div>
-
             <div className="intakeInfoAlpha">
               <div className="intakeInfoAlpha_text">
                 Alpha
               </div>
-
               <div className="intakeInfoAlpha_letters">
                 <div className="letter">R</div>
                 <div className="letter">L</div>
               </div>
-
               <div className="intakeInfoAlpha_dashboard">
                 <IntakeAlpha/>
               </div>
-
             </div>
           </div>
         </div>

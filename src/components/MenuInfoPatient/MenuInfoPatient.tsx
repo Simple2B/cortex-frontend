@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 interface MyProps {
   api_key: string
+  name: string
 }
 
 
@@ -19,12 +20,14 @@ export default function MenuInfoPatient(props: MyProps): ReactElement {
       //Javascript split method to get the name of the path in array
       const splitLocation = pathname.split("/");
 
+      console.log("props.name ", props.name );
 
   return (
     <div className="menuInfoPatient_container">
         <div className="menuInfoPatient">
             <div className={splitLocation[1] === "#" ? "active" : "menuInfoPatientItem"}>
-              <NavLink to="#">JOHN</NavLink>
+              {/* test data props */}
+              <NavLink to="#">{ props.name === '' || props.name === null ? 'JOHN' : props.name }</NavLink>
             </div>
             <div className={splitLocation[1] === "#" ? "active" : "menuInfoPatientItem"}>
               <NavLink to="#">Care Plan</NavLink>
