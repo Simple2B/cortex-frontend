@@ -7,10 +7,20 @@
   padding-right: 20%;
 }
 
+.queue a {
+  text-decoration: none;
+  color: #fff;
+  transition: all .3 ease-in-out;
+}
+
+.queue a:hover {
+  transition: all .3 ease-in-out;
+  color: #0ff;
+}
+
 .queue_title {
   font-size: 52px;
   text-align: center;
-  color: #fff;
   margin: 0;
   margin-bottom: 55px;
 }
