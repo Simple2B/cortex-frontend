@@ -1,0 +1,46 @@
+/* .menuInfoPatient_container {
+    width: 100%;
+    height: 100%;
+    border-bottom: solid #707070 1px;
+
+} */
+
+.menuInfoPatient {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    padding-top: 45px;
+    padding-bottom: 25px;
+    border-bottom: solid #707070 3px;
+}
+
+.menuInfoPatient .menuInfoPatientItem a {
+    text-decoration: none;
+    font-size: 27px;
+    margin-right: 65px;
+    color: #707070;
+    border-bottom: solid 1px transparent;
+}
+
+.menuInfoPatient .menuInfoPatientItem:last-child a {
+    margin-right: 0;
+}
+
+.active a {
+    text-decoration: none;
+    font-size: 27px;
+    margin-right: 65px;
+    color: #AEF7FF;
+    border-bottom: solid #AEF7FF 1px;
+}
+
+.menuInfoPatient .active:last-child a {
+    margin-right: 0;
+}
+
+.menuInfoPatient .menuInfoPatientItem {
+    /* margin-right: 65px; */
+    /* font-size: 27px;
+    border-bottom: solid 1px transparent; */
+}
