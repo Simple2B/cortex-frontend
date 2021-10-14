@@ -152,7 +152,8 @@
 }
 
 .intake_btnActive {
-    width: 175px;
+    width: 33%;
+    /* width: 175px; */
     /* heigsht: 59px; */
     background-color: #B1B1B1;
     color: #fff;
