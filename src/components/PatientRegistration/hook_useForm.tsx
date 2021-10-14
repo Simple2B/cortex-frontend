@@ -41,6 +41,7 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
     };
 
     const onChange = (event: any) => {
+
       setValues(values  => ({ ...values, [event.target.name]: event.target.value }));
     };
 
@@ -67,7 +68,9 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
     };
 
     const onSubmit = (event: any) => {
+
       event.preventDefault();
+
       const errorBuffer = validate(values);
       console.log("errorBuffer", errorBuffer);
 
