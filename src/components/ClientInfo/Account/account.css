@@ -7,7 +7,6 @@
     margin-right: 35px;
 }
 
-
 .clientInfo {
     display: flex;
     flex-direction: column;
@@ -188,6 +187,63 @@
     padding: 7px;
 }
 
+.billing_form {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.billing_formInputs {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.billing_formBlock {
+    width: 50%;
+}
+
+.billing_formBlockInput {
+    margin-top: 10px;
+}
+
+.billing_formBlock .title {
+    font-size: 25px;
+    color: #B1B1B1;
+}
+
+.billing_formBlock .inputContainer input {
+    width: 100%;
+    background-color: #191919;
+    color: #fff;
+    font-size: 25px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border: none;
+    border-bottom: #fff 1px solid;
+}
+
+.billing_formBlock .billing_formBlockInput {
+    margin-right: 5px;
+}
+
+.btnComplete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#fff;
+    font-size: 25px;
+    width: 262px;
+    height: 68px;
+    margin-top: 25px;
+    background: radial-gradient(#00E5FF, #085E67);
+    border-radius: 34px;
+}
+
 @media (max-width: 1440px) {
 
     .clientInfo_tittle {
@@ -222,4 +278,15 @@
         font-size: 18px;
     }
 
+    .billing_formBlock .title {
+        font-size: 20px;
+    }
+
+    .btnComplete {
+        font-size: 20px;
+        width: 200px;
+        height: 58px;
+        margin-top: 25px;
+        border-radius: 35px;
+    }
 }
