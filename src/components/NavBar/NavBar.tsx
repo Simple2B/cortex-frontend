@@ -41,7 +41,7 @@ export default function NavBar(): ReactElement {
     <div className="nav_bar">
       <div onClick={handleMenuSwitch} className="menu_button"><Menu /></div>
       <nav className={`menu ${switchMenu ? 'open' : ''}`}>
-        <NavLink className="nav_item" to="/patients">Patients</NavLink>
+        <NavLink className="nav_item" to="/queue">Patients</NavLink>
         <NavLink className="nav_item" to="/reports">Reports</NavLink>
         <NavLink className="nav_item" to="/kiosk">Kiosk</NavLink>
         <NavLink onClick={handlerLogout} className="nav_item" to="/">Log out</NavLink>
