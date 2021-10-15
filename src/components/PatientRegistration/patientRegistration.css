@@ -19,6 +19,7 @@
 
 .registration_input {
   /* width: 879px; */
+  position: relative;
   width: 43.3%;
   height: 84px;
   border-radius: 42px;
@@ -285,16 +286,19 @@
 
 .registration_input_data {
   width: 93%;
-  height: 50px;
-  margin: 2.5px auto;
-  font-size: 22px;
+  height: 93%;
+  /* margin: 2.5px auto; */
+  font-size: 35px;
+  background-color: transparent;
   /* background-color: black; */
+  display: flex;
   opacity: 1;
   border: none;
   color: #AEF7FF;
   background-color: black;
   outline: none;
   justify-content: left;
+  align-items: center;
 }
 
 .registration_input_birth {
@@ -302,7 +306,7 @@
 }
 
 .registration_input_birth .input_birth {
-  width: 95%;
+  width: 93%;
   color: transparent;
 }
 
