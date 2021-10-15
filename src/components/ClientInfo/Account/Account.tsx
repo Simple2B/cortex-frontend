@@ -52,9 +52,7 @@ export default function Account(): ReactElement {
     <>
         <NavBar />
         <MenuInfoPatient api_key={api_key} name={'client.firstName'}/>
-
         <div className="accountContainer">
-
           <div className="clientInfo">
             <div className="clientInfo_tittle">Client info</div>
             <div className="clientInfoAccount">
@@ -68,11 +66,8 @@ export default function Account(): ReactElement {
               <div className="info"><div>Email: </div><div className="clientInfo_text"></div></div>
             </div>
           </div>
-
           <div className="visitHistory">
-
             <div className="clientInfo_tittle">Visit History</div>
-
             <div className="visitHistory_table">
                 <table>
                   <tr>
@@ -102,28 +97,21 @@ export default function Account(): ReactElement {
                   </tr>
                 </table>
             </div>
-
             <div className="visitHistory_inputs">
-
               <div className="visitHistory_inputContainer">
                 <div className="inputTitle">Plan</div>
                 <div><input type="text" placeholder=""/></div>
               </div>
-
               <div className="visitHistory_inputContainer">
                 <div className="inputTitle">Frequency</div>
                 <div><input type="text" placeholder=""/></div>
               </div>
-
               <div className="visitHistory_inputContainer">
                 <div className="inputTitle">Remaining</div>
                 <div><input type="text" placeholder=""/></div>
               </div>
-
             </div>
-
           </div>
-
           <div className="billing">
             <div className="clientInfo_tittle">Billing</div>
             <div className="billing_table">
@@ -165,31 +153,36 @@ export default function Account(): ReactElement {
                   </tr>
                 </table>
             </div>
-            {/* <div className="billing_inputs">
-
-              <div className="visitHistory_inputContainer">
-                <div className="inputTitle">Plan</div>
-                <div><input type="text" placeholder=""/></div>
-              </div>
-
-              <div className="visitHistory_inputContainer">
-                <div className="inputTitle">Frequency</div>
-                <div><input type="text" placeholder=""/></div>
-              </div>
-
-              <div className="visitHistory_inputContainer">
-                <div className="inputTitle">Remaining</div>
-                <div><input type="text" placeholder=""/></div>
-              </div>
-
-            </div> */}
             <div className="billing_form">
+              <div className="billing_formInputs">
+                <div className="billing_formBlock">
+                  <div className="billing_formBlockInput">
+                    <div className="title">Card number</div>
+                    <div className="inputContainer"><input type="" placeholder=""/></div>
+                  </div>
+                  <div className="billing_formBlockInput">
+                    <div className="title">Expiration</div>
+                    <div  className="inputContainer"><input type="" placeholder=""/></div>
+                  </div>
+                </div>
 
+                <div className="billing_formBlock">
+                    <div className="billing_formBlockInput">
+                      <div className="title">CVV</div>
+                      <div  className="inputContainer"><input type="" placeholder=""/></div>
+                    </div>
+                    <div className="billing_formBlockInput">
+                      <div className="title">Zip</div>
+                      <div  className="inputContainer"><input type="" placeholder=""/></div>
+                    </div>
+                </div>
+              </div>
+              <div className="btnComplete">
+                COMPLETE
+              </div>
             </div>
           </div>
-
         </div>
-
     </>
   )
 }
