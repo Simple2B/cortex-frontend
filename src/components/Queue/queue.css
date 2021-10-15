@@ -110,10 +110,11 @@
   color: white;
   font-size: 35px;
   margin-bottom: 25px;
-  /* padding-left: 110px; */
+  padding-left: 110px;
 }
 
 .input_search {
+  width: 55%;
   position: absolute;
   margin-bottom: 25px;
   top: 65px;
@@ -131,7 +132,6 @@
   top: 50%;
   margin-bottom: 10px;
 }
-
 
 .rogue_mode {
   font-size: 25px;
@@ -257,6 +257,9 @@
     left: 115px;
   }
 
+  .input_search {
+    width: 80%;
+  }
 }
 
 @media (max-width: 540px) {
@@ -293,13 +296,6 @@
     font-size: 25px;
   }
 
-  /* .modal_window {
-    width: 410px;
-    height: 410px;
-    padding: 10px;
-    margin-top: 85px;
-  }*/
-
   .modal_window .lists {
     padding-top: 200px;
   }
@@ -316,6 +312,10 @@
   }
 
   .input_search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 99%;
     position: absolute;
     margin-bottom: 5px;
     top: 100px;
@@ -398,22 +398,13 @@
   .logo svg {
     width: 200px;
   }
-
 }
-
 
 @media (max-width: 414px) {
   .queue {
     margin: 23% 10%;
     padding-right: 0;
   }
-
-  /* .modal_window {
-    width: 350px;
-    height: 410px;
-    padding: 10px;
-    margin-top: 85px;
-  } */
 }
 
 @media (max-width: 375px) {
@@ -421,12 +412,6 @@
     margin: 25% 10%;
     padding-right: 0;
   }
-
-  /* .modal_window {
-    width: 318px;
-    padding: 10px;
-    margin-top: 130px;
-  } */
 
   .queue_list {
     width: 275px;

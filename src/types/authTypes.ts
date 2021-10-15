@@ -48,6 +48,6 @@ export interface ILogoutResponse {
   detail: string;
 }
 export interface ILoginParams {
-  email: string;
+  username: string;
   password: string;
 }

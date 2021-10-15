@@ -3,12 +3,15 @@ import { ILoginResponse } from "../types/authTypes";
 import { authInstance } from "./axiosInstance";
 
 
-const formatRequestBody = (email: string, password: string) => {
-  const params = {
-    email: email,
-    password: password,
-  };
-  return params;
+const formatRequestBody = (username: string, password: string) => {
+  // const params = {
+  //   username: username,
+  //   password: password,
+  // };
+  const formData = new FormData();
+  formData.append('username', username);
+  formData.append('password', password);
+  return formData;
 };
 
 const formatRequestBodyApiKey = (password: string, api_key: string) => {
@@ -19,13 +22,12 @@ const formatRequestBodyApiKey = (password: string, api_key: string) => {
   return params;
 };
 
-
 export const authApi = {
 
-  login: async (email: string, password: string): Promise<ILoginResponse> => {
+  login: async (username: string, password: string): Promise<ILoginResponse> => {
     try {
       const response = await authInstance
-      .post('api/auth/sign_in', formatRequestBody(email, password))
+      .post('api/auth/sign_in', formatRequestBody(username, password))
        console.log("POST [/auth/sign_in] response received successfully");
       return response.data;
     } catch (error: any) {

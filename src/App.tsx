@@ -10,7 +10,6 @@ import Kiosk from './components/Kiosk/Kiosk';
 import Login from './components/Login/Login';
 import PasswordChoose from './components/PasswordChoose/PasswordChoose';
 import PatientRegistration from './components/PatientRegistration/PatientRegistration';
-import Patients from './components/Patients/Patients';
 import Queue from './components/Queue/Queue';
 import Reports from './components/Reports/Reports';
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute';
@@ -66,11 +65,6 @@ function App() {
             {...defaultProtectedRouteProps}
             exact path="/reports"
             component={Reports}
-          />
-          <ProtectedRoute
-            {...defaultProtectedRouteProps}
-            exact path="/patients"
-            component={Patients}
           />
           <ProtectedRoute
             {...defaultProtectedRouteProps}
