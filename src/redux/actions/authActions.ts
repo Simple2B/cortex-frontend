@@ -8,11 +8,11 @@ import {
 import { Dispatch } from "redux";
 import { authApi } from "../../api/authApi";
 
-export const login = ({ password, email }: ILoginParams) => {
+export const login = ({ password, username }: ILoginParams) => {
   return async (dispatch: Dispatch<AuthAction>) => {
     try {
       dispatch({ type: AuthActionTypes.AUTH_API_REQUEST });
-      const data: ILoginResponse = await authApi.login(email, password);
+      const data: ILoginResponse = await authApi.login(username, password);
 
       localStorage.setItem("token", data.access_token);
 
