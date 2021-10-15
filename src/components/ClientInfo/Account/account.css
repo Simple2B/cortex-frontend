@@ -1,0 +1,180 @@
+.accountContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+/* .accountContainer div {
+} */
+
+.clientInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.clientInfo_tittle {
+    width: 100%;
+    font-size: 30px;
+    color: #AEF7FF;
+    margin-top: 35px;
+    margin-bottom: 40px;
+}
+
+.clientInfoAccount {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: left;
+}
+
+.clientInfoAccount div {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    text-align: center;
+    font-size: 30px;
+    color: #fff;
+
+}
+
+.clientInfoAccount .info_title {
+    margin-bottom: 10px;
+}
+
+.clientInfoAccount .info {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.clientInfoAccount div:last-child {
+    margin-bottom: 0;
+}
+
+.clientInfoAccount .info div {
+    margin-right: 5px;
+}
+
+.clientInfoAccount .clientInfo_text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 30px;
+    color: #707070;
+    padding-left: 10px;
+}
+
+.visitHistory {
+    width: 34.6%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.visitHistory_table {
+    width: 100%;
+}
+.visitHistory_table table {
+    width: 100%;
+    border: 1px solid #707070;
+}
+
+.visitHistory_table table tr th {
+    font-size: 30px;
+    color: #fff;
+    border: 1px solid #707070;
+    text-align: center;
+    padding: 7px;
+}
+
+.visitHistory_table table tr td {
+    font-size: 30px;
+    color: #707070;
+    border: 1px solid #707070;
+    text-align: center;
+    padding: 7px;
+}
+
+
+.visitHistory_inputs {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.visitHistory_inputContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 7px;
+}
+
+.visitHistory_inputContainer div, .visitHistory_inputContainer div input {
+    width: 100%;
+}
+
+.visitHistory_inputContainer div input {
+    border: #707070 1px solid;
+    border-radius: 7px;
+    background-color: #191919;
+    color: #fff;
+    font-size: 25px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.visitHistory_inputContainer div input::placeholder {
+   margin-left: 5px;
+}
+
+.visitHistory_inputContainer .inputTitle{
+    font-size: 25px;
+    color: #B1B1B1;
+}
+
+
+.billing {
+    width: 29.4%;
+}
+
+@media (max-width: 1440px) {
+
+    .clientInfo_tittle {
+        font-size: 25px;
+        margin-top: 25px;
+        margin-bottom: 30px;
+    }
+
+    .clientInfoAccount div {
+        font-size: 25px;
+    }
+
+    .clientInfoAccount .clientInfo_text {
+        display: flex;
+        /* justify-content: center; */
+        align-items: center;
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .visitHistory_table table tr th {
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .visitHistory_table table tr td {
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .visitHistory_inputContainer .inputTitle{
+        font-size: 18px;
+    }
+
+}
