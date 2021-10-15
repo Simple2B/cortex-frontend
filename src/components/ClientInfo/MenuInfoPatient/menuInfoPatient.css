@@ -1,33 +1,46 @@
 .menuInfoPatient {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    padding-top: 45px;
-    padding-bottom: 25px;
-    border-bottom: solid #707070 3px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	padding-top: 45px;
+	padding-bottom: 25px;
+	border-bottom: solid #707070 3px;
 }
 
 .menuInfoPatient .menuInfoPatientItem a {
-    text-decoration: none;
-    font-size: 27px;
-    margin-right: 65px;
-    color: #707070;
-    border-bottom: solid 1px transparent;
+	text-decoration: none;
+	font-size: 27px;
+	margin-right: 65px;
+	color: #707070;
+	border-bottom: solid 1px transparent;
 }
 
 .menuInfoPatient .menuInfoPatientItem:last-child a {
-    margin-right: 0;
+	margin-right: 0;
 }
 
 .active a {
-    text-decoration: none;
-    font-size: 27px;
-    margin-right: 65px;
-    color: #AEF7FF;
-    border-bottom: solid #AEF7FF 1px;
+	text-decoration: none;
+	font-size: 27px;
+	margin-right: 65px;
+	color: #aef7ff;
+	border-bottom: solid #aef7ff 1px;
 }
 
 .menuInfoPatient .active:last-child a {
-    margin-right: 0;
+	margin-right: 0;
+}
+
+@media (max-width: 1024px) {
+	.menuInfoPatient {
+		padding: 45px 5px 25px 5px;
+	}
+
+	.menuInfoPatient .menuInfoPatientItem a {
+		margin-right: 1em;
+	}
+	.active a {
+		margin-right: 1em;
+	}
 }
