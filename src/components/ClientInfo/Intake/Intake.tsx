@@ -2,7 +2,8 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 import NavBar from '../../NavBar/NavBar';
 import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
-import { clientApi, Client } from '../../../api/clientApi';
+import { Client } from '../../../api/clientApi';
+import { instance } from '../../../api/axiosInstance';
 import './intake.css';
 import { ReactComponent as IntakeDashboard } from '../../../images/intake_dashboard.svg';
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
@@ -39,16 +40,35 @@ export default function Intake(): ReactElement {
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>();
 
+  const getClient = () =>  async (api_key: string): Promise<void> => {
+    try {
+      const response = await instance()
+      .get('api/client/clients_intake');
+      for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].api_key === api_key) {
+          console.log("response.data[i] => ", response.data[i]);
+          let client_db = await response.data[i];
+          console.log("client_db intake", client_db);
+          setClient(client_db);
+        }
+      }
+    } catch (error: any) {
+      // place to handle errors and rise custom errors
+      console.log('GET: error message =>  ', error.message);
+      console.log('error response data clients => ', error.response.data);
+      throw new Error(error.message);
+    };
+  };
+
 
   useEffect(() => {
-    const clientDB = clientApi.getClient(api_key);
+    getClient();
     // setClient(clientDB);
   }, []);
 
   console.log("client intake => ", client);
 
-  console.log("location in ClientInfo => ", location.pathname);
-
+  console.log("api_key => ", api_key);
 
   return (
     <>
