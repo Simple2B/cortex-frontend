@@ -88,7 +88,7 @@ export const clientApi = {
     console.log('dataReqPatient =>', data);
 
     try {
-      const response = await authInstance
+      const response = await instance()
       .post('api/client/registration', formatRequestData(data))
       const res = response.data
       console.log(`response received successfully `, res);
