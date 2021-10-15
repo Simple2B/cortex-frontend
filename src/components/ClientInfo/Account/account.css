@@ -1,10 +1,12 @@
 .accountContainer {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
 }
 
-/* .accountContainer div {
-} */
+.accountContainer .clientInfo, .accountContainer .visitHistory {
+    margin-right: 35px;
+}
+
 
 .clientInfo {
     display: flex;
@@ -99,6 +101,22 @@
     padding: 7px;
 }
 
+.billing_table table tr:last-child td {
+    border: 1px solid transparent;
+    text-align: left;
+    padding: 0;
+    padding-top: 20px;
+    padding-right: 5px;
+}
+
+.billing_table table tr:last-child td:last-child {
+    padding-right: 0;
+}
+
+.billing_table table tr:last-child td div {
+    width: 100%;
+}
+
 
 .visitHistory_inputs {
     width: 100%;
@@ -113,6 +131,10 @@
     display: flex;
     flex-direction: column;
     margin-right: 7px;
+}
+
+.visitHistory_inputs div:last-child {
+    margin-right: 0;
 }
 
 .visitHistory_inputContainer div, .visitHistory_inputContainer div input {
@@ -138,9 +160,32 @@
     color: #B1B1B1;
 }
 
-
 .billing {
     width: 29.4%;
+}
+
+.billing_table {
+    width: 100%;
+}
+.billing_table table {
+    width: 100%;
+    border: 1px solid #707070;
+}
+
+.billing_table table tr th {
+    font-size: 30px;
+    color: #fff;
+    border: 1px solid #707070;
+    text-align: center;
+    padding: 7px;
+}
+
+.billing_table table tr td {
+    font-size: 30px;
+    color: #707070;
+    border: 1px solid #707070;
+    text-align: center;
+    padding: 7px;
 }
 
 @media (max-width: 1440px) {
@@ -163,12 +208,12 @@
         font-size: 25px;
     }
 
-    .visitHistory_table table tr th {
+    .visitHistory_table table tr th, .billing_table table tr th {
         font-size: 20px;
         padding: 5px;
     }
 
-    .visitHistory_table table tr td {
+    .visitHistory_table table tr td, .billing_table table tr td {
         font-size: 20px;
         padding: 5px;
     }

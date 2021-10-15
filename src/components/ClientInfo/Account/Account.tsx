@@ -126,8 +126,63 @@ export default function Account(): ReactElement {
 
           <div className="billing">
             <div className="clientInfo_tittle">Billing</div>
-            <div className="billing_table"></div>
-            <div className="billing_inputs"></div>
+            <div className="billing_table">
+                <table>
+                  <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                  <tr>
+                    <td>02/12/2020</td>
+                    <td>$580</td>
+                    <td>Paid</td>
+                  </tr>
+                  <tr>
+                    <td>02/12/2020</td>
+                    <td>$580</td>
+                    <td>Failed</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div className="visitHistory_inputContainer">
+                        <div className="inputTitle">Type</div>
+                        <div><input type="text" placeholder=""/></div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="visitHistory_inputContainer">
+                        <div className="inputTitle">Number</div>
+                        <div><input type="text" placeholder=""/></div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="visitHistory_inputContainer">
+                        <div className="inputTitle">Amount</div>
+                        <div><input type="text" placeholder=""/></div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+            </div>
+            {/* <div className="billing_inputs">
+
+              <div className="visitHistory_inputContainer">
+                <div className="inputTitle">Plan</div>
+                <div><input type="text" placeholder=""/></div>
+              </div>
+
+              <div className="visitHistory_inputContainer">
+                <div className="inputTitle">Frequency</div>
+                <div><input type="text" placeholder=""/></div>
+              </div>
+
+              <div className="visitHistory_inputContainer">
+                <div className="inputTitle">Remaining</div>
+                <div><input type="text" placeholder=""/></div>
+              </div>
+
+            </div> */}
             <div className="billing_form">
 
             </div>
