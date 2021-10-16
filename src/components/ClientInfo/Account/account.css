@@ -308,3 +308,57 @@
 		width: 97%;
 	}
 }
+
+@media (max-width: 721px) {
+	.accountContainer {
+		margin: 0 15px 25px 25px;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.accountContainer .clientInfo {
+		align-items: flex-start;
+	}
+	.accountContainer .visitHistory {
+		width: 97%;
+		margin-right: 15px;
+	}
+	.billing {
+		margin-top: 0;
+		width: 97%;
+	}
+}
+
+@media (max-width: 431px) {
+	.accountContainer {
+		margin: 0 15px 25px 15px;
+	}
+	.clientInfo div {
+		font-size: 0.85em;
+	}
+
+	.visitHistory_table table tr th,
+	.billing_table table tr th {
+		font-size: 0.5em;
+		padding: 5px;
+	}
+
+	.visitHistory_table table tr td,
+	.billing_table table tr td {
+		font-size: 0.4em;
+		padding: 5px;
+	}
+
+	.accountContainer .visitHistory {
+		width: 97%;
+		margin-right: 15px;
+	}
+	.visitHistory_inputContainer div input {
+		padding: 5px 0;
+	}
+	.billing {
+		width: 100%;
+	}
+	.billing_formBlock .title {
+		font-size: 15px;
+	}
+}
