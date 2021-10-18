@@ -108,6 +108,7 @@
 }
 
 .clientIntakeInfo {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: left;
@@ -115,7 +116,15 @@
 }
 
 .clientIntakeInfo div {
-    font-size: 20px;
+    margin-left: 28px;
+    margin-bottom: 5px;
+    width: 100%;
+    font-size: 26px;
+}
+
+.clientIntakeInfo_item {
+    font-size: 25px;
+    color:#AAAAAA;
 }
 
 .intakeInfoText_healthBtn {
@@ -217,6 +226,14 @@
 
 .intakeInfoAlpha_dashboard svg {
     width: 100%;
+}
+
+.infoMessageIntake {
+    font-size: 30px;
+    margin-bottom: 25px;
+    color:#707070;
+    text-shadow: 0.5px 0.5px 0.5px #AEF7FF;
+    letter-spacing: 1px;
 }
 
 
