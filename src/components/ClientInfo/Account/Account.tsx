@@ -43,31 +43,35 @@ export default function Account(): ReactElement {
             <div className="clientInfo_tittle">Visit History</div>
             <div className="visitHistory_table">
                 <table>
-                  <tr>
-                    <th>Date</th>
-                    <th>Service</th>
-                    <th>Practitioner</th>
-                  </tr>
-                  <tr>
-                    <td>02/12/2020</td>
-                    <td>Upgrade</td>
-                    <td>Trevor Colm</td>
-                  </tr>
-                  <tr>
-                    <td>02/12/2020</td>
-                    <td>Upgrade</td>
-                    <td>Trevor Colm</td>
-                  </tr>
-                  <tr>
-                    <td>02/12/2020</td>
-                    <td>Upgrade</td>
-                    <td>Trevor Colm</td>
-                  </tr>
-                  <tr>
-                    <td>02/12/2020</td>
-                    <td>Upgrade</td>
-                    <td>Trevor Colm</td>
-                  </tr>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Service</th>
+                      <th>Practitioner</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>02/12/2020</td>
+                      <td>Upgrade</td>
+                      <td>Trevor Colm</td>
+                    </tr>
+                    <tr>
+                      <td>02/12/2020</td>
+                      <td>Upgrade</td>
+                      <td>Trevor Colm</td>
+                    </tr>
+                    <tr>
+                      <td>02/12/2020</td>
+                      <td>Upgrade</td>
+                      <td>Trevor Colm</td>
+                    </tr>
+                    <tr>
+                      <td>02/12/2020</td>
+                      <td>Upgrade</td>
+                      <td>Trevor Colm</td>
+                    </tr>
+                  </tbody>
                 </table>
             </div>
             <div className="visitHistory_inputs">
