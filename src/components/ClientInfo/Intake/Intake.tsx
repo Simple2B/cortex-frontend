@@ -3,32 +3,32 @@ import { useLocation } from "react-router-dom";
 import NavBar from '../../NavBar/NavBar';
 import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
 import { Client } from '../../../api/clientApi';
-import { instance } from '../../../api/axiosInstance';
+import {instance} from '../../../api/axiosInstance';
 import './intake.css';
+// import { clientApi } from "../../../api/clientApi";
 import { ReactComponent as IntakeDashboard } from '../../../images/intake_dashboard.svg';
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 
 
-
 const ClientDefault = {
-  api_key: "",
+  id: null,
   firstName: "",
   lastName: "",
   birthday: "",
   address: "",
   city: "",
   state: "",
-  zip: 0,
+  zip: "",
   phone: "",
   email: "",
   referring: "",
-  // conditions: list[str]
+  conditions: [],
   otherCondition: "",
-  // diseases: list[str]
+  diseases: [],
   medications: "",
-  covidTestedPositive: null,
-  covidVaccine:  null,
-  stressfulLevel: 0,
+  covidTestedPositive: "",
+  covidVaccine: "",
+  stressfulLevel: 1,
   consentMinorChild: false,
   relationshipChild: "",
 };
@@ -38,35 +38,30 @@ export default function Intake(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
-  const [client, setClient] = useState<Client>();
+  const [client, setClient] = useState<Client>(ClientDefault);
 
-  const getClient = () =>  async (api_key: string): Promise<void> => {
+  const getClient = async () => {
     try {
       const response = await instance()
-      .get("api/client/client_intake");
-      setClient(response.data)
+      .get('api/client/get_client_intake');
+      console.log("GET: get_client_intake => ", response.data);
+      setClient(response.data);
     } catch (error: any) {
       // place to handle errors and rise custom errors
-      console.log('GET: error message =>  ', error.message);
-      console.log('error response data clients => ', error.response.data);
+      console.log('GET: error message get_client_intake =>  ', error.message);
+      console.log('error response data get_client_intake => ', error.response.data);
       throw new Error(error.message);
     };
-  };
-
+  }
 
   useEffect(() => {
-    getClient();
-    // setClient(clientDB);
+    // getClient()
   }, []);
-
-  console.log("client intake => ", client);
-
-  console.log("api_key => ", api_key);
 
   return (
     <>
         <NavBar />
-        <MenuInfoPatient api_key={api_key} name={'client.firstName'}/>
+        <MenuInfoPatient api_key={api_key} firstName={client.firstName}/>
         <div className="containerIntakeContent">
           <div className="coherence">
             <div className="coherenceTitleText">Coherence</div>
@@ -89,16 +84,16 @@ export default function Intake(): ReactElement {
               <div className="intakeInfoText_health">
                 <i className="fas fa-times"/>
                 <div className="intakeInfoText_healthTitle">Intake</div>
-                {/* <div className="clientIntakeInfo">
-                  <div>Referring: {client.referring},</div>
-                  <div>Other condition: {client.otherCondition},</div>
-                  <div>Medications: {client.medications},</div>
-                  <div>Covid tested: {client.covidTestedPositive},</div>
-                  <div>Covid vaccine:  {client.covidVaccine},</div>
-                  <div>Stressfull level: {client.stressfulLevel},</div>
-                  <div>Consent minor child: {client.consentMinorChild},</div>
-                  <div>Relationship child: {client.relationshipChild},</div>
-                </div> */}
+                <div className="clientIntakeInfo">
+                  <div>Referring: <span className="clientIntakeInfo_item">{client.referring}</span>,</div>
+                  <div>Other condition: <span className="clientIntakeInfo_item">{client.otherCondition}</span>,</div>
+                  <div>Medications: <span className="clientIntakeInfo_item">{client.medications}</span>,</div>
+                  <div>Covid tested: <span className="clientIntakeInfo_item">{client.covidTestedPositive}</span>,</div>
+                  <div>Covid vaccine:  <span className="clientIntakeInfo_item">{client.covidVaccine}</span>,</div>
+                  <div>Stressfull level: <span className="clientIntakeInfo_item">{client.stressfulLevel}</span>,</div>
+                  <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild}</span>,</div>
+                  <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild}</span>,</div>
+                </div>
                 <div className="intakeInfoText_healthBtn">
                   <div className="intake_btn">
                     Consult
@@ -140,7 +135,6 @@ export default function Intake(): ReactElement {
             </div>
           </div>
         </div>
-
     </>
   )
 }
