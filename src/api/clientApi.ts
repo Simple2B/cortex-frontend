@@ -139,17 +139,20 @@ export const clientApi = {
   //   };
   // },
 
-  // identifyClientWithPhone: async (data: string): Promise<void> => {
-  //   console.log('dataReqIdentifyClient =>', data);
-  //   try {
-  //     const response = await instance()
-  //     .post('api/client/kiosk', data)
-  //     console.log('response received successfully ', response.data);
-  //     return response.data;
-  //   } catch (error: any) {
-  //     console.log("error message addClientToQueue => ", new Error(error.message));
-  //     console.log('POST: error data  addClientToQueue =>', error.message.data);
-  //     throw new Error(error.message);
-  //   }
-  // },
+  identifyClientWithPhone: async (phone: string): Promise<void> => {
+    console.log('identifyClientWithPhone: phone =>', phone);
+    const data = {"phone": phone};
+    console.log('dataReqIdentifyClient =>', data);
+    try {
+      const response = await instance()
+      .post('api/client/kiosk', data);
+      console.log('response kiosk ', response);
+      console.log('response received successfully ', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("error message addClientToQueue => ", new Error(error.message));
+      console.log('POST: error data  addClientToQueue =>', error.message.data);
+      throw new Error(error.message);
+    }
+  },
 };

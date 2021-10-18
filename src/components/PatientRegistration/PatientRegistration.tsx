@@ -117,11 +117,11 @@ export default function PatientRegistration(): ReactElement {
     }
 
     if (values.conditions.size === 0) {
-      errors.conditionError = "Yuo must choose some condition";
+      errors.conditionError = "You must choose some condition";
     }
 
     if (values.diseases.size === 0) {
-      errors.diseaseError = "Yuo must choose some disease";
+      errors.diseaseError = "You must choose some disease";
     }
 
     if (values.medications.trim() === "") {

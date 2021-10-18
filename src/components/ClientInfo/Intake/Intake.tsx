@@ -43,15 +43,8 @@ export default function Intake(): ReactElement {
   const getClient = () =>  async (api_key: string): Promise<void> => {
     try {
       const response = await instance()
-      .get('api/client/clients_intake');
-      for (let i = 0; i < response.data.length; i++) {
-        if (response.data[i].api_key === api_key) {
-          console.log("response.data[i] => ", response.data[i]);
-          let client_db = await response.data[i];
-          console.log("client_db intake", client_db);
-          setClient(client_db);
-        }
-      }
+      .get(`api/client/client_intake/${api_key}`);
+      setClient(response.data)
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', error.message);

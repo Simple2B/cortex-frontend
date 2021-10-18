@@ -44,27 +44,18 @@ export default function Kiosk(): ReactElement {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     console.log(phoneQuery);
+
+    clientApi.identifyClientWithPhone(phoneQuery);
     const filteredName = list.filter(number => number.phone === phoneQuery).map(user => user.first_name).toString();
 
     e.preventDefault();
-    // let filteredName;
-    // let user: IPatient = {api_key: "", first_name: "", last_name: "", phone: "", email: ""};
-
-    // for (let i = 0; i < list.length; i ++) {
-    //   if(list[i].phone === phoneQuery) {
-    //     filteredName = list[i].first_name;
-    //     user = list[i]
-    //   }
-    // }
 
     if (filteredName) {
           console.log('filteredName => ', filteredName);
-          // console.log('user => ', user);
 
           setStyle(true);
           setWelcomeText(`Thanks ${filteredName}, have a seat and we’ll call your name shortly.`);
           setPhoneQuery('');
-          // clientApi.addClientToQueue(user);
 
           const interval = setInterval(() => {
             setStyle(false);
