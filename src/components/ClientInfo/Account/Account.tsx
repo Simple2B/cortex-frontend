@@ -2,48 +2,21 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 import NavBar from '../../NavBar/NavBar';
 import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
-import { clientApi, Client } from '../../../api/clientApi';
+import { instance } from '../../../api/axiosInstance';
 import './account.css';
-
-
-
-const ClientDefault = {
-  api_key: "",
-  firstName: "",
-  lastName: "",
-  birthday: "",
-  address: "",
-  city: "",
-  state: "",
-  zip: 0,
-  phone: "",
-  email: "",
-  referring: "",
-  // conditions: list[str]
-  otherCondition: "",
-  // diseases: list[str]
-  medications: "",
-  covidTestedPositive: null,
-  covidVaccine:  null,
-  stressfulLevel: 0,
-  consentMinorChild: false,
-  relationshipChild: "",
-};
 
 
 export default function Account(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
-  // const [client, setClient] = useState<Client>();
 
 
-  // useEffect(() => {
-  //   const clientDB = clientApi.getClient(api_key);
-  //   // setClient(clientDB);
-  // }, []);
 
-  // console.log("client intake => ", client);
+  useEffect(() => {
+    // getClientIntake();
+  }, []);
+
 
   console.log("location in ClientInfo => ", location.pathname);
 
@@ -51,7 +24,7 @@ export default function Account(): ReactElement {
   return (
     <>
         <NavBar />
-        <MenuInfoPatient api_key={api_key} name={'client.firstName'}/>
+        <MenuInfoPatient api_key={api_key} firstName={'client.firstName'}/>
         <div className="accountContainer">
           <div className="clientInfo">
             <div className="clientInfo_tittle">Client info</div>
@@ -116,41 +89,47 @@ export default function Account(): ReactElement {
             <div className="clientInfo_tittle">Billing</div>
             <div className="billing_table">
                 <table>
-                  <tr>
-                    <th>Date</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                  </tr>
-                  <tr>
-                    <td>02/12/2020</td>
-                    <td>$580</td>
-                    <td>Paid</td>
-                  </tr>
-                  <tr>
-                    <td>02/12/2020</td>
-                    <td>$580</td>
-                    <td>Failed</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="visitHistory_inputContainer">
-                        <div className="inputTitle">Type</div>
-                        <div><input type="text" placeholder=""/></div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="visitHistory_inputContainer">
-                        <div className="inputTitle">Number</div>
-                        <div><input type="text" placeholder=""/></div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="visitHistory_inputContainer">
-                        <div className="inputTitle">Amount</div>
-                        <div><input type="text" placeholder=""/></div>
-                      </div>
-                    </td>
-                  </tr>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>02/12/2020</td>
+                      <td>$580</td>
+                      <td>Paid</td>
+                    </tr>
+                    <tr>
+                      <td>02/12/2020</td>
+                      <td>$580</td>
+                      <td>Failed</td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        <div className="visitHistory_inputContainer">
+                          <div className="inputTitle">Type</div>
+                          <div><input type="text" placeholder=""/></div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="visitHistory_inputContainer">
+                          <div className="inputTitle">Number</div>
+                          <div><input type="text" placeholder=""/></div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="visitHistory_inputContainer">
+                          <div className="inputTitle">Amount</div>
+                          <div><input type="text" placeholder=""/></div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tfoot>
                 </table>
             </div>
             <div className="billing_form">

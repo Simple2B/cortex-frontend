@@ -57,28 +57,26 @@ interface IClientQueue {
 }
 
 export interface Client {
-  client : {
-    api_key: string,
+    id: number | null,
     firstName: string,
     lastName: string,
     birthday: string,
     address: string,
     city: string,
     state: string,
-    zip: number,
+    zip: string,
     phone: string,
     email: string,
     referring: string,
-    // conditions: list[str]
+    conditions: string[],
     otherCondition: string,
-    // diseases: list[str]
+    diseases: string[],
     medications: string,
-    covidTestedPositive: boolean | null,
-    covidVaccine:  boolean | null,
-    stressfulLevel: number,
+    covidTestedPositive: string,
+    covidVaccine: string,
+    stressfulLevel: number
     consentMinorChild: boolean,
     relationshipChild: string,
-  }
 };
 
 export const clientApi = {
@@ -161,13 +159,27 @@ export const clientApi = {
     try {
       const response = await instance()
       .post('api/client/client_intake', data_client);
-      console.log('response Intake ', response);
-      console.log('Intake response received successfully ', response.data);
+      console.log('POST: response Intake ', response);
+      console.log('POST: Intake response received successfully ', response.data);
       return response.data;
     } catch (error: any) {
-      console.log("error message clientIntake => ", new Error(error.message));
+      console.log("POST: error message clientIntake => ", new Error(error.message));
       console.log('POST: error data  clientIntake =>', error.message.data);
       throw new Error(error.message);
     }
   },
+
+  // getClientIntake: () => async (): Promise<Client> => {
+  //   try {
+  //     const response = await instance()
+  //     .get("api/client/client_intake");
+  //     console.log('GET: getClient Intake =>  ', response.data);
+  //     return response.data
+  //   } catch (error: any) {
+  //     // place to handle errors and rise custom errors
+  //     console.log('GET: error message =>  ', error.message);
+  //     console.log('error response data clients => ', error.response.data);
+  //     throw new Error(error.message);
+  //   };
+  // },
 };
