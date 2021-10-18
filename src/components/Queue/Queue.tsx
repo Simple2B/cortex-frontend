@@ -70,7 +70,8 @@ export default function Queue(): ReactElement {
       <div className="queue">
         <h1 className="queue_title">The Queue</h1>
 
-        {
+        { queue.length > 0
+          ?
           queue.map((patient, index) => (
             <NavLink to={`/${patient.api_key}/intake`} key={index}>
               <div className="queue_list" onClick={() => {
@@ -80,6 +81,8 @@ export default function Queue(): ReactElement {
               </div>
             </NavLink>
           ))
+          :
+          <div className="infoMessageIntake">NO PATIENTS IN QUEUE</div>
         }
         <button className="queue_add_button" onClick={() => setIsOpen(true)}>+Add new</button>
         <Popup open={isOpen} modal>
