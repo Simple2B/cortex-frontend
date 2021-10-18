@@ -155,4 +155,19 @@ export const clientApi = {
       throw new Error(error.message);
     }
   },
+
+  clientIntake: async (data_client: {"api_key": string, "rougue_mode": boolean | null}): Promise<void> => {
+    console.log('clientIntake: data_client =>', data_client);
+    try {
+      const response = await instance()
+      .post('api/client/client_intake', data_client);
+      console.log('response Intake ', response);
+      console.log('Intake response received successfully ', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("error message clientIntake => ", new Error(error.message));
+      console.log('POST: error data  clientIntake =>', error.message.data);
+      throw new Error(error.message);
+    }
+  },
 };

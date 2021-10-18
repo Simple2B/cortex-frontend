@@ -47,4 +47,5 @@ export interface User {
     last_name: string,
     phone: string,
     email: string,
+    rougue_mode: boolean | null
 }
