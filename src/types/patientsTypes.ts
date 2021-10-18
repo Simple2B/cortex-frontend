@@ -41,9 +41,10 @@ export interface IClientAction {
 }
 
 export interface User {
-  api_key: string,
-  first_name: string,
-  last_name: string,
-  phone: string,
-  email: string,
+    id: number | null,
+    api_key: string,
+    first_name: string,
+    last_name: string,
+    phone: string,
+    email: string,
 }

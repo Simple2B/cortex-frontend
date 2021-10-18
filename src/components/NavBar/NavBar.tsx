@@ -21,13 +21,10 @@ export default function NavBar(): ReactElement {
   }
 
   const dateFromLocalStorage = new Date(parseInt(localStorage['dateNow'], 10));
-  console.log("dateFromLocalStorage => ", dateFromLocalStorage);
   //one hour from now
   const intervalTime = new Date(dateFromLocalStorage.getFullYear(), dateFromLocalStorage.getMonth(), dateFromLocalStorage.getDate(), dateFromLocalStorage.getHours() + 1, dateFromLocalStorage.getMinutes(), dateFromLocalStorage.getSeconds());
-  console.log("intervalTime => ", intervalTime);
 
   const now = new Date();
-  console.log("now => ", now);
 
   if (intervalTime < now) {
     console.log("intervalTime < now", intervalTime < now);

@@ -9,7 +9,6 @@ import './queue.css'
 import { NavLink } from 'react-router-dom';
 
 
-
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
   const [clients, setClients] = useState<User[]>([]);
@@ -23,10 +22,11 @@ export default function Queue(): ReactElement {
       .get('api/client/queue')
       console.log("clients in queue => ", response.data)
       setQueue(response.data);
+      return response.data;
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', new Error(error.message));
-      console.log('error response data queue => ', error.response.data);
+      // console.log('error response data queue => ', error.response.data);
       throw new Error(error.message);
     }
   };
@@ -99,13 +99,13 @@ export default function Queue(): ReactElement {
                       }
                       }).map((patient, index )=> (
                         <div className="queue_list" key={index} onClick={(e: any) => {
-                          const copyListPatients = [...clients];
-                          const patient_target = e.target.innerText.split(",");
-                            clientApi.addClientToQueue(patient);
-                            addClient(patient);
-                        }}>
+                            const copyListPatients = [...clients];
+                            const patient_target = e.target.innerText.split(",");
+                              clientApi.addClientToQueue(patient);
+                              addClient(patient);
+                            }}>
                           {patient.last_name}, {patient.first_name}
-                          </div>
+                        </div>
                       ))
                     }
                 </div>
