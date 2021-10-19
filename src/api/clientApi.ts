@@ -179,7 +179,7 @@ export const clientApi = {
     }
   },
 
-  clientIntake: async (data_client: {"api_key": string, "rougue_mode": boolean | null}): Promise<void> => {
+  clientIntake: async (data_client: {"api_key": string, "rougue_mode": boolean }): Promise<void> => {
     console.log('clientIntake: data_client =>', data_client);
     try {
       const response = await instance()
