@@ -90,7 +90,7 @@
 	border: 1px solid #707070;
 	background: radial-gradient(#515151, #000000);
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 	position: relative;
@@ -105,7 +105,10 @@
 }
 
 .intakeInfoText_healthTitle {
+	position: absolute;
+	top: 15px;
 	font-size: 28px;
+	letter-spacing: 1px;
 }
 
 .clientIntakeInfo {
@@ -113,13 +116,27 @@
 	justify-content: center;
 	align-items: left;
 	flex-direction: column;
+	visibility: visible;
+}
+
+.clientIntakeInfoBlock {
+	position: absolute;
+	visibility: hidden;
 }
 
 .clientIntakeInfo div {
-	font-size: 20px;
+	font-size: 28px;
+	color: #707070;
+}
+
+.clientIntakeInfo_item {
+	font-size: 26px;
+	color:#fff;
 }
 
 .intakeInfoText_healthBtn {
+	position: absolute;
+	bottom: 0;
 	font-size: 26px;
 	display: flex;
 	justify-content: center;
@@ -127,21 +144,35 @@
 	width: 531px;
 	background-color: #4e4e4e;
 	border-radius: 38px;
+	margin-bottom: 15px;
 }
 
 .intake_btn {
 	margin-right: 30px;
+	width: 33%;
 	color: #aaaaaa;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
+	transition: ease-out all 0.1s;
 }
 
 .intake_btnActive {
+	margin-right: 30px;
 	width: 33%;
 	background-color: #b1b1b1;
 	color: #fff;
 	border-radius: 38px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	transition: ease-in all 0.2s;
+}
+
+.intakeInfoText_healthBtn div:last-child {
+	margin-right: 0;
 }
 
 .intakeInfoText_healthBtn .intake_btn:last-child {
