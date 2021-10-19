@@ -15,6 +15,7 @@ export default function Intake(): ReactElement {
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
+  const [activeBtn, setActiveBtn] = useState('');
 
   const getClient = async () => {
     try {
@@ -34,6 +35,11 @@ export default function Intake(): ReactElement {
   useEffect(() => {
     getClient()
   }, []);
+
+  const handleChangeBtn = (e: any) => {
+    setActiveBtn(e.currentTarget.innerHTML);
+  }
+
 
   return (
     <>
@@ -61,27 +67,38 @@ export default function Intake(): ReactElement {
               <div className="intakeInfoText_health">
                 <i className="fas fa-times"/>
                 <div className="intakeInfoText_healthTitle">Intake</div>
-                <div className="clientIntakeInfo">
-                  <div>Referring: <span className="clientIntakeInfo_item">{client.referring}</span>,</div>
-                  <div>Other condition: <span className="clientIntakeInfo_item">{client.otherCondition}</span>,</div>
-                  <div>Medications: <span className="clientIntakeInfo_item">{client.medications}</span>,</div>
-                  <div>Covid tested: <span className="clientIntakeInfo_item">{client.covidTestedPositive}</span>,</div>
-                  <div>Covid vaccine:  <span className="clientIntakeInfo_item">{client.covidVaccine}</span>,</div>
-                  <div>Stressfull level: <span className="clientIntakeInfo_item">{client.stressfulLevel}</span>,</div>
-                  <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild}</span>,</div>
-                  <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild}</span>,</div>
+                <div className={activeBtn == "Health HX" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
+                  <div>Referring: <span className="clientIntakeInfo_item">{client.referring}</span></div>
+                  <div>Other condition: <span className="clientIntakeInfo_item">{client.otherCondition}</span></div>
+                  <div>Medications: <span className="clientIntakeInfo_item">{client.medications}</span></div>
+                  <div>Covid tested: <span className="clientIntakeInfo_item">{client.covidTestedPositive}</span></div>
+                  <div>Covid vaccine:  <span className="clientIntakeInfo_item">{client.covidVaccine}</span></div>
+                  <div>Stressfull level: <span className="clientIntakeInfo_item">{client.stressfulLevel}</span></div>
+                  <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild}</span></div>
+                  <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild}</span></div>
                 </div>
+
+                <div className={activeBtn == "Family HX" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
+                  <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild}</span></div>
+                  <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild}</span></div>
+                </div>
+
+                <div className={activeBtn == "Consult" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
+                  <div>Consult: <span className="clientIntakeInfo_item"></span></div>
+                </div>
+
                 <div className="intakeInfoText_healthBtn">
-                  <div className="intake_btn">
+                  <div onClick={handleChangeBtn} className={activeBtn == "Consult" ? "intake_btnActive" : "intake_btn"}>
                     Consult
                   </div>
-                  <div className="intake_btn intake_btnActive">
+                  <div onClick={handleChangeBtn} className={activeBtn == "Health HX" ? "intake_btnActive" : "intake_btn"}>
                     Health HX
                   </div>
-                  <div className="intake_btn">
+                  <div onClick={handleChangeBtn} className={activeBtn == "Family HX" ? "intake_btnActive" : "intake_btn"}>
                     Family HX
                   </div>
                 </div>
+
               </div>
               <div className="intakeInfoText_results">
                 <div className="results">
