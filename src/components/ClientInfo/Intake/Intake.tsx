@@ -15,7 +15,7 @@ export default function Intake(): ReactElement {
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
-  const [activeBtn, setActiveBtn] = useState('');
+  const [activeBtn, setActiveBtn] = useState("Health HX");
 
   const getClient = async () => {
     try {
