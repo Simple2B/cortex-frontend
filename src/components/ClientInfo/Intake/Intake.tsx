@@ -2,36 +2,12 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 import NavBar from '../../NavBar/NavBar';
 import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
-import { Client } from '../../../api/clientApi';
+import { Client, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
 import './intake.css';
 // import { clientApi } from "../../../api/clientApi";
 import { ReactComponent as IntakeDashboard } from '../../../images/intake_dashboard.svg';
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
-
-
-const ClientDefault = {
-  id: null,
-  firstName: "",
-  lastName: "",
-  birthday: "",
-  address: "",
-  city: "",
-  state: "",
-  zip: "",
-  phone: "",
-  email: "",
-  referring: "",
-  conditions: [],
-  otherCondition: "",
-  diseases: [],
-  medications: "",
-  covidTestedPositive: "",
-  covidVaccine: "",
-  stressfulLevel: 1,
-  consentMinorChild: false,
-  relationshipChild: "",
-};
 
 
 export default function Intake(): ReactElement {
@@ -55,7 +31,7 @@ export default function Intake(): ReactElement {
   }
 
   useEffect(() => {
-    // getClient()
+    getClient()
   }, []);
 
   return (
