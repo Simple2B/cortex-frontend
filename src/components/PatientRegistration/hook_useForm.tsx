@@ -67,12 +67,19 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
 
     };
 
+    const scrollToError = (errorBuffer: IPatientForm) => {
+      const firstErrorNodeName: string = Object.keys(errorBuffer)[0]
+      const firstErrorNode: Element | null = document.querySelector(`[data-error=${firstErrorNodeName}]`)
+      firstErrorNode?.scrollIntoView({behavior: 'smooth', block: 'start'})
+    }
+
     const onSubmit = (event: any) => {
 
       event.preventDefault();
 
       const errorBuffer = validate(values);
-      console.log("errorBuffer", errorBuffer);
+      console.log({errorBuffer});
+
 
       if (Object.keys(errorBuffer).length === 0) {
         callback(values);
@@ -82,9 +89,12 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
       } else {
         setErrors(errorBuffer);
         setSubmitted(false);
+        scrollToError(errorBuffer)
       }
+      
+      
     };
-
+    
     return {
         toggleCheckboxConsent,
         toggleCheckboxFollowing,

@@ -1,291 +1,364 @@
 .accountContainer {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
-.accountContainer .clientInfo, .accountContainer .visitHistory {
-    margin-right: 35px;
+.accountContainer .clientInfo,
+.accountContainer .visitHistory {
+	margin-right: 35px;
 }
 
 .clientInfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .clientInfo_tittle {
-    width: 100%;
-    font-size: 30px;
-    color: #AEF7FF;
-    margin-top: 35px;
-    margin-bottom: 40px;
+	width: 100%;
+	font-size: 30px;
+	color: #aef7ff;
+	margin-top: 35px;
+	margin-bottom: 40px;
 }
 
 .clientInfoAccount {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: left;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: left;
 }
 
 .clientInfoAccount div {
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    text-align: center;
-    font-size: 30px;
-    color: #fff;
-
+	display: flex;
+	/* justify-content: center; */
+	align-items: center;
+	text-align: center;
+	font-size: 30px;
+	color: #fff;
 }
 
 .clientInfoAccount .info_title {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .clientInfoAccount .info {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 10px;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	text-align: center;
+	margin-bottom: 10px;
 }
 
 .clientInfoAccount div:last-child {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .clientInfoAccount .info div {
-    margin-right: 5px;
+	margin-right: 5px;
 }
 
 .clientInfoAccount .clientInfo_text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 30px;
-    color: #707070;
-    padding-left: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-size: 30px;
+	color: #707070;
+	padding-left: 10px;
 }
 
 .visitHistory {
-    width: 34.6%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+	width: 34.6%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
 }
 
 .visitHistory_table {
-    width: 100%;
+	width: 100%;
 }
 .visitHistory_table table {
-    width: 100%;
-    border: 1px solid #707070;
+	width: 100%;
+	border: 1px solid #707070;
 }
 
 .visitHistory_table table tr th {
-    font-size: 30px;
-    color: #fff;
-    border: 1px solid #707070;
-    text-align: center;
-    padding: 7px;
+	font-size: 30px;
+	color: #fff;
+	border: 1px solid #707070;
+	text-align: center;
+	padding: 7px;
 }
 
 .visitHistory_table table tr td {
-    font-size: 30px;
-    color: #707070;
-    border: 1px solid #707070;
-    text-align: center;
-    padding: 7px;
+	font-size: 30px;
+	color: #707070;
+	border: 1px solid #707070;
+	text-align: center;
+	padding: 7px;
 }
 
 .billing_table table tr:last-child td {
-    border: 1px solid transparent;
-    text-align: left;
-    padding: 0;
-    padding-top: 20px;
-    padding-right: 5px;
+	border: 1px solid transparent;
+	text-align: left;
+	padding: 0;
+	padding-top: 20px;
+	padding-right: 5px;
 }
 
 .billing_table table tr:last-child td:last-child {
-    padding-right: 0;
+	padding-right: 0;
 }
 
 .billing_table table tr:last-child td div {
-    width: 100%;
+	width: 100%;
 }
 
-
 .visitHistory_inputs {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 30px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 30px;
 }
 
 .visitHistory_inputContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-right: 7px;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	margin-right: 7px;
 }
 
 .visitHistory_inputs div:last-child {
-    margin-right: 0;
+	margin-right: 0;
 }
 
-.visitHistory_inputContainer div, .visitHistory_inputContainer div input {
-    width: 100%;
+.visitHistory_inputContainer div,
+.visitHistory_inputContainer div input {
+	width: 100%;
 }
 
 .visitHistory_inputContainer div input {
-    border: #707070 1px solid;
-    border-radius: 7px;
-    background-color: #191919;
-    color: #fff;
-    font-size: 25px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+	border: #707070 1px solid;
+	border-radius: 7px;
+	background-color: #191919;
+	color: #fff;
+	font-size: 25px;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 .visitHistory_inputContainer div input::placeholder {
-   margin-left: 5px;
+	margin-left: 5px;
 }
 
-.visitHistory_inputContainer .inputTitle{
-    font-size: 25px;
-    color: #B1B1B1;
+.visitHistory_inputContainer .inputTitle {
+	font-size: 25px;
+	color: #b1b1b1;
 }
 
 .billing {
-    width: 29.4%;
+	width: 29.4%;
 }
 
 .billing_table {
-    width: 100%;
+	width: 100%;
 }
 .billing_table table {
-    width: 100%;
-    border: 1px solid #707070;
+	width: 100%;
+	border: 1px solid #707070;
 }
 
 .billing_table table tr th {
-    font-size: 30px;
-    color: #fff;
-    border: 1px solid #707070;
-    text-align: center;
-    padding: 7px;
+	font-size: 30px;
+	color: #fff;
+	border: 1px solid #707070;
+	text-align: center;
+	padding: 7px;
 }
 
 .billing_table table tr td {
-    font-size: 30px;
-    color: #707070;
-    border: 1px solid #707070;
-    text-align: center;
-    padding: 7px;
+	font-size: 30px;
+	color: #707070;
+	border: 1px solid #707070;
+	text-align: center;
+	padding: 7px;
 }
 
 .billing_form {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 20px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-top: 20px;
 }
 
 .billing_formInputs {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .billing_formBlock {
-    width: 50%;
+	width: 50%;
 }
 
 .billing_formBlockInput {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
 .billing_formBlock .title {
-    font-size: 25px;
-    color: #B1B1B1;
+	font-size: 25px;
+	color: #b1b1b1;
 }
 
 .billing_formBlock .inputContainer input {
-    width: 100%;
-    background-color: #191919;
-    color: #fff;
-    font-size: 25px;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    border: none;
-    border-bottom: #fff 1px solid;
+	width: 100%;
+	background-color: #191919;
+	color: #fff;
+	font-size: 25px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	border: none;
+	border-bottom: #fff 1px solid;
 }
 
 .billing_formBlock .billing_formBlockInput {
-    margin-right: 5px;
+	margin-right: 5px;
 }
 
 .btnComplete {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color:#fff;
-    font-size: 25px;
-    width: 262px;
-    height: 68px;
-    margin-top: 25px;
-    background: radial-gradient(#00E5FF, #085E67);
-    border-radius: 34px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	font-size: 25px;
+	width: 262px;
+	height: 68px;
+	margin-top: 25px;
+	background: radial-gradient(#00e5ff, #085e67);
+	border-radius: 34px;
 }
 
 @media (max-width: 1440px) {
+	.clientInfo_tittle {
+		font-size: 25px;
+		margin-top: 25px;
+		margin-bottom: 30px;
+	}
 
-    .clientInfo_tittle {
-        font-size: 25px;
-        margin-top: 25px;
-        margin-bottom: 30px;
-    }
+	.clientInfoAccount div {
+		font-size: 25px;
+	}
 
-    .clientInfoAccount div {
-        font-size: 25px;
-    }
+	.clientInfoAccount .clientInfo_text {
+		display: flex;
+		align-items: center;
+		text-align: center;
+		font-size: 25px;
+	}
 
-    .clientInfoAccount .clientInfo_text {
-        display: flex;
-        align-items: center;
-        text-align: center;
-        font-size: 25px;
-    }
+	.visitHistory_table table tr th,
+	.billing_table table tr th {
+		font-size: 20px;
+		padding: 5px;
+	}
 
-    .visitHistory_table table tr th, .billing_table table tr th {
-        font-size: 20px;
-        padding: 5px;
-    }
+	.visitHistory_table table tr td,
+	.billing_table table tr td {
+		font-size: 20px;
+		padding: 5px;
+	}
 
-    .visitHistory_table table tr td, .billing_table table tr td {
-        font-size: 20px;
-        padding: 5px;
-    }
+	.visitHistory_inputContainer .inputTitle {
+		font-size: 18px;
+	}
 
-    .visitHistory_inputContainer .inputTitle{
-        font-size: 18px;
-    }
+	.billing_formBlock .title {
+		font-size: 20px;
+	}
 
-    .billing_formBlock .title {
-        font-size: 20px;
-    }
+	.btnComplete {
+		font-size: 20px;
+		width: 200px;
+		height: 58px;
+		margin-top: 25px;
+		border-radius: 35px;
+	}
+}
 
-    .btnComplete {
-        font-size: 20px;
-        width: 200px;
-        height: 58px;
-        margin-top: 25px;
-        border-radius: 35px;
-    }
+@media (max-width: 1024px) {
+	.accountContainer {
+		flex-wrap: wrap;
+		justify-content: space-between;
+		margin-left: 50px;
+		margin-bottom: 50px;
+	}
+	.accountContainer .visitHistory {
+		width: 60%;
+		margin-right: 35px;
+	}
+
+	.billing {
+		margin-top: 1em;
+		width: 97%;
+	}
+}
+
+@media (max-width: 721px) {
+	.accountContainer {
+		margin: 0 15px 25px 25px;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.accountContainer .clientInfo {
+		align-items: flex-start;
+	}
+	.accountContainer .visitHistory {
+		width: 97%;
+		margin-right: 15px;
+	}
+	.billing {
+		margin-top: 0;
+		width: 97%;
+	}
+}
+
+@media (max-width: 431px) {
+	.accountContainer {
+		margin: 0 15px 25px 15px;
+	}
+	.clientInfo div {
+		font-size: 0.85em;
+	}
+
+	.visitHistory_table table tr th,
+	.billing_table table tr th {
+		font-size: 0.5em;
+		padding: 5px;
+	}
+
+	.visitHistory_table table tr td,
+	.billing_table table tr td {
+		font-size: 0.4em;
+		padding: 5px;
+	}
+
+	.accountContainer .visitHistory {
+		width: 97%;
+		margin-right: 15px;
+	}
+	.visitHistory_inputContainer div input {
+		padding: 5px 0;
+	}
+	.billing {
+		width: 100%;
+	}
+	.billing_formBlock .title {
+		font-size: 15px;
+	}
 }
