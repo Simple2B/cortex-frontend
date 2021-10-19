@@ -71,8 +71,8 @@ export default function Intake(): ReactElement {
                   <div>Referring: <span className="clientIntakeInfo_item">{client.referring}</span></div>
                   <div>Other condition: <span className="clientIntakeInfo_item">{client.otherCondition}</span></div>
                   <div>Medications: <span className="clientIntakeInfo_item">{client.medications}</span></div>
-                  <div>Covid tested: <span className="clientIntakeInfo_item">{client.covidTestedPositive}</span></div>
-                  <div>Covid vaccine:  <span className="clientIntakeInfo_item">{client.covidVaccine}</span></div>
+                  <div>Covid tested: <span className="clientIntakeInfo_item">{client.covidTestedPositive === "null" ? "rather not say" : client.covidTestedPositive}</span></div>
+                  <div>Covid vaccine:  <span className="clientIntakeInfo_item">{client.covidVaccine === "null" ? "rather not say" : client.covidVaccine}</span></div>
                   <div>Stressfull level: <span className="clientIntakeInfo_item">{client.stressfulLevel}</span></div>
                   <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild}</span></div>
                   <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild}</span></div>
