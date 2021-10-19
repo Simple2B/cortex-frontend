@@ -228,14 +228,6 @@
     width: 100%;
 }
 
-.infoMessageIntake {
-    font-size: 30px;
-    margin-bottom: 25px;
-    color:#707070;
-    text-shadow: 0.5px 0.5px 0.5px #AEF7FF;
-    letter-spacing: 1px;
-}
-
 
 @media (max-width: 1024px) {
 

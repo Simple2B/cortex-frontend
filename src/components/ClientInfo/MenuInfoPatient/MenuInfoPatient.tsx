@@ -27,8 +27,7 @@ export default function MenuInfoPatient(props: MyProps): ReactElement {
     <div className="menuInfoPatient_container">
         <div className="menuInfoPatient">
             <div className={splitLocation[splitLocation.length - 1] === "#" ? "active" : "menuInfoPatientItem"}>
-              {/* test data props */}
-              <NavLink to="#">{ props.firstName }</NavLink>
+              <NavLink to="#" className="item">{ props.firstName }</NavLink>
             </div>
             <div className={splitLocation[splitLocation.length - 1] === "#" ? "active" : "menuInfoPatientItem"}>
               <NavLink to="#">Care Plan</NavLink>

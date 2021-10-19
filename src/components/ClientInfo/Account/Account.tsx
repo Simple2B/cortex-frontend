@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import NavBar from '../../NavBar/NavBar';
 import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
 import { instance } from '../../../api/axiosInstance';
+import { Client, ClientDefault } from '../../../api/clientApi';
 import './account.css';
 
 
@@ -10,6 +11,26 @@ export default function Account(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
+
+  const [client, setClient] = useState<Client>(ClientDefault);
+
+  const getClient = async () => {
+    try {
+      const response = await instance()
+      .get('api/client/get_client_intake');
+      console.log("GET: account => ", response.data);
+      setClient(response.data);
+    } catch (error: any) {
+      // place to handle errors and rise custom errors
+      console.log('GET: error message account =>  ', error.message);
+      console.log('error response data account => ', error.response.data);
+      throw new Error(error.message);
+    };
+  }
+
+  useEffect(() => {
+    getClient()
+  }, []);
 
 
 
@@ -24,19 +45,19 @@ export default function Account(): ReactElement {
   return (
     <>
         <NavBar />
-        <MenuInfoPatient api_key={api_key} firstName={'client.firstName'}/>
+        <MenuInfoPatient api_key={api_key} firstName={client.firstName}/>
         <div className="accountContainer">
           <div className="clientInfo">
             <div className="clientInfo_tittle">Client info</div>
             <div className="clientInfoAccount">
-              <div className="info_title">Name</div>
-              <div className="info"><div>DOB: </div><div className="clientInfo_text"></div></div>
-              <div className="info"><div>Address: </div><div className="clientInfo_text">Street</div></div>
-              <div className="info"><div>City: </div><div className="clientInfo_text"></div></div>
-              <div className="info"><div>State: </div><div className="clientInfo_text"></div></div>
-              <div className="info"><div>Zip: </div><div className="clientInfo_text"></div></div>
-              <div className="info"><div>Phone: </div><div className="clientInfo_text"></div></div>
-              <div className="info"><div>Email: </div><div className="clientInfo_text"></div></div>
+              <div className="info_title">Name <div className="clientInfo_text">{client.firstName} {client.lastName}</div></div>
+              <div className="info"><div>DOB: </div><div className="clientInfo_text">{client.birthday}</div></div>
+              <div className="info"><div>Address: </div><div className="clientInfo_text">{client.address}</div></div>
+              <div className="info"><div>City: </div><div className="clientInfo_text">{client.city}</div></div>
+              <div className="info"><div>State: </div><div className="clientInfo_text">{client.state}</div></div>
+              <div className="info"><div>Zip: </div><div className="clientInfo_text">{client.zip}</div></div>
+              <div className="info"><div>Phone: </div><div className="clientInfo_text">{client.phone}</div></div>
+              <div className="info"><div>Email: </div><div className="clientInfo_text">{client.email}</div></div>
             </div>
           </div>
           <div className="visitHistory">

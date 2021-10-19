@@ -79,6 +79,29 @@ export interface Client {
     relationshipChild: string,
 };
 
+export const ClientDefault = {
+  id: null,
+  firstName: "",
+  lastName: "",
+  birthday: "",
+  address: "",
+  city: "",
+  state: "",
+  zip: "",
+  phone: "",
+  email: "",
+  referring: "",
+  conditions: [],
+  otherCondition: "",
+  diseases: [],
+  medications: "",
+  covidTestedPositive: "",
+  covidVaccine: "",
+  stressfulLevel: 1,
+  consentMinorChild: false,
+  relationshipChild: "",
+};
+
 export const clientApi = {
 
   registrationClient: async (data: IPatientForm): Promise<void> => {
