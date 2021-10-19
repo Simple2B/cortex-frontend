@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 263.848 253">
+  <g id="Group_1052" data-name="Group 1052" transform="translate(-282 -563)">
+    <g id="Group_832" data-name="Group 832" transform="translate(282.652 563)">
+      <text id="_1" data-name="1" transform="translate(5.348 173)" fill="#aef7ff" font-size="18" font-family="Poppins-ExtraLight, Poppins" font-weight="200" letter-spacing="0.15em"><tspan x="-2.331" y="0">1</tspan></text>
+      <text id="_0" data-name="0" transform="translate(5.348 212)" fill="#aef7ff" font-size="18" font-family="Poppins-ExtraLight, Poppins" font-weight="200" letter-spacing="0.15em"><tspan x="-5.418" y="0">0</tspan></text>
+      <text id="_3" data-name="3" transform="translate(5.348 96)" fill="#aef7ff" font-size="18" font-family="Poppins-ExtraLight, Poppins" font-weight="200" letter-spacing="0.15em"><tspan x="-5.22" y="0">3</tspan></text>
+      <text id="_2" data-name="2" transform="translate(5.348 135)" fill="#aef7ff" font-size="18" font-family="Poppins-ExtraLight, Poppins" font-weight="200" letter-spacing="0.15em"><tspan x="-5.13" y="0">2</tspan></text>
+      <text id="_4" data-name="4" transform="translate(5.348 58)" fill="#aef7ff" font-size="18" font-family="Poppins-ExtraLight, Poppins" font-weight="200" letter-spacing="0.15em"><tspan x="-5.337" y="0">4</tspan></text>
+      <text id="_5" data-name="5" transform="translate(5.348 19)" fill="#aef7ff" font-size="18" font-family="Poppins-ExtraLight, Poppins" font-weight="200" letter-spacing="0.15em"><tspan x="-5.445" y="0">5</tspan></text>
+      <g id="Group_831" data-name="Group 831" transform="translate(20.769 16.237)">
+        <line id="Line_14" data-name="Line 14" x2="242.427" transform="translate(0 200.134)" fill="none" stroke="#aef7ff" stroke-width="1"/>
+        <line id="Line_17" data-name="Line 17" x2="242.427" transform="translate(0 120.081)" fill="none" stroke="#aef7ff" stroke-width="1"/>
+        <line id="Line_15" data-name="Line 15" x2="242.427" transform="translate(0 160.107)" fill="none" stroke="#aef7ff" stroke-width="1"/>
+        <line id="Line_16" data-name="Line 16" x2="242.427" transform="translate(0 80.054)" fill="none" stroke="#aef7ff" stroke-width="1"/>
+        <line id="Line_18" data-name="Line 18" x2="242.427" transform="translate(0 40.027)" fill="none" stroke="#aef7ff" stroke-width="1"/>
+        <line id="Line_19" data-name="Line 19" x2="242.427" fill="none" stroke="#aef7ff" stroke-width="1"/>
+      </g>
+    </g>
+    <rect id="Rectangle_23" data-name="Rectangle 23" width="35" height="161" transform="translate(397 619)" fill="#3f8daf"/>
+    <rect id="Rectangle_24" data-name="Rectangle 24" width="35" height="121" transform="translate(325 659)" fill="#a4cec7"/>
+    <rect id="Rectangle_25" data-name="Rectangle 25" width="35" height="81" transform="translate(470 699)" fill="#aef7ff"/>
+    <text id="VLF" transform="translate(343 810)" fill="#aef7ff" font-size="14" font-family="Poppins-Medium, Poppins" font-weight="500" letter-spacing="0.15em"><tspan x="-13.671" y="0">VLF</tspan></text>
+    <text id="LF" transform="translate(415 811)" fill="#aef7ff" font-size="15" font-family="Poppins-Medium, Poppins" font-weight="500" letter-spacing="0.15em"><tspan x="-8.318" y="0">LF</tspan></text>
+    <text id="HF" transform="translate(488 811)" fill="#aef7ff" font-size="15" font-family="Poppins-Medium, Poppins" font-weight="500" letter-spacing="0.15em"><tspan x="-10.275" y="0">HF</tspan></text>
+  </g>
+</svg>
