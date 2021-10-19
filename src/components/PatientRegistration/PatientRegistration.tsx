@@ -112,7 +112,7 @@ export default function PatientRegistration(): ReactElement {
     );
 
     if (values.email.trim() === "") {
-      errors.email = "Phone must not be empty";
+      errors.email = "Email must not be empty";
     } else if (!regexEmail.test(values.email)) {
       errors.email = "Incorrect email. Must be like email@email.com";
     }
@@ -130,7 +130,7 @@ export default function PatientRegistration(): ReactElement {
     }
 
     if (values.stressfulLevel === "") {
-      errors.stressfulLevel = "Stressfull level must be choose";
+      errors.stressfulLevel = "Stressful level must be choose";
     }
 
     return errors;
@@ -183,15 +183,16 @@ export default function PatientRegistration(): ReactElement {
     }}
     />
   }
-
+  
   return (
     <>
       <div className="registration">
         <h1 className="registration_title">Registration Form</h1>
         <form onSubmit={onSubmit} noValidate className="registration_form">
-          <div className="registration_input" >
+          <div className="registration_input" data-error={"firstName"}>
             <input
               name="firstName"
+              
               value={values.firstName.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${
@@ -205,7 +206,7 @@ export default function PatientRegistration(): ReactElement {
             )}
           </div>
 
-          <div className="registration_input">
+          <div className="registration_input" data-error={"lastName"}>
             <input
               name="lastName"
               value={values.lastName.trim() || ""}
@@ -266,9 +267,10 @@ export default function PatientRegistration(): ReactElement {
             placeholder="ZIP"
           />
 
-          <div className="registration_input">
+          <div className="registration_input" data-error={"phone"}>
             <input
               name="phone"
+              
               value={values.phone.trim()}
               onChange={onChange}
               className={`registration_input_data ${
@@ -282,9 +284,10 @@ export default function PatientRegistration(): ReactElement {
             )}
           </div>
 
-          <div className="registration_input">
+          <div className="registration_input" data-error={"email"}>
             <input
               name="email"
+              
               value={values.email.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${
@@ -307,14 +310,16 @@ export default function PatientRegistration(): ReactElement {
           />
 
           <div
+            data-error={"conditionError"}
             className={`reqFormTitleText ${
               errors.conditionError && "is-invalid"
             }`}
+
           >
             Check any conditions you CURRENTLY have{" "}
-            <span className="asterisk">*</span>
+            <span  className="asterisk">*</span>
             {errors.conditionError && (
-              <div className="invalid-feedback" style={{ display: "block" }}>
+              <div data-error={"conditionError"} className="invalid-feedback" style={{ display: "block" }}>
                 {errors.conditionError}
               </div>
             )}
@@ -341,6 +346,7 @@ export default function PatientRegistration(): ReactElement {
           </div>
 
           <div
+          data-error={"diseaseError"}
             className={`reqFormTitleText ${
               errors.diseaseError && "is-invalid"
             }`}
@@ -355,9 +361,10 @@ export default function PatientRegistration(): ReactElement {
           </div>
           {createCheckboxesFollowing()}
 
-          <div className="registration_input">
+          <div className="registration_input"  data-error={"medications"}>
             <input
               name="medications"
+             
               value={values.medications.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${
@@ -451,7 +458,7 @@ export default function PatientRegistration(): ReactElement {
             On a scale of 1-10 how stressfull has your life been?{" "}
             <span className="asterisk">*</span>
           </div>
-          <div className="reqFormTitleText error">{errors.stressfulLevel}</div>
+          <div data-error={"stressfulLevel"} className="reqFormTitleText error">{errors.stressfulLevel}</div>
 
           <div className="containerCheckboxStressfulLevel">
             <div className="reqFormSubTitleText">Not stressful</div>
