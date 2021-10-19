@@ -285,12 +285,8 @@
 }
 
 .registration_input_data {
-  width: 93%;
-  height: 93%;
-  /* margin: 2.5px auto; */
   font-size: 35px;
   background-color: transparent;
-  /* background-color: black; */
   display: flex;
   opacity: 1;
   border: none;
@@ -299,6 +295,8 @@
   outline: none;
   justify-content: left;
   align-items: center;
+  border-radius: 42px;
+  opacity: 0.66;
 }
 
 .registration_input_birth {
@@ -374,13 +372,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .containerCheckboxStressfulLevel {
     width: 55%;
   }
+
   .inputRelationshipChild {
     width: 55%;
   }
+
+  .registration_input_data {
+    width: 100%;
+    height: 100%;
+    font-size: 26px;
+    background-color: transparent;
+    /* background-color: black; */
+    display: flex;
+    opacity: 1;
+    border: none;
+    color: #AEF7FF;
+    background-color: black;
+    outline: none;
+    justify-content: left;
+    align-items: center;
+  }
 }
-
-
-
 
 @media (max-width: 768px) {
   .registration_title {
@@ -431,9 +443,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
   .registration_input_data {
-    width: 95%;
-    height: 38px;
-    margin: 2.5px auto;
+    width: 100%;
+    height: 100%;
     font-size: 16px;
     opacity: 1;
     border: none;
@@ -441,7 +452,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: black;
     outline: none;
     justify-content: left;
-
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
