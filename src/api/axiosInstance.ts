@@ -21,6 +21,6 @@ export const authInstance: AxiosInstance = axios.create({
   baseURL: domain.REACT_DOMAIN,
   headers: {
     "Content-Type": "multipart/form-data",
-    'Access-Control-Allow-Origin' : '*',
+    // 'Access-Control-Allow-Origin' : '*',
   },
 });

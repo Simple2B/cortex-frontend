@@ -6,33 +6,40 @@ import { ReactComponent as Logo } from '../../images/cortex_logo.svg';
 import { IPatient } from '../../types/patientsTypes';
 import { NavLink } from 'react-router-dom';
 import { instance } from "../../api/axiosInstance";
-import { stringify } from 'querystring';
 
 
 export default function Kiosk(): ReactElement {
   const [phoneQuery, setPhoneQuery] = useState('');
   const [welcomeText, setWelcomeText] = useState('Please enter your phone number');
   const [style, setStyle] = useState(false);
-  const [list, setList] = useState<IPatient[]>([]);
-  const [client, setClient] = useState<IPatient[]>([]);
+  // const [list, setList] = useState<IPatient[]>([]);
+  const [client, setClient] = useState<IPatient>({
+    "api_key": "",
+    "first_name": "",
+    "last_name": "",
+    "phone": "",
+    "email": ""
+  });
 
-  const getClients = async () => {
+  const getClient = async (phone: string) => {
     try {
       const response = await instance()
-      .get('api/client/clients');
-      console.log("clients => ", response.data);
-      setList(response.data);
+      .get(`api/client/kiosk/${phone}`);
+      console.log("client kiosk => ", response.data);
+      setClient(response.data);
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', error.message);
-      console.log('error response data client identify with phone => ', error.response.data);
+      console.log('error response client kiosk => ', error.response.data);
       throw new Error(error.message);
     };
   };
 
   useEffect(() => {
-    getClients()
-  }, []);
+    if (phoneQuery) {
+      getClient(phoneQuery)
+    };
+  }, [phoneQuery]);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneQuery(e.target.value);
@@ -43,10 +50,11 @@ export default function Kiosk(): ReactElement {
   }
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
-    console.log(phoneQuery);
+    console.log("phoneQuery => ", phoneQuery);
 
     clientApi.identifyClientWithPhone(phoneQuery);
-    const filteredName = list.filter(number => number.phone === phoneQuery).map(user => user.first_name).toString();
+    const filteredName = client.first_name
+    console.log("Kiosk -> client ", client);
 
     e.preventDefault();
 
