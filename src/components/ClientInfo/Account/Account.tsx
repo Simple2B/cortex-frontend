@@ -17,7 +17,7 @@ export default function Account(): ReactElement {
   const getClient = async () => {
     try {
       const response = await instance()
-      .get('api/client/get_client_intake');
+      .get(`api/client/client_intake/${api_key}`);
       console.log("GET: account => ", response.data);
       setClient(response.data);
     } catch (error: any) {
@@ -30,12 +30,6 @@ export default function Account(): ReactElement {
 
   useEffect(() => {
     getClient()
-  }, []);
-
-
-
-  useEffect(() => {
-    // getClientIntake();
   }, []);
 
 

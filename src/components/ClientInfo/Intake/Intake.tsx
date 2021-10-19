@@ -19,7 +19,7 @@ export default function Intake(): ReactElement {
   const getClient = async () => {
     try {
       const response = await instance()
-      .get('api/client/client_intake');
+      .get(`api/client/client_intake/${api_key}`);
       console.log("GET: client_intake => ", response.data);
       setClient(response.data);
       return response.data
