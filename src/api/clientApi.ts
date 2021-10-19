@@ -111,13 +111,15 @@ export const clientApi = {
     try {
       const response = await instance()
       .post('api/client/registration', formatRequestData(data))
+      console.log(`!!!!! response registration `, response);
+
       const res = response.data
       console.log(`response received successfully `, res);
       return res;
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log(`POST: error message => ${error.message}`);
-      console.log("error.response.data) => ", error.response.data);
+      // console.log("error.response.data) => ", error.response.data);
       throw new Error(error.message);
     }
   },
