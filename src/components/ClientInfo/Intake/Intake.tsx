@@ -19,9 +19,10 @@ export default function Intake(): ReactElement {
   const getClient = async () => {
     try {
       const response = await instance()
-      .get('api/client/get_client_intake');
-      console.log("GET: get_client_intake => ", response.data);
+      .get('api/client/client_intake');
+      console.log("GET: client_intake => ", response.data);
       setClient(response.data);
+      return response.data
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log('GET: error message get_client_intake =>  ', error.message);

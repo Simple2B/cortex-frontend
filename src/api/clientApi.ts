@@ -193,18 +193,4 @@ export const clientApi = {
       throw new Error(error.message);
     }
   },
-
-  // getClientIntake: () => async (): Promise<Client> => {
-  //   try {
-  //     const response = await instance()
-  //     .get("api/client/client_intake");
-  //     console.log('GET: getClient Intake =>  ', response.data);
-  //     return response.data
-  //   } catch (error: any) {
-  //     // place to handle errors and rise custom errors
-  //     console.log('GET: error message =>  ', error.message);
-  //     console.log('error response data clients => ', error.response.data);
-  //     throw new Error(error.message);
-  //   };
-  // },
 };
