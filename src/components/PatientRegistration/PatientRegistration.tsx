@@ -86,6 +86,7 @@ const initialState: IPatientForm = {
 };
 
 export default function PatientRegistration(): ReactElement {
+
   const validateForm = (values: IPatientForm) => {
     let errors: Partial<IPatientForm> = {};
     if (values.firstName.trim() === "") {
