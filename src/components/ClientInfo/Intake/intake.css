@@ -109,25 +109,6 @@
 }
 
 .clientIntakeInfo {
-<<<<<<< HEAD
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: left;
-    flex-direction: column;
-}
-
-.clientIntakeInfo div {
-    margin-left: 28px;
-    margin-bottom: 5px;
-    width: 100%;
-    font-size: 26px;
-}
-
-.clientIntakeInfo_item {
-    font-size: 25px;
-    color:#AAAAAA;
-=======
 	display: flex;
 	justify-content: center;
 	align-items: left;
@@ -136,7 +117,6 @@
 
 .clientIntakeInfo div {
 	font-size: 20px;
->>>>>>> origin/arsenii/feature/responsive_intake_account
 }
 
 .intakeInfoText_healthBtn {
