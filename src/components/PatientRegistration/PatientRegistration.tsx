@@ -183,7 +183,7 @@ export default function PatientRegistration(): ReactElement {
     }}
     />
   }
-  
+
   return (
     <>
       <div className="registration">
@@ -192,7 +192,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input" data-error={"firstName"}>
             <input
               name="firstName"
-              
+
               value={values.firstName.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${
@@ -270,7 +270,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input" data-error={"phone"}>
             <input
               name="phone"
-              
+
               value={values.phone.trim()}
               onChange={onChange}
               className={`registration_input_data ${
@@ -287,7 +287,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input" data-error={"email"}>
             <input
               name="email"
-              
+
               value={values.email.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${
@@ -364,7 +364,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input"  data-error={"medications"}>
             <input
               name="medications"
-             
+
               value={values.medications.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${

@@ -29,12 +29,14 @@
   text-align: left;
   color: #fff;
   opacity: 0.66;
-  padding-left: 30px;
+  /* margin-left: 30px; */
+  /* padding-left: 30px; */
   margin-bottom: 25px;
 }
 
 .registration_input::placeholder , .registration_input input::placeholder{
   color: #AEF7FF;
+  padding-left: 30px;
 }
 
 .registration_button {
@@ -293,7 +295,7 @@
   color: #AEF7FF;
   background-color: black;
   outline: none;
-  justify-content: left;
+  /* justify-content: left; */
   align-items: center;
   border-radius: 42px;
   opacity: 0.66;
@@ -306,12 +308,19 @@
 .registration_input_birth .input_birth {
   width: 93%;
   color: transparent;
+  background-color: transparent;
+  outline: none;
 }
 
 .registration_input_birth .label_birth {
-  /* width: 30%; */
+  width: 70%;
   position: absolute;
   top: 22%;
+  /* left: 30px; */
+  padding-left: 30px;
+  border: transparent;
+  border-radius: 38px;
+
   color: #AEF7FF;
   background-color: black;
 }
@@ -335,7 +344,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: left;
     color: #AEF7FF;
     opacity: 0.66;
-    padding-left: 30px;
+    /* padding-left: 30px; */
     /* margin-bottom: 17px; */
   }
 
@@ -389,7 +398,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #AEF7FF;
     background-color: black;
     outline: none;
-    justify-content: left;
+    /* justify-content: left; */
     align-items: center;
   }
 }
@@ -411,7 +420,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: left;
     color: #fff;
     opacity: 0.66;
-    padding-left: 30px;
+    /* padding-left: 30px; */
     /* margin-bottom: 10px; */
   }
 
@@ -451,7 +460,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #AEF7FF;
     background-color: black;
     outline: none;
-    justify-content: left;
+    /* justify-content: left; */
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
