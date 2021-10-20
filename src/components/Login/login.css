@@ -12,6 +12,14 @@
   height: auto;
 }
 
+.cortex_logo {
+  margin: 15px auto;
+}
+
+.loginAlertError {
+  font-size: 35px;
+}
+
 .cortex_logo svg {
   width: 38%;
 }
@@ -74,6 +82,10 @@
     font-size: 24px;
   }
 
+  .loginAlertError {
+    font-size: 30px;
+  }
+
 }
 
 @media (max-width: 940px) {
@@ -103,6 +115,10 @@
     letter-spacing: 5px;
   }
 
+  .loginAlertError {
+    font-size: 25px;
+  }
+
 }
 
 @media (max-width: 540px) {
@@ -128,6 +144,10 @@
   .login_button {
     width: 70%;
     height: 55px;
+    font-size: 20px;
+  }
+
+  .loginAlertError {
     font-size: 20px;
   }
 }
@@ -157,6 +177,10 @@
   .login_button {
     width: 70%;
     height: 50px;
+    font-size: 18px;
+  }
+
+  .loginAlertError {
     font-size: 18px;
   }
 }
