@@ -5,7 +5,6 @@ import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
 import { Client, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
 import './intake.css';
-// import { clientApi } from "../../../api/clientApi";
 import { ReactComponent as IntakeDashboard } from '../../../images/intake_dashboard.svg';
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 
@@ -68,19 +67,18 @@ export default function Intake(): ReactElement {
                 <i className="fas fa-times"/>
                 <div className="intakeInfoText_healthTitle">Intake</div>
                 <div className={activeBtn == "Health HX" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
-                  <div>Referring: <span className="clientIntakeInfo_item">{client.referring}</span></div>
-                  <div>Other condition: <span className="clientIntakeInfo_item">{client.otherCondition}</span></div>
+                  <div>Referring: <span className="clientIntakeInfo_item">{client.referring === "" ? " - " : client.referring}</span></div>
+                  <div>Condition: <span className="clientIntakeInfo_item">{client.conditions}</span></div>
+                  <div>Diseases: <span className="clientIntakeInfo_item">{client.diseases}</span></div>
                   <div>Medications: <span className="clientIntakeInfo_item">{client.medications}</span></div>
                   <div>Covid tested: <span className="clientIntakeInfo_item">{client.covidTestedPositive === "null" ? "rather not say" : client.covidTestedPositive}</span></div>
                   <div>Covid vaccine:  <span className="clientIntakeInfo_item">{client.covidVaccine === "null" ? "rather not say" : client.covidVaccine}</span></div>
                   <div>Stressfull level: <span className="clientIntakeInfo_item">{client.stressfulLevel}</span></div>
-                  <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild}</span></div>
-                  <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild}</span></div>
                 </div>
 
                 <div className={activeBtn == "Family HX" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
-                  <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild}</span></div>
-                  <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild}</span></div>
+                  <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild }</span></div>
+                  <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild === "" ? " - " : client.relationshipChild}</span></div>
                 </div>
 
                 <div className={activeBtn == "Consult" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
