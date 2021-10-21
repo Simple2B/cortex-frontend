@@ -39,3 +39,13 @@ export interface IClientAction {
   type: ClientActionTypes.ADD_CLIENT;
   payload: IPatientForm;
 }
+
+export interface User {
+    id: number | null,
+    api_key: string,
+    first_name: string,
+    last_name: string,
+    phone: string,
+    email: string,
+    rougue_mode: boolean | null
+}

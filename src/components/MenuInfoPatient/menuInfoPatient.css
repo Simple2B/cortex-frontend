@@ -1,8 +1,0 @@
-.menuInfoPatient {
-    display: flex;
-    justify-content: center;
-}
-
-.menuInfoPatient .menuInfoPatientItem {
-    font-size: 27px;
-}

@@ -3,16 +3,11 @@ import Popup from 'reactjs-popup';
 import { clientApi } from "../../api/clientApi";
 import NavBar from '../NavBar/NavBar';
 import { instance } from "../../api/axiosInstance";
+import { User } from "../../types/patientsTypes";
 import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
 import './queue.css'
+import { NavLink } from 'react-router-dom';
 
-interface User {
-    api_key: string,
-    first_name: string,
-    last_name: string,
-    phone: string,
-    email: string,
-}
 
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
@@ -27,10 +22,11 @@ export default function Queue(): ReactElement {
       .get('api/client/queue')
       console.log("clients in queue => ", response.data)
       setQueue(response.data);
+      return response.data;
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', new Error(error.message));
-      console.log('error response data queue => ', error.response.data);
+      // console.log('error response data queue => ', error.response.data);
       throw new Error(error.message);
     }
   };
@@ -73,10 +69,20 @@ export default function Queue(): ReactElement {
       </div>
       <div className="queue">
         <h1 className="queue_title">The Queue</h1>
-        {
+
+        { queue.length > 0
+          ?
           queue.map((patient, index) => (
-            <div className="queue_list" key={index}>{patient.last_name}, {patient.first_name}</div>
+            <NavLink to={`/${patient.api_key}/intake`} key={index}>
+              <div className="queue_list" onClick={() => {
+                  clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})
+              }}>
+                  {patient.last_name}, {patient.first_name}
+              </div>
+            </NavLink>
           ))
+          :
+          <div className="infoMessageIntake">NO PATIENTS IN QUEUE</div>
         }
         <button className="queue_add_button" onClick={() => setIsOpen(true)}>+Add new</button>
         <Popup open={isOpen} modal>
@@ -92,20 +98,20 @@ export default function Queue(): ReactElement {
                 </div>
                 <div className="client_lists">
                     { clients.filter(client => !(queue.map(q => q.phone)).includes(client.phone)).filter(client => {
-                      if (querySearch == '') {
+                      if (querySearch === '') {
                           return client;
                       } else if ((client.first_name + client.last_name).toLowerCase().includes(querySearch.toLowerCase())) {
                         return client;
                       }
                       }).map((patient, index )=> (
                         <div className="queue_list" key={index} onClick={(e: any) => {
-                          const copyListPatients = [...clients];
-                          const patient_target = e.target.innerText.split(",");
-                            clientApi.addClientToQueue(patient);
-                            addClient(patient);
-                        }}>
+                            const copyListPatients = [...clients];
+                            const patient_target = e.target.innerText.split(",");
+                              clientApi.addClientToQueue(patient);
+                              addClient(patient);
+                            }}>
                           {patient.last_name}, {patient.first_name}
-                          </div>
+                        </div>
                       ))
                     }
                 </div>
