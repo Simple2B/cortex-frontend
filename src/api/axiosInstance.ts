@@ -5,13 +5,14 @@ import domain from "./domain.json";
 
 export const instance = (): AxiosInstance => {
   const token = localStorage.getItem("token") ?? "";
+  // console.log("token", token)
   return axios.create({
     baseURL: domain.REACT_DOMAIN,
     headers: {
       Authorization: `Bearer ${token}`,
       // "Content-Type": "application/json; charset=utf-8",
       'Access-Control-Allow-Origin' : '*',
-      'Access-Control-Allow-Methods':'GET, PUT, POST, DELETE, PATCH, OPTIONS',
+      // 'Access-Control-Allow-Methods':'GET, PUT, POST, DELETE, PATCH, OPTIONS',
     },
   });
 };
@@ -19,7 +20,7 @@ export const instance = (): AxiosInstance => {
 export const authInstance: AxiosInstance = axios.create({
   baseURL: domain.REACT_DOMAIN,
   headers: {
-    "Content-Type": "application/json; charset=utf-8",
-    'Access-Control-Allow-Origin' : '*',
+    "Content-Type": "multipart/form-data",
+    // 'Access-Control-Allow-Origin' : '*',
   },
 });

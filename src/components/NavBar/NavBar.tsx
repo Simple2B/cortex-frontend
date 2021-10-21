@@ -21,13 +21,10 @@ export default function NavBar(): ReactElement {
   }
 
   const dateFromLocalStorage = new Date(parseInt(localStorage['dateNow'], 10));
-  console.log("dateFromLocalStorage => ", dateFromLocalStorage);
   //one hour from now
   const intervalTime = new Date(dateFromLocalStorage.getFullYear(), dateFromLocalStorage.getMonth(), dateFromLocalStorage.getDate(), dateFromLocalStorage.getHours() + 1, dateFromLocalStorage.getMinutes(), dateFromLocalStorage.getSeconds());
-  console.log("intervalTime => ", intervalTime);
 
   const now = new Date();
-  console.log("now => ", now);
 
   if (intervalTime < now) {
     console.log("intervalTime < now", intervalTime < now);
@@ -41,7 +38,7 @@ export default function NavBar(): ReactElement {
     <div className="nav_bar">
       <div onClick={handleMenuSwitch} className="menu_button"><Menu /></div>
       <nav className={`menu ${switchMenu ? 'open' : ''}`}>
-        <NavLink className="nav_item" to="/patients">Patients</NavLink>
+        <NavLink className="nav_item" to="/queue">Patients</NavLink>
         <NavLink className="nav_item" to="/reports">Reports</NavLink>
         <NavLink className="nav_item" to="/kiosk">Kiosk</NavLink>
         <NavLink onClick={handlerLogout} className="nav_item" to="/">Log out</NavLink>

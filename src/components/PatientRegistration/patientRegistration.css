@@ -19,6 +19,7 @@
 
 .registration_input {
   /* width: 879px; */
+  position: relative;
   width: 43.3%;
   height: 84px;
   border-radius: 42px;
@@ -28,12 +29,14 @@
   text-align: left;
   color: #fff;
   opacity: 0.66;
-  padding-left: 30px;
+  /* margin-left: 30px; */
+  /* padding-left: 30px; */
   margin-bottom: 25px;
 }
 
 .registration_input::placeholder , .registration_input input::placeholder{
   color: #AEF7FF;
+  padding-left: 30px;
 }
 
 .registration_button {
@@ -284,17 +287,18 @@
 }
 
 .registration_input_data {
-  width: 93%;
-  height: 50px;
-  margin: 2.5px auto;
-  font-size: 22px;
-  /* background-color: black; */
+  font-size: 35px;
+  background-color: transparent;
+  display: flex;
   opacity: 1;
   border: none;
   color: #AEF7FF;
   background-color: black;
   outline: none;
-  justify-content: left;
+  /* justify-content: left; */
+  align-items: center;
+  border-radius: 42px;
+  opacity: 0.66;
 }
 
 .registration_input_birth {
@@ -302,14 +306,21 @@
 }
 
 .registration_input_birth .input_birth {
-  width: 95%;
+  width: 93%;
   color: transparent;
+  background-color: transparent;
+  outline: none;
 }
 
 .registration_input_birth .label_birth {
-  /* width: 30%; */
+  width: 70%;
   position: absolute;
   top: 22%;
+  /* left: 30px; */
+  padding-left: 30px;
+  border: transparent;
+  border-radius: 38px;
+
   color: #AEF7FF;
   background-color: black;
 }
@@ -333,7 +344,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: left;
     color: #AEF7FF;
     opacity: 0.66;
-    padding-left: 30px;
+    /* padding-left: 30px; */
     /* margin-bottom: 17px; */
   }
 
@@ -370,13 +381,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .containerCheckboxStressfulLevel {
     width: 55%;
   }
+
   .inputRelationshipChild {
     width: 55%;
   }
+
+  .registration_input_data {
+    width: 100%;
+    height: 100%;
+    font-size: 26px;
+    background-color: transparent;
+    /* background-color: black; */
+    display: flex;
+    opacity: 1;
+    border: none;
+    color: #AEF7FF;
+    background-color: black;
+    outline: none;
+    /* justify-content: left; */
+    align-items: center;
+  }
 }
-
-
-
 
 @media (max-width: 768px) {
   .registration_title {
@@ -395,7 +420,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: left;
     color: #fff;
     opacity: 0.66;
-    padding-left: 30px;
+    /* padding-left: 30px; */
     /* margin-bottom: 10px; */
   }
 
@@ -427,17 +452,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
   .registration_input_data {
-    width: 95%;
-    height: 38px;
-    margin: 2.5px auto;
+    width: 100%;
+    height: 100%;
     font-size: 16px;
     opacity: 1;
     border: none;
     color: #AEF7FF;
     background-color: black;
     outline: none;
-    justify-content: left;
-
+    /* justify-content: left; */
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
