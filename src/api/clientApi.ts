@@ -171,7 +171,7 @@ export const clientApi = {
       .post('api/client/kiosk', data);
       console.log('response kiosk ', response);
       console.log('response received successfully ', response.data);
-      return response.data;
+      // return response.data;
     } catch (error: any) {
       console.log("error message addClientToQueue => ", new Error(error.message));
       console.log('POST: error data  addClientToQueue =>', error.message.data);
