@@ -73,9 +73,11 @@ export default function Queue(): ReactElement {
         { queue.length > 0
           ?
           queue.map((patient, index) => (
-            <div className="queue_list">
-                {/* <i className="fas fa-times faTimesItemQueue" onClick={() => {clientApi.deleteClient(patient)}} title="Delete from queue"/> */}
-                <NavLink to={`/${patient.api_key}/intake`} key={index} >
+            <div className="queue_list" key={index} >
+                <i className="fas fa-times faTimesItemQueue"
+                  onClick={() => {clientApi.deleteClient(patient)}}
+                title="Delete from queue"/>
+                <NavLink to={`/${patient.api_key}/intake`} >
                   <div className="list"  onClick={() => {clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})}}>
                       {patient.last_name}, {patient.first_name}
                   </div>
@@ -86,7 +88,10 @@ export default function Queue(): ReactElement {
           :
           <div className="infoMessageIntake">NO PATIENTS IN QUEUE</div>
         }
-        <button className="queue_add_button" onClick={() => setIsOpen(true)}>+Add new</button>
+        <button className="queue_add_button" onClick={() => {
+          setIsOpen(true);
+          setSearchQuery("");
+          }}>+Add new</button>
         <Popup open={isOpen} modal>
           <div className="modal_window">
 
