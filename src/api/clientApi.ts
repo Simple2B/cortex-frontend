@@ -1,6 +1,6 @@
 // import { AxiosError, AxiosResponse } from "axios";
 import { instance, authInstance } from "./axiosInstance";
-import { IPatientForm } from '../types/patientsTypes';
+import { IPatientForm, User } from '../types/patientsTypes';
 
 interface IPatientFormForBackend {
   firstName: string,
@@ -190,6 +190,21 @@ export const clientApi = {
     } catch (error: any) {
       console.log("POST: error message clientIntake => ", new Error(error.message));
       console.log('POST: error data  clientIntake =>', error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
+  deleteClient: async (data_client: User): Promise<void> => {
+    console.log('deleteClient: data_client =>', data_client);
+    try {
+      const response = await instance()
+      .post('api/client/delete_clients_queue', data_client);
+      console.log('POST: response deleteClient ', response);
+      console.log('POST: deleteClient response received successfully ', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("POST: error message deleteClient => ", new Error(error.message));
+      console.log('POST: error data  deleteClient =>', error.message.data);
       throw new Error(error.message);
     }
   },
