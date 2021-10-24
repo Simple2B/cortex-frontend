@@ -118,6 +118,7 @@
 	align-items: left;
 	flex-direction: column;
 	visibility: visible;
+	margin-left: 5px;
 }
 
 .clientIntakeInfoBlock {
