@@ -1,10 +1,9 @@
 import React, { ReactElement, useState } from 'react'
+import './login.css'
 import { useHistory } from 'react-router-dom';
-import { authApi } from '../../api/authApi';
 import { ReactComponent as Brain } from '../../images/brain.svg'
 import { ReactComponent as Logo } from '../../images/cortex_logo.svg'
 import { useActions } from '../../redux/useActions';
-import './login.css'
 
 export interface ILogin {
   username: string;
@@ -34,48 +33,37 @@ export default function Login(): ReactElement {
     });
   };
 
-  const loginForm = async ({ username, password }: ILogin) => {
-    // console.log("intervalHour", intervalHour);
-    console.log(`Start login fetch`)
-    const token = await authApi.login(username, password);
-    console.log(`token`, token)
-    localStorage.setItem("token", token["access_token"]);
-    console.log(`Stop login fetch`)
-  }
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
 
-  const handleSubmit = () => {
-    try {
-      login({
+    // try {
+    const apiLogin = login({
         password: form.password,
         username: form.username,
       });
-      // setError(false);
-      const now = new Date();
-      localStorage['dateNow'] = ''+now.getTime();
       history.push('/queue');
-      // setMessageError("");
-    } catch (error: any) {
-      const status = error.status;
-      console.log("status ", status);
-      setForm({
-        username: "",
-        password: "",
-      });
-      setError(true);
-      setMessageError("Invalid login credentials. Please try again!");
-      // setMessageError("Incorrect email or password");
-      console.log(messageError);
-      if (status === 401 || status === 403 || status === 404) {
-        setError(true);
-        setMessageError("Invalid login credentials. Please try again!");
-        localStorage.removeItem("token");
-        return Promise.reject({
-          message: false,
-        });
-      }
-      // other error code (404, 500, etc): no need to log out
-      return Promise.resolve();
-    }
+
+      console.log("login -> ", apiLogin);
+
+
+    // const result = loginApi
+
+    // } catch (error: any) {
+    //   console.log("error from login -> ", error);
+    //   const status = error.status;
+    //   setForm({
+    //     username: "",
+    //     password: "",
+    //   });
+    //   if (status === 401 || status === 403 || status === 404) {
+    //     setError(true);
+    //     setMessageError("Invalid login credentials. Please try again!");
+    //     return Promise.reject({
+    //       message: false,
+    //     });
+    //   }
+    //   return Promise.resolve();
+    // }
   };
 
   return (

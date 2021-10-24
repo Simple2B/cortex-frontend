@@ -9,19 +9,24 @@ import { Dispatch } from "redux";
 import { authApi } from "../../api/authApi";
 
 export const login = ({ password, username }: ILoginParams) => {
-  return async (dispatch: Dispatch<AuthAction>) => {
+  return async (dispatch: Dispatch<AuthAction>): Promise<any> => {
     try {
       dispatch({ type: AuthActionTypes.AUTH_API_REQUEST });
       const data: ILoginResponse = await authApi.login(username, password);
 
       localStorage.setItem("token", data.access_token);
+      const now = new Date();
+      localStorage['dateNow'] = ''+now.getTime();
 
       dispatch({
         type: AuthActionTypes.LOGIN_SUCCESS,
         payload: data,
       });
-    } catch (e) {
+      return data.access_token;
+    } catch (e: any) {
+      console.log("authAction: error from redux -> ", e)
       dispatch({ type: AuthActionTypes.LOGIN_FAILURE, payload: e });
+      return e.message;
     }
   };
 };

@@ -4,10 +4,6 @@ import { authInstance } from "./axiosInstance";
 
 
 const formatRequestBody = (username: string, password: string) => {
-  // const params = {
-  //   username: username,
-  //   password: password,
-  // };
   const formData = new FormData();
   formData.append('username', username);
   formData.append('password', password);
@@ -32,7 +28,7 @@ export const authApi = {
       return response.data;
     } catch (error: any) {
       // place to handle errors and rise custom errors
-      console.log(`POST [api/auth/sign_in] error message: ${error.message}`);
+      // console.log(`POST [api/auth/sign_in] error message: ${error.message}`);
       throw new Error(error.message);
     }
   },
