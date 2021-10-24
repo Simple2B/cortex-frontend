@@ -53,27 +53,6 @@ export default function Queue(): ReactElement {
     setQueue((prev: User[]) => [...prev, patient]);
   };
 
-  const modal: HTMLElement | null = document.getElementById("myModal");
-
-  const btn = document.getElementById("myBtn");
-
-  const span = document.getElementsByClassName("close")[0];
-
-
-  // btn.addEventListener("click", () => {
-  //   modal.style.display = "block";
-  // })
-
-  // span.onclick = function() {
-  //   modal.style.display = "none";
-  // }
-
-  // window.onclick = function(event) {
-  //   if (event.target == modal) {
-  //     modal.style.display = "none";
-  //   }
-  // }
-
   const removeMemberFromQueue = (index: number, patient: User) => {
     const newClients = [...queue];
     console.log("newClients before deleted => ", newClients);
