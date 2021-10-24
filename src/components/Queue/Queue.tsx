@@ -11,7 +11,6 @@ import { NavLink } from 'react-router-dom';
 
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
-
   const [clients, setClients] = useState<User[]>([]);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -24,9 +23,7 @@ export default function Queue(): ReactElement {
       console.log("clients in queue => ", response.data);
       setQueue(response.data);
     } catch (error: any) {
-      // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', new Error(error.message));
-      // console.log('error response data queue => ', error.response.data);
       throw new Error(error.message);
     }
   };
@@ -58,9 +55,7 @@ export default function Queue(): ReactElement {
     const newClients = [...queue];
     console.log("newClients before deleted => ", newClients);
     newClients.splice(index, 1);
-    setQueue(newClients);
     console.log("newClients after deleted => ", newClients);
-
     clientApi.deleteClient({
       id: patient.id,
       api_key: patient.api_key,
@@ -70,6 +65,8 @@ export default function Queue(): ReactElement {
       email: patient.email,
       rougue_mode: patient.rougue_mode,
     });
+
+    setQueue(newClients);
   };
 
 
@@ -92,9 +89,9 @@ export default function Queue(): ReactElement {
           ?
           queue.map((patient, index) => (
             <div className="queue_list" key={index} >
-                <i className="fas fa-times faTimesItemQueue"
-                  onClick={() => removeMemberFromQueue(index, patient)}
-                title="Delete from queue"/>
+                <i className="fas fa-times faTimesItemQueue" onClick={() => {
+                  removeMemberFromQueue(index, patient)
+                  }} title="Delete from queue"/>
                 <NavLink to={`/${patient.api_key}/intake`} >
                   <div className="list"  onClick={() => {clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})}}>
                       {patient.last_name}, {patient.first_name}
@@ -106,13 +103,14 @@ export default function Queue(): ReactElement {
           :
           <div className="infoMessageIntake">NO PATIENTS IN QUEUE</div>
         }
+
         <button className="queue_add_button" onClick={() => {
           setIsOpen(true);
           setSearchQuery("");
           }}>+Add new</button>
+
         <Popup open={isOpen} modal>
           <div className="modal_window">
-
             <div className="lists">
                 <i className="fas fa-times" onClick={() => setIsOpen(false)}/>
                 <div className="input_search">
@@ -143,6 +141,7 @@ export default function Queue(): ReactElement {
             </div>
           </div>
         </Popup>
+
       </div>
     </>
   )
