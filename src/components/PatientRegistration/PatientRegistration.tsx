@@ -154,8 +154,6 @@ export default function PatientRegistration(): ReactElement {
     />
   );
 
-
-
   const {
     values,
     errors,
