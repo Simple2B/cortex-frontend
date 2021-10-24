@@ -68,14 +68,14 @@ export default function Intake(): ReactElement {
                 <div className="intakeInfoText_healthTitle">Intake</div>
                 <div className={activeBtn == "Health HX" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
                   <div>Referring: <span className="clientIntakeInfo_item">{client.referring === "" ? " - " : client.referring}</span></div>
-                  <div>Condition: {client.conditions.map(condition => (
-                      <span className="clientIntakeInfo_item itemsConditions">
+                  <div>Condition: {client.conditions.map((condition, index) => (
+                      <span className="clientIntakeInfo_item itemsConditions" key={index}>
                         {condition},
                       </span>
                     ))}
                   </div>
-                  <div>Diseases: {client.diseases.map(disease => (
-                      <span className="clientIntakeInfo_item itemsConditions">
+                  <div>Diseases: {client.diseases.map((disease, index) => (
+                      <span className="clientIntakeInfo_item itemsConditions" key={index}>
                         {disease},
                       </span>
                     ))}
