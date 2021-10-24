@@ -194,13 +194,13 @@ export const clientApi = {
     }
   },
 
-  deleteClient: async (data_client: User): Promise<void> => {
-    console.log('deleteClient: data_client =>', data_client);
+  deleteClient: async (client: User): Promise<void> => {
+    console.log('deleteClient: data_client =>', client);
     try {
       const response = await instance()
-      .post('api/client/delete_clients_queue', data_client);
+      .post('api/client/delete_clients_queue', client);
       console.log('POST: response deleteClient ', response);
-      console.log('POST: deleteClient response received successfully ', response.data);
+      console.log('POST: response deleted client from queue successfully ', response.data);
       return response.data;
     } catch (error: any) {
       console.log("POST: error message deleteClient => ", new Error(error.message));
