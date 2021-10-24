@@ -64,7 +64,7 @@ export default function Intake(): ReactElement {
           <div className="intakeInfo">
             <div className="intakeInfoText">
               <div className="intakeInfoText_health">
-                <i className="fas fa-times"/>
+                {/* <i className="fas fa-times"/> */}
                 <div className="intakeInfoText_healthTitle">Intake</div>
                 <div className={activeBtn == "Health HX" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
                   <div>Referring: <span className="clientIntakeInfo_item">{client.referring === "" ? " - " : client.referring}</span></div>
