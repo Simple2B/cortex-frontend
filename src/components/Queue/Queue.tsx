@@ -125,6 +125,7 @@ export default function Queue(): ReactElement {
                     <div className="btnsModal">
                       <div className="btnModalOk" onClick={() => {
                         removeMemberFromQueue(index, patient);
+                        setModalOpen(false);
                       }}>Ok</div>
                       <div onClick={() => setModalOpen(false)}>Cancel</div>
                     </div>
