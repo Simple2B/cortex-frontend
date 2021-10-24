@@ -142,26 +142,6 @@ export const clientApi = {
     }
   },
 
-  // getClient: async (api_key: string): Promise<void> => {
-  //   try {
-  //     const response = await instance()
-  //     .get('api/client/clients_intake');
-  //     for (let i = 0; i < response.data.length; i++) {
-  //       if (response.data[i].api_key === api_key) {
-  //         console.log("response.data[i] => ", response.data[i]);
-  //         let client_db = await response.data[i];
-  //         console.log("client_db intake", client_db);
-  //         return client_db;
-  //       }
-  //     }
-  //   } catch (error: any) {
-  //     // place to handle errors and rise custom errors
-  //     console.log('GET: error message =>  ', error.message);
-  //     console.log('error response data clients => ', error.response.data);
-  //     throw new Error(error.message);
-  //   };
-  // },
-
   identifyClientWithPhone: async (phone: string): Promise<void> => {
     console.log('identifyClientWithPhone: phone =>', phone);
     const data = {"phone": phone};
