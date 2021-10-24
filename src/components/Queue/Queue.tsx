@@ -23,7 +23,6 @@ export default function Queue(): ReactElement {
       .get('api/client/queue');
       console.log("clients in queue => ", response.data);
       setQueue(response.data);
-      return response.data;
     } catch (error: any) {
       // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', new Error(error.message));
@@ -55,12 +54,22 @@ export default function Queue(): ReactElement {
     setQueue((prev: User[]) => [...prev, patient]);
   };
 
-  const removeMemberFromQueue = (index: number) => {
+  const removeMemberFromQueue = (index: number, patient: User) => {
     const newClients = [...queue];
     console.log("newClients before deleted => ", newClients);
     newClients.splice(index, 1);
     setQueue(newClients);
     console.log("newClients after deleted => ", newClients);
+
+    clientApi.deleteClient({
+      id: patient.id,
+      api_key: patient.api_key,
+      first_name: patient.first_name,
+      last_name: patient.last_name,
+      phone: patient.phone,
+      email: patient.email,
+      rougue_mode: patient.rougue_mode,
+    });
   };
 
 
@@ -84,18 +93,7 @@ export default function Queue(): ReactElement {
           queue.map((patient, index) => (
             <div className="queue_list" key={index} >
                 <i className="fas fa-times faTimesItemQueue"
-                  onClick={() => {
-                    clientApi.deleteClient({
-                      id: patient.id,
-                      api_key: patient.api_key,
-                      first_name: patient.first_name,
-                      last_name: patient.last_name,
-                      phone: patient.phone,
-                      email: patient.email,
-                      rougue_mode: patient.rougue_mode,
-                    });
-                    removeMemberFromQueue(index);
-                  }}
+                  onClick={() => removeMemberFromQueue(index, patient)}
                 title="Delete from queue"/>
                 <NavLink to={`/${patient.api_key}/intake`} >
                   <div className="list"  onClick={() => {clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})}}>
