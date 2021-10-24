@@ -15,6 +15,8 @@ export const login = ({ password, username }: ILoginParams) => {
       const data: ILoginResponse = await authApi.login(username, password);
 
       localStorage.setItem("token", data.access_token);
+      const now = new Date();
+      localStorage['dateNow'] = ''+now.getTime();
 
       dispatch({
         type: AuthActionTypes.LOGIN_SUCCESS,

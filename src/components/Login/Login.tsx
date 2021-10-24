@@ -38,7 +38,7 @@ export default function Login(): ReactElement {
     // console.log("intervalHour", intervalHour);
     console.log(`Start login fetch`)
     const token = await authApi.login(username, password);
-    console.log(`token`, token)
+    console.log(`token`, token);
     localStorage.setItem("token", token["access_token"]);
     console.log(`Stop login fetch`)
   }
@@ -50,8 +50,6 @@ export default function Login(): ReactElement {
         username: form.username,
       });
       // setError(false);
-      const now = new Date();
-      localStorage['dateNow'] = ''+now.getTime();
       history.push('/queue');
       // setMessageError("");
     } catch (error: any) {
