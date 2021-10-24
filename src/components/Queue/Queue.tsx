@@ -16,6 +16,8 @@ export default function Queue(): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
   const [querySearch, setSearchQuery] = useState<string>('');
 
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const getClientsForQueue = async () => {
     try {
       const response = await instance()
@@ -51,6 +53,27 @@ export default function Queue(): ReactElement {
     setQueue((prev: User[]) => [...prev, patient]);
   };
 
+  const modal: HTMLElement | null = document.getElementById("myModal");
+
+  const btn = document.getElementById("myBtn");
+
+  const span = document.getElementsByClassName("close")[0];
+
+
+  // btn.addEventListener("click", () => {
+  //   modal.style.display = "block";
+  // })
+
+  // span.onclick = function() {
+  //   modal.style.display = "none";
+  // }
+
+  // window.onclick = function(event) {
+  //   if (event.target == modal) {
+  //     modal.style.display = "none";
+  //   }
+  // }
+
   const removeMemberFromQueue = (index: number, patient: User) => {
     const newClients = [...queue];
     console.log("newClients before deleted => ", newClients);
@@ -67,7 +90,8 @@ export default function Queue(): ReactElement {
     });
 
     setQueue(newClients);
-  };
+
+    };
 
 
   return (
@@ -89,9 +113,23 @@ export default function Queue(): ReactElement {
           ?
           queue.map((patient, index) => (
             <div className="queue_list" key={index} >
-                <i className="fas fa-times faTimesItemQueue" onClick={() => {
-                  removeMemberFromQueue(index, patient)
-                  }} title="Delete from queue"/>
+                <i className="fas fa-times faTimesItemQueue" title="Delete from queue" onClick={() => {
+                    if (patient) {
+                      setModalOpen(true);
+                    }
+                }}/>
+                <div id="myModal" className={isModalOpen ? "modalOpen" : "modal"}>
+                  <div className="modal-content">
+                    <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
+                    <div className="modalText">Are you sure you want to remove {patient.first_name} {patient.last_name} from the queue ?</div>
+                    <div className="btnsModal">
+                      <div className="btnModalOk" onClick={() => {
+                        removeMemberFromQueue(index, patient);
+                      }}>Ok</div>
+                      <div onClick={() => setModalOpen(false)}>Cancel</div>
+                    </div>
+                  </div>
+                </div>
                 <NavLink to={`/${patient.api_key}/intake`} >
                   <div className="list"  onClick={() => {clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})}}>
                       {patient.last_name}, {patient.first_name}
