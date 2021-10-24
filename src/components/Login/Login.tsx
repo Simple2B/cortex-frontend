@@ -4,14 +4,11 @@ import { useHistory } from 'react-router-dom';
 import { ReactComponent as Brain } from '../../images/brain.svg'
 import { ReactComponent as Logo } from '../../images/cortex_logo.svg'
 import { useActions } from '../../redux/useActions';
-import { useTypedSelector } from '../../redux/useTypeSelector';
-
 
 export interface ILogin {
   username: string;
   password: string;
 }
-
 
 export default function Login(): ReactElement {
   const [ form, setForm ] = useState<ILogin>({
