@@ -135,6 +135,10 @@
 	color:#fff;
 }
 
+.itemsConditions {
+	margin-right: 5px;
+}
+
 .intakeInfoText_healthBtn {
 	position: absolute;
 	bottom: 0;
