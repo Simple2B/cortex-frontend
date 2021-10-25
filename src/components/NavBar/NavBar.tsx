@@ -40,6 +40,7 @@ export default function NavBar(): ReactElement {
     console.log("intervalTime < now", intervalTime < now);
     localStorage.removeItem("token");
     localStorage.removeItem("dateNow");
+    window.location.reload();
     console.log("!!! removeItem dateNow  !!!");
   }
 
