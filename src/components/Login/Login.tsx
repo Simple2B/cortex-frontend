@@ -71,7 +71,7 @@ export default function Login(): ReactElement {
         {/* <div className="errorMessage"></div> */}
         <button onClick={handleSubmit}
           disabled={
-          form.password === "" || form.username === "" || !isLoading
+          (form.password === "" || form.username === "") && isLoading
           } className="login_button">LOGIN</button>
       </form>
     </div>
