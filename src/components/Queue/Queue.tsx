@@ -8,7 +8,6 @@ import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
 import './queue.css'
 import { NavLink } from 'react-router-dom';
 
-
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
   const [clients, setClients] = useState<User[]>([]);
