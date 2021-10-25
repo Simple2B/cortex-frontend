@@ -15,7 +15,7 @@ export default function Queue(): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
   const [querySearch, setSearchQuery] = useState<string>('');
 
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState<number>(0);
 
   const getClientsForQueue = async () => {
     try {
@@ -52,25 +52,16 @@ export default function Queue(): ReactElement {
     setQueue((prev: User[]) => [...prev, patient]);
   };
 
-  const removeMemberFromQueue = (index: number, patient: User) => {
+  const removeMemberFromQueue = (index: number) => {
     const newClients = [...queue];
     console.log("newClients before deleted => ", newClients);
     newClients.splice(index, 1);
     console.log("newClients after deleted => ", newClients);
-    clientApi.deleteClient({
-      id: patient.id,
-      api_key: patient.api_key,
-      first_name: patient.first_name,
-      last_name: patient.last_name,
-      phone: patient.phone,
-      email: patient.email,
-      rougue_mode: patient.rougue_mode,
-    });
-
     setQueue(newClients);
 
-    };
+    // setQueue((queue: User[]) => queue.filter((prevPatient, i) => i !== index));
 
+    };
 
   return (
     <>
@@ -91,21 +82,32 @@ export default function Queue(): ReactElement {
           ?
           queue.map((patient, index) => (
             <div className="queue_list" key={index} >
-                <i className="fas fa-times faTimesItemQueue" title="Delete from queue" onClick={() => {
-                    if (patient) {
-                      setModalOpen(true);
-                    }
-                }}/>
-                <div id="myModal" className={isModalOpen ? "modalOpen" : "modal"}>
+                <i className="fas fa-times faTimesItemQueue" title="Delete from queue" onClick={(e) => setModalOpen(patient.id)}/>
+                <div id="myModal" className={isModalOpen === patient.id ? "modalOpen" : "modal"}>
                   <div className="modal-content">
-                    <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
-                    <div className="modalText">Are you sure you want to remove {patient.first_name} {patient.last_name} from the queue ?</div>
+                    <span className="close" onClick={() => setModalOpen(0)}>&times;</span>
+                    <div className="modalText">
+                      Are you sure you want to remove {patient.first_name} {patient.last_name} from the queue ?
+                    </div>
                     <div className="btnsModal">
                       <div className="btnModalOk" onClick={() => {
-                        removeMemberFromQueue(index, patient);
-                        setModalOpen(false);
-                      }}>Ok</div>
-                      <div onClick={() => setModalOpen(false)}>Cancel</div>
+
+                          clientApi.deleteClient({
+                            "id": patient.id,
+                            "api_key": patient.api_key,
+                            "first_name": patient.first_name,
+                            "last_name": patient.last_name,
+                            "phone": patient.phone,
+                            "email": patient.email,
+                            "rougue_mode": true,
+                          });
+
+                          removeMemberFromQueue(index);
+                          setModalOpen(0);
+                        }}>
+                          Ok
+                      </div>
+                      <div onClick={() => setModalOpen(0)}>Cancel</div>
                     </div>
                   </div>
                 </div>
@@ -115,7 +117,6 @@ export default function Queue(): ReactElement {
                   </div>
                 </NavLink>
             </div>
-
           ))
           :
           <div className="infoMessageIntake">NO PATIENTS IN QUEUE</div>
