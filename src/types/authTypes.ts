@@ -1,6 +1,8 @@
 // state
 export interface IAuthState {
   loggedIn: boolean;
+  errorMessage: string;
+  isLoading: boolean;
 }
 // action types
 export enum AuthActionTypes {
@@ -20,7 +22,7 @@ interface ILoginRequestSuccessAction {
 }
 interface ILoginRequestFailureAction {
   type: AuthActionTypes.LOGIN_FAILURE;
-  payload: any;
+  payload: string;
 }
 interface ILogoutAction {
   type: AuthActionTypes.LOGOUT;

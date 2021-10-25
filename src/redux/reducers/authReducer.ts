@@ -6,10 +6,14 @@ let initialState: IAuthState = (function () {
 
     return {
       loggedIn: true,
+      errorMessage: "",
+      isLoading: false,
     };
   } else
     return {
       loggedIn: false,
+      errorMessage: "",
+      isLoading: false,
     };
 })();
 
@@ -22,14 +26,17 @@ export const authReducer = (
       return {
         ...state,
         loggedIn: true,
+        errorMessage: "",
       };
     case AuthActionTypes.LOGIN_FAILURE:
       return {
         ...state,
         loggedIn: false,
+        errorMessage: action.payload,
+        isLoading: true,
       };
     case AuthActionTypes.LOGOUT:
-      return { ...state, loggedIn: false };
+      return { ...state, loggedIn: false, errorMessage: "",};
     case AuthActionTypes.CHECK_TOKEN:
       return { ...state, loggedIn: true };
     default:
