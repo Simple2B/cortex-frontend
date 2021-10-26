@@ -50,7 +50,7 @@ export default function NavBar(): ReactElement {
       <div onClick={handleMenuSwitch} className="menu_button"><Menu /></div>
       <nav className={`menu ${switchMenu ? 'open' : ''}`}>
         <NavLink className="nav_item" to="/queue" onClick={()=> splitLocation[splitLocation.length - 1] === 'queue' && setSwitchMenu(false) }>Patients</NavLink>
-        <NavLink className="nav_item" to="/reports" onClick={()=> splitLocation[splitLocation.length - 1] === 'queue' && setSwitchMenu(false) }>Reports</NavLink>
+        <NavLink className="nav_item" to="/reports" onClick={()=> splitLocation[splitLocation.length - 1] === 'reports' && setSwitchMenu(false) }>Reports</NavLink>
         <NavLink className="nav_item" to="/kiosk">Kiosk</NavLink>
         <NavLink onClick={handlerLogout} className="nav_item" to="/">Log out</NavLink>
       </nav>
