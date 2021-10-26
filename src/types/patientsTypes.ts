@@ -41,11 +41,11 @@ export interface IClientAction {
 }
 
 export interface User {
-    id: number | null,
+    id: number,
     api_key: string,
     first_name: string,
     last_name: string,
     phone: string,
     email: string,
-    rougue_mode: boolean | null
+    rougue_mode: boolean | null,
 }

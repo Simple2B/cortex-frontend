@@ -1,9 +1,10 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useState, useEffect } from 'react'
 import './login.css'
 import { useHistory } from 'react-router-dom';
 import { ReactComponent as Brain } from '../../images/brain.svg'
 import { ReactComponent as Logo } from '../../images/cortex_logo.svg'
 import { useActions } from '../../redux/useActions';
+import { useTypedSelector } from '../../redux/useTypeSelector';
 
 export interface ILogin {
   username: string;
@@ -18,8 +19,9 @@ export default function Login(): ReactElement {
   const history = useHistory();
   const { login } = useActions();
 
-  const [messageError, setMessageError] = useState("");
-  const [error, setError] = useState(false);
+  const errorMessage = useTypedSelector((state) => state.auth.errorMessage);
+  const isLogin = useTypedSelector((state) => state.auth.loggedIn);
+  const isLoading = useTypedSelector((state) => state.auth.isLoading);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm((prev) => {
@@ -33,37 +35,21 @@ export default function Login(): ReactElement {
     });
   };
 
+  useEffect(() => {
+    isLogin && history.push('/queue');
+    setForm({
+      username: "",
+      password: "",
+    });
+  }, [isLogin, isLoading, errorMessage])
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    // try {
-    const apiLogin = login({
+    login({
         password: form.password,
         username: form.username,
       });
-      history.push('/queue');
-
-      console.log("login -> ", apiLogin);
-
-
-    // const result = loginApi
-
-    // } catch (error: any) {
-    //   console.log("error from login -> ", error);
-    //   const status = error.status;
-    //   setForm({
-    //     username: "",
-    //     password: "",
-    //   });
-    //   if (status === 401 || status === 403 || status === 404) {
-    //     setError(true);
-    //     setMessageError("Invalid login credentials. Please try again!");
-    //     return Promise.reject({
-    //       message: false,
-    //     });
-    //   }
-    //   return Promise.resolve();
-    // }
   };
 
   return (
@@ -74,9 +60,9 @@ export default function Login(): ReactElement {
       <div className="cortex_logo">
         <Logo />
       </div>
-      { error &&
+      { errorMessage.length > 0 &&
         <div className="alert alert-danger loginAlertError" role="alert">
-            {messageError}
+            {errorMessage}
         </div>
       }
       <form className="login_form">
@@ -85,7 +71,7 @@ export default function Login(): ReactElement {
         {/* <div className="errorMessage"></div> */}
         <button onClick={handleSubmit}
           disabled={
-            form.password === "" || form.username === ""
+          (form.password === "" || form.username === "") && isLoading
           } className="login_button">LOGIN</button>
       </form>
     </div>
