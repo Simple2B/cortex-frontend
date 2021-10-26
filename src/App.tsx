@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Switch,
   Route,
   Redirect,
 } from "react-router-dom";
@@ -28,6 +29,7 @@ function App() {
 
   return (
     <div className="App" >
+      <Switch>
          <Route exact path="/">
             {loggedIn ? (
               <Redirect
@@ -73,6 +75,7 @@ function App() {
             component={Queue}
           />
 
+
           <ProtectedRoute
             {...defaultProtectedRouteProps}
             exact path="/:api_key/intake"
@@ -87,7 +90,7 @@ function App() {
 
           <ProtectedRoute
               {...defaultProtectedRouteProps}
-              exact path="/:api_key/:firstName"
+              exact path="/:api_key/:first_name"
               component={Name}
           />
 
@@ -108,6 +111,7 @@ function App() {
           <Route exact path="/">
             <Login />
           </Route> */}
+        </Switch>
     </div >
   );
 }
