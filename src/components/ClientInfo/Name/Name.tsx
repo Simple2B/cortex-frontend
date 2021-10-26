@@ -115,7 +115,7 @@ export default function Name(): ReactElement {
                       <div onClick={handleChangeBtnShortLeg} className={activeBtnShortLeg == "R" ? "btnActive" : "name_btn"}>R</div>
                     </div>
                   </div>
-                  <div className="btn">
+                  <div className="btn containerRogueMode">
                     <div className="btn_Title titleRogueMode">Rogue Mode</div>
                     <div className="btnContainer btnRogueMode">
                       <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "on" ? "btnActive" : "name_btn"}>on</div>
