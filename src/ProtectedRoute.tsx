@@ -17,10 +17,6 @@ export default function ProtectedRoute({
   if (isAuthenticated) {
     return <Route {...routeProps} />;
   } else {
-    let obj = {
-      pathname: authenticationPath,
-      state: { ...routeProps },
-    };
     return (
       <Redirect
         to={{

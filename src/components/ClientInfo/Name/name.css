@@ -1,0 +1,18 @@
+.nameContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nameContainer_arousal {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nameContainer_arousal .title {
+    font-family: Poppins, sans-serif;
+    font-size: 42px;
+    font-weight: bold;
+}
