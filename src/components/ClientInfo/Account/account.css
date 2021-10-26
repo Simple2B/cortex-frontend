@@ -121,6 +121,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	flex-direction: column;
 	margin-top: 30px;
 }
 
@@ -128,7 +129,7 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	margin-right: 7px;
+	/* margin-right: 7px; */
 }
 
 .visitHistory_inputs div:last-child {
@@ -144,8 +145,9 @@
 	border: #707070 1px solid;
 	border-radius: 7px;
 	background-color: #191919;
-	color: #fff;
+	color: #707070;
 	font-size: 25px;
+	padding-left: 5px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
