@@ -129,7 +129,20 @@ export default function Name(): ReactElement {
                     <Brain/>
                 </div>
 
-                <div className=""></div>
+                <div className="intakeInfoText_results">
+                  <div className="results">
+                    <div>63bpm</div>
+                    <div>HR</div>
+                  </div>
+                  <div className="results">
+                    <div>10</div>
+                    <div>Resp</div>
+                  </div>
+                  <div className="results">
+                    <div>98%</div>
+                    <div>SpO2</div>
+                  </div>
+                </div>
               </div>
 
             <div className="alphaContainer">
