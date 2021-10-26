@@ -91,17 +91,17 @@ export default function Account(): ReactElement {
             </div>
             <div className="visitHistory_inputs">
               <div className="visitHistory_inputContainer">
-                <div className="inputTitle">Plan</div>
-                <div><input type="text" placeholder=""/></div>
+                <div className="inputTitle">Start date</div>
+                <div><input type="datetime-local" placeholder=""/></div>
               </div>
               <div className="visitHistory_inputContainer">
-                <div className="inputTitle">Frequency</div>
-                <div><input type="text" placeholder=""/></div>
+                <div className="inputTitle">End date</div>
+                <div><input type="datetime-local" placeholder=""/></div>
               </div>
-              <div className="visitHistory_inputContainer">
+              {/* <div className="visitHistory_inputContainer">
                 <div className="inputTitle">Remaining</div>
                 <div><input type="text" placeholder=""/></div>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="billing">
