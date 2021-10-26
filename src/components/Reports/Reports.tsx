@@ -133,9 +133,10 @@ export default function Reports(): ReactElement {
             <div className="dates">
               <DatePicker
 
-                timeInputLabel="Time:"
-                dateFormat="MM/dd/yyyy h:mm aa"
-                showTimeInput
+                // timeInputLabel="Time:"
+                // dateFormat="MM/dd/yyyy h:mm aa"
+                dateFormat="MM/dd/yyyy"
+                // showTimeInput
 
                 className="data_input"
                 selected={startDate}
@@ -153,9 +154,11 @@ export default function Reports(): ReactElement {
               />
               <DatePicker
 
-                timeInputLabel="Time:"
-                dateFormat="MM/dd/yyyy h:mm aa"
-                showTimeInput
+                // timeInputLabel="Time:"
+                // dateFormat="MM/dd/yyyy h:mm aa"
+                // showTimeInput
+
+                dateFormat="MM/dd/yyyy"
 
                 className="data_input"
                 selected={endDate}
