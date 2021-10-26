@@ -26,8 +26,8 @@ export default function MenuInfoPatient(props: MyProps): ReactElement {
   return (
     <div className="menuInfoPatient_container">
         <div className="menuInfoPatient">
-            <div className={splitLocation[splitLocation.length - 1] === "#" ? "active" : "menuInfoPatientItem"}>
-              <NavLink to="#" className="item">{ props.firstName }</NavLink>
+            <div className={splitLocation[splitLocation.length - 1] === `${props.firstName}` ? "active" : "menuInfoPatientItem"}>
+              <NavLink to={`/${props.api_key}/${props.firstName}`} className="item">{ props.firstName }</NavLink>
             </div>
             <div className={splitLocation[splitLocation.length - 1] === "#" ? "active" : "menuInfoPatientItem"}>
               <NavLink to="#">Care Plan</NavLink>
