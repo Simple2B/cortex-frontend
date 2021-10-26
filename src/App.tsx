@@ -6,6 +6,7 @@ import {
 import './App.css';
 import Account from './components/ClientInfo/Account/Account';
 import Intake from './components/ClientInfo/Intake/Intake';
+import Name from './components/ClientInfo/Name/Name';
 import Kiosk from './components/Kiosk/Kiosk';
 import Login from './components/Login/Login';
 import PasswordChoose from './components/PasswordChoose/PasswordChoose';
@@ -82,6 +83,12 @@ function App() {
               {...defaultProtectedRouteProps}
               exact path="/:api_key/account"
               component={Account}
+          />
+
+          <ProtectedRoute
+              {...defaultProtectedRouteProps}
+              exact path="/:api_key/:firstName"
+              component={Name}
           />
 
 
