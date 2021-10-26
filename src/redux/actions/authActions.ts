@@ -22,11 +22,11 @@ export const login = ({ password, username }: ILoginParams) => {
         type: AuthActionTypes.LOGIN_SUCCESS,
         payload: data,
       });
-      return data.access_token;
+      // return data.access_token;
     } catch (e: any) {
       console.log("authAction: error from redux -> ", e)
-      dispatch({ type: AuthActionTypes.LOGIN_FAILURE, payload: e });
-      return e.message;
+      dispatch({ type: AuthActionTypes.LOGIN_FAILURE, payload: "Invalid login credentials. Please try again!" });
+      // return e.message;
     }
   };
 };
@@ -39,7 +39,7 @@ export const logout = () => {
       localStorage.removeItem("token");
 
       dispatch({ type: AuthActionTypes.LOGOUT });
-    } catch (e) {
+    } catch (e: any) {
       dispatch({ type: AuthActionTypes.LOGIN_FAILURE, payload: e });
     }
   };
