@@ -188,4 +188,19 @@ export const clientApi = {
       throw new Error(error.message);
     }
   },
+
+  completeClient: async (data_client: {"api_key": string, "rougue_mode": boolean }): Promise<void> => {
+    console.log('completeClient: data_client =>', data_client);
+    try {
+      const response = await instance()
+      .post('api/client/complete_client_visit', data_client);
+      console.log('POST: response completeClient ', response);
+      console.log('POST: response complete client successfully ', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("POST: error message completeClient => ", new Error(error.message));
+      console.log('POST: error data  completeClient =>', error.message.data);
+      throw new Error(error.message);
+    }
+  },
 };
