@@ -124,11 +124,9 @@ export default function Name(): ReactElement {
                   </div>
 
                 </div>
-
                 <div className="brain">
                     <Brain/>
                 </div>
-
                 <div className="intakeInfoText_results">
                   <div className="results">
                     <div>63bpm</div>
