@@ -3,7 +3,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 import NavBar from '../../NavBar/NavBar';
 import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
-import { Client, ClientDefault } from '../../../api/clientApi';
+import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
 import "./name.css";
 import arrowRight  from "../../../images/arrowRight.svg";
@@ -89,7 +89,12 @@ export default function Name(): ReactElement {
                     <div className="btn_circle"></div>
                     <div className="btn_circle btn_circleActive"></div>
                   </div>
-                  <div className="coherenceBtn_complete">
+                  <div className="coherenceBtn_complete" onClick={() => {
+                        clientApi.completeClient({"api_key": api_key,
+                        "rougue_mode": false})
+                        console.log("client" , {"api_key": api_key,
+                        "rougue_mode": false, "first_name": client.firstName})
+                  }}>
                     Complete
                   </div>
                 </div>
@@ -158,7 +163,6 @@ export default function Name(): ReactElement {
 
             </div>
         </div>
-
     </>
   )
 }
