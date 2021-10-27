@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import { ReactComponent as Arrow } from '../../images/arrow.svg'
 
 import "react-datepicker/dist/react-datepicker.css";
-import './reports.css'
+import './reports.sass'
 import Select, { components } from 'react-select'
 
 
@@ -114,10 +114,10 @@ export default function Reports(): ReactElement {
     <>
       <NavBar />
       <div className="reports">
-        <h1 className="reports_title">Reports</h1>
+        <h1 className="reportsTitle">Reports</h1>
 
-        <div className="reports_generation">
-          <div className="report_type_selector">
+        <div className="reportsGeneration">
+          <div className="reportTypeSelector">
             <Select
               components={{ DropdownIndicator }}
               placeholder={'Select type'}
@@ -127,40 +127,24 @@ export default function Reports(): ReactElement {
               value={type}
             />
           </div>
-
-
-          <div className="reports_date_select">
+          <div className="reportsDateSelect">
             <div className="dates">
               <DatePicker
-
-                // timeInputLabel="Time:"
-                // dateFormat="MM/dd/yyyy h:mm aa"
                 dateFormat="MM/dd/yyyy"
-                // showTimeInput
-
-                className="data_input"
+                className="dataInput"
                 selected={startDate}
                 onChange={(data) => setStartDate(data)}
                 selectsStart
                 showTimeSelect
                 startDate={startDate}
                 endDate={endDate}
-
                 isClearable
                 placeholderText="Start date"
-
                 showMonthDropdown
-                // value="Start date"
               />
               <DatePicker
-
-                // timeInputLabel="Time:"
-                // dateFormat="MM/dd/yyyy h:mm aa"
-                // showTimeInput
-
                 dateFormat="MM/dd/yyyy"
-
-                className="data_input"
+                className="dataInput"
                 selected={endDate}
                 onChange={(data) => setEndDate(data)}
                 selectsEnd
@@ -168,16 +152,13 @@ export default function Reports(): ReactElement {
                 startDate={startDate}
                 endDate={endDate}
                 minDate={startDate}
-
                 isClearable
                 placeholderText="End date"
-
                 showMonthDropdown
-                // value="End date"
               />
 
             </div>
-            <button onClick={handleSubmit} className="reports_button">
+            <button onClick={handleSubmit} className="reportsButton">
               Generate
           </button>
           </div>
