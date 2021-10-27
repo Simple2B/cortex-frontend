@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-
 import { useLocation } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import NavBar from '../../NavBar/NavBar';
 import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
 import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
@@ -23,6 +23,8 @@ export default function Name(): ReactElement {
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
   const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("R");
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
+
+  const history = useHistory();
 
   const getClient = async () => {
     try {
@@ -91,7 +93,8 @@ export default function Name(): ReactElement {
                   </div>
                   <div className="coherenceBtn_complete" onClick={() => {
                         clientApi.completeClient({"api_key": api_key,
-                        "rougue_mode": false})
+                        "rougue_mode": false});
+                        history.push('/queue');
                         console.log("client" , {"api_key": api_key,
                         "rougue_mode": false, "first_name": client.firstName})
                   }}>
