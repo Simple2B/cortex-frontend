@@ -4,7 +4,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import './App.css';
+import './App.sass';
 import Account from './components/ClientInfo/Account/Account';
 import Intake from './components/ClientInfo/Intake/Intake';
 import Name from './components/ClientInfo/Name/Name';
@@ -48,9 +48,7 @@ function App() {
               )}
           </Route>
           <Route path="/password-choose/:api_key" children={<PasswordChoose />} />
-          {/* <Route path="/password-choose/:api_key">
-            <PasswordChoose />
-          </Route> */}
+
           <Route exact path="/patient-registration">
             <PatientRegistration />
           </Route>
@@ -75,7 +73,6 @@ function App() {
             component={Queue}
           />
 
-
           <ProtectedRoute
             {...defaultProtectedRouteProps}
             exact path="/:api_key/intake"
@@ -93,24 +90,6 @@ function App() {
               exact path="/:api_key/:first_name"
               component={Name}
           />
-
-
-          {/*
-          <Route exact path="/kiosk">
-            <Kiosk />
-          </Route>
-          <Route exact path="/reports">
-            <Reports />
-          </Route>
-          <Route exact path="/patients">
-            <Patients />
-          </Route>
-          <Route exact path="/queue">
-            <Queue />
-          </Route>
-          <Route exact path="/">
-            <Login />
-          </Route> */}
         </Switch>
     </div >
   );
