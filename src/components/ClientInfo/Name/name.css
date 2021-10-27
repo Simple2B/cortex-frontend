@@ -1,0 +1,209 @@
+.nameContainer {
+    height: 78.85vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nameContainer_arousal {
+	width: 34.22%;
+	height: 100%;
+	border-right: solid #707070 3px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+}
+
+.nameContainer_arousal .title {
+    font-family: Poppins, sans-serif;
+    font-size: 42px;
+    font-weight: bold;
+
+}
+
+
+.overAroused {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.overAroused .overAroused_tittle {
+    color: #FF0000;
+    font-size: 38px;
+    text-align: center;
+}
+
+.overAroused_content {
+    margin-top: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+}
+
+.overAroused_content div:first-child {
+    margin-left: 7px;
+}
+
+.overAroused_content div:last-child {
+    margin-right: 7px;
+}
+
+.overAroused_content .nameDashboard {
+    width: 60%;
+}
+
+
+.overAroused_content .nameDashboard img {
+    width: 100%;
+}
+
+.overAroused_content .arrowLeft img, .overAroused_content .arrowRight img {
+    width: 85%;
+}
+
+.containerComplete {
+    display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.btn_circles {
+	width: 80px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 28px;
+}
+
+.btn_circle {
+	width: 13px;
+	height: 12px;
+	background-color: #b1b1b1;
+	border: 1px solid #707070;
+	border-radius: 50%;
+}
+
+.btn_circleActive {
+    width: 28px;
+	height: 28px;
+	background-color: #fff;
+}
+
+.nameContainer_brain {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nameContainer_brainContent {
+    height: 80%;
+    display: flex;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+	justify-content: center;
+    /* align-items: center; */
+}
+
+.btns .btn {
+    display: flex;
+    flex-direction: column;
+	justify-content: center;
+    /* align-items: center; */
+}
+
+.btns .btn .btn_Title {
+    font-size: 33px;
+    color: #fff;
+}
+
+.btns .btn .btnContainer {
+    width: 258px;
+    height: 46;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #262626;
+    border: 1px solid #262626;
+    border-radius: 38px;
+}
+
+.btns .btn .btnContainer div {
+    width: 33.33%;
+    color: #B1B1B1;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btns .btn .btnContainer .btnActive {
+    background-color: #6E6E6E;
+    border: 1px solid #6E6E6E;
+    border-radius: 38px;
+}
+
+.btns .btn .titleRogueMode {
+    font-family: Poppins, sans-serif;
+    font-size: 25px;
+    text-align: left;
+}
+
+.btns .containerRogueMode {
+    margin-top: 15%;
+}
+
+.btns .btn .btnRogueMode {
+    align-self: flex-start;
+    width: 154px;
+    height: 27px;
+}
+
+.btns .btn .btnRogueMode div {
+    width: 50%;
+    text-align: center;
+}
+
+.nameContainer_brain .alphaContainer {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: 11.57vh;
+}
+
+.alphaContainer_text {
+    font-size: 43px;
+}
+
+.alphaContainer_letters {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
+	text-align: center;
+}
+
+.alphaContainer_letters .letter {
+	font-size: 24px;
+	color: #aef7ff;
+}
+
+.alphaContainer_dashboard {
+	width: 68%;
+}
+
+.alphaContainer_dashboard svg {
+	width: 100%;
+}

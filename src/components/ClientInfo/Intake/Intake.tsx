@@ -37,7 +37,7 @@ export default function Intake(): ReactElement {
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
-  }
+  };
 
 
   return (

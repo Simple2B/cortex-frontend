@@ -1,5 +1,7 @@
-import React, { ReactElement, useState } from 'react'
-import NavBar from '../NavBar/NavBar'
+import React, { ReactElement, useState } from 'react';
+import NavBar from '../NavBar/NavBar';
+// import 'react-modern-calendar-datepicker/lib/DatePicker.css';
+// import DatePicker from 'react-modern-calendar-datepicker';
 import DatePicker from "react-datepicker";
 import { ReactComponent as Arrow } from '../../images/arrow.svg'
 
@@ -101,7 +103,7 @@ export default function Reports(): ReactElement {
       startDate: startDate,
       endDate: endDate,
     };
-    console.log(data);
+    console.log("report data", data);
   }
 
   const handleSelect = (type: string) => {
@@ -116,32 +118,62 @@ export default function Reports(): ReactElement {
 
         <div className="reports_generation">
           <div className="report_type_selector">
-            <Select components={{ DropdownIndicator }} placeholder={'Select type'} options={options} onChange={handleSelect} styles={customStyles} value={type} />
+            <Select
+              components={{ DropdownIndicator }}
+              placeholder={'Select type'}
+              options={options}
+              onChange={handleSelect}
+              styles={customStyles}
+              value={type}
+            />
           </div>
 
 
           <div className="reports_date_select">
             <div className="dates">
               <DatePicker
+
+                // timeInputLabel="Time:"
+                // dateFormat="MM/dd/yyyy h:mm aa"
+                dateFormat="MM/dd/yyyy"
+                // showTimeInput
+
                 className="data_input"
                 selected={startDate}
-                onChange={(date) => setStartDate(date)}
+                onChange={(data) => setStartDate(data)}
                 selectsStart
                 showTimeSelect
                 startDate={startDate}
                 endDate={endDate}
-                value="Start date"
+
+                isClearable
+                placeholderText="Start date"
+
+                showMonthDropdown
+                // value="Start date"
               />
               <DatePicker
+
+                // timeInputLabel="Time:"
+                // dateFormat="MM/dd/yyyy h:mm aa"
+                // showTimeInput
+
+                dateFormat="MM/dd/yyyy"
+
                 className="data_input"
                 selected={endDate}
-                onChange={(date) => setEndDate(date)}
+                onChange={(data) => setEndDate(data)}
                 selectsEnd
                 showTimeSelect
                 startDate={startDate}
                 endDate={endDate}
                 minDate={startDate}
-                value="End date"
+
+                isClearable
+                placeholderText="End date"
+
+                showMonthDropdown
+                // value="End date"
               />
 
             </div>
@@ -150,8 +182,6 @@ export default function Reports(): ReactElement {
           </button>
           </div>
         </div>
-
-
       </div>
     </>
   )
