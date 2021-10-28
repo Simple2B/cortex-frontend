@@ -76,11 +76,11 @@ export default function Queue(): ReactElement {
             <SearchIcon className="queue_search_icon" />
             <input className="queue_patients_search" placeholder="Search"/>
         </div>
-        <div className="btn">
-          <div className="titleRogueMode">Rogue Mode</div>
-          <div className="btnRogueMode">
-            <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "on" ? "btnActive" : "name_btn"}>on</div>
-            <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "off" ? "btnActive" : "name_btn"}>off</div>
+        <div className="queue_btn">
+          <div className="queue_titleRogueMode">Rogue Mode</div>
+          <div className="queue_btnRogueMode">
+            <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "on" ? "queue_btnActive" : "queue_name_btn"}>on</div>
+            <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "off" ? "queue_btnActive" : "queue_name_btn"}>off</div>
           </div>
         </div>
 
