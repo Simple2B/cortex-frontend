@@ -117,7 +117,7 @@ export default function Queue(): ReactElement {
                     </div>
                   </div>
                 </div>
-                <NavLink to={`/${patient.api_key}/intake`} >
+                <NavLink to={`/${patient.api_key}/${patient.first_name}`} >
                   <div className="list"  onClick={() => {clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})}}>
                       {patient.last_name}, {patient.first_name}
                   </div>
