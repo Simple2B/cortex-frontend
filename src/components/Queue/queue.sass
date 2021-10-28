@@ -12,6 +12,37 @@
       transition: all .3 ease-in-out
       color: #0ff
 
+.queue_input_search
+  position: absolute
+  z-index: 100
+  top: -55px
+  right: 30px
+  width: 343px
+  height: 55px
+  display: flex
+  justify-content: center
+  align-items: center
+  color: #fff
+  background-color: #434343
+  border: 1px solid #434343
+  border-radius: 19px
+  .queue_search_icon
+    width: 35px
+    height: 35px
+    margin: 10px
+
+  .queue_patients_search
+    width: 100%
+    height: 100%
+    outline: none
+    background-color: transparent
+    background-color: #434343
+    border: 1px solid #434343
+    border-top-right-radius: 19px
+    border-bottom-right-radius: 19px
+    color: #fff
+    margin-left: 5px
+
 .btn
   display: flex
   flex-direction: column
@@ -281,10 +312,36 @@
       right: 0
       top: -115px
 
+  .queue_input_search
+    top: -75px
+    left: 30px
+    width: 343px
+    height: 60px
+
 @media (max-width: 540px)
   .queue
     margin: 18% 10%
     padding-right: 0
+
+  .queue_input_search
+    top: -55px
+    left: 0px
+    width: 243px
+    height: 45px
+    display: flex
+    justify-content: center
+    align-items: center
+    color: #fff
+    background-color: #434343
+    border: 1px solid #434343
+    border-radius: 19px
+    .queue_search_icon
+      width: 35px
+      height: 35px
+      margin: 10px
+
+    .queue_patients_search
+      font-size: 23px
 
   .queue_title
     font-size: 42px
@@ -391,6 +448,33 @@
     margin: 23% 10%
     padding-right: 0
 
+    .btn
+      right: -45px
+      top: -75px
+      .titleRogueMode
+        margin-left: 10px
+        font-size: 14px
+      .btnRogueMode
+        align-self: flex-start
+        width: 140px
+        height: 35px
+
+  .queue_input_search
+    position: absolute
+    z-index: 100
+    top: -50px
+    left: -25px
+    width: 210px
+    height: 40px
+    .queue_search_icon
+      width: 30px
+      height: 30px
+      margin: 7px
+
+    .queue_patients_search
+      font-size: 20px
+
+
 @media (max-width: 375px)
   .queue
     margin: 25% 10%
@@ -411,3 +495,21 @@
     border: 2px solid #0ff
     box-sizing: border-box
     font-size: 25px
+
+
+@media (max-width: 375px)
+  .queue
+    margin: 23% 10%
+    padding-right: 0
+    .btn
+      right: -45px
+      top: -75px
+      .titleRogueMode
+        margin-left: 10px
+        font-size: 14px
+      .btnRogueMode
+        width: 120px
+        height: 35px
+
+  .queue_input_search
+    width: 190px
