@@ -1,4 +1,5 @@
 import React, { ReactElement, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
 
@@ -10,6 +11,7 @@ import { useActions } from '../../redux/useActions';
 
 export default function NavBar(): ReactElement {
   const [switchMenu, setSwitchMenu] = useState<boolean>(false);
+  const history = useHistory();
 
   //assigning location variable
   const location = useLocation();
@@ -54,7 +56,12 @@ export default function NavBar(): ReactElement {
         <NavLink className="nav_item" to="/kiosk">Kiosk</NavLink>
         <NavLink onClick={handlerLogout} className="nav_item" to="/">Log out</NavLink>
       </nav>
-      <div className="logo"><Logo /></div>
+      <div className="logo" onClick={() => {
+        history.push('/queue')
+      }}>
+        <Logo />
+      </div>
     </div>
   )
 }
+//
