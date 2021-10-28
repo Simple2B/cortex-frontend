@@ -72,7 +72,10 @@ export default function Queue(): ReactElement {
       <NavBar />
       <div className="queue">
         <h1 className="queue_title">The Queue</h1>
-
+        <div className="queue_input_search">
+            <SearchIcon className="queue_search_icon" />
+            <input className="queue_patients_search" placeholder="Search"/>
+        </div>
         <div className="btn">
           <div className="titleRogueMode">Rogue Mode</div>
           <div className="btnRogueMode">
