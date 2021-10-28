@@ -288,12 +288,14 @@
 
 .registration_input_data {
   font-size: 35px;
+  width: 100%;
+  height: 100%;
   background-color: transparent;
   display: flex;
   opacity: 1;
   border: none;
   color: #AEF7FF;
-  background-color: black;
+  /* background-color: black; */
   outline: none;
   /* justify-content: left; */
   align-items: center;
