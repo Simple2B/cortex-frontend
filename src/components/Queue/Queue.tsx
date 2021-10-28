@@ -5,7 +5,7 @@ import NavBar from '../NavBar/NavBar';
 import { instance } from "../../api/axiosInstance";
 import { User } from "../../types/patientsTypes";
 import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
-import './queue.css'
+import './queue.sass'
 import { NavLink } from 'react-router-dom';
 
 export default function Queue(): ReactElement {
@@ -16,6 +16,9 @@ export default function Queue(): ReactElement {
   const [querySearch, setSearchQuery] = useState<string>('');
 
   const [isModalOpen, setModalOpen] = useState<number>(0);
+
+  const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
+
 
   const getClientsForQueue = async () => {
     try {
@@ -58,25 +61,25 @@ export default function Queue(): ReactElement {
     newClients.splice(index, 1);
     console.log("newClients after deleted => ", newClients);
     setQueue(newClients);
+  };
 
-    // setQueue((queue: User[]) => queue.filter((prevPatient, i) => i !== index));
-
-    };
+  const handleChangeBtnRogueMode = (e: any) => {
+    setActiveBtnRogueMode(e.currentTarget.innerHTML);
+  };
 
   return (
     <>
       <NavBar />
-      <div className="rogue"><div className="rogue_mode">Rogue Mode</div>
-        <div className="button b2" id="button-10">
-          <input defaultChecked={true} type="checkbox" className="checkbox" />
-          <div className="knobs">
-            <span>On</span>
-          </div>
-          <div className="layer"></div>
-        </div>
-      </div>
       <div className="queue">
         <h1 className="queue_title">The Queue</h1>
+
+        <div className="btn">
+          <div className="titleRogueMode">Rogue Mode</div>
+          <div className="btnRogueMode">
+            <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "on" ? "btnActive" : "name_btn"}>on</div>
+            <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "off" ? "btnActive" : "name_btn"}>off</div>
+          </div>
+        </div>
 
         { queue.length > 0
           ?
@@ -119,18 +122,21 @@ export default function Queue(): ReactElement {
             </div>
           ))
           :
-          <div className="infoMessageIntake">NO PATIENTS IN QUEUE</div>
+          <div className="infoMessage">NO PATIENTS IN QUEUE</div>
         }
 
         <button className="queue_add_button" onClick={() => {
+          console.log("Add patient");
           setIsOpen(true);
           setSearchQuery("");
-          }}>+Add new</button>
+          }}>
+          +Add new
+        </button>
 
-        <Popup open={isOpen} modal>
+        <Popup open={isOpen} modal className="popup">
           <div className="modal_window">
             <div className="lists">
-                <i className="fas fa-times" onClick={() => setIsOpen(false)}/>
+                <i className="fas fa-times modalCross" onClick={() => setIsOpen(false)}/>
                 <div className="input_search">
                   <SearchIcon className="search_icon" />
                   <input value={querySearch} onChange={(e) => {
@@ -159,7 +165,6 @@ export default function Queue(): ReactElement {
             </div>
           </div>
         </Popup>
-
       </div>
     </>
   )
