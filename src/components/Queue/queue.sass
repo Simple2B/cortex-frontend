@@ -43,21 +43,25 @@
     color: #fff
     margin-left: 5px
 
-.btn
+.queue_btn
+  width: 22%
   display: flex
   flex-direction: column
   justify-content: center
   position: absolute
-  right: 0
+  right: 7px
   top: 30vh
-  .titleRogueMode
+  .queue_titleRogueMode
     font-family: Poppins, sans-serif
     font-size: 25px
     text-align: left
     color: #fff
-  .btnRogueMode
+  .queue_btnRogueMode
     align-self: flex-start
-    width: 352px
+
+    width: 100%
+    max-width: 352px
+
     height: 59px
     display: flex
     justify-content: center
@@ -74,7 +78,7 @@
       color: #B1B1B1
       font-size: 18px
       cursor: pointer
-  .btnActive
+  .queue_btnActive
     background-color: #6E6E6E
     border: 1px solid #6E6E6E
     border-radius: 38px
@@ -297,20 +301,20 @@
     letter-spacing: .5px
 
 @media (max-width: 1024px)
-  .btn
-    .titleRogueMode
-    .btnRogueMode
-      width: 252px
-      height: 59px
-      border-radius: 38px
+  // .queue_btn
+  //   .queue_titleRogueMode
+  //   .queue_btnRogueMode
+  //     width: 252px
+  //     height: 59px
+  //     border-radius: 38px
 
 @media (max-width: 768px)
   .queue
     margin-top: 120px
 
-    .btn
-      right: 0
-      top: -115px
+    .queue_btn
+      width: 30%
+      top: -110px
 
   .queue_input_search
     top: -75px
@@ -433,31 +437,22 @@
   .infoMessageIntake
     font-size: 20px
 
-  .queue .btn
-    right: -45px
-    top: -80px
-    .titleRogueMode
-      font-size: 16px
-    .btnRogueMode
+  .queue .queue_btn
+    width: 38%
+    right: -25px
+    top: -70px
+    .queue_titleRogueMode
+      margin-left: 5px
+      font-size: 13px
+    .queue_btnRogueMode
       align-self: flex-start
-      width: 158px
+      width: 100%
       height: 39px
 
 @media (max-width: 414px)
   .queue
     margin: 23% 10%
     padding-right: 0
-
-    .btn
-      right: -45px
-      top: -75px
-      .titleRogueMode
-        margin-left: 10px
-        font-size: 14px
-      .btnRogueMode
-        align-self: flex-start
-        width: 140px
-        height: 35px
 
   .queue_input_search
     position: absolute
@@ -479,6 +474,16 @@
   .queue
     margin: 25% 10%
     padding-right: 0
+    .queue_btn
+      right: -20px
+      top: -66px
+      .queue_titleRogueMode
+        margin-left: 5px
+        font-size: 13px
+      .queue_btnRogueMode
+        align-self: flex-start
+        width: 105px
+        height: 35px
 
   .queue_list
     width: 275px
@@ -495,21 +500,14 @@
     border: 2px solid #0ff
     box-sizing: border-box
     font-size: 25px
+  .infoMessage
+    font-size: 19px
 
 
-@media (max-width: 375px)
+@media (max-width: 320px)
   .queue
     margin: 23% 10%
     padding-right: 0
-    .btn
-      right: -45px
-      top: -75px
-      .titleRogueMode
-        margin-left: 10px
-        font-size: 14px
-      .btnRogueMode
-        width: 120px
-        height: 35px
 
   .queue_input_search
     width: 190px
