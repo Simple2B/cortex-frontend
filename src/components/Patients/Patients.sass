@@ -1,0 +1,520 @@
+.patientsContainer
+  display: flex
+  justify-content: center
+  flex-direction: column
+  align-items: center
+
+  .patients_input_search
+    width: 100%
+    height: 9vh
+    max-width: 565px
+    max-height: 81px
+    display: flex
+    justify-content: center
+    align-items: center
+    color: #fff
+    background-color: #434343
+    border: 1px solid #434343
+    border-radius: 19px
+    margin-bottom: 20px
+    .patients_search_icon
+      width: 35px
+      height: 35px
+      margin: 10px
+
+    .patients_patients_search
+      width: 100%
+      height: 100%
+      outline: none
+      background-color: transparent
+      background-color: #434343
+      border: 1px solid #434343
+      border-top-right-radius: 19px
+      border-bottom-right-radius: 19px
+      color: #fff
+      margin-left: 5px
+  a
+    text-decoration: none
+    color: #fff
+    transition: all .3 ease-in-out
+    &:hover
+      transition: all .3 ease-in-out
+      color: #0ff
+
+
+
+.queue_btn
+  width: 22%
+  display: flex
+  flex-direction: column
+  justify-content: center
+  position: absolute
+  right: 7px
+  top: 30vh
+  .queue_titleRogueMode
+    font-family: Poppins, sans-serif
+    font-size: 25px
+    text-align: left
+    color: #fff
+  .queue_btnRogueMode
+    align-self: flex-start
+
+    width: 100%
+    max-width: 352px
+
+    height: 59px
+    display: flex
+    justify-content: center
+    align-items: center
+    background-color: #262626
+    border: 1px solid #262626
+    border-radius: 38px
+    div
+      width: 50%
+      height: 100%
+      display: flex
+      justify-content: center
+      align-items: center
+      color: #B1B1B1
+      font-size: 18px
+      cursor: pointer
+  .queue_btnActive
+    background-color: #6E6E6E
+    border: 1px solid #6E6E6E
+    border-radius: 38px
+
+.queue_title
+  font-size: 52px
+  text-align: center
+  margin: 0
+  margin-bottom: 45px
+
+.lists
+  height: 55vh
+  overflow: scroll
+  overflow-y: scroll
+  // overflow: visible
+
+
+.queue_list
+  position: relative
+  display: flex
+  align-items: center
+  justify-content: center
+  width: 443px
+  height: 97px
+  background: #000
+  border: 4px solid #0ff
+  margin-bottom: 25px
+  cursor: pointer
+  text-transform: uppercase
+
+  .list
+    margin: 0 auto
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 100%
+    height: 57px
+
+  .faTimesItemQueue
+    visibility: hidden
+    opacity: 0
+    font-size: 24px
+    position: absolute
+    top: 5px
+    right: 5px
+    transition: all .3s ease-in-out
+    z-index: 1000
+
+  &:hover .faTimesItemQueue
+    visibility: visible
+    opacity: 1
+    font-size: 24px
+    position: absolute
+    top: 5px
+    right: 5px
+    color: #0ff
+    transition: all .3s ease-in-out
+
+.queue_add_button
+  width: 443px
+  height: 97px
+  background: transparent
+  font-weight: bold
+  border: 4px solid #0ff
+  color: #fff
+  font-size: 38px
+  cursor: pointer
+  &:hover
+    background: rgb(0, 80, 80)
+
+.modal_window
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100vh
+  background-color: rgba(0, 0, 0, 0.8)
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  overflow: scroll
+
+  .lists
+    position: relative
+    width: 100%
+    max-width: 93vw
+    height: 95vh
+    padding-top: 105px
+    background-color: #303030
+    display: flex
+    justify-content: flex-start
+    flex-direction: column
+    align-items: center
+    padding-top: 200px
+
+    .modalCross
+      position: absolute
+      top: 20px
+      right: 20px
+      color: #0ff
+      z-index: 1000
+      font-size: 38px
+
+    .input_search
+      width: 98%
+      position: absolute
+      margin-bottom: 25px
+      top: 65px
+      .search_icon
+        position: absolute
+        left: 15px
+        top: 15px
+      .patients_search
+        width: 100%
+        max-width: 93vw
+        height: 81px
+        background: #434343
+        border: none
+        border-radius: 19px
+        color: white
+        font-size: 35px
+        padding-left: 110px
+
+    .client_lists
+      width: 100%
+      display: flex
+      justify-content: center
+      align-items: center
+      flex-direction: column
+      overflow: scroll
+
+
+.infoMessage
+  font-size: 30px
+  margin-bottom: 25px
+  color:#707070
+  text-shadow: 0.5px 0.5px 0.5px #AEF7FF
+  letter-spacing: 1px
+
+/* modal window */
+.modal
+  display: none
+  position: fixed
+  z-index: 1
+  left: 0
+  top: 0
+  width: 100%
+  height: 100%
+  overflow: auto
+  background-color: rgb(0,0,0)
+  background-color: rgba(0,0,0,0.4)
+
+.modalOpen
+  display: block
+  position: fixed
+  z-index: 1000
+  left: 0
+  top: 0
+  width: 100%
+  height: 100%
+  overflow: auto
+  background-color: rgb(0,0,0)
+  background-color: rgba(0,0,0,0.4)
+
+.modal-content
+  background-color: #707070
+  margin: 15% auto
+  padding: 20px
+  border: 1px solid #888
+  width: 80%
+
+.modalText
+  font-size: 20px
+  text-align: justify
+  text-indent: 25px
+  text-transform: none
+
+.btnsModal
+  display: flex
+  justify-content: center
+  align-items: center
+  margin-top: 15px
+
+.btnsModal div
+  font-size: 20px
+  margin-right: 10px
+  text-transform: lowercase
+  padding: 3px 20px
+  border: 1px solid #0ff
+  border-radius: 40px
+  cursor: pointer
+  transition: all .3s ease-in-out
+
+.btnsModal div:hover
+  background: radial-gradient(#00e5ff, #085e67)
+  transition: all .3s ease-in-out
+
+.btnsModal div:last-child
+  margin-right: 0
+
+.btnsModal  .btnModalOk
+  padding: 3px 40px
+
+.close
+  color: #aaa
+  font-size: 25px
+  font-weight: bold
+  text-align: right
+
+.close:hover,
+.close:focus
+  color: black
+  text-decoration: none
+  cursor: pointer
+
+@media (max-width: 1440px)
+  .popup-content
+    right: 10%
+
+  .input_search
+    width: 80%
+
+  .infoMessage
+    font-size: 25px
+    margin-bottom: 20px
+    letter-spacing: .5px
+
+@media (max-width: 1024px)
+  // .queue_btn
+  //   .queue_titleRogueMode
+  //   .queue_btnRogueMode
+  //     width: 252px
+  //     height: 59px
+  //     border-radius: 38px
+
+@media (max-width: 768px)
+  .patientsContainer
+    margin-top: 120px
+
+    .queue_btn
+      width: 30%
+      top: -110px
+
+  .queue_input_search
+    top: -75px
+    left: 30px
+    width: 343px
+    height: 60px
+
+@media (max-width: 540px)
+  .patientsContainer
+    margin: 18% 10%
+    padding-right: 0
+
+  .queue_input_search
+    top: -55px
+    left: 0px
+    width: 243px
+    height: 45px
+    display: flex
+    justify-content: center
+    align-items: center
+    color: #fff
+    background-color: #434343
+    border: 1px solid #434343
+    border-radius: 19px
+    .queue_search_icon
+      width: 35px
+      height: 35px
+      margin: 10px
+
+    .queue_patients_search
+      font-size: 23px
+
+  .queue_title
+    font-size: 42px
+    text-align: center
+    color: #fff
+    margin: 0
+    margin-bottom: 25px
+    font-size: 30px
+    letter-spacing: 3px
+
+  .queue_add_button
+    width: 310px
+    height: 77px
+    background: transparent
+    font-weight: bold
+    border: 2px solid #0ff
+    box-sizing: border-box
+    font-size: 30px
+
+  .queue_list
+    width: 310px
+    height: 77px
+    margin-bottom: 15px
+    font-size: 25px
+    position: relative
+
+  .faTimesItemQueue
+    font-size: 20px
+
+  .modal_window .lists
+    padding-top: 200px
+
+  .patients_search
+    width: 100%
+    max-width: 90vw
+    height: 67px
+    font-size: 25px
+    margin-bottom: 5px
+    padding-left: 67px
+
+  .input_search
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 99%
+    position: absolute
+    margin-bottom: 5px
+    top: 100px
+
+  .input_search svg
+    width: 40px
+
+  .search_icon
+    position: absolute
+    left: 15px
+    top: 10px
+
+  .lists .fa-times
+    position: absolute
+    top: 15px
+    right: 15px
+    color: #0ff
+    z-index: 1000
+    font-size: 24px
+
+  .popup-content
+    right: 0
+
+  .nav_bar
+    padding: 5px 0 0 28px
+    height: auto
+
+  .menu_button svg
+    width: 30px
+
+  .menu
+    top: 60px
+    left: 40px
+    width: 200px
+    height: 341px
+    font-size: 26px
+
+  .logo
+    margin-left: 40px
+
+  .logo svg
+    width: 200px
+
+  .infoMessageIntake
+    font-size: 20px
+
+  .patientsContainer .queue_btn
+    width: 38%
+    right: -25px
+    top: -70px
+    .queue_titleRogueMode
+      margin-left: 5px
+      font-size: 13px
+    .queue_btnRogueMode
+      align-self: flex-start
+      width: 100%
+      height: 39px
+
+@media (max-width: 414px)
+  .patientsContainer
+    margin: 23% 10%
+    padding-right: 0
+
+  .queue_input_search
+    position: absolute
+    z-index: 100
+    top: -50px
+    left: -25px
+    width: 210px
+    height: 40px
+    .queue_search_icon
+      width: 30px
+      height: 30px
+      margin: 7px
+
+    .queue_patients_search
+      font-size: 20px
+
+
+@media (max-width: 375px)
+  .patientsContainer
+    margin: 25% 10%
+    padding-right: 0
+    .queue_btn
+      right: -20px
+      top: -66px
+      .queue_titleRogueMode
+        margin-left: 5px
+        font-size: 13px
+      .queue_btnRogueMode
+        align-self: flex-start
+        width: 105px
+        height: 35px
+
+  .queue_list
+    width: 275px
+    height: 60px
+    margin-bottom: 10px
+    font-size: 20px
+    border: 1.5px solid #0ff
+
+  .queue_add_button
+    width: 275px
+    height: 60px
+    background: transparent
+    font-weight: bold
+    border: 2px solid #0ff
+    box-sizing: border-box
+    font-size: 25px
+  .infoMessage
+    font-size: 19px
+
+
+@media (max-width: 320px)
+  .patientsContainer
+    margin: 23% 10%
+    padding-right: 0
+
+  .queue_input_search
+    width: 190px

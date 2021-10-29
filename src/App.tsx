@@ -17,6 +17,7 @@ import Reports from './components/Reports/Reports';
 import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute';
 import { useTypedSelector } from './redux/useTypeSelector';
 import Fullscreen from 'react-fullscreen-crossbrowser';
+import Patient from './components/Patients/Patients';
 
 
 function App() {
@@ -68,6 +69,11 @@ function App() {
               {...defaultProtectedRouteProps}
               exact path="/kiosk"
               component={Kiosk}
+            />
+            <ProtectedRoute
+                {...defaultProtectedRouteProps}
+                exact path="/patients"
+                component={Patient}
             />
             <ProtectedRoute
               {...defaultProtectedRouteProps}
