@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 35px;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  position: relative;
+}
+
+.fullScreenBtn {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  transition: all .3s ease-in-out;
+  color: #6e6d6d;
+}
