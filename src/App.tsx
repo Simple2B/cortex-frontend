@@ -38,7 +38,7 @@ function App() {
 
       <Fullscreen enabled={fullScreenMode}>
         <div className="App" >
-          <i className={ fullScreenMode? "fas fa-compress-arrows-alt fullScreenBtn": "fas fa-expand-arrows-alt fullScreenBtn"} onClick={fullScreenToggler}/>
+          <i className={ fullScreenMode ? "fas fa-compress-arrows-alt fullScreenBtn": "fas fa-expand-arrows-alt fullScreenBtn"} onClick={fullScreenToggler}/>
           <Switch>
             <Route exact path="/">
               {loggedIn ? (
