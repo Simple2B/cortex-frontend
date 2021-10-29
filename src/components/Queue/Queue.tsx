@@ -76,8 +76,7 @@ export default function Queue(): ReactElement {
         <div className="queue_input_search">
             <SearchIcon className="queue_search_icon" />
             <input className="queue_patients_search" placeholder="Search" value={search} onChange={(e) => {
-                    setSearch(e.target.value);
-                  }}/>
+                    setSearch(e.target.value);}}/>
         </div>
         <div className="queue_btn">
           <div className="queue_titleRogueMode">Rogue Mode</div>
@@ -95,7 +94,7 @@ export default function Queue(): ReactElement {
             } else if ((client.first_name + client.last_name).toLowerCase().includes(search.toLowerCase())) {
               return client;
             }
-            })
+          })
           .map((patient, index) => (
             <div className="queue_list" key={index} >
                 <i className="fas fa-times faTimesItemQueue" title="Delete from queue" onClick={(e) => setModalOpen(patient.id)}/>
