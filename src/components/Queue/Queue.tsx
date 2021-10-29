@@ -19,6 +19,8 @@ export default function Queue(): ReactElement {
 
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
 
+  const [search, setSearch] = useState<string>('');
+
 
   const getClientsForQueue = async () => {
     try {
@@ -39,7 +41,6 @@ export default function Queue(): ReactElement {
       console.log("clients => ", response.data);
       setClients(response.data);
     } catch (error: any) {
-      // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', error.message);
       console.log('error response data clients => ', error.response.data);
       throw new Error(error.message);
@@ -74,7 +75,9 @@ export default function Queue(): ReactElement {
         <h1 className="queue_title">The Queue</h1>
         <div className="queue_input_search">
             <SearchIcon className="queue_search_icon" />
-            <input className="queue_patients_search" placeholder="Search"/>
+            <input className="queue_patients_search" placeholder="Search" value={search} onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}/>
         </div>
         <div className="queue_btn">
           <div className="queue_titleRogueMode">Rogue Mode</div>
@@ -86,7 +89,14 @@ export default function Queue(): ReactElement {
 
         { queue.length > 0
           ?
-          queue.map((patient, index) => (
+          queue.filter(client => {
+            if (search === '') {
+                return client;
+            } else if ((client.first_name + client.last_name).toLowerCase().includes(search.toLowerCase())) {
+              return client;
+            }
+            })
+          .map((patient, index) => (
             <div className="queue_list" key={index} >
                 <i className="fas fa-times faTimesItemQueue" title="Delete from queue" onClick={(e) => setModalOpen(patient.id)}/>
                 <div id="myModal" className={isModalOpen === patient.id ? "modalOpen" : "modal"}>
