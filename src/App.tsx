@@ -27,10 +27,8 @@ function App() {
     authenticationPath: "/login",
   };
 
+  let [fullScreenMode, setFullScreenMode]= useState<boolean>(false);
 
-  let [fullScreenMode, setFullScreenMode]= useState<boolean>(true);
-
-  //method to toggle fullscreen
   const fullScreenToggler = () => {
     setFullScreenMode(!fullScreenMode);
   }
@@ -39,10 +37,7 @@ function App() {
 
       <Fullscreen enabled={fullScreenMode}>
         <div className="App" >
-          <button onClick={fullScreenToggler} className="fullScreenBtn">
-             FullScreen
-          </button>
-
+          <i className={ fullScreenMode ? "fas fa-compress-arrows-alt fullScreenBtn": "fas fa-expand-arrows-alt fullScreenBtn"} onClick={fullScreenToggler}/>
           <Switch>
             <Route exact path="/">
               {loggedIn ? (
