@@ -1,5 +1,4 @@
 import React, { ReactElement, useState, useEffect} from 'react'
-import Popup from 'reactjs-popup';
 import { clientApi } from "../../api/clientApi";
 import NavBar from '../NavBar/NavBar';
 import { instance } from "../../api/axiosInstance";
@@ -54,7 +53,9 @@ export default function Patient(): ReactElement {
             .map((patient, index) => (
               <div className="queue_list" key={index} >
                   <NavLink to={`/${patient.api_key}/account`} >
-                    <div className="list"  onClick={() => {clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})}}>
+                    <div className="list"
+                        // onClick={() => {clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})}}
+                      >
                         {patient.last_name}, {patient.first_name}
                     </div>
                   </NavLink>
