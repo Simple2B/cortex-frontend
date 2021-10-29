@@ -10,3 +10,13 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.App {
+  position: relative;
+}
+
+.fullScreenBtn {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
