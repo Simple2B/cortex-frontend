@@ -13,7 +13,6 @@ import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg'
 import { ReactComponent as Brain } from '../../../images/brain.svg';
 
 
-
 export default function Name(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
@@ -93,10 +92,10 @@ export default function Name(): ReactElement {
                   </div>
                   <div className="coherenceBtn_complete" onClick={() => {
                         clientApi.completeClient({"api_key": api_key,
-                        "rougue_mode": false});
+                        "rougue_mode": false, "place_in_queue": client.place_in_queue});
                         history.push('/queue');
                         console.log("client" , {"api_key": api_key,
-                        "rougue_mode": false, "first_name": client.firstName})
+                        "rougue_mode": false, "first_name": client.firstName, "place_in_queue": client.place_in_queue})
                   }}>
                     Complete
                   </div>
@@ -151,7 +150,6 @@ export default function Name(): ReactElement {
                   </div>
                 </div>
               </div>
-
               <div className="alphaContainer">
                 <div className="alphaContainer_text">
                   Alpha
@@ -164,7 +162,6 @@ export default function Name(): ReactElement {
                   <IntakeAlpha/>
                 </div>
               </div>
-
             </div>
         </div>
     </>

@@ -1,5 +1,4 @@
 import React, { ReactElement, useState, useEffect} from 'react'
-import { clientApi } from "../../api/clientApi";
 import NavBar from '../NavBar/NavBar';
 import { instance } from "../../api/axiosInstance";
 import { User } from "../../types/patientsTypes";
@@ -53,9 +52,7 @@ export default function Patient(): ReactElement {
             .map((patient, index) => (
               <div className="queue_list" key={index} >
                   <NavLink to={`/${patient.api_key}/account`} >
-                    <div className="list"
-                        // onClick={() => {clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})}}
-                      >
+                    <div className="list">
                         {patient.last_name}, {patient.first_name}
                     </div>
                   </NavLink>
