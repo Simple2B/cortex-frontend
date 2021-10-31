@@ -114,6 +114,7 @@ export default function Queue(): ReactElement {
                             "last_name": patient.last_name,
                             "phone": patient.phone,
                             "email": patient.email,
+                            "place_in_queue": patient.place_in_queue,
                             "rougue_mode": true,
                           });
 
@@ -127,7 +128,10 @@ export default function Queue(): ReactElement {
                   </div>
                 </div>
                 <NavLink to={`/${patient.api_key}/${patient.first_name}`} >
-                  <div className="list"  onClick={() => {clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})}}>
+                  <div className="list"  onClick={() => {
+                      console.log("clientIntake", {"patient_name": patient.first_name, "api_key": patient.api_key, "rougue_mode": activeBtnRogueMode, "place_in_queue": patient.place_in_queue});
+                      clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true, "place_in_queue": patient.place_in_queue})
+                      }}>
                       {patient.last_name}, {patient.first_name}
                   </div>
                 </NavLink>
