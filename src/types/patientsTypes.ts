@@ -47,5 +47,6 @@ export interface User {
     last_name: string,
     phone: string,
     email: string,
+    place_in_queue: number | null,
     rougue_mode: boolean | null,
 }

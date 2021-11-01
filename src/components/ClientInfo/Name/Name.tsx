@@ -5,13 +5,12 @@ import NavBar from '../../NavBar/NavBar';
 import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
 import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
-import "./name.css";
+import "./name.sass";
 import arrowRight  from "../../../images/arrowRight.svg";
 import  arrowLeft  from "../../../images/arrowLeft.svg";
 import nameDashboard from "../../../images/nameDashboard.svg";
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 import { ReactComponent as Brain } from '../../../images/brain.svg';
-
 
 
 export default function Name(): ReactElement {
@@ -93,10 +92,10 @@ export default function Name(): ReactElement {
                   </div>
                   <div className="coherenceBtn_complete" onClick={() => {
                         clientApi.completeClient({"api_key": api_key,
-                        "rougue_mode": false});
+                        "rougue_mode": false, "place_in_queue": client.place_in_queue});
                         history.push('/queue');
                         console.log("client" , {"api_key": api_key,
-                        "rougue_mode": false, "first_name": client.firstName})
+                        "rougue_mode": false, "first_name": client.firstName, "place_in_queue": client.place_in_queue})
                   }}>
                     Complete
                   </div>
@@ -106,7 +105,7 @@ export default function Name(): ReactElement {
             <div className="nameContainer_brain">
 
               <div className="nameContainer_brainContent">
-                <div className="btns">
+                <div className="brain_btns">
                   <div className="btn">
                     <div className="btn_Title">Atlas</div>
                     <div className="btnContainer">
@@ -130,11 +129,12 @@ export default function Name(): ReactElement {
                       <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "off" ? "btnActive" : "name_btn"}>off</div>
                     </div>
                   </div>
-
                 </div>
+
                 <div className="brain">
                     <Brain/>
                 </div>
+
                 <div className="intakeInfoText_results">
                   <div className="results">
                     <div>63bpm</div>
@@ -150,20 +150,18 @@ export default function Name(): ReactElement {
                   </div>
                 </div>
               </div>
-
-            <div className="alphaContainer">
-              <div className="alphaContainer_text">
-                Alpha
+              <div className="alphaContainer">
+                <div className="alphaContainer_text">
+                  Alpha
+                </div>
+                <div className="alphaContainer_letters">
+                  <div className="letter">R</div>
+                  <div className="letter">L</div>
+                </div>
+                <div className="alphaContainer_dashboard">
+                  <IntakeAlpha/>
+                </div>
               </div>
-              <div className="alphaContainer_letters">
-                <div className="letter">R</div>
-                <div className="letter">L</div>
-              </div>
-              <div className="alphaContainer_dashboard">
-                <IntakeAlpha/>
-              </div>
-            </div>
-
             </div>
         </div>
     </>
