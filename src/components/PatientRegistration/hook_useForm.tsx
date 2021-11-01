@@ -91,10 +91,8 @@ export const useForm = (callback: (values: IPatientForm) => Promise<void>, initi
         setSubmitted(false);
         scrollToError(errorBuffer)
       }
-      
-      
     };
-    
+
     return {
         toggleCheckboxConsent,
         toggleCheckboxFollowing,
