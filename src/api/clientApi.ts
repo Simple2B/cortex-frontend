@@ -77,6 +77,7 @@ export interface Client {
     stressfulLevel: number
     consentMinorChild: boolean,
     relationshipChild: string,
+    place_in_queue: number | null
 };
 
 export const ClientDefault = {
@@ -100,6 +101,7 @@ export const ClientDefault = {
   stressfulLevel: 1,
   consentMinorChild: false,
   relationshipChild: "",
+  place_in_queue: null
 };
 
 export const clientApi = {
@@ -159,7 +161,7 @@ export const clientApi = {
     }
   },
 
-  clientIntake: async (data_client: {"api_key": string, "rougue_mode": boolean }): Promise<void> => {
+  clientIntake: async (data_client: {"api_key": string, "rougue_mode": boolean, "place_in_queue": number | null }): Promise<void> => {
     console.log('clientIntake: data_client =>', data_client);
     try {
       const response = await instance()
@@ -189,7 +191,7 @@ export const clientApi = {
     }
   },
 
-  completeClient: async (data_client: {"api_key": string, "rougue_mode": boolean }): Promise<void> => {
+  completeClient: async (data_client: {"api_key": string, "rougue_mode": boolean, "place_in_queue": number | null }): Promise<void> => {
     console.log('completeClient: data_client =>', data_client);
     try {
       const response = await instance()

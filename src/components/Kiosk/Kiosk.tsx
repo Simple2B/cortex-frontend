@@ -12,30 +12,7 @@ export default function Kiosk(): ReactElement {
   const [phoneQuery, setPhoneQuery] = useState('');
   const [welcomeText, setWelcomeText] = useState('Please enter your phone number');
   const [style, setStyle] = useState(false);
-  // const [list, setList] = useState<IPatient[]>([]);
-  // const [client, setClient] = useState<IPatient>({
-  //   "api_key": "",
-  //   "first_name": "",
-  //   "last_name": "",
-  //   "phone": "",
-  //   "email": ""
-  // });
   const [clients, setClients] = useState<IPatient[]>([]);
-
-
-  // const getClient = async (phone: string) => {
-  //   try {
-  //     const response = await instance()
-  //     .get(`api/client/kiosk/${phone}`);
-  //     console.log("client kiosk => ", response.data);
-  //     setClient(response.data);
-  //   } catch (error: any) {
-  //     // place to handle errors and rise custom errors
-  //     console.log('GET: error message =>  ', error.message);
-  //     console.log('error response client kiosk => ', error.response.data);
-  //     throw new Error(error.message);
-  //   };
-  // };
 
   const getClients = async () => {
     try {
@@ -52,12 +29,7 @@ export default function Kiosk(): ReactElement {
   };
 
   useEffect(() => {
-    // if (phoneQuery) {
-    //   getClient(phoneQuery)
-    // };
-
     getClients();
-
   }, [phoneQuery]);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,9 +43,6 @@ export default function Kiosk(): ReactElement {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     console.log("phoneQuery => ", phoneQuery);
     e.preventDefault();
-
-    // const filteredName = client.first_name;
-    // console.log("Kiosk -> client ", client);
     const clientFromDB = clients.filter(client => client.phone === phoneQuery);
     const filteredName = clientFromDB.length > 0 ? clientFromDB[0].first_name : false ;
 
@@ -122,8 +91,8 @@ export default function Kiosk(): ReactElement {
           disabled={
             phoneQuery === ""
           } className="kiosk_button">LOGIN</button>
-        <div className="redirect_registr">Not our patient yet? Please fill</div>
-        <NavLink className="form_registr" to="patient-registration">Registration form</ NavLink>
+        <div className="redirect_registr">New here?</div>
+        <NavLink className="form_registr" to="patient-registration">Sign up</ NavLink>
       </form>
     </div>
   )

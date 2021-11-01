@@ -5,7 +5,7 @@ import NavBar from '../NavBar/NavBar';
 import { instance } from "../../api/axiosInstance";
 import { User } from "../../types/patientsTypes";
 import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
-import './queue.css'
+import './queue.sass'
 import { NavLink } from 'react-router-dom';
 
 export default function Queue(): ReactElement {
@@ -16,6 +16,11 @@ export default function Queue(): ReactElement {
   const [querySearch, setSearchQuery] = useState<string>('');
 
   const [isModalOpen, setModalOpen] = useState<number>(0);
+
+  const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
+
+  const [search, setSearch] = useState<string>('');
+
 
   const getClientsForQueue = async () => {
     try {
@@ -36,7 +41,6 @@ export default function Queue(): ReactElement {
       console.log("clients => ", response.data);
       setClients(response.data);
     } catch (error: any) {
-      // place to handle errors and rise custom errors
       console.log('GET: error message =>  ', error.message);
       console.log('error response data clients => ', error.response.data);
       throw new Error(error.message);
@@ -58,29 +62,40 @@ export default function Queue(): ReactElement {
     newClients.splice(index, 1);
     console.log("newClients after deleted => ", newClients);
     setQueue(newClients);
+  };
 
-    // setQueue((queue: User[]) => queue.filter((prevPatient, i) => i !== index));
-
-    };
+  const handleChangeBtnRogueMode = (e: any) => {
+    setActiveBtnRogueMode(e.currentTarget.innerHTML);
+  };
 
   return (
     <>
       <NavBar />
-      <div className="rogue"><div className="rogue_mode">Rogue Mode</div>
-        <div className="button b2" id="button-10">
-          <input defaultChecked={true} type="checkbox" className="checkbox" />
-          <div className="knobs">
-            <span>On</span>
-          </div>
-          <div className="layer"></div>
-        </div>
-      </div>
       <div className="queue">
         <h1 className="queue_title">The Queue</h1>
+        <div className="queue_input_search">
+            <SearchIcon className="queue_search_icon" />
+            <input className="queue_patients_search" placeholder="Search" value={search} onChange={(e) => {
+                    setSearch(e.target.value);}}/>
+        </div>
+        <div className="queue_btn">
+          <div className="queue_titleRogueMode">Rogue Mode</div>
+          <div className="queue_btnRogueMode">
+            <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "on" ? "queue_btnActive" : "queue_name_btn"}>on</div>
+            <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "off" ? "queue_btnActive" : "queue_name_btn"}>off</div>
+          </div>
+        </div>
 
         { queue.length > 0
           ?
-          queue.map((patient, index) => (
+          queue.filter(client => {
+            if (search === '') {
+                return client;
+            } else if ((client.first_name + client.last_name).toLowerCase().includes(search.toLowerCase())) {
+              return client;
+            }
+          })
+          .map((patient, index) => (
             <div className="queue_list" key={index} >
                 <i className="fas fa-times faTimesItemQueue" title="Delete from queue" onClick={(e) => setModalOpen(patient.id)}/>
                 <div id="myModal" className={isModalOpen === patient.id ? "modalOpen" : "modal"}>
@@ -99,6 +114,7 @@ export default function Queue(): ReactElement {
                             "last_name": patient.last_name,
                             "phone": patient.phone,
                             "email": patient.email,
+                            "place_in_queue": patient.place_in_queue,
                             "rougue_mode": true,
                           });
 
@@ -111,26 +127,32 @@ export default function Queue(): ReactElement {
                     </div>
                   </div>
                 </div>
-                <NavLink to={`/${patient.api_key}/intake`} >
-                  <div className="list"  onClick={() => {clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true})}}>
+                <NavLink to={`/${patient.api_key}/${patient.first_name}`} >
+                  <div className="list"  onClick={() => {
+                      console.log("clientIntake", {"patient_name": patient.first_name, "api_key": patient.api_key, "rougue_mode": activeBtnRogueMode, "place_in_queue": patient.place_in_queue});
+                      clientApi.clientIntake({"api_key": patient.api_key, "rougue_mode": true, "place_in_queue": patient.place_in_queue})
+                      }}>
                       {patient.last_name}, {patient.first_name}
                   </div>
                 </NavLink>
             </div>
           ))
           :
-          <div className="infoMessageIntake">NO PATIENTS IN QUEUE</div>
+          <div className="infoMessage">NO PATIENTS IN QUEUE</div>
         }
 
         <button className="queue_add_button" onClick={() => {
+          console.log("Add patient");
           setIsOpen(true);
           setSearchQuery("");
-          }}>+Add new</button>
+          }}>
+          +Add new
+        </button>
 
-        <Popup open={isOpen} modal>
+        <Popup open={isOpen} modal className="popup">
           <div className="modal_window">
             <div className="lists">
-                <i className="fas fa-times" onClick={() => setIsOpen(false)}/>
+                <i className="fas fa-times modalCross" onClick={() => setIsOpen(false)}/>
                 <div className="input_search">
                   <SearchIcon className="search_icon" />
                   <input value={querySearch} onChange={(e) => {
@@ -159,7 +181,6 @@ export default function Queue(): ReactElement {
             </div>
           </div>
         </Popup>
-
       </div>
     </>
   )
