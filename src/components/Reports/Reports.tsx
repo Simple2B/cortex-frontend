@@ -130,12 +130,12 @@ export default function Reports(): ReactElement {
           <div className="reportsDateSelect">
             <div className="dates">
               <DatePicker
-                dateFormat="MM/dd/yyyy"
+                dateFormat="MM/dd/yyyy h:mm aa"
                 className="dataInput"
                 selected={startDate}
                 onChange={(data) => setStartDate(data)}
                 selectsStart
-                showTimeSelect
+                showTimeInput
                 startDate={startDate}
                 endDate={endDate}
                 isClearable
@@ -143,12 +143,12 @@ export default function Reports(): ReactElement {
                 showMonthDropdown
               />
               <DatePicker
-                dateFormat="MM/dd/yyyy"
+                dateFormat="MM/dd/yyyy h:mm aa"
                 className="dataInput"
                 selected={endDate}
                 onChange={(data) => setEndDate(data)}
                 selectsEnd
-                showTimeSelect
+                showTimeInput
                 startDate={startDate}
                 endDate={endDate}
                 minDate={startDate}
@@ -160,7 +160,7 @@ export default function Reports(): ReactElement {
             </div>
             <button onClick={handleSubmit} className="reportsButton">
               Generate
-          </button>
+            </button>
           </div>
         </div>
       </div>
