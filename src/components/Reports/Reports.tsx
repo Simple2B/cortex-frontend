@@ -8,11 +8,18 @@ import { ReactComponent as Arrow } from '../../images/arrow.svg'
 import "react-datepicker/dist/react-datepicker.css";
 import './reports.sass'
 import Select, { components } from 'react-select'
+import { reportApi } from '../../api/reportApi';
 
 
 interface IDataReport {
   startDate: Date;
   endDate: Date;
+  type: string;
+}
+
+interface IDataReportToBack {
+  startDate: string;
+  endDate: string;
   type: string;
 }
 
@@ -87,7 +94,7 @@ const DropdownIndicator = (props: any) => {
 export default function Reports(): ReactElement {
   const [startDate, setStartDate] = useState<any>(new Date());
   const [endDate, setEndDate] = useState<any>(new Date());
-  const [type, setType] = useState<any>(null)
+  const [type, setType] = useState<any>(null);
 
   const options = [
     { value: 'Visits', label: 'Visits' },
@@ -103,7 +110,40 @@ export default function Reports(): ReactElement {
       startDate: startDate,
       endDate: endDate,
     };
-    console.log("report data", data);
+    const startMonth = data.startDate.getMonth() < 10 ? '0' + data.startDate.getMonth().toString() : data.startDate.getMonth().toString();
+    const startDay = data.startDate.getDay() < 10 ? '0' + data.startDate.getDay().toString() : data.startDate.getDay().toString() ;
+    const startFullYear = data.startDate.getFullYear().toString();
+
+    const startHours = data.startDate.getHours() < 10 ? '0' + data.startDate.getHours().toString() : data.startDate.getHours().toString();
+    const startMinutes = data.startDate.getMinutes() < 10 ? '0' + data.startDate.getMinutes().toString() : data.startDate.getMinutes().toString();
+    const startSeconds = data.startDate.getSeconds() < 10 ? '0' + data.startDate.getSeconds().toString() : data.startDate.getSeconds().toString();
+    const startDateToBack = `${startMonth}/${startDay}/${startFullYear}, ${startHours}/${startMinutes}/${startSeconds}`;
+    console.log("start_date",  startDateToBack);
+
+    const endMonth = data.endDate.getMonth() < 10 ? '0' + data.endDate.getMonth().toString() : data.endDate.getMonth().toString();
+    const endDay = data.endDate.getDay() < 10 ? '0' + data.endDate.getDay().toString() : data.endDate.getDay().toString();
+    const endFullYear = data.endDate.getFullYear();
+
+    const endHours = data.endDate.getHours() < 10 ? '0' + data.endDate.getHours().toString() : data.endDate.getHours().toString();
+    const endMinutes = data.endDate.getMinutes() < 10 ? '0' + data.endDate.getMinutes().toString() : data.endDate.getMinutes().toString();
+    const endSeconds = data.endDate.getSeconds() < 10 ? '0' + data.endDate.getSeconds().toString() : data.endDate.getSeconds().toString();
+    const endDateToBack = `${endMonth}/${endDay}/${endFullYear}, ${endHours}/${endMinutes}/${endSeconds}`;
+    console.log("start_date",  endDateToBack);
+
+    const typeString = Object.values(data.type)[0].toLowerCase()
+    console.log("type", typeString);
+
+    const dataToBack: IDataReportToBack = {
+      type: typeString,
+      startDate: startDateToBack,
+      endDate: endDateToBack,
+    };
+
+    console.log("dataToBack", dataToBack);
+
+    if (dataToBack.type === 'visits') {
+      reportApi.filterDateToReportVisit(dataToBack)
+    }
   }
 
   const handleSelect = (type: string) => {
@@ -158,7 +198,7 @@ export default function Reports(): ReactElement {
               />
 
             </div>
-            <button onClick={handleSubmit} className="reportsButton">
+            <button onClick={handleSubmit} className="reportsButton" disabled={type === null}>
               Generate
             </button>
           </div>

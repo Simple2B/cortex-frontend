@@ -27,8 +27,6 @@
           justify-content: center
           align-items: center
           margin: 0 auto
-          // div:first-child
-          //   margin-right: 10px
           .dataInput
             width: 321px
             height: 61px
@@ -42,8 +40,8 @@
           .react-datepicker__close-icon
             width: 40px
           .react-datepicker-wrapper
-            div,
-            input
+            // div,
+            // input
             &:first-child
               margin-right: 20px
         .reportsButton
@@ -55,9 +53,19 @@
           font-size: 38px
           color: #fff
 
+// .css-7itnvo-Menu
+//     position: absolute
+//     left: 0
+//     right: 0
+//     z-index: 100
+
 
 @media (max-width: 768px)
   .reports
+    .reportsTitle
+      margin-top: 40px
+      margin-bottom: 60px
+      font-size: 42px
     .reportsGeneration
         .reportTypeSelector
           margin-bottom: 15px
@@ -86,12 +94,20 @@
     right: 0
     z-index: 100
 
+  .css-7itnvo-Menu
+    position: absolute
+    left: 0
+    right: 0
+    z-index: 100
+
+  .reports .reportsGeneration .reportsDateSelect .reportsButton
+    margin-top: 300px
 
 @media (max-width: 540px)
   .reports
     .reportsGeneration
         margin: 0 auto
-        .reportTypeSelector
+        // .reportTypeSelector
         .reportsDateSelect
           display: flex
           justify-content: space-between
@@ -123,12 +139,6 @@
 
   .css-1av6kra-Control
     z-index: 200
-
-  .css-7itnvo-Menu
-    position: absolute
-    left: 0
-    right: 0
-    z-index: 100
 
   .reports .reportsGeneration .reportsDateSelect .dates .dataInput
     margin: 0
