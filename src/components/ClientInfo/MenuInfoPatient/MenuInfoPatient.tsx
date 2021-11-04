@@ -5,8 +5,9 @@ import { NavLink } from 'react-router-dom';
 
 
 interface MyProps {
-  api_key: string
-  firstName: string
+  api_key: string,
+  firstName: string,
+  lastName: string,
 }
 
 
@@ -27,7 +28,7 @@ export default function MenuInfoPatient(props: MyProps): ReactElement {
     <div className="menuInfoPatient_container">
         <div className="menuInfoPatient">
             <div className={splitLocation[splitLocation.length - 1] === `${props.firstName}` ? "active" : "menuInfoPatientItem"}>
-              <NavLink to={`/${props.api_key}/${props.firstName}`} className="item">{ props.firstName }</NavLink>
+              <NavLink to={`/${props.api_key}/${props.firstName}`} className="item">{ props.firstName + " " + props.lastName.split("")[0] + '.'}</NavLink>
             </div>
             <div className={splitLocation[splitLocation.length - 1] === "#" ? "active" : "menuInfoPatientItem"}>
               <NavLink to="#">Care Plan</NavLink>
