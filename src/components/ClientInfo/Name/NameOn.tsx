@@ -1,8 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import NavBar from '../../NavBar/NavBar';
-import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
 import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
 import "./name.sass";
@@ -11,46 +9,44 @@ import  arrowLeft  from "../../../images/arrowLeft.svg";
 import nameDashboard from "../../../images/nameDashboard.svg";
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 import { ReactComponent as Brain } from '../../../images/brain.svg';
+import NavBar from '../../NavBar/NavBar';
 
 
-export default function Name(): ReactElement {
-  const location = useLocation();
-  const splitLocation = location.pathname.split("/");
-  const api_key = splitLocation[splitLocation.length - 2];
-  const [client, setClient] = useState<Client>(ClientDefault);
+export default function NameOn(): ReactElement {
+//   const location = useLocation();
+//   const splitLocation = location.pathname.split("/");
+//   const api_key = splitLocation[splitLocation.length - 2];
+//   const [client, setClient] = useState<Client>(ClientDefault);
 
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
   const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("L");
-  const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
+  const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
 
   const history = useHistory();
 
-  const getClient = async () => {
-    try {
-      const response = await instance()
-      .get(`api/client/client_intake/${api_key}`);
-      console.log("GET: client_intake name => ", response.data);
-      setClient(response.data);
-      return response.data
-    } catch (error: any) {
-      // place to handle errors and rise custom errors
-      console.log('GET: error message get_client_intake name =>  ', error.message);
-      console.log('error response data get_client_intake name => ', error.response.data);
-      throw new Error(error.message);
-    };
-  }
+//   const getClient = async () => {
+//     try {
+//       const response = await instance()
+//       .get(`api/client/client_intake/${api_key}`);
+//       console.log("GET: client_intake name => ", response.data);
+//       setClient(response.data);
+//       return response.data
+//     } catch (error: any) {
+//       // place to handle errors and rise custom errors
+//       console.log('GET: error message get_client_intake name =>  ', error.message);
+//       console.log('error response data get_client_intake name => ', error.response.data);
+//       throw new Error(error.message);
+//     };
+//   }
 
-  useEffect(() => {
-    getClient()
-  }, []);
+//   useEffect(() => {
+//     getClient()
+//   }, []);
 
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
-    // if (activeBtnRogueMode === "on") {
-    //   history.push('/queue');
-    // }
     if (activeBtnRogueMode === "on") {
-      history.push('/nameOn');
+    //   history.push('/nameOn');
     }
   }, [activeBtnRogueMode]);
 
@@ -70,8 +66,9 @@ export default function Name(): ReactElement {
 
 
   return (
-    <>
-        <div className="nameContainer">
+    <div className="nameOn">
+        <NavBar />
+        <div className="nameContainerOn">
             <div className="nameContainer_arousal">
 
                 <div className="title">Arousal</div>
@@ -99,13 +96,15 @@ export default function Name(): ReactElement {
                     <div className="btn_circle"></div>
                     <div className="btn_circle btn_circleActive"></div>
                   </div>
-                  <div className="coherenceBtn_complete" onClick={() => {
-                        clientApi.completeClient({"api_key": api_key,
-                        "rougue_mode": false, "place_in_queue": client.place_in_queue});
-                        history.push('/queue');
-                        console.log("client" , {"api_key": api_key,
-                        "rougue_mode": false, "first_name": client.firstName, "place_in_queue": client.place_in_queue})
-                  }}>
+                  <div className="coherenceBtn_complete"
+                //     onClick={() => {
+                //         clientApi.completeClient({"api_key": api_key,
+                //         "rougue_mode": false, "place_in_queue": client.place_in_queue});
+                //         history.push('/queue');
+                //         console.log("client" , {"api_key": api_key,
+                //         "rougue_mode": false, "first_name": client.firstName, "place_in_queue": client.place_in_queue})
+                //   }}
+                  >
                     Complete
                   </div>
                 </div>
@@ -173,6 +172,6 @@ export default function Name(): ReactElement {
               </div>
             </div>
         </div>
-    </>
+    </div>
   )
 }

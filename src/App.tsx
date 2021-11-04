@@ -20,6 +20,7 @@ import Fullscreen from 'react-fullscreen-crossbrowser';
 import Patient from './components/Patients/Patients';
 import NavBar from './components/NavBar/NavBar';
 import MenuInfoPatient from './components/ClientInfo/MenuInfoPatient/MenuInfoPatient';
+import NameOn from './components/ClientInfo/Name/NameOn';
 
 function App() {
   const loggedIn = useTypedSelector((state) => state.auth.loggedIn);
@@ -89,6 +90,11 @@ function App() {
               {...defaultProtectedRouteProps}
               exact path="/queue"
               component={Queue}
+            />
+            <ProtectedRoute
+              {...defaultProtectedRouteProps}
+              exact path="/nameOn"
+              component={NameOn}
             />
             <>
             <NavBar />
