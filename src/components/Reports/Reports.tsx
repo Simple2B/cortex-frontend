@@ -8,11 +8,19 @@ import { ReactComponent as Arrow } from '../../images/arrow.svg'
 import "react-datepicker/dist/react-datepicker.css";
 import './reports.sass'
 import Select, { components } from 'react-select'
+import { reportApi } from '../../api/reportApi';
+import { instance } from '../../api/axiosInstance';
 
 
 interface IDataReport {
   startDate: Date;
   endDate: Date;
+  type: string;
+}
+
+interface IDataReportToBack {
+  startDate: string;
+  endDate: string;
   type: string;
 }
 
@@ -87,7 +95,10 @@ const DropdownIndicator = (props: any) => {
 export default function Reports(): ReactElement {
   const [startDate, setStartDate] = useState<any>(new Date());
   const [endDate, setEndDate] = useState<any>(new Date());
-  const [type, setType] = useState<any>(null)
+  const [type, setType] = useState<any>(null);
+
+  const [fileVisits, setFileVisits] = useState(null);
+  const [updateData, setUpdateData] = useState(null);
 
   const options = [
     { value: 'Visits', label: 'Visits' },
@@ -95,7 +106,29 @@ export default function Reports(): ReactElement {
     { value: 'Revenue', label: 'Revenue' },
     { value: 'Client_export', label: 'Client export' },
     { value: 'Client_import', label: 'Client import' }
-  ]
+  ];
+
+
+  const getFileWithVisits = async () => {
+    try {
+      const response = await instance()
+      .get('api/client/report_visit');
+      console.log("GET: csv file with visits => ", response);
+      setFileVisits(response.data);
+    } catch (error: any) {
+      console.log('GET: error message (file visits)=>  ', new Error(error.message));
+      throw new Error(error.message);
+    }
+  };
+
+  // const importCSV = (csvFile: any) => {
+  //   Papa.parse(csvFile, {
+  //     complete: updateData,
+  //     header: true
+  //   });
+  // };
+
+
 
   const handleSubmit = () => {
     const data: IDataReport = {
@@ -103,8 +136,39 @@ export default function Reports(): ReactElement {
       startDate: startDate,
       endDate: endDate,
     };
-    console.log("report data", data);
-  }
+
+    const dateStart = new Date(data.startDate.toISOString().replace(/GMT.*$/,'GMT+0000')).toISOString();
+    const dStart = dateStart.replace('T', ' ').replace(".000Z", " ").split(" ");
+    const fullDateStart = dStart[0].split("-");
+    const fullTime = dStart[1];
+    const startDateToBack = `${fullDateStart[1]}/${fullDateStart[2]}/${fullDateStart[0]}, ${fullTime}`
+    console.log("startDateToBack ", startDateToBack);
+
+    const endStart = new Date(data.endDate.toISOString().replace(/GMT.*$/,'GMT+0000')).toISOString();
+    const dEnd = endStart.replace('T', ' ').replace(".000Z", " ").split(" ");
+    const fullDateEnd = dEnd[0].split("-");
+    const fullTimeEnd = dEnd[1];
+    const endDateToBack = `${fullDateEnd[1]}/${fullDateEnd[2]}/${fullDateEnd[0]}, ${fullTimeEnd}`
+    console.log("startDateToBack ", endDateToBack);
+
+
+    const typeString = Object.values(data.type)[0].toLowerCase()
+    console.log("type", typeString);
+
+    const dataToBack: IDataReportToBack = {
+      type: typeString,
+      startDate: startDateToBack,
+      endDate: endDateToBack,
+    };
+
+
+    if (dataToBack.type === 'visits') {
+      reportApi.filterDateToReportVisit(dataToBack);
+      getFileWithVisits();
+    }
+  };
+
+  console.log("fileVisits", fileVisits);
 
   const handleSelect = (type: string) => {
     setType(type)
@@ -130,37 +194,37 @@ export default function Reports(): ReactElement {
           <div className="reportsDateSelect">
             <div className="dates">
               <DatePicker
-                dateFormat="MM/dd/yyyy"
+                dateFormat="MM/dd/yyyy h:mm aa"
                 className="dataInput"
                 selected={startDate}
                 onChange={(data) => setStartDate(data)}
                 selectsStart
-                showTimeSelect
+                showTimeInput
                 startDate={startDate}
                 endDate={endDate}
                 isClearable
                 placeholderText="Start date"
-                showMonthDropdown
+                // showMonthDropdown
               />
               <DatePicker
-                dateFormat="MM/dd/yyyy"
+                dateFormat="MM/dd/yyyy h:mm aa"
                 className="dataInput"
                 selected={endDate}
                 onChange={(data) => setEndDate(data)}
                 selectsEnd
-                showTimeSelect
+                showTimeInput
                 startDate={startDate}
                 endDate={endDate}
                 minDate={startDate}
                 isClearable
                 placeholderText="End date"
-                showMonthDropdown
+                // showMonthDropdown
               />
 
             </div>
-            <button onClick={handleSubmit} className="reportsButton">
+            <button onClick={handleSubmit} className="reportsButton" disabled={type === null}>
               Generate
-          </button>
+            </button>
           </div>
         </div>
       </div>
