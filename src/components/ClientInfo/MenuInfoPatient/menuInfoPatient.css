@@ -16,10 +16,6 @@
 	border-bottom: solid 1px transparent;
 }
 
-.menuInfoPatientItem .item {
-    text-transform: uppercase;
-}
-
 .menuInfoPatient .menuInfoPatientItem:last-child a {
 	margin-right: 0;
 }
