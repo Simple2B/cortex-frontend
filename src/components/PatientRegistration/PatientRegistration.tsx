@@ -268,7 +268,6 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input" data-error={"phone"}>
             <input
               name="phone"
-
               value={values.phone.trim()}
               onChange={onChange}
               className={`registration_input_data ${
@@ -285,7 +284,6 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input" data-error={"email"}>
             <input
               name="email"
-
               value={values.email.trim() || ""}
               onChange={onChange}
               className={`registration_input_data ${
@@ -298,7 +296,6 @@ export default function PatientRegistration(): ReactElement {
               <div className="invalid-feedback">{errors.email}</div>
             )}
           </div>
-
           <input
             value={values.referring.trim()}
             name="referring"
@@ -306,13 +303,11 @@ export default function PatientRegistration(): ReactElement {
             className="registration_input"
             placeholder="Who can we thank for referring you?"
           />
-
           <div
             data-error={"conditionError"}
             className={`reqFormTitleText ${
               errors.conditionError && "is-invalid"
             }`}
-
           >
             Check any conditions you CURRENTLY have{" "}
             <span  className="asterisk">*</span>
@@ -408,6 +403,7 @@ export default function PatientRegistration(): ReactElement {
                 value={'null'}
                 name="covidTestedPositive"
                 type="radio"
+                checked
                 onChange={onChange}
               />
               <span className="checkmarkRadiobutton"></span>
@@ -446,6 +442,7 @@ export default function PatientRegistration(): ReactElement {
                 value={'null'}
                 name="covidVaccine"
                 type="radio"
+                checked
                 onChange={onChange}
               />
               <span className="checkmarkRadiobutton"></span>
