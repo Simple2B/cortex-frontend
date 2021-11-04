@@ -43,7 +43,7 @@ export default function Intake(): ReactElement {
   return (
     <>
         <NavBar />
-        <MenuInfoPatient api_key={api_key} firstName={client.firstName}/>
+        <MenuInfoPatient api_key={api_key} firstName={client.firstName} lastName={client.lastName}/>
         <div className="containerIntakeContent">
           <div className="coherence">
             <div className="coherenceTitleText">Coherence</div>

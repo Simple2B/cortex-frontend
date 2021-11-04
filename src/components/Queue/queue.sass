@@ -89,6 +89,24 @@
   margin: 0
   margin-bottom: 55px
 
+.containerListsButton
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  position: relative
+
+
+.queue_lists_container
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  max-height: 60vh
+  overflow: scroll
+  .infoMessage
+    text-align: center
+
 .queue_list
   position: relative
   display: flex
@@ -131,6 +149,7 @@
     transition: all .3s ease-in-out
 
 .queue_add_button
+  // position: absolute
   width: 443px
   height: 97px
   background: transparent
@@ -141,6 +160,10 @@
   cursor: pointer
   &:hover
     background: rgb(0, 80, 80)
+
+.modal_window_close
+  overflow: hidden
+  display: none
 
 .modal_window
   position: fixed
@@ -154,6 +177,7 @@
   align-items: center
   flex-direction: column
   overflow: scroll
+  z-index: 1000
 
   .lists
     position: relative
@@ -287,6 +311,9 @@
   color: black
   text-decoration: none
   cursor: pointer
+
+#popup-root
+  height: 100vh
 
 @media (max-width: 1440px)
   .popup-content
