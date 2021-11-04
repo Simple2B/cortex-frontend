@@ -36,8 +36,9 @@ function App() {
 
   return (
 
-      <Fullscreen enabled={fullScreenMode}>
+
         <div className="App" >
+          <Fullscreen enabled={fullScreenMode}>
           <i className={ fullScreenMode ? "fas fa-compress-arrows-alt fullScreenBtn": "fas fa-expand-arrows-alt fullScreenBtn"} onClick={fullScreenToggler}/>
           <Switch>
             <Route exact path="/">
@@ -102,8 +103,8 @@ function App() {
                 component={Name}
             />
           </Switch>
+          </Fullscreen>
         </div >
-      </Fullscreen>
   );
 }
 
