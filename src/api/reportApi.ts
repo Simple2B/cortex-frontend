@@ -1,14 +1,15 @@
-// import { AxiosError, AxiosResponse } from "axios";
 import { instance } from "./axiosInstance";
 
 
+interface IDataReportVisit {
+  type: string,
+  startDate: string,
+  endDate: string,
+};
+
 export const reportApi = {
 
-  filterDateToReportVisit: async (data: {
-    type: string,
-    startDate: string,
-    endDate: string,
-  }): Promise<void> => {
+  filterDateToReportVisit: async (data: IDataReportVisit): Promise<void> => {
 
     console.log('dataReqPatient =>', data);
 
