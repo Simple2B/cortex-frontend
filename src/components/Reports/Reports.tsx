@@ -122,6 +122,18 @@ export default function Reports(): ReactElement {
     }
   };
 
+  const getFileWithNewClients = async () => {
+    try {
+      const response = await instance()
+      .get('api/client/report_new_clients');
+      console.log("GET: csv file with new_clients => ", response);
+      setFileVisits(response.data);
+    } catch (error: any) {
+      console.log('GET: error message (file new_clients)=>  ', new Error(error.message));
+      throw new Error(error.message);
+    }
+  };
+
   const handleSubmit = () => {
     const data: IDataReport = {
       type: type,
@@ -156,19 +168,29 @@ export default function Reports(): ReactElement {
       endDate: endDateToBack,
     };
 
-
     if (dataToBack.type === 'visits') {
       reportApi.filterDateToReportVisit(dataToBack);
-      getFileWithVisits();
+      if (fileVisits && fileVisits.length > 42) {
+        getFileWithVisits();
+      } else {
+        alert(`No visits during this period ${startDateToBack} - ${endDateToBack}`);
+        console.log("No visits for this date")
+      }
     }
 
     if (dataToBack.type === 'new_clients') {
-      // reportApi.filterDateToReportNewClients(dataToBack);
-      // getFileWithNewClients();
+      reportApi.filterDateToReportNewClients(dataToBack);
+      if (fileVisits && fileVisits.length > 132) {
+        getFileWithNewClients();
+      } else {
+        alert(`There are no new clients during this period ${startDateToBack} - ${endDateToBack}`);
+        console.log("There are no new clients during this period")
+      }
     }
   };
 
   console.log("fileVisits", fileVisits);
+  console.log("fileVisits length", fileVisits && fileVisits.length);
 
   const handleSelect = (type: string) => {
     setType(type)
@@ -220,9 +242,9 @@ export default function Reports(): ReactElement {
               />
 
             </div>
-            <button onClick={handleSubmit} className="reportsButton" disabled={type === null}>
+            <button onClick={handleSubmit} className={`${type === null ? "reportsButtonDisabled" : "reportsButton"}`} disabled={type === null}>
               Generate
-              {fileVisits && <CSVDownload data={fileVisits} target="_blank" />}
+              { fileVisits && <CSVDownload data={fileVisits} target="_blank" />}
             </button>
           </div>
         </div>
