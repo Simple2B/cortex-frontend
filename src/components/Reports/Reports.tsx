@@ -1,5 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import NavBar from '../NavBar/NavBar';
+import { CSVLink, CSVDownload } from "react-csv";
 // import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 // import DatePicker from 'react-modern-calendar-datepicker';
 import DatePicker from "react-datepicker";
@@ -93,11 +94,11 @@ const DropdownIndicator = (props: any) => {
 };
 
 export default function Reports(): ReactElement {
-  const [startDate, setStartDate] = useState<any>(new Date());
-  const [endDate, setEndDate] = useState<any>(new Date());
+  const [startDate, setStartDate] = useState<any>(new Date);
+  const [endDate, setEndDate] = useState<any>(new Date);
   const [type, setType] = useState<any>(null);
 
-  const [fileVisits, setFileVisits] = useState(null);
+  const [fileVisits, setFileVisits] = useState<string | any>(null);
   const [updateData, setUpdateData] = useState(null);
 
   const options = [
@@ -121,15 +122,6 @@ export default function Reports(): ReactElement {
     }
   };
 
-  // const importCSV = (csvFile: any) => {
-  //   Papa.parse(csvFile, {
-  //     complete: updateData,
-  //     header: true
-  //   });
-  // };
-
-
-
   const handleSubmit = () => {
     const data: IDataReport = {
       type: type,
@@ -137,20 +129,23 @@ export default function Reports(): ReactElement {
       endDate: endDate,
     };
 
-    const dateStart = new Date(data.startDate.toISOString().replace(/GMT.*$/,'GMT+0000')).toISOString();
-    const dStart = dateStart.replace('T', ' ').replace(".000Z", " ").split(" ");
-    const fullDateStart = dStart[0].split("-");
-    const fullTime = dStart[1];
-    const startDateToBack = `${fullDateStart[1]}/${fullDateStart[2]}/${fullDateStart[0]}, ${fullTime}`
+    const fullStartDate = data.startDate.toISOString().replace("T", " ").replace(".", " ").split(" ");
+    const dStart = fullStartDate[0].split("-");
+    console.log(dStart);
+    console.log(fullStartDate[1]);
+
+    const fullTime = fullStartDate[1];
+    const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`
     console.log("startDateToBack ", startDateToBack);
 
-    const endStart = new Date(data.endDate.toISOString().replace(/GMT.*$/,'GMT+0000')).toISOString();
-    const dEnd = endStart.replace('T', ' ').replace(".000Z", " ").split(" ");
-    const fullDateEnd = dEnd[0].split("-");
-    const fullTimeEnd = dEnd[1];
-    const endDateToBack = `${fullDateEnd[1]}/${fullDateEnd[2]}/${fullDateEnd[0]}, ${fullTimeEnd}`
-    console.log("startDateToBack ", endDateToBack);
+    const fullEndDate = data.endDate.toISOString().replace("T", " ").replace(".", " ").split(" ");
+    const dEnd = fullEndDate[0].split("-");
+    console.log(dEnd);
+    console.log(fullEndDate[1]);
 
+    const fullTimeEnd = fullEndDate[1];
+    const endDateToBack = `${dEnd[1]}/${dEnd[2]}/${dEnd[0]}, ${fullTimeEnd}`
+    console.log("startDateToBack ", endDateToBack);
 
     const typeString = Object.values(data.type)[0].toLowerCase()
     console.log("type", typeString);
@@ -165,6 +160,11 @@ export default function Reports(): ReactElement {
     if (dataToBack.type === 'visits') {
       reportApi.filterDateToReportVisit(dataToBack);
       getFileWithVisits();
+    }
+
+    if (dataToBack.type === 'new_clients') {
+      // reportApi.filterDateToReportNewClients(dataToBack);
+      // getFileWithNewClients();
     }
   };
 
@@ -204,7 +204,6 @@ export default function Reports(): ReactElement {
                 endDate={endDate}
                 isClearable
                 placeholderText="Start date"
-                // showMonthDropdown
               />
               <DatePicker
                 dateFormat="MM/dd/yyyy h:mm aa"
@@ -218,12 +217,12 @@ export default function Reports(): ReactElement {
                 minDate={startDate}
                 isClearable
                 placeholderText="End date"
-                // showMonthDropdown
               />
 
             </div>
             <button onClick={handleSubmit} className="reportsButton" disabled={type === null}>
               Generate
+              {fileVisits && <CSVDownload data={fileVisits} target="_blank" />}
             </button>
           </div>
         </div>
