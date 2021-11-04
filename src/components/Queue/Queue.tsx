@@ -12,12 +12,12 @@ export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
   const [clients, setClients] = useState<User[]>([]);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenClientModal, setIsOpenClientModal] = useState<boolean>(false);
   const [querySearch, setSearchQuery] = useState<string>('');
 
   const [isModalOpen, setModalOpen] = useState<number>(0);
 
-  const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
+  const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
   const [search, setSearch] = useState<string>('');
 
@@ -143,16 +143,16 @@ export default function Queue(): ReactElement {
 
         <button className="queue_add_button" onClick={() => {
           console.log("Add patient");
-          setIsOpen(true);
+          setIsOpenClientModal(!isOpenClientModal);
           setSearchQuery("");
           }}>
           +Add new
         </button>
 
-        <Popup open={isOpen} modal className="popup">
+        <Popup open={isOpenClientModal} modal className="popup">
           <div className="modal_window">
             <div className="lists">
-                <i className="fas fa-times modalCross" onClick={() => setIsOpen(false)}/>
+                <i className="fas fa-times modalCross" onClick={() => setIsOpenClientModal(!isOpenClientModal)}/>
                 <div className="input_search">
                   <SearchIcon className="search_icon" />
                   <input value={querySearch} onChange={(e) => {
@@ -171,7 +171,7 @@ export default function Queue(): ReactElement {
                               clientApi.addClientToQueue(patient);
                               addClient(patient);
                               setSearchQuery("");
-                              setIsOpen(false);
+                              setIsOpenClientModal(!isOpenClientModal);
                             }}>
                           {patient.last_name}, {patient.first_name}
                         </div>

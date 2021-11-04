@@ -28,11 +28,11 @@ function App() {
     authenticationPath: "/login",
   };
 
-  let [fullScreenMode, setFullScreenMode]= useState<boolean>(false);
+  const [fullScreenMode, setFullScreenMode]= useState<boolean>(false);
 
   const fullScreenToggler = () => {
     setFullScreenMode(!fullScreenMode);
-  }
+  };
 
   return (
 

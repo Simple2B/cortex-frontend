@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import './reports.sass'
 import Select, { components } from 'react-select'
 import { reportApi } from '../../api/reportApi';
+import { instance } from '../../api/axiosInstance';
 
 
 interface IDataReport {
@@ -96,13 +97,38 @@ export default function Reports(): ReactElement {
   const [endDate, setEndDate] = useState<any>(new Date());
   const [type, setType] = useState<any>(null);
 
+  const [fileVisits, setFileVisits] = useState(null);
+  const [updateData, setUpdateData] = useState(null);
+
   const options = [
     { value: 'Visits', label: 'Visits' },
     { value: 'New_clients', label: 'New clients' },
     { value: 'Revenue', label: 'Revenue' },
     { value: 'Client_export', label: 'Client export' },
     { value: 'Client_import', label: 'Client import' }
-  ]
+  ];
+
+
+  const getFileWithVisits = async () => {
+    try {
+      const response = await instance()
+      .get('api/client/report_visit');
+      console.log("GET: csv file with visits => ", response);
+      setFileVisits(response.data);
+    } catch (error: any) {
+      console.log('GET: error message (file visits)=>  ', new Error(error.message));
+      throw new Error(error.message);
+    }
+  };
+
+  // const importCSV = (csvFile: any) => {
+  //   Papa.parse(csvFile, {
+  //     complete: updateData,
+  //     header: true
+  //   });
+  // };
+
+
 
   const handleSubmit = () => {
     const data: IDataReport = {
@@ -110,25 +136,21 @@ export default function Reports(): ReactElement {
       startDate: startDate,
       endDate: endDate,
     };
-    const startMonth = data.startDate.getMonth() < 10 ? '0' + data.startDate.getMonth().toString() : data.startDate.getMonth().toString();
-    const startDay = data.startDate.getDay() < 10 ? '0' + data.startDate.getDay().toString() : data.startDate.getDay().toString() ;
-    const startFullYear = data.startDate.getFullYear().toString();
 
-    const startHours = data.startDate.getHours() < 10 ? '0' + data.startDate.getHours().toString() : data.startDate.getHours().toString();
-    const startMinutes = data.startDate.getMinutes() < 10 ? '0' + data.startDate.getMinutes().toString() : data.startDate.getMinutes().toString();
-    const startSeconds = data.startDate.getSeconds() < 10 ? '0' + data.startDate.getSeconds().toString() : data.startDate.getSeconds().toString();
-    const startDateToBack = `${startMonth}/${startDay}/${startFullYear}, ${startHours}/${startMinutes}/${startSeconds}`;
-    console.log("start_date",  startDateToBack);
+    const dateStart = new Date(data.startDate.toISOString().replace(/GMT.*$/,'GMT+0000')).toISOString();
+    const dStart = dateStart.replace('T', ' ').replace(".000Z", " ").split(" ");
+    const fullDateStart = dStart[0].split("-");
+    const fullTime = dStart[1];
+    const startDateToBack = `${fullDateStart[1]}/${fullDateStart[2]}/${fullDateStart[0]}, ${fullTime}`
+    console.log("startDateToBack ", startDateToBack);
 
-    const endMonth = data.endDate.getMonth() < 10 ? '0' + data.endDate.getMonth().toString() : data.endDate.getMonth().toString();
-    const endDay = data.endDate.getDay() < 10 ? '0' + data.endDate.getDay().toString() : data.endDate.getDay().toString();
-    const endFullYear = data.endDate.getFullYear();
+    const endStart = new Date(data.endDate.toISOString().replace(/GMT.*$/,'GMT+0000')).toISOString();
+    const dEnd = endStart.replace('T', ' ').replace(".000Z", " ").split(" ");
+    const fullDateEnd = dEnd[0].split("-");
+    const fullTimeEnd = dEnd[1];
+    const endDateToBack = `${fullDateEnd[1]}/${fullDateEnd[2]}/${fullDateEnd[0]}, ${fullTimeEnd}`
+    console.log("startDateToBack ", endDateToBack);
 
-    const endHours = data.endDate.getHours() < 10 ? '0' + data.endDate.getHours().toString() : data.endDate.getHours().toString();
-    const endMinutes = data.endDate.getMinutes() < 10 ? '0' + data.endDate.getMinutes().toString() : data.endDate.getMinutes().toString();
-    const endSeconds = data.endDate.getSeconds() < 10 ? '0' + data.endDate.getSeconds().toString() : data.endDate.getSeconds().toString();
-    const endDateToBack = `${endMonth}/${endDay}/${endFullYear}, ${endHours}/${endMinutes}/${endSeconds}`;
-    console.log("start_date",  endDateToBack);
 
     const typeString = Object.values(data.type)[0].toLowerCase()
     console.log("type", typeString);
@@ -139,12 +161,14 @@ export default function Reports(): ReactElement {
       endDate: endDateToBack,
     };
 
-    console.log("dataToBack", dataToBack);
 
     if (dataToBack.type === 'visits') {
-      reportApi.filterDateToReportVisit(dataToBack)
+      reportApi.filterDateToReportVisit(dataToBack);
+      getFileWithVisits();
     }
-  }
+  };
+
+  console.log("fileVisits", fileVisits);
 
   const handleSelect = (type: string) => {
     setType(type)
@@ -180,7 +204,7 @@ export default function Reports(): ReactElement {
                 endDate={endDate}
                 isClearable
                 placeholderText="Start date"
-                showMonthDropdown
+                // showMonthDropdown
               />
               <DatePicker
                 dateFormat="MM/dd/yyyy h:mm aa"
@@ -194,7 +218,7 @@ export default function Reports(): ReactElement {
                 minDate={startDate}
                 isClearable
                 placeholderText="End date"
-                showMonthDropdown
+                // showMonthDropdown
               />
 
             </div>

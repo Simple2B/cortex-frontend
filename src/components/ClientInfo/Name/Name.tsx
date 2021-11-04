@@ -60,7 +60,7 @@ export default function Name(): ReactElement {
   return (
     <>
         <NavBar />
-        <MenuInfoPatient api_key={api_key} firstName={client.firstName}/>
+        <MenuInfoPatient api_key={api_key} firstName={client.firstName} lastName={client.lastName}/>
 
         <div className="nameContainer">
             <div className="nameContainer_arousal">
