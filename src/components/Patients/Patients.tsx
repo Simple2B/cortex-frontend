@@ -5,6 +5,7 @@ import { User } from "../../types/patientsTypes";
 import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
 import './Patients.sass'
 import { NavLink } from 'react-router-dom';
+import { clientApi } from '../../api/clientApi';
 
 export default function Patient(): ReactElement {
   const [clients, setClients] = useState<User[]>([]);
