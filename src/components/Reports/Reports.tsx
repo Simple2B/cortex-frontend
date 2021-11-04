@@ -1,8 +1,6 @@
 import React, { ReactElement, useState } from 'react';
 import NavBar from '../NavBar/NavBar';
-import { CSVLink, CSVDownload } from "react-csv";
-// import 'react-modern-calendar-datepicker/lib/DatePicker.css';
-// import DatePicker from 'react-modern-calendar-datepicker';
+import { CSVDownload } from "react-csv";
 import DatePicker from "react-datepicker";
 import { ReactComponent as Arrow } from '../../images/arrow.svg'
 
@@ -97,9 +95,7 @@ export default function Reports(): ReactElement {
   const [startDate, setStartDate] = useState<any>(new Date);
   const [endDate, setEndDate] = useState<any>(new Date);
   const [type, setType] = useState<any>(null);
-
   const [fileVisits, setFileVisits] = useState<string | any>(null);
-  const [updateData, setUpdateData] = useState(null);
 
   const options = [
     { value: 'Visits', label: 'Visits' },
