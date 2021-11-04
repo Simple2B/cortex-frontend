@@ -403,7 +403,6 @@ export default function PatientRegistration(): ReactElement {
                 value={'null'}
                 name="covidTestedPositive"
                 type="radio"
-                checked
                 onChange={onChange}
               />
               <span className="checkmarkRadiobutton"></span>
@@ -442,7 +441,6 @@ export default function PatientRegistration(): ReactElement {
                 value={'null'}
                 name="covidVaccine"
                 type="radio"
-                checked
                 onChange={onChange}
               />
               <span className="checkmarkRadiobutton"></span>
