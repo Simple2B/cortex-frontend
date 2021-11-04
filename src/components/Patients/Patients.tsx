@@ -9,7 +9,6 @@ import { clientApi } from '../../api/clientApi';
 
 export default function Patient(): ReactElement {
   const [clients, setClients] = useState<User[]>([]);
-
   const [search, setSearch] = useState<string>('');
 
   const getClients = async () => {
