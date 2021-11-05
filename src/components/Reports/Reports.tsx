@@ -262,9 +262,9 @@ export default function Reports(): ReactElement {
 
       <div className={isOpenModal ? "modalOpen" : "modal"}>
         <div className="modal-content">
-            <span className="close" onClick={() => setIsOpenModel(false)}>&times;</span>
+            <span className="close" onClick={() => setIsOpenModel(isOpenModal)}>&times;</span>
 
-              {
+              { type &&
                 type.value.toLowerCase() === 'visits' ?
                   <div className="modalText">
                     { file.length > 42
@@ -275,6 +275,7 @@ export default function Reports(): ReactElement {
                     }
                   </div>
                     :
+                  type &&
                   type.value.toLowerCase() === 'new_clients' ?
                     <div className="modalText">
                       { file.length > 132
@@ -298,7 +299,7 @@ export default function Reports(): ReactElement {
                     Ok
                   </CSVLink>
                 </div>
-                <div onClick={() => setIsOpenModel(false)}>Cancel</div>
+                <div onClick={() => setIsOpenModel(isOpenModal)}>Cancel</div>
               </div>
             }
 
