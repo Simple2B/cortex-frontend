@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import NavBar from '../NavBar/NavBar';
-import { CSVDownload } from "react-csv";
+import { CSVDownload, CSVLink } from "react-csv";
 import DatePicker from "react-datepicker";
 import { ReactComponent as Arrow } from '../../images/arrow.svg'
 import "react-datepicker/dist/react-datepicker.css";
@@ -94,8 +94,9 @@ export default function Reports(): ReactElement {
   const [startDate, setStartDate] = useState<Date | any>(null);
   const [endDate, setEndDate] = useState<Date | any>(null);
   const [type, setType] = useState<any>(null);
-  const [fileVisits, setFileVisits] = useState<string | any>(null);
-  const [fileNewClients, setFileNewClients] = useState<string | any>(null);
+  const [file, setFile] = useState<string | any>(null);
+
+  const [isOpenModal, setIsOpenModel] = useState(false);
 
   const options = [
     { value: 'Visits', label: 'Visits' },
@@ -111,7 +112,7 @@ export default function Reports(): ReactElement {
       .get('api/client/report_visit');
       console.log("GET: csv file with visits => ", response);
       const data = await response.data;
-      setFileVisits(data);
+      setFile(data);
     } catch (error: any) {
       console.log('GET: error message (file visits)=>  ', new Error(error.message));
       throw new Error(error.message);
@@ -124,20 +125,15 @@ export default function Reports(): ReactElement {
       .get('api/client/report_new_clients');
       console.log("GET: csv file with new_clients => ", response);
       const data = await response.data
-      setFileNewClients(data);
+      setFile(data);
     } catch (error: any) {
       console.log('GET: error message (file new_clients)=>  ', new Error(error.message));
       throw new Error(error.message);
     }
   };
 
-  useEffect(() => {
-    setType(type);
-    setStartDate(startDate);
-    setEndDate(endDate);
-  }, [type, startDate, endDate]);
+  const filterDateForReport = () => {
 
-  const handleSubmit = () => {
     const data: IDataReport = {
       type: type,
       startDate: startDate,
@@ -146,24 +142,18 @@ export default function Reports(): ReactElement {
 
     const fullStartDate = data.startDate.toISOString().replace("T", " ").replace(".", " ").split(" ");
     const dStart = fullStartDate[0].split("-");
-    // console.log(dStart);
-    // console.log(fullStartDate[1]);
 
     const fullTime = fullStartDate[1];
     const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`
-    // console.log("startDateToBack ", startDateToBack);
 
     const fullEndDate = data.endDate.toISOString().replace("T", " ").replace(".", " ").split(" ");
     const dEnd = fullEndDate[0].split("-");
-    // console.log(dEnd);
-    // console.log(fullEndDate[1]);
 
     const fullTimeEnd = fullEndDate[1];
     const endDateToBack = `${dEnd[1]}/${dEnd[2]}/${dEnd[0]}, ${fullTimeEnd}`
-    // console.log("startDateToBack ", endDateToBack);
+    const typeString = Object.values(data.type)[0].toLowerCase();
+    // setType(typeString);
 
-    const typeString = Object.values(data.type)[0].toLowerCase()
-    // console.log("type", typeString);
 
     const dataToBack: IDataReportToBack = {
       type: typeString,
@@ -173,25 +163,42 @@ export default function Reports(): ReactElement {
 
     if (dataToBack.type === 'visits') {
       reportApi.filterDateToReportVisit(dataToBack);
-      getFileWithVisits();
-      // if (fileVisits) {
-      //   getFileWithVisits();
-      // }
-        // alert(`No visits during this period ${startDateToBack} - ${endDateToBack}`);
-        // console.log("No visits for this date")
-
-    }
+    };
 
     if (dataToBack.type === 'new_clients') {
       reportApi.filterDateToReportNewClients(dataToBack);
+    };
+  }
+
+  useEffect(() => {
+    setType(type);
+    setStartDate(startDate);
+    setEndDate(endDate);
+    setFile(file);
+    if (startDate && endDate) {
+        filterDateForReport()
+    };
+  }, [type, startDate, endDate, file]);
+
+  useEffect(() => {
+    setIsOpenModel(isOpenModal)
+  }, [isOpenModal]);
+
+
+
+  const handleSubmit = () => {
+    if (type && type.value.toLowerCase() === 'visits') {
+      getFileWithVisits();
+        // alert(`No visits during this period ${startDateToBack} - ${endDateToBack}`);
+        // console.log("No visits for this date")
+
+    };
+    if (type && type.value.toLowerCase() === 'new_clients') {
       getFileWithNewClients();
-      // if (fileVisits) {
-      //   getFileWithNewClients();
-      // }
         // alert(`There are no new clients during this period ${startDateToBack} - ${endDateToBack}`);
         // console.log("There are no new clients during this period")
-
-    }
+    };
+    setIsOpenModel(!isOpenModal);
   };
 
   const handleSelect = (type: string) => {
@@ -244,11 +251,25 @@ export default function Reports(): ReactElement {
               />
 
             </div>
-            <button onClick={handleSubmit} className={`${type === null ? "reportsButtonDisabled" : "reportsButton"}`} disabled={type === null}>
-              Generate
-              { fileVisits  && <CSVDownload data={fileVisits} target="_blank" /> }
-              { fileNewClients && <CSVDownload data={fileNewClients} target="_blank" /> }
-            </button>
+                <button
+                  onClick={handleSubmit}
+                  className={`${!type || !startDate || !endDate ? "reportsButtonDisabled" : "reportsButton"}`}
+                  disabled={!type || !startDate || !endDate}>
+                    <div className={`${isOpenModal ?  "modal_window" : "modal_window_close"}`}>
+                      {
+                        file &&
+                          <CSVLink
+                            className="csvLink"
+                            data={file}
+                            filename={`${type.value.toLowerCase() + "_" + new Date().toLocaleDateString("en-US")}.csv`}
+                            target="_blank"
+                          >
+                            DOWNLOAD
+                          </CSVLink>
+                      }
+                    </div>
+                    <span className="text">Generate</span>
+                </button>
           </div>
         </div>
       </div>
