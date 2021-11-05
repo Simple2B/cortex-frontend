@@ -267,7 +267,7 @@ export default function Reports(): ReactElement {
               { type &&
                 type.value.toLowerCase() === 'visits' ?
                   <div className="modalText">
-                    { file.length > 42
+                    { file && file.length > 42
                       ? `Download a report of visits for the period ${startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}  ${endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}`
                       : <div className="modalTextError">
                           There are no visits during this period {startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}   {endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}
@@ -278,7 +278,7 @@ export default function Reports(): ReactElement {
                   type &&
                   type.value.toLowerCase() === 'new_clients' ?
                     <div className="modalText">
-                      { file.length > 132
+                      { file && file.length > 132
                         ? `Download a report of new clients for the period ${startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}  ${endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}`
                         : <div className="modalTextError">
                             There are no new clients during this period {startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}   {endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}
