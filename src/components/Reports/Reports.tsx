@@ -201,6 +201,7 @@ export default function Reports(): ReactElement {
   };
   if (file) {
     console.log("file", file.length);
+    console.log("type.value", type.value);
   };
 
 
@@ -262,32 +263,45 @@ export default function Reports(): ReactElement {
       <div className={isOpenModal ? "modalOpen" : "modal"}>
         <div className="modal-content">
             <span className="close" onClick={() => setIsOpenModel(false)}>&times;</span>
+
               {
-                type.value === 'visits' &&
-                <div className="modalText">
+                type.value.toLowerCase() === 'visits' ?
+                  <div className="modalText">
                     { file.length > 42
-                      ? `Download a report for the period ${startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}  ${endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}`
-                      : `There are no visits during this period ${startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}   ${endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}`
+                      ? `Download a report of visits for the period ${startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}  ${endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}`
+                      : <div className="modalTextError">
+                          There are no visits during this period {startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}   {endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}
+                        </div>
                     }
-                </div>
+                  </div>
+                    :
+                  type.value.toLowerCase() === 'new_clients' ?
+                    <div className="modalText">
+                      { file.length > 132
+                        ? `Download a report of new clients for the period ${startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}  ${endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}`
+                        : <div className="modalTextError">
+                            There are no new clients during this period {startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}   {endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}
+                          </div>
+                      }
+                    </div> : ""
               }
-            <div className="btnsModal">
-              <div className="btnModalOk">
-                  {
-                    file
-                      &&
-                    <CSVLink
-                      className="csvLink"
-                      data={file}
-                      filename={`${type.value.toLowerCase() + "_" + new Date().toLocaleDateString("en-US")}.csv`}
-                      target="_blank"
-                    >
-                      Ok
-                    </CSVLink>
-                  }
+            {
+             ( (file  && file.length > 42) || (file && file.length > 132) ) &&
+              <div className="btnsModal">
+                <div className="btnModalOk">
+                  <CSVLink
+                    className="csvLink"
+                    data={file}
+                    filename={`${type.value.toLowerCase() + "_" + new Date().toLocaleDateString("en-US")}.csv`}
+                    target="_blank"
+                  >
+                    Ok
+                  </CSVLink>
+                </div>
+                <div onClick={() => setIsOpenModel(false)}>Cancel</div>
               </div>
-              <div onClick={() => setIsOpenModel(false)}>Cancel</div>
-            </div>
+            }
+
         </div>
       </div>
     </>
