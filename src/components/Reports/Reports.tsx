@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import NavBar from '../NavBar/NavBar';
 import { CSVDownload } from "react-csv";
 import DatePicker from "react-datepicker";
@@ -91,8 +91,8 @@ const DropdownIndicator = (props: any) => {
 };
 
 export default function Reports(): ReactElement {
-  const [startDate, setStartDate] = useState<any>(new Date);
-  const [endDate, setEndDate] = useState<any>(new Date);
+  const [startDate, setStartDate] = useState<Date | any>(null);
+  const [endDate, setEndDate] = useState<Date | any>(null);
   const [type, setType] = useState<any>(null);
   const [fileVisits, setFileVisits] = useState<string | any>(null);
   const [fileNewClients, setFileNewClients] = useState<string | any>(null);
@@ -130,6 +130,12 @@ export default function Reports(): ReactElement {
       throw new Error(error.message);
     }
   };
+
+  useEffect(() => {
+    setType(type);
+    setStartDate(startDate);
+    setEndDate(endDate);
+  }, [type, startDate, endDate]);
 
   const handleSubmit = () => {
     const data: IDataReport = {
