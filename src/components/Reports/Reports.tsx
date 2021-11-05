@@ -267,10 +267,10 @@ export default function Reports(): ReactElement {
               { type &&
                 type.value.toLowerCase() === 'visits' ?
                   <div className="modalText">
-                    { file && file.length > 42 && startDate && endDate
-                      ? `Download a report of visits for the period ${startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}  ${endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}`
+                    { file && file.length > 42
+                      ? `Download a report of visits for this period`
                       : <div className="modalTextError">
-                          There are no visits during this period {startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}   {endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}
+                          There are no visits during this period
                         </div>
                     }
                   </div>
@@ -278,10 +278,10 @@ export default function Reports(): ReactElement {
                   type &&
                   type.value.toLowerCase() === 'new_clients' ?
                     <div className="modalText">
-                      { file && file.length > 132 && startDate && endDate
-                        ? `Download a report of new clients for the period ${startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}  ${endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}`
+                      { file && file.length > 132
+                        ? `Download a report of new clients for this period`
                         : <div className="modalTextError">
-                            There are no new clients during this period {startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}   {endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}
+                            There are no new clients during this period
                           </div>
                       }
                     </div> : ""
