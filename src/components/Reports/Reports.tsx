@@ -184,33 +184,32 @@ export default function Reports(): ReactElement {
     setIsOpenModel(isOpenModal)
   }, [isOpenModal]);
 
-
-
   const handleSubmit = () => {
     if (type && type.value.toLowerCase() === 'visits') {
       getFileWithVisits();
-        // alert(`No visits during this period ${startDateToBack} - ${endDateToBack}`);
-        // console.log("No visits for this date")
-
     };
     if (type && type.value.toLowerCase() === 'new_clients') {
       getFileWithNewClients();
         // alert(`There are no new clients during this period ${startDateToBack} - ${endDateToBack}`);
         // console.log("There are no new clients during this period")
     };
-    setIsOpenModel(!isOpenModal);
+    setIsOpenModel(true);
   };
 
   const handleSelect = (type: string) => {
     setType(type)
   };
+  if (file) {
+    console.log("file", file.length);
+  };
+
+
 
   return (
     <>
       <NavBar />
       <div className="reports">
         <h1 className="reportsTitle">Reports</h1>
-
         <div className="reportsGeneration">
           <div className="reportTypeSelector">
             <Select
@@ -249,28 +248,46 @@ export default function Reports(): ReactElement {
                 isClearable
                 placeholderText="End date"
               />
-
             </div>
                 <button
                   onClick={handleSubmit}
                   className={`${!type || !startDate || !endDate ? "reportsButtonDisabled" : "reportsButton"}`}
                   disabled={!type || !startDate || !endDate}>
-                    <div className={`${isOpenModal ?  "modal_window" : "modal_window_close"}`}>
-                      {
-                        file &&
-                          <CSVLink
-                            className="csvLink"
-                            data={file}
-                            filename={`${type.value.toLowerCase() + "_" + new Date().toLocaleDateString("en-US")}.csv`}
-                            target="_blank"
-                          >
-                            DOWNLOAD
-                          </CSVLink>
-                      }
-                    </div>
                     <span className="text">Generate</span>
                 </button>
           </div>
+        </div>
+      </div>
+
+      <div className={isOpenModal ? "modalOpen" : "modal"}>
+        <div className="modal-content">
+            <span className="close" onClick={() => setIsOpenModel(false)}>&times;</span>
+              {
+                type.value === 'visits' &&
+                <div className="modalText">
+                    { file.length > 42
+                      ? `Download a report for the period ${startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}  ${endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}`
+                      : `There are no visits during this period ${startDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}   ${endDate.toISOString().replace("T", " ").replace(".", " ").split(" ")[0].replace(",", "/")}`
+                    }
+                </div>
+              }
+            <div className="btnsModal">
+              <div className="btnModalOk">
+                  {
+                    file
+                      &&
+                    <CSVLink
+                      className="csvLink"
+                      data={file}
+                      filename={`${type.value.toLowerCase() + "_" + new Date().toLocaleDateString("en-US")}.csv`}
+                      target="_blank"
+                    >
+                      Ok
+                    </CSVLink>
+                  }
+              </div>
+              <div onClick={() => setIsOpenModel(false)}>Cancel</div>
+            </div>
         </div>
       </div>
     </>

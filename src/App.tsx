@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Switch,
   Route,
@@ -32,14 +32,13 @@ function App() {
 
   const [fullScreenMode, setFullScreenMode]= useState<boolean>(false);
 
-  // const location = useLocation();
-  // const splitLocation = location.pathname.split("/");
-  // const api_key = splitLocation[splitLocation.length - 2];
-  // const [client, setClient] = useState<Client>(ClientDefault);
-
   const fullScreenToggler = () => {
     setFullScreenMode(!fullScreenMode);
   };
+
+  useEffect(() => {
+    setFullScreenMode(fullScreenMode);
+  }, [fullScreenMode]);
 
   return (
         <div className="App" >

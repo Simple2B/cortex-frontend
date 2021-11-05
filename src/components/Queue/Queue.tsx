@@ -57,9 +57,6 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
-    // if (activeBtnRogueMode === "on") {
-    //   history.push('/queue');
-    // }
     if (activeBtnRogueMode === "on") {
       history.push('/nameOn');
     }
@@ -166,9 +163,6 @@ export default function Queue(): ReactElement {
           </button>
 
         </div>
-
-
-        {/* <Popup open={isOpenClientModal} modal position="right center"> */}
           <div className={`${isOpenClientModal ?  "modal_window" : "modal_window_close"}`}>
             <div className="lists">
                 <i className="fas fa-times modalCross" onClick={() => setIsOpenClientModal(!isOpenClientModal)}/>
@@ -199,7 +193,6 @@ export default function Queue(): ReactElement {
                 </div>
             </div>
           </div>
-        {/* </Popup> */}
       </div>
     </div>
   )
