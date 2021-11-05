@@ -262,7 +262,7 @@ export default function Reports(): ReactElement {
 
       <div className={isOpenModal ? "modalOpen" : "modal"}>
         <div className="modal-content">
-            <span className="close" onClick={() => setIsOpenModel(isOpenModal)}>&times;</span>
+            <span className="close" onClick={() => setIsOpenModel(!isOpenModal)}>&times;</span>
 
               { type &&
                 type.value.toLowerCase() === 'visits' ?
@@ -299,7 +299,7 @@ export default function Reports(): ReactElement {
                     Ok
                   </CSVLink>
                 </div>
-                <div onClick={() => setIsOpenModel(isOpenModal)}>Cancel</div>
+                <div onClick={() => setIsOpenModel(!isOpenModal)}>Cancel</div>
               </div>
             }
         </div>
