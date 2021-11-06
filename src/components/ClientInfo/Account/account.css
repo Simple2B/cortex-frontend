@@ -1,6 +1,8 @@
 .accountContainer {
 	display: flex;
 	justify-content: center;
+	height: 78vh;
+	padding: 10px;
 }
 
 .accountContainer .clientInfo,
@@ -330,7 +332,7 @@
 	}
 }
 
-@media (max-width: 431px) {
+/* @media (max-width: 431px) {
 	.accountContainer {
 		margin: 0 15px 25px 15px;
 	}
@@ -363,4 +365,4 @@
 	.billing_formBlock .title {
 		font-size: 15px;
 	}
-}
+} */
