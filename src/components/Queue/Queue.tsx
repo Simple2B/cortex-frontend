@@ -7,7 +7,7 @@ import { instance } from "../../api/axiosInstance";
 import { User } from "../../types/patientsTypes";
 import { ReactComponent as SearchIcon } from '../../images/lupa.svg'
 import './queue.sass'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
@@ -21,6 +21,8 @@ export default function Queue(): ReactElement {
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
   const [search, setSearch] = useState<string>('');
+
+  const history = useHistory();
 
 
   const getClientsForQueue = async () => {
@@ -52,6 +54,13 @@ export default function Queue(): ReactElement {
     getClients();
     getClientsForQueue();
   }, []);
+
+  useEffect(() => {
+    setActiveBtnRogueMode(activeBtnRogueMode);
+    if (activeBtnRogueMode === "on") {
+      history.push('/nameOn');
+    }
+  }, [activeBtnRogueMode]);
 
   const addClient = (patient: User) => {
     setQueue((prev: User[]) => [...prev, patient]);
@@ -154,9 +163,6 @@ export default function Queue(): ReactElement {
           </button>
 
         </div>
-
-
-        {/* <Popup open={isOpenClientModal} modal position="right center"> */}
           <div className={`${isOpenClientModal ?  "modal_window" : "modal_window_close"}`}>
             <div className="lists">
                 <i className="fas fa-times modalCross" onClick={() => setIsOpenClientModal(!isOpenClientModal)}/>
@@ -187,7 +193,6 @@ export default function Queue(): ReactElement {
                 </div>
             </div>
           </div>
-        {/* </Popup> */}
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Switch,
   Route,
@@ -18,7 +18,9 @@ import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute';
 import { useTypedSelector } from './redux/useTypeSelector';
 import Fullscreen from 'react-fullscreen-crossbrowser';
 import Patient from './components/Patients/Patients';
-
+import NavBar from './components/NavBar/NavBar';
+import MenuInfoPatient from './components/ClientInfo/MenuInfoPatient/MenuInfoPatient';
+import NameOn from './components/ClientInfo/Name/NameOn';
 
 function App() {
   const loggedIn = useTypedSelector((state) => state.auth.loggedIn);
@@ -34,9 +36,11 @@ function App() {
     setFullScreenMode(!fullScreenMode);
   };
 
+  useEffect(() => {
+    setFullScreenMode(fullScreenMode);
+  }, [fullScreenMode]);
+
   return (
-
-
         <div className="App" >
           <Fullscreen enabled={fullScreenMode}>
           <i className={ fullScreenMode ? "fas fa-compress-arrows-alt fullScreenBtn": "fas fa-expand-arrows-alt fullScreenBtn"} onClick={fullScreenToggler}/>
@@ -88,23 +92,34 @@ function App() {
             />
             <ProtectedRoute
               {...defaultProtectedRouteProps}
-              exact path="/:api_key/intake"
-              component={Intake}
+              exact path="/nameOn"
+              component={NameOn}
             />
+            <>
+            <NavBar />
+            <MenuInfoPatient/>
+              <Switch>
+                    <ProtectedRoute
+                      {...defaultProtectedRouteProps}
+                      exact path="/:api_key/intake"
+                      component={Intake}
+                    />
 
-            <ProtectedRoute
-                {...defaultProtectedRouteProps}
-                exact path="/:api_key/account"
-                component={Account}
-            />
-            <ProtectedRoute
-                {...defaultProtectedRouteProps}
-                exact path="/:api_key/:first_name"
-                component={Name}
-            />
+                    <ProtectedRoute
+                        {...defaultProtectedRouteProps}
+                        exact path="/:api_key/account"
+                        component={Account}
+                    />
+                    <ProtectedRoute
+                        {...defaultProtectedRouteProps}
+                        exact path="/:api_key/:first_name"
+                        component={Name}
+                    />
+              </Switch>
+            </>
           </Switch>
           </Fullscreen>
-        </div >
+        </div>
   );
 }
 

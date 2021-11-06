@@ -1,7 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
-import NavBar from '../../NavBar/NavBar';
-import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
 import { Client, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
 import './intake.css';
@@ -42,8 +40,6 @@ export default function Intake(): ReactElement {
 
   return (
     <>
-        <NavBar />
-        <MenuInfoPatient api_key={api_key} firstName={client.firstName} lastName={client.lastName}/>
         <div className="containerIntakeContent">
           <div className="coherence">
             <div className="coherenceTitleText">Coherence</div>
