@@ -20,8 +20,8 @@ export default function Name(): ReactElement {
   const [client, setClient] = useState<Client>(ClientDefault);
 
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
-  const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("R");
-  const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
+  const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("L");
+  const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
   const history = useHistory();
 
@@ -44,6 +44,18 @@ export default function Name(): ReactElement {
     getClient()
   }, []);
 
+  useEffect(() => {
+    setActiveBtnRogueMode(activeBtnRogueMode);
+    // if (activeBtnRogueMode === "on") {
+    //   history.push('/queue');
+    // }
+    if (activeBtnRogueMode === "on") {
+      history.push('/nameOn');
+    }
+  }, [activeBtnRogueMode]);
+
+  console.log("activeBtnRogueMode", activeBtnRogueMode);
+
   const handleChangeBtn = (e: any) => {
     setActiveBtnAtlas(e.currentTarget.innerHTML);
   };
@@ -59,9 +71,6 @@ export default function Name(): ReactElement {
 
   return (
     <>
-        <NavBar />
-        <MenuInfoPatient api_key={api_key} firstName={client.firstName} lastName={client.lastName}/>
-
         <div className="nameContainer">
             <div className="nameContainer_arousal">
 

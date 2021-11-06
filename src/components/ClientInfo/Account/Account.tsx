@@ -1,7 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
-import NavBar from '../../NavBar/NavBar';
-import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
 import { instance } from '../../../api/axiosInstance';
 import { Client, ClientDefault } from '../../../api/clientApi';
 import './account.css';
@@ -38,8 +36,6 @@ export default function Account(): ReactElement {
 
   return (
     <>
-        <NavBar />
-        <MenuInfoPatient api_key={api_key} firstName={client.firstName} lastName={client.lastName}/>
         <div className="accountContainer">
           <div className="clientInfo">
             <div className="clientInfo_tittle">Client info</div>
