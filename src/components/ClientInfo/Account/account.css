@@ -313,7 +313,7 @@
 	}
 }
 
-@media (max-width: 721px) {
+/* @media (max-width: 721px) {
 	.accountContainer {
 		margin: 0 15px 25px 25px;
 		flex-direction: column;
@@ -330,7 +330,7 @@
 		margin-top: 0;
 		width: 97%;
 	}
-}
+} */
 
 /* @media (max-width: 431px) {
 	.accountContainer {
