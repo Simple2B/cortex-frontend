@@ -133,27 +133,25 @@ export default function Reports(): ReactElement {
   };
 
   const filterDateForReport = () => {
-
     const data: IDataReport = {
       type: type,
       startDate: startDate,
       endDate: endDate,
     };
 
-    const fullStartDate = data.startDate.toISOString().replace("T", " ").replace(".", " ").split(" ");
+    const dateStart = new Date(data.startDate.toString().replace(/GMT.*$/,'GMT+0000')).toISOString();
+    const fullStartDate = dateStart.replace("T", " ").replace(".", " ").split(" ");
     const dStart = fullStartDate[0].split("-");
-
     const fullTime = fullStartDate[1];
-    const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`
+    const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
 
-    const fullEndDate = data.endDate.toISOString().replace("T", " ").replace(".", " ").split(" ");
+    const dateEnd = new Date(data.endDate.toString().replace(/GMT.*$/,'GMT+0000')).toISOString();
+    const fullEndDate = dateEnd.replace("T", " ").replace(".", " ").split(" ");
     const dEnd = fullEndDate[0].split("-");
-
     const fullTimeEnd = fullEndDate[1];
-    const endDateToBack = `${dEnd[1]}/${dEnd[2]}/${dEnd[0]}, ${fullTimeEnd}`
-    const typeString = Object.values(data.type)[0].toLowerCase();
-    // setType(typeString);
+    const endDateToBack = `${dEnd[1]}/${dEnd[2]}/${dEnd[0]}, ${fullTimeEnd}`;
 
+    const typeString = Object.values(data.type)[0].toLowerCase();
 
     const dataToBack: IDataReportToBack = {
       type: typeString,
@@ -190,8 +188,6 @@ export default function Reports(): ReactElement {
     };
     if (type && type.value.toLowerCase() === 'new_clients') {
       getFileWithNewClients();
-        // alert(`There are no new clients during this period ${startDateToBack} - ${endDateToBack}`);
-        // console.log("There are no new clients during this period")
     };
     setIsOpenModel(true);
   };
@@ -262,7 +258,7 @@ export default function Reports(): ReactElement {
 
       <div className={isOpenModal ? "modalOpen" : "modal"}>
         <div className="modal-content">
-            <span className="close" onClick={() => setIsOpenModel(!isOpenModal)}>&times;</span>
+            <div className="close" onClick={() => setIsOpenModel(!isOpenModal)}>&times;</div>
 
               { type &&
                 type.value.toLowerCase() === 'visits' ?
@@ -287,20 +283,23 @@ export default function Reports(): ReactElement {
                     </div> : ""
               }
             {
-             ( (file  && file.length > 42) || (file && file.length > 132) ) &&
-              <div className="btnsModal">
-                <div className="btnModalOk">
-                  <CSVLink
-                    className="csvLink"
-                    data={file}
-                    filename={`${type.value.toLowerCase() + "_" + new Date().toLocaleDateString("en-US")}.csv`}
-                    target="_blank"
-                  >
+                ((file  && file.length > 42 && type.value.toLowerCase() === "visits")
+                  ||
+                (file && file.length > 132 && type.value.toLowerCase() === "new_clients"))
+                  &&
+                <div className="btnsModal">
+                  <div className="btnModalOk" onClick={() => setIsOpenModel(!isOpenModal)}>
+                    <CSVLink
+                      className="csvLink"
+                      data={file}
+                      filename={`${type.value.toLowerCase() + "_" + new Date().toLocaleDateString("en-US")}.csv`}
+                      target="_blank"
+                    >
                     Ok
-                  </CSVLink>
+                    </CSVLink>
+                  </div>
+                  <div onClick={() => setIsOpenModel(!isOpenModal)}>Cancel</div>
                 </div>
-                <div onClick={() => setIsOpenModel(!isOpenModal)}>Cancel</div>
-              </div>
             }
         </div>
       </div>
