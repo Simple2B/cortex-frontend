@@ -46,9 +46,9 @@ export default function Name(): ReactElement {
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
     if (activeBtnRogueMode === "on") {
-      history.push('/nameOn');
+      history.push(`/nameOn/${dashboard}`);
     }
-  }, [activeBtnRogueMode]);
+  }, [activeBtnRogueMode, dashboard]);
 
   console.log("activeBtnRogueMode", activeBtnRogueMode);
 

@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import "./name.sass";
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 import { ReactComponent as Brain } from '../../../images/brain.svg';
@@ -10,10 +10,17 @@ import Coherence from '../Dashboard/Coherence';
 
 
 export default function NameOn(): ReactElement {
+
+  const location = useLocation();
+  const splitLocation = location.pathname.split("/");
+  const dashboardNameOn = splitLocation[splitLocation.length - 1];
+
+  console.log("dashboardNameOn", dashboardNameOn);
+
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
   const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("L");
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
-  const [ dashboard, setDashboard] = useState<string>("arousal");
+  const [dashboard, setDashboard] = useState<string>(dashboardNameOn);
 
   const history = useHistory();
 
