@@ -1,18 +1,12 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useLocation } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
-import {instance} from '../../../api/axiosInstance';
 import "./name.sass";
-import arrowRight  from "../../../images/arrowRight.svg";
-import  arrowLeft  from "../../../images/arrowLeft.svg";
-import nameDashboard from "../../../images/nameDashboard.svg";
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 import { ReactComponent as Brain } from '../../../images/brain.svg';
 import NavBar from '../../NavBar/NavBar';
-import Arousal from './Arousal';
-import BrainWaves from './BrainWaves';
-import Coherence from './Coherence';
+import Arousal from '../Dashboard/Arousal';
+import BrainWaves from '../Dashboard/BrainWaves';
+import Coherence from '../Dashboard/Coherence';
 
 
 export default function NameOn(): ReactElement {
