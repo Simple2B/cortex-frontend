@@ -33,7 +33,6 @@ export default function Name(): ReactElement {
       setClient(response.data);
       return response.data
     } catch (error: any) {
-      // place to handle errors and rise custom errors
       console.log('GET: error message get_client_intake name =>  ', error.message);
       console.log('error response data get_client_intake name => ', error.response.data);
       throw new Error(error.message);
