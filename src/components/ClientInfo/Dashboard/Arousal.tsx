@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import "./name.sass";
+import "./dashboard.sass";
 import arrowRight  from "../../../images/arrowRight.svg";
 import  arrowLeft  from "../../../images/arrowLeft.svg";
 import nameDashboard from "../../../images/nameDashboard.svg";
