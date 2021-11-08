@@ -1,47 +1,28 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useLocation } from "react-router-dom";
-import { useHistory } from 'react-router-dom';
-import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
-import {instance} from '../../../api/axiosInstance';
+import { useHistory, useLocation } from 'react-router-dom';
 import "./name.sass";
-import arrowRight  from "../../../images/arrowRight.svg";
-import  arrowLeft  from "../../../images/arrowLeft.svg";
-import nameDashboard from "../../../images/nameDashboard.svg";
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 import { ReactComponent as Brain } from '../../../images/brain.svg';
 import NavBar from '../../NavBar/NavBar';
+import Arousal from '../Dashboard/Arousal';
+import BrainWaves from '../Dashboard/BrainWaves';
+import Coherence from '../Dashboard/Coherence';
 
 
 export default function NameOn(): ReactElement {
-//   const location = useLocation();
-//   const splitLocation = location.pathname.split("/");
-//   const api_key = splitLocation[splitLocation.length - 2];
-//   const [client, setClient] = useState<Client>(ClientDefault);
+
+  const location = useLocation();
+  const splitLocation = location.pathname.split("/");
+  const dashboardNameOn = splitLocation[splitLocation.length - 1];
+
+  console.log("dashboardNameOn", dashboardNameOn);
 
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
   const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("L");
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
+  const [dashboard, setDashboard] = useState<string>(dashboardNameOn);
 
   const history = useHistory();
-
-//   const getClient = async () => {
-//     try {
-//       const response = await instance()
-//       .get(`api/client/client_intake/${api_key}`);
-//       console.log("GET: client_intake name => ", response.data);
-//       setClient(response.data);
-//       return response.data
-//     } catch (error: any) {
-//       // place to handle errors and rise custom errors
-//       console.log('GET: error message get_client_intake name =>  ', error.message);
-//       console.log('error response data get_client_intake name => ', error.response.data);
-//       throw new Error(error.message);
-//     };
-//   }
-
-//   useEffect(() => {
-//     getClient()
-//   }, []);
 
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
@@ -71,40 +52,21 @@ export default function NameOn(): ReactElement {
         <div className="nameContainerOn">
             <div className="nameContainer_arousal">
 
-                <div className="title">Arousal</div>
-                <div className="overAroused">
-                    <div className="overAroused_tittle">
-                        OVER AROUSED
-                    </div>
-                    <div className="overAroused_content">
-                      <div className="arrowLeft">
-                        <img src={arrowLeft} alt="arrowLeft" />
-                      </div>
+                {
+                    dashboard === 'arousal' && <Arousal/>
+                    ||
+                    dashboard === 'brainWaves' && <BrainWaves/>
+                    ||
+                    dashboard === 'coherence' && <Coherence/>
+                }
 
-                      <div className="nameDashboard">
-                        <img src={nameDashboard} alt="nameDashboard" />
-                      </div>
-
-                      <div className="arrowRight">
-                        <img src={arrowRight} alt="arrowRight" />
-                      </div>
-                    </div>
-                </div>
                 <div className="containerComplete">
                   <div className="btn_circles">
-                    <div className="btn_circle"></div>
-                    <div className="btn_circle"></div>
-                    <div className="btn_circle btn_circleActive"></div>
+                    <div className={`${dashboard === 'arousal' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard("arousal")}></div>
+                    <div className={`${dashboard === 'brainWaves' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard("brainWaves")}></div>
+                    <div className={`${dashboard === 'coherence' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard("coherence")}></div>
                   </div>
-                  <div className="coherenceBtn_complete"
-                //     onClick={() => {
-                //         clientApi.completeClient({"api_key": api_key,
-                //         "rougue_mode": false, "place_in_queue": client.place_in_queue});
-                //         history.push('/queue');
-                //         console.log("client" , {"api_key": api_key,
-                //         "rougue_mode": false, "first_name": client.firstName, "place_in_queue": client.place_in_queue})
-                //   }}
-                  >
+                  <div className="coherenceBtn_complete">
                     Complete
                   </div>
                 </div>

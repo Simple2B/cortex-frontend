@@ -92,7 +92,7 @@ function App() {
             />
             <ProtectedRoute
               {...defaultProtectedRouteProps}
-              exact path="/nameOn"
+              exact path="/nameOn/:dashboard"
               component={NameOn}
             />
             <>
