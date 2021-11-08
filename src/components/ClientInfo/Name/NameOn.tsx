@@ -3,7 +3,6 @@ import { useHistory, useLocation } from 'react-router-dom';
 import "./name.sass";
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 import { ReactComponent as Brain } from '../../../images/brain.svg';
-import NavBar from '../../NavBar/NavBar';
 import Arousal from '../Dashboard/Arousal';
 import BrainWaves from '../Dashboard/BrainWaves';
 import Coherence from '../Dashboard/Coherence';
@@ -47,8 +46,7 @@ export default function NameOn(): ReactElement {
 
 
   return (
-    <div className="nameOn">
-        <NavBar />
+    <>
         <div className="nameContainerOn">
             <div className="nameContainer_arousal">
 
@@ -134,6 +132,6 @@ export default function NameOn(): ReactElement {
               </div>
             </div>
         </div>
-    </div>
+    </>
   )
 }

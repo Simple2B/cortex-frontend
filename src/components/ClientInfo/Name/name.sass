@@ -1,264 +1,196 @@
-.nameContainer, .nameContainerOn
-    height: 78vh
+.nameContainer_arousal
+    position: relative
+    width: 34.22%
+    height: 100%
+    border-right: solid #707070 3px
+    background: radial-gradient(#515151, #000000)
     display: flex
-    justify-content: space-between
+    justify-content: flex-start
+    align-items: center
+    flex-direction: column
+
+    .containerComplete
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+
+        .btn_circles
+            width: 85%
+            max-width: 80px
+            display: flex
+            justify-content: space-between
+            align-items: center
+            margin-bottom: 28px
+
+            .btn_circle
+                width: 13px
+                height: 12px
+                background-color: #b1b1b1
+                border: 1px solid #707070
+                border-radius: 50%
+
+            .btn_circleActive
+                width: 28px
+                height: 28px
+                background-color: #fff
+                border-radius: 50%
+        .coherenceBtn_complete
+            // width: 85%
+            // max-width: 200px
+            // font-size: 22px
+
+.nameContainer_brain
+    width: 100%
+    height: 100%
+    display: flex
+    flex-direction: column
     align-items: center
 
-    .nameContainer_arousal
-        position: relative
-        width: 34.22%
-        height: 100%
-        border-right: solid #707070 3px
-        background: radial-gradient(#515151, #000000)
-        display: flex
-        justify-content: flex-start
-        align-items: center
-        flex-direction: column
-        // .title
-        //     margin-top: 13%
-        //     margin-bottom: 10%
-        //     font-family: Poppins, sans-serif
-        //     font-size: 42px
-        //     font-weight: bold
-
-        // .overAroused
-        //     // width: 85%
-        //     padding-bottom: 5%
-        //     display: flex
-        //     flex-direction: column
-        //     justify-content: center
-        //     align-items: center
-
-        //     .overAroused_tittle
-        //         color: #FF0000
-        //         font-size: 38px
-        //         text-align: center
-
-        //     .overAroused_content
-        //         margin-top: 10%
-        //         width: 100%
-        //         display: flex
-        //         justify-content: space-between
-
-        //         div:first-child
-        //             margin-left: 7px
-
-        //         div:last-child
-        //             margin-right: 7px
-
-        //         .nameDashboard
-        //             width: 60%
-
-        //         .nameDashboard img
-        //             width: 100%
-
-        //         .arrowLeft img,
-        //         .arrowRight img
-        //             width: 85%
-
-        .containerComplete
-            height: 12vh
-            display: flex
-            justify-content: center
-            align-items: center
-            flex-direction: column
-            // margin-top: 25px
-            position: absolute
-            bottom: 5%
-            margin-bottom: 15px
-
-            .btn_circles
-                width: 85%
-                max-width: 80px
-                display: flex
-                justify-content: space-between
-                align-items: center
-                margin-bottom: 28px
-
-                .btn_circle
-                    width: 13px
-                    height: 12px
-                    background-color: #b1b1b1
-                    border: 1px solid #707070
-                    border-radius: 50%
-
-                .btn_circleActive
-                    width: 28px
-                    height: 28px
-                    background-color: #fff
-                    border-radius: 50%
-            .coherenceBtn_complete
-                // width: 85%
-                // max-width: 200px
-                // font-size: 22px
-
-    .nameContainer_brain
+    .nameContainer_brainContent
         width: 100%
-        height: 100%
+        height: 80%
         display: flex
-        flex-direction: column
-        // justify-content: space-around
+        justify-content: space-around
         align-items: center
 
-        .nameContainer_brainContent
-            width: 100%
-            height: 80%
+        .brain_btns
+            width: 20.673%
             display: flex
-            justify-content: space-around
-            align-items: center
+            flex-direction: column
+            justify-content: center
 
-            .brain_btns
-                width: 20.673%
+            .btn
+                width: 100%
                 display: flex
                 flex-direction: column
                 justify-content: center
 
-                .btn
+                .btn_Title
+                    font-size: 33px
+                    color: #fff
+
+                .btnContainer
                     width: 100%
-                    display: flex
-                    flex-direction: column
-                    justify-content: center
-
-                    .btn_Title
-                        font-size: 33px
-                        color: #fff
-
-                    .btnContainer
-                        width: 100%
-                        max-width: 258px
-                        height: 46px
-                        display: flex
-                        justify-content: center
-                        align-items: center
-                        background-color: #262626
-                        border: 1px solid #262626
-                        border-radius: 38px
-
-                    .btnContainer div
-                        width: 33.33%
-                        height: 100%
-                        display: flex
-                        justify-content: center
-                        align-items: center
-                        color: #B1B1B1
-                        font-size: 18px
-                        text-align: center
-                        cursor: pointer
-
-                    .btnContainer .btnActive
-                        background-color: #6E6E6E
-                        border: 1px solid #6E6E6E
-                        border-radius: 38px
-
-                    .titleRogueMode
-                        font-family: Poppins, sans-serif
-                        font-size: 25px
-                        text-align: left
-
-                .containerRogueMode
-                    margin-top: 15%
-
-                    .btnRogueMode
-                        align-self: flex-start
-                        width: 100%
-                        max-width: 154px
-                        height: 46px
-
-                    .btnRogueMode div
-                        width: 50%
-                        text-align: center
-            .brain
-                // width: 100%
-                height: 100%
-                width: 50.08%
-                svg
-                    width: 100%
-                    height: 100%
-            .intakeInfoText_results
-                display: flex
-                flex-direction: column
-                justify-content: space-around
-                align-items: center
-                height: 100%
-                .results
+                    max-width: 258px
+                    height: 46px
                     display: flex
                     justify-content: center
                     align-items: center
-                    flex-direction: column
-                    max-width: 121px
-                    max-height: 121px
-                    border: 1px solid #aef7ff
-                    border-radius: 50%
-                    div
-                        // width: 100%
-                        display: flex
-                        justify-content: center
-                        align-items: center
+                    background-color: #262626
+                    border: 1px solid #262626
+                    border-radius: 38px
 
-        .alphaContainer
-            width: 100%
+                .btnContainer div
+                    width: 33.33%
+                    height: 100%
+                    display: flex
+                    justify-content: center
+                    align-items: center
+                    color: #B1B1B1
+                    font-size: 18px
+                    text-align: center
+                    cursor: pointer
+
+                .btnContainer .btnActive
+                    background-color: #6E6E6E
+                    border: 1px solid #6E6E6E
+                    border-radius: 38px
+
+                .titleRogueMode
+                    font-family: Poppins, sans-serif
+                    font-size: 25px
+                    text-align: left
+
+            .containerRogueMode
+                margin-top: 15%
+
+                .btnRogueMode
+                    align-self: flex-start
+                    width: 100%
+                    max-width: 154px
+                    height: 46px
+
+                .btnRogueMode div
+                    width: 50%
+                    text-align: center
+        .brain
+            // width: 100%
+            height: 100%
+            width: 50.08%
+            svg
+                width: 100%
+                height: 100%
+        .intakeInfoText_results
+            display: flex
+            flex-direction: column
+            justify-content: space-around
+            align-items: center
+            height: 100%
+            .results
+                display: flex
+                justify-content: center
+                align-items: center
+                flex-direction: column
+                max-width: 121px
+                max-height: 121px
+                border: 1px solid #aef7ff
+                border-radius: 50%
+                div
+                    // width: 100%
+                    display: flex
+                    justify-content: center
+                    align-items: center
+
+    .alphaContainer
+        display: flex
+        justify-content: center
+        align-items: center
+        padding-bottom: 10px
+        // height: 11.57vh
+        .alphaContainer_text
+            margin-right: 25px
+            font-size: 43px
+        .alphaContainer_letters
+            margin-right: 5px
             display: flex
             justify-content: space-around
             align-items: center
-            height: 11.57vh
-            .alphaContainer_text
-                font-size: 43px
-            .alphaContainer_letters
-                display: flex
-                justify-content: space-around
-                align-items: center
-                flex-direction: column
-                text-align: center
-                .letter
-                    font-size: 24px
-                    color: #aef7ff
-            .alphaContainer_dashboard
-                width: 68%
-                svg
-                    width: 100%
-
-.nameOn
-    height: 100vh
-    .nav_bar
-        height: 22vh
-        padding: 50px 0 0 50px
-        display: flex
-        align-items: baseline
-.nameContainerOn
-    display: flex
-    justify-content: space-between
-    align-items: center
-    border-top: solid #707070 3px
+            flex-direction: column
+            text-align: center
+            .letter
+                font-size: 24px
+                color: #aef7ff
+        .alphaContainer_dashboard
+            width: 68%
+            svg
+                width: 100%
 
 
 
 @media (max-width: 1024px)
-    .nameContainer, .nameContainerOn
-        .nameContainer_brain
+    .nameContainer_brain
+        height: 95%
+        .nameContainer_brainContent
+            height: 80%
+            flex-direction: column-reverse
             // flex-wrap: wrap
             // justify-content: space-between
-            // flex-direction: column
-
-            .nameContainer_brainContent
-                flex-direction: column-reverse
-                // flex-wrap: wrap
-                // justify-content: space-between
-                .brain
-                    width: 70%
-                .brain_btns
-                    width: 100%
-                    flex-direction: row
-                    .btn
-                        .btn_Title
-                            text-align: left
-                            font-size: 23px
-                            padding-left: 10px
-                    .containerRogueMode
-                        margin-top: 0
-                        .titleRogueMode
-                            font-size: 23px
-                .intakeInfoText_results
-                    padding-top: 20px
-                    flex-direction: row
-
-
+            .intakeInfoText_results
+                padding-top: 20px
+                display: flex
+                flex-direction: row
+            .brain
+                width: 60%
+            .brain_btns
+                width: 100%
+                flex-direction: row
+                .btn
+                    .btn_Title
+                        text-align: left
+                        font-size: 23px
+                        padding-left: 10px
+                .containerRogueMode
+                    margin-top: 0
+                    .titleRogueMode
+                        font-size: 23px

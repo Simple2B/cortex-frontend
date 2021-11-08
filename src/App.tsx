@@ -4,7 +4,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import './App.css';
+import './App.sass';
 import Account from './components/ClientInfo/Account/Account';
 import Intake from './components/ClientInfo/Intake/Intake';
 import Name from './components/ClientInfo/Name/Name';
@@ -21,6 +21,7 @@ import Patient from './components/Patients/Patients';
 import NavBar from './components/NavBar/NavBar';
 import MenuInfoPatient from './components/ClientInfo/MenuInfoPatient/MenuInfoPatient';
 import NameOn from './components/ClientInfo/Name/NameOn';
+import { directive } from '@babel/types';
 
 function App() {
   const loggedIn = useTypedSelector((state) => state.auth.loggedIn);
@@ -90,14 +91,27 @@ function App() {
               exact path="/queue"
               component={Queue}
             />
-            <ProtectedRoute
-              {...defaultProtectedRouteProps}
-              exact path="/nameOn/:dashboard"
-              component={NameOn}
-            />
+              <ProtectedRoute
+                {...defaultProtectedRouteProps}
+                exact path="/nameOn/:dashboard"
+                render={ () => {
+                    return (
+                    <>
+                      <div className="containerNameOn">
+                        <NavBar />
+                      </div>
+                      <NameOn/>
+                    </>
+                    )
+                  }
+                }
+              />
             <>
-            <NavBar />
-            <MenuInfoPatient/>
+            <div className="containerNavBarMenuInfoPatient">
+              <NavBar />
+              <MenuInfoPatient/>
+            </div>
+            <div className="containerForClientInfo">
               <Switch>
                     <ProtectedRoute
                       {...defaultProtectedRouteProps}
@@ -116,6 +130,7 @@ function App() {
                         component={Name}
                     />
               </Switch>
+            </div>
             </>
           </Switch>
           </Fullscreen>
