@@ -1,10 +1,12 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { useLocation } from "react-router-dom";
-import { Client, ClientDefault } from '../../../api/clientApi';
+import { useHistory, useLocation } from "react-router-dom";
+import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
 import './intake.css';
-import { ReactComponent as IntakeDashboard } from '../../../images/intake_dashboard.svg';
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
+import Arousal from '../Dashboard/Arousal';
+import BrainWaves from '../Dashboard/BrainWaves';
+import Coherence from '../Dashboard/Coherence';
 
 
 export default function Intake(): ReactElement {
@@ -13,6 +15,10 @@ export default function Intake(): ReactElement {
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
   const [activeBtn, setActiveBtn] = useState("Health HX");
+
+  const [ dashboard, setDashboard] = useState<string>("coherence");
+
+  const history = useHistory();
 
   const getClient = async () => {
     try {
@@ -42,25 +48,36 @@ export default function Intake(): ReactElement {
     <>
         <div className="containerIntakeContent">
           <div className="coherence">
-            <div className="coherenceTitleText">Coherence</div>
-            <div className="coherenceDashboard">
-                <IntakeDashboard/>
-            </div>
+            {
+                dashboard === 'arousal' && <Arousal/>
+                ||
+                dashboard === 'brainWaves' && <BrainWaves/>
+                ||
+                dashboard === 'coherence' && <Coherence/>
+            }
+
             <div className="coherenceBtn">
-              <div className="coherenceBtn_circles">
-                <div className="coherenceBtn_circle"></div>
-                <div className="coherenceBtn_circle"></div>
-                <div className="coherenceBtn_circle coherenceBtn_circleActive"></div>
-              </div>
-              <div className="coherenceBtn_complete">
-                Complete
-              </div>
+                <div className="coherenceBtn_circles">
+                  <div className={`${dashboard === 'arousal' ? "coherenceBtn_circleActive" : "coherenceBtn_circle"}`} onClick={() => setDashboard("arousal")}></div>
+                  <div className={`${dashboard === 'brainWaves' ? "coherenceBtn_circleActive" : "coherenceBtn_circle"}`} onClick={() => setDashboard("brainWaves")}></div>
+                  <div className={`${dashboard === 'coherence' ? "coherenceBtn_circleActive" : "coherenceBtn_circle"}`} onClick={() => setDashboard("coherence")}></div>
+                </div>
+                <div className="coherenceBtn_complete"
+                    onClick={() => {
+                      clientApi.completeClient({"api_key": api_key,
+                      "rougue_mode": false, "place_in_queue": client.place_in_queue});
+                      history.push('/queue');
+                      console.log("client" , {"api_key": api_key,
+                      "rougue_mode": false, "first_name": client.firstName, "place_in_queue": client.place_in_queue})
+                  }}
+                >
+                  Complete
+                </div>
             </div>
           </div>
           <div className="intakeInfo">
             <div className="intakeInfoText">
               <div className="intakeInfoText_health">
-                {/* <i className="fas fa-times"/> */}
                 <div className="intakeInfoText_healthTitle">Intake</div>
                 <div className={activeBtn == "Health HX" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
                   <div>Referring: <span className="clientIntakeInfo_item">{client.referring === "" ? " - " : client.referring}</span></div>

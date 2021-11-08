@@ -1,16 +1,14 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import NavBar from '../../NavBar/NavBar';
-import MenuInfoPatient from '../MenuInfoPatient/MenuInfoPatient';
 import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
 import "./name.sass";
-import arrowRight  from "../../../images/arrowRight.svg";
-import  arrowLeft  from "../../../images/arrowLeft.svg";
-import nameDashboard from "../../../images/nameDashboard.svg";
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 import { ReactComponent as Brain } from '../../../images/brain.svg';
+import Arousal from '../Dashboard/Arousal';
+import BrainWaves from '../Dashboard/BrainWaves';
+import Coherence from '../Dashboard/Coherence';
 
 
 export default function Name(): ReactElement {
@@ -23,6 +21,8 @@ export default function Name(): ReactElement {
   const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("L");
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
+  const [ dashboard, setDashboard] = useState<string>("arousal");
+
   const history = useHistory();
 
   const getClient = async () => {
@@ -33,7 +33,6 @@ export default function Name(): ReactElement {
       setClient(response.data);
       return response.data
     } catch (error: any) {
-      // place to handle errors and rise custom errors
       console.log('GET: error message get_client_intake name =>  ', error.message);
       console.log('error response data get_client_intake name => ', error.response.data);
       throw new Error(error.message);
@@ -46,13 +45,10 @@ export default function Name(): ReactElement {
 
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
-    // if (activeBtnRogueMode === "on") {
-    //   history.push('/queue');
-    // }
     if (activeBtnRogueMode === "on") {
-      history.push('/nameOn');
+      history.push(`/nameOn/${dashboard}`);
     }
-  }, [activeBtnRogueMode]);
+  }, [activeBtnRogueMode, dashboard]);
 
   console.log("activeBtnRogueMode", activeBtnRogueMode);
 
@@ -74,30 +70,19 @@ export default function Name(): ReactElement {
         <div className="nameContainer">
             <div className="nameContainer_arousal">
 
-                <div className="title">Arousal</div>
-                <div className="overAroused">
-                    <div className="overAroused_tittle">
-                        OVER AROUSED
-                    </div>
-                    <div className="overAroused_content">
-                      <div className="arrowLeft">
-                        <img src={arrowLeft} alt="arrowLeft" />
-                      </div>
+                {
+                    dashboard === 'arousal' && <Arousal/>
+                    ||
+                    dashboard === 'brainWaves' && <BrainWaves/>
+                    ||
+                    dashboard === 'coherence' && <Coherence/>
+                }
 
-                      <div className="nameDashboard">
-                        <img src={nameDashboard} alt="nameDashboard" />
-                      </div>
-
-                      <div className="arrowRight">
-                        <img src={arrowRight} alt="arrowRight" />
-                      </div>
-                    </div>
-                </div>
                 <div className="containerComplete">
                   <div className="btn_circles">
-                    <div className="btn_circle"></div>
-                    <div className="btn_circle"></div>
-                    <div className="btn_circle btn_circleActive"></div>
+                    <div className={`${dashboard === 'arousal' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard("arousal")}></div>
+                    <div className={`${dashboard === 'brainWaves' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard("brainWaves")}></div>
+                    <div className={`${dashboard === 'coherence' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard("coherence")}></div>
                   </div>
                   <div className="coherenceBtn_complete" onClick={() => {
                         clientApi.completeClient({"api_key": api_key,

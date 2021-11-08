@@ -58,7 +58,7 @@ export default function Queue(): ReactElement {
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
     if (activeBtnRogueMode === "on") {
-      history.push('/nameOn');
+      history.push('/nameOn/arousal');
     }
   }, [activeBtnRogueMode]);
 
