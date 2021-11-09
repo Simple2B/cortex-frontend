@@ -1,17 +1,36 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { instance } from '../../../api/axiosInstance';
+import { User } from '../../../types/patientsTypes';
 import "./InfoDevice.sass";
 
 
 export default function InfoDevice(): ReactElement {
 
-  const today = new Date();
+  const [queue, setQueue] = useState<User[]>([]);
 
+  const getClientsForQueue = async () => {
+    try {
+      const response = await instance()
+      .get('api/client/queue');
+      console.log("clients in queue => ", response.data);
+      setQueue(response.data);
+    } catch (error: any) {
+      console.log('GET: error message =>  ', new Error(error.message));
+      throw new Error(error.message);
+    }
+  };
+
+  const today = new Date();
   const time = new Intl.DateTimeFormat("en-US", {
     hour: "numeric",
     minute: "numeric",
   });
 
-  console.log("time", time.format(today));
+  useEffect(() => {
+    getClientsForQueue();
+  }, []);
+
+  const countClientsQueue = queue.length;
 
   return (
     <div className="containerInfoDevice">
@@ -20,7 +39,7 @@ export default function InfoDevice(): ReactElement {
 
           <div className="containerAccountIcon">
             <div className="icon"><i className="fas fa-user-alt"/></div>
-            <sub className="countClients">+2</sub>
+            <sub className="countClients">{ countClientsQueue && '+' + countClientsQueue}</sub>
           </div>
 
           <div className="circleAccountIcon"></div>
