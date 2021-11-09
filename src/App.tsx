@@ -23,8 +23,9 @@ import MenuInfoPatient from './components/ClientInfo/MenuInfoPatient/MenuInfoPat
 import NameOn from './components/ClientInfo/Name/NameOn';
 import { directive } from '@babel/types';
 import InfoDevice from './components/ClientInfo/InfoDevice/InfoDevice';
-import Intake from './components/ClientInfo/Intake_CarePlane/Intake';
-import { CarePlane } from './components/ClientInfo/Intake_CarePlane/CarePlane';
+import Intake from './components/ClientInfo/Intake_CarePlane_Notes/Intake';
+import { CarePlane } from './components/ClientInfo/Intake_CarePlane_Notes/CarePlane';
+import { Notes } from './components/ClientInfo/Intake_CarePlane_Notes/Notes';
 // import { CarePlane } from './components/ClientInfo/Intake/CarePlane';
 
 function App() {
@@ -135,6 +136,12 @@ function App() {
                         {...defaultProtectedRouteProps}
                         exact path="/:api_key/care_plane"
                         component={CarePlane}
+                    />
+
+                    <ProtectedRoute
+                        {...defaultProtectedRouteProps}
+                        exact path="/:api_key/notes"
+                        component={Notes}
                     />
 
                     <ProtectedRoute
