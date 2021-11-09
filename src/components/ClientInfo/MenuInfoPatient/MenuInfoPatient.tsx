@@ -62,8 +62,8 @@ export default function MenuInfoPatient(): ReactElement {
             <div className={splitLocation[splitLocation.length - 1] === 'intake' ? "active" : "menuInfoPatientItem"}>
               <NavLink to={`/${api_key}/intake`}>Intake</NavLink>
             </div>
-            <div className={splitLocation[splitLocation.length - 1] === "#" ? "active" : "menuInfoPatientItem"}>
-              <NavLink to="#">Report</NavLink>
+            <div className={splitLocation[splitLocation.length - 1] === "report" ? "active" : "menuInfoPatientItem"}>
+              <NavLink to={`/${api_key}/report`}>Report</NavLink>
             </div>
             <div className={splitLocation[splitLocation.length - 1] === "account" ? "active" : "menuInfoPatientItem"}>
               <NavLink to={`/${api_key}/account`}>Account</NavLink>
