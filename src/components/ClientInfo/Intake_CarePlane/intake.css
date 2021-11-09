@@ -130,6 +130,34 @@
 	letter-spacing: 1px;
 }
 
+.carePlaneInfo {
+	width: 90%;
+	display: flex;
+	justify-content: baseline;
+	flex-direction: column;
+	align-items: baseline;
+}
+
+.carePlaneInfo .carePlaneInfo_item {
+	display: flex;
+	justify-content: baseline;
+	align-items: baseline;
+}
+
+.carePlaneInfo .carePlaneInfo_item .title{
+	font-size: 31px;
+	letter-spacing: 1.3px;
+	font-weight: 100;
+	margin-right: 10px;
+	color: #c9c9c9;
+}
+
+.carePlaneInfo .carePlaneInfo_item .text{
+	font-size: 29px;
+	letter-spacing: 1px;
+	color: #FFFFFF;
+}
+
 .clientIntakeInfo {
 	height: 68%;
 	display: flex;

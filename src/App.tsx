@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import './App.sass';
 import Account from './components/ClientInfo/Account/Account';
-import Intake from './components/ClientInfo/Intake/Intake';
+// import Intake from './components/ClientInfo/Intake/Intake';
 import Name from './components/ClientInfo/Name/Name';
 import Kiosk from './components/Kiosk/Kiosk';
 import Login from './components/Login/Login';
@@ -23,6 +23,9 @@ import MenuInfoPatient from './components/ClientInfo/MenuInfoPatient/MenuInfoPat
 import NameOn from './components/ClientInfo/Name/NameOn';
 import { directive } from '@babel/types';
 import InfoDevice from './components/ClientInfo/InfoDevice/InfoDevice';
+import Intake from './components/ClientInfo/Intake_CarePlane/Intake';
+import { CarePlane } from './components/ClientInfo/Intake_CarePlane/CarePlane';
+// import { CarePlane } from './components/ClientInfo/Intake/CarePlane';
 
 function App() {
   const loggedIn = useTypedSelector((state) => state.auth.loggedIn);
@@ -127,6 +130,13 @@ function App() {
                         exact path="/:api_key/account"
                         component={Account}
                     />
+
+                    <ProtectedRoute
+                        {...defaultProtectedRouteProps}
+                        exact path="/:api_key/care_plane"
+                        component={CarePlane}
+                    />
+
                     <ProtectedRoute
                         {...defaultProtectedRouteProps}
                         exact path="/:api_key/:first_name"
