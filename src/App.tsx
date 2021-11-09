@@ -99,6 +99,7 @@ function App() {
                     return (
                     <>
                       <div className="containerNameOn">
+                        <InfoDevice/>
                         <NavBar />
                       </div>
                       <NameOn/>
