@@ -4,6 +4,15 @@ import "./InfoDevice.sass";
 
 export default function InfoDevice(): ReactElement {
 
+  const today = new Date();
+
+  const time = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+  });
+
+  console.log("time", time.format(today));
+
   return (
     <div className="containerInfoDevice">
 
@@ -40,7 +49,7 @@ export default function InfoDevice(): ReactElement {
           </div>
 
           <div className="containerTime">
-              01 : 35
+              {time.format(today)}
           </div>
 
         </div>
