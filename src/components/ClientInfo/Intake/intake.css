@@ -317,7 +317,7 @@
 
 	.intakeInfoText_healthBtn {
 		width: 80%;
-		font-size: 22px;
+		font-size: 16px;
 	}
 	.intakeInfoAlpha_dashboard {
 		width: 50%;
@@ -346,7 +346,7 @@
 	.coherence {
 		width: 90%;
 		height: 100%;
-		border-right: none;
+		/* border-right: none; */
 	}
 
 	.coherenceDashboard {

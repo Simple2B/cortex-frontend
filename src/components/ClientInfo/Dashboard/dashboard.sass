@@ -1,15 +1,20 @@
 .containerDashboard
-    height: 80%
+    // width: 100%
+    // height: 80%
+    display: flex
+    flex-direction: column
+    justify-content: space-around
+    align-items: center
     .title
-        margin-top: 13%
-        margin-bottom: 10%
+        // margin-top: 13%
+        // margin-bottom: 10%
         font-family: Poppins, sans-serif
         font-size: 42px
         font-weight: bold
         text-align: center
 
     .overAroused
-        width: 100%
+        width: 80%
         padding-bottom: 5%
         display: flex
         flex-direction: column
@@ -22,19 +27,10 @@
             text-align: center
 
         .overAroused_content
-            margin-top: 10%
             width: 100%
             display: flex
             justify-content: center
             align-items: center
-            div
-                cursor: pointer
-
-            div:first-child
-                margin-left: 7px
-
-            div:last-child
-                margin-right: 7px
 
             .nameDashboard
                 display: flex

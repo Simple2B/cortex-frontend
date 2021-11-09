@@ -22,6 +22,7 @@ import NavBar from './components/NavBar/NavBar';
 import MenuInfoPatient from './components/ClientInfo/MenuInfoPatient/MenuInfoPatient';
 import NameOn from './components/ClientInfo/Name/NameOn';
 import { directive } from '@babel/types';
+import InfoDevice from './components/ClientInfo/InfoDevice/InfoDevice';
 
 function App() {
   const loggedIn = useTypedSelector((state) => state.auth.loggedIn);
@@ -108,6 +109,7 @@ function App() {
               />
             <>
             <div className="containerNavBarMenuInfoPatient">
+              <InfoDevice/>
               <NavBar />
               <MenuInfoPatient/>
             </div>
