@@ -19,7 +19,7 @@ export default function NameOn(): ReactElement {
   console.log("dashboardNameOn", dashboardNameOn);
 
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
-  const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("L");
+  const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("X");
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
   const [dashboard, setDashboard] = useState<string>(dashboardNameOn);
 
