@@ -267,6 +267,21 @@
 	visibility: hidden;
 }
 
+.clientIntakeInfo  .containerResult {
+	width: 100%;
+	height: 100%;
+}
+
+.clientIntakeInfo  .containerResult .intakeTextAreaResult {
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	outline: none;
+	color: #FFF;
+	font-size: 22px;
+	border: transparent;
+}
+
 .clientIntakeInfo div {
 	font-size: 28px;
 	color: #707070;

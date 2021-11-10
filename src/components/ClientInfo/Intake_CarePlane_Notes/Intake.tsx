@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState, useRef } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
@@ -46,6 +46,38 @@ export default function Intake(): ReactElement {
   };
 
   console.log("client intake", client);
+
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  // The value of the textarea
+  const [value, setValue] = useState<String>();
+  // This function is triggered when textarea changes
+  const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(event.target.value);
+  };
+
+  useEffect(() => {
+    if (textareaRef && textareaRef.current) {
+      textareaRef.current.style.height = "0px";
+      const scrollHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = scrollHeight + "px";
+    }
+  }, [value]);
+
+  const styles: { [name: string]: React.CSSProperties } = {
+    container: {
+      marginTop: 50,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    },
+    textareaDefaultStyle: {
+      padding: 5,
+      width: 400,
+      display: "block",
+      resize: "none",
+      backgroundColor: "#eee",
+    },
+  };
 
 
   return (
@@ -119,7 +151,18 @@ export default function Intake(): ReactElement {
             </div>
 
             <div className={activeBtn == "Consult" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
-              <div>Consult: <span className="clientIntakeInfo_item"></span></div>
+              <div className="containerResult">
+                {/* <span className="clientIntakeInfo_item"> */}
+                    <textarea
+                      ref={textareaRef}
+                      className="intakeTextAreaResult"
+                      onChange={textAreaChange}
+                      placeholder="Write result"
+                    >
+                      {value}
+                    </textarea>
+                  {/* </span> */}
+                </div>
             </div>
 
             <div className="intakeInfoText_healthBtn">
