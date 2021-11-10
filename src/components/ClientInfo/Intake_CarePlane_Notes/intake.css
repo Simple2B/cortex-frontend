@@ -103,7 +103,7 @@
     height: 85%;
 }
 
-.intakeInfoText_health {
+.intakeInfoText_health, .carePlaneInfoText {
 	width: 76.47%;
 	height: 95%;
 	border: 1px solid #707070;
@@ -115,6 +115,10 @@
 	position: relative;
 }
 
+.carePlaneInfoText {
+	justify-content: center;
+}
+
 .intakeInfoText_health .fas.fa-times {
 	position: absolute;
 	color: #fff;
@@ -123,11 +127,13 @@
 	left: 15px;
 }
 
-.intakeInfoText_healthTitle {
-	/* position: absolute;
-	top: 15px; */
+.intakeInfoText_healthTitle, .carePlaneTitle {
 	font-size: 28px;
 	letter-spacing: 1px;
+}
+
+.carePlaneTitle {
+	padding-bottom: 10px;
 }
 
 .carePlaneInfo, .notesInfo {

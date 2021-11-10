@@ -74,8 +74,8 @@ export function CarePlane(): ReactElement {
       </div>
       <div className="intakeInfo">
         <div className="intakeInfoText">
-          <div className="intakeInfoText_health">
-            <div className="intakeInfoText_healthTitle">Care Plane</div>
+          <div className="intakeInfoText_health carePlaneInfoText">
+            <div className="intakeInfoText_healthTitle carePlaneTitle">Care Plane</div>
             <div className="carePlaneInfo">
 
               <div className="carePlaneInfo_item">
