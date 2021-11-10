@@ -8,7 +8,7 @@
 
 .accountContainer .clientInfo,
 .accountContainer .visitHistory {
-	margin-right: 35px;
+	margin-right: 20px;
 }
 
 .clientInfo {
@@ -32,7 +32,13 @@
 	align-items: left;
 }
 
-.clientInfoAccount div {
+.clientInfoAccount .infoContainer {
+	display: flex;
+	justify-content: baseline;
+	align-items: center;
+}
+
+.clientInfoAccount  div {
 	display: flex;
 	/* justify-content: center; */
 	align-items: center;
@@ -41,15 +47,12 @@
 	color: #fff;
 }
 
-.clientInfoAccount .info_title {
-	margin-bottom: 10px;
-}
-
 .clientInfoAccount .info {
 	display: flex;
 	justify-content: left;
 	align-items: center;
 	text-align: center;
+	flex-wrap: wrap;
 	margin-bottom: 10px;
 }
 
@@ -103,11 +106,10 @@
 	padding: 7px;
 }
 
-.billing_table table tr:last-child td {
+.billing_table table tfoot tr:last-child td {
 	border: 1px solid transparent;
 	text-align: left;
 	padding: 0;
-	padding-top: 20px;
 	padding-right: 5px;
 }
 
@@ -196,8 +198,7 @@
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-top: 5px;
 }
 
 .billing_formInputs {
