@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState, useRef } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
@@ -22,6 +22,8 @@ export function Notes(): ReactElement {
 
   const history = useHistory();
 
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+
   const getClient = async () => {
     try {
       const response = await instance()
@@ -43,6 +45,23 @@ export function Notes(): ReactElement {
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
   };
+
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  // The value of the textarea
+  const [value, setValue] = useState<String>("");
+  // This function is triggered when textarea changes
+  const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(event.target.value);
+  };
+
+  useEffect(() => {
+    if (textareaRef && textareaRef.current) {
+      textareaRef.current.style.height = "100%";
+      textareaRef.current.style.width = "92%";
+      const scrollHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = scrollHeight + "px";
+    }
+  }, [value]);
 
   return (
     <>
@@ -104,7 +123,35 @@ export function Notes(): ReactElement {
                 <svg id="plus-symbol-button" xmlns="http://www.w3.org/2000/svg" width="30.957" height="30.957" viewBox="0 0 30.957 30.957">
                     <path id="Path_1148" data-name="Path 1148" d="M30.957,12.526v5.905a.805.805,0,0,1-.805.805H19.236V30.152a.805.805,0,0,1-.805.805H12.526a.805.805,0,0,1-.805-.805V19.236H.805A.805.805,0,0,1,0,18.431V12.526a.805.805,0,0,1,.805-.805H11.721V.805A.805.805,0,0,1,12.526,0h5.905a.805.805,0,0,1,.805.805V11.721H30.152A.805.805,0,0,1,30.957,12.526Z" fill="#fff"/>
                 </svg>
-                <div className="text">Add new</div>
+                <div className="text" onClick={() => setModalOpen(true)}>Add new</div>
+
+
+                    <div className={isModalOpen ? "modalOpen" : "modal"}>
+                      <div className="modal-content modalContentNotes">
+                        <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
+                        <div className="modalText modalContentNotesText">
+                          <textarea
+                            ref={textareaRef}
+                            className="textAreaChange"
+                            onChange={textAreaChange}
+                            placeholder="Write Notes"
+                          >
+                            {value}
+                          </textarea>
+                        </div>
+                        <div className="btnsModal">
+                          <div className="btnModalOk" >
+                              add
+                          </div>
+                          <div className="btnModalCancel" onClick={() => setModalOpen(false)}>Cancel</div>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+
             </div>
             <div className="notesBtnToggle">
                 <div onClick={handleChangeBtn} className={activeBtn == "Preset" ? "btnActive" : "btn"}>Preset</div>
