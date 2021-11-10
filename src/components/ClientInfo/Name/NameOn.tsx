@@ -3,10 +3,11 @@ import { useHistory, useLocation } from 'react-router-dom';
 import "./name.sass";
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 import { ReactComponent as Brain } from '../../../images/brain.svg';
-import NavBar from '../../NavBar/NavBar';
 import Arousal from '../Dashboard/Arousal';
 import BrainWaves from '../Dashboard/BrainWaves';
 import Coherence from '../Dashboard/Coherence';
+import arrowRight  from "../../../images/arrowRight.svg";
+import  arrowLeft  from "../../../images/arrowLeft.svg";
 
 
 export default function NameOn(): ReactElement {
@@ -18,7 +19,7 @@ export default function NameOn(): ReactElement {
   console.log("dashboardNameOn", dashboardNameOn);
 
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
-  const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("L");
+  const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("X");
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("on");
   const [dashboard, setDashboard] = useState<string>(dashboardNameOn);
 
@@ -47,18 +48,25 @@ export default function NameOn(): ReactElement {
 
 
   return (
-    <div className="nameOn">
-        <NavBar />
+    <>
         <div className="nameContainerOn">
             <div className="nameContainer_arousal">
 
-                {
+                <div className="containerCoherence">
+                  <div className="arrowLeft">
+                    <img src={arrowLeft} alt="arrowLeft" onClick={() => dashboard === "coherence" ? setDashboard("brainWaves"): dashboard === "brainWaves" ?  setDashboard("arousal") :  setDashboard("coherence")}/>
+                  </div>
+                  {
                     dashboard === 'arousal' && <Arousal/>
                     ||
-                    dashboard === 'brainWaves' && <BrainWaves/>
+                    dashboard === 'brainWaves' && <BrainWaves />
                     ||
-                    dashboard === 'coherence' && <Coherence/>
-                }
+                    dashboard === 'coherence' && <Coherence />
+                  }
+                  <div className="arrowRight">
+                    <img src={arrowRight} alt="arrowRight" onClick={() => dashboard === "coherence" ? setDashboard("arousal"): dashboard === "arousal" ?  setDashboard("brainWaves") :  setDashboard("coherence")}/>
+                  </div>
+                </div>
 
                 <div className="containerComplete">
                   <div className="btn_circles">
@@ -134,6 +142,6 @@ export default function NameOn(): ReactElement {
               </div>
             </div>
         </div>
-    </div>
+    </>
   )
 }

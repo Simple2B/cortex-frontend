@@ -4,9 +4,9 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import './App.css';
+import './App.sass';
 import Account from './components/ClientInfo/Account/Account';
-import Intake from './components/ClientInfo/Intake/Intake';
+// import Intake from './components/ClientInfo/Intake/Intake';
 import Name from './components/ClientInfo/Name/Name';
 import Kiosk from './components/Kiosk/Kiosk';
 import Login from './components/Login/Login';
@@ -21,6 +21,13 @@ import Patient from './components/Patients/Patients';
 import NavBar from './components/NavBar/NavBar';
 import MenuInfoPatient from './components/ClientInfo/MenuInfoPatient/MenuInfoPatient';
 import NameOn from './components/ClientInfo/Name/NameOn';
+import { directive } from '@babel/types';
+import InfoDevice from './components/ClientInfo/InfoDevice/InfoDevice';
+import Intake from './components/ClientInfo/Intake_CarePlane_Notes/Intake';
+import { CarePlane } from './components/ClientInfo/Intake_CarePlane_Notes/CarePlane';
+import { Notes } from './components/ClientInfo/Intake_CarePlane_Notes/Notes';
+import { AccountReport } from './components/ClientInfo/AccountReport/AccountReport';
+// import { CarePlane } from './components/ClientInfo/Intake/CarePlane';
 
 function App() {
   const loggedIn = useTypedSelector((state) => state.auth.loggedIn);
@@ -90,14 +97,29 @@ function App() {
               exact path="/queue"
               component={Queue}
             />
-            <ProtectedRoute
-              {...defaultProtectedRouteProps}
-              exact path="/nameOn/:dashboard"
-              component={NameOn}
-            />
+              <ProtectedRoute
+                {...defaultProtectedRouteProps}
+                exact path="/nameOn/:dashboard"
+                render={ () => {
+                    return (
+                    <>
+                      <div className="containerNameOn">
+                        <InfoDevice/>
+                        <NavBar />
+                      </div>
+                      <NameOn/>
+                    </>
+                    )
+                  }
+                }
+              />
             <>
-            <NavBar />
-            <MenuInfoPatient/>
+            <div className="containerNavBarMenuInfoPatient">
+              <InfoDevice/>
+              <NavBar />
+              <MenuInfoPatient/>
+            </div>
+            <div className="containerForClientInfo">
               <Switch>
                     <ProtectedRoute
                       {...defaultProtectedRouteProps}
@@ -110,12 +132,32 @@ function App() {
                         exact path="/:api_key/account"
                         component={Account}
                     />
+
+                    <ProtectedRoute
+                        {...defaultProtectedRouteProps}
+                        exact path="/:api_key/care_plane"
+                        component={CarePlane}
+                    />
+
+                    <ProtectedRoute
+                        {...defaultProtectedRouteProps}
+                        exact path="/:api_key/notes"
+                        component={Notes}
+                    />
+
+                    <ProtectedRoute
+                        {...defaultProtectedRouteProps}
+                        exact path="/:api_key/report"
+                        component={AccountReport}
+                    />
+
                     <ProtectedRoute
                         {...defaultProtectedRouteProps}
                         exact path="/:api_key/:first_name"
                         component={Name}
                     />
               </Switch>
+            </div>
             </>
           </Switch>
           </Fullscreen>

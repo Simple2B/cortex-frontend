@@ -40,7 +40,11 @@ export default function Account(): ReactElement {
           <div className="clientInfo">
             <div className="clientInfo_tittle">Client info</div>
             <div className="clientInfoAccount">
-              <div className="info_title">Name <div className="clientInfo_text">{client.firstName} {client.lastName}</div></div>
+              <div className="infoContainer">
+                <div className="info_title">Name </div>
+                <div className="clientInfo_text">{client.firstName} {client.lastName}</div>
+              </div>
+
               <div className="info"><div>DOB: </div><div className="clientInfo_text">{client.birthday}</div></div>
               <div className="info"><div>Address: </div><div className="clientInfo_text">{client.address}</div></div>
               <div className="info"><div>City: </div><div className="clientInfo_text">{client.city}</div></div>
@@ -151,22 +155,22 @@ export default function Account(): ReactElement {
               <div className="billing_formInputs">
                 <div className="billing_formBlock">
                   <div className="billing_formBlockInput">
-                    <div className="title">Card number</div>
+                    <div className="titleAccount">Card number</div>
                     <div className="inputContainer"><input type="" placeholder=""/></div>
                   </div>
                   <div className="billing_formBlockInput">
-                    <div className="title">Expiration</div>
+                    <div className="titleAccount">Expiration</div>
                     <div  className="inputContainer"><input type="" placeholder=""/></div>
                   </div>
                 </div>
 
                 <div className="billing_formBlock">
                     <div className="billing_formBlockInput">
-                      <div className="title">CVV</div>
+                      <div className="titleAccount">CVV</div>
                       <div  className="inputContainer"><input type="" placeholder=""/></div>
                     </div>
                     <div className="billing_formBlockInput">
-                      <div className="title">Zip</div>
+                      <div className="titleAccount">Zip</div>
                       <div  className="inputContainer"><input type="" placeholder=""/></div>
                     </div>
                 </div>

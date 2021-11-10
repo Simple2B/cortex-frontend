@@ -1,11 +1,18 @@
+.menuInfoPatient_container {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
+	/* border-bottom: solid #707070 3px */
+}
 .menuInfoPatient {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100%;
-	padding-top: 45px;
-	padding-bottom: 25px;
-	border-bottom: solid #707070 3px;
+
 }
 
 .menuInfoPatient .menuInfoPatientItem a {
@@ -34,7 +41,7 @@
 
 @media (max-width: 1024px) {
 	.menuInfoPatient {
-		padding: 45px 5px 25px 5px;
+		/* padding: 45px 5px 25px 5px; */
 	}
 
 	.menuInfoPatient .menuInfoPatientItem a {
