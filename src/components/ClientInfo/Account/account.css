@@ -1,13 +1,14 @@
 .accountContainer {
 	display: flex;
 	justify-content: center;
-	height: 78vh;
+	height: 100%;
+	/* width: 98%; */
 	padding: 10px;
 }
 
 .accountContainer .clientInfo,
 .accountContainer .visitHistory {
-	margin-right: 35px;
+	margin-right: 20px;
 }
 
 .clientInfo {
@@ -31,7 +32,13 @@
 	align-items: left;
 }
 
-.clientInfoAccount div {
+.clientInfoAccount .infoContainer {
+	display: flex;
+	justify-content: baseline;
+	align-items: center;
+}
+
+.clientInfoAccount  div {
 	display: flex;
 	/* justify-content: center; */
 	align-items: center;
@@ -40,15 +47,12 @@
 	color: #fff;
 }
 
-.clientInfoAccount .info_title {
-	margin-bottom: 10px;
-}
-
 .clientInfoAccount .info {
 	display: flex;
 	justify-content: left;
 	align-items: center;
 	text-align: center;
+	flex-wrap: wrap;
 	margin-bottom: 10px;
 }
 
@@ -102,11 +106,10 @@
 	padding: 7px;
 }
 
-.billing_table table tr:last-child td {
+.billing_table table tfoot tr:last-child td {
 	border: 1px solid transparent;
 	text-align: left;
 	padding: 0;
-	padding-top: 20px;
 	padding-right: 5px;
 }
 
@@ -150,8 +153,6 @@
 	color: #707070;
 	font-size: 25px;
 	padding-left: 5px;
-	padding-top: 10px;
-	padding-bottom: 10px;
 }
 
 .visitHistory_inputContainer div input::placeholder {
@@ -197,7 +198,7 @@
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	margin-top: 20px;
+	margin-top: 5px;
 }
 
 .billing_formInputs {
@@ -211,11 +212,7 @@
 	width: 50%;
 }
 
-.billing_formBlockInput {
-	margin-top: 10px;
-}
-
-.billing_formBlock .title {
+.billing_formBlock .titleAccount {
 	font-size: 25px;
 	color: #b1b1b1;
 }
@@ -225,8 +222,6 @@
 	background-color: #191919;
 	color: #fff;
 	font-size: 25px;
-	padding-top: 7px;
-	padding-bottom: 7px;
 	border: none;
 	border-bottom: #fff 1px solid;
 }
@@ -282,14 +277,14 @@
 		font-size: 18px;
 	}
 
-	.billing_formBlock .title {
+	.billing_formBlock .titleAccount {
 		font-size: 20px;
 	}
 
 	.btnComplete {
 		font-size: 20px;
 		width: 200px;
-		height: 58px;
+		height: 50px;
 		margin-top: 25px;
 		border-radius: 35px;
 	}
@@ -299,8 +294,6 @@
 	.accountContainer {
 		flex-wrap: wrap;
 		justify-content: space-between;
-		margin-left: 50px;
-		margin-bottom: 50px;
 	}
 	.accountContainer .visitHistory {
 		width: 60%;
@@ -362,7 +355,7 @@
 	.billing {
 		width: 100%;
 	}
-	.billing_formBlock .title {
+	.billing_formBlock .titleAccount {
 		font-size: 15px;
 	}
 } */

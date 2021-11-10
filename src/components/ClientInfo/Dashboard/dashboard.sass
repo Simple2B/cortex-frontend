@@ -1,42 +1,48 @@
-.title
-    margin-top: 13%
-    margin-bottom: 10%
-    font-family: Poppins, sans-serif
-    font-size: 42px
-    font-weight: bold
-    text-align: center
-
-.overAroused
-    // width: 85%
-    padding-bottom: 5%
+.containerDashboard
+    // width: 100%
+    // height: 80%
     display: flex
     flex-direction: column
-    justify-content: center
+    justify-content: space-around
     align-items: center
-
-    .overAroused_tittle
-        color: #FF0000
-        font-size: 38px
+    .title
+        // margin-top: 13%
+        // margin-bottom: 10%
+        font-family: Poppins, sans-serif
+        font-size: 42px
+        font-weight: bold
         text-align: center
 
-    .overAroused_content
-        margin-top: 10%
-        width: 100%
+    .overAroused
+        width: 80%
+        padding-bottom: 5%
         display: flex
-        justify-content: space-between
+        flex-direction: column
+        justify-content: center
+        align-items: center
 
-        div:first-child
-            margin-left: 7px
+        .overAroused_tittle
+            color: #FF0000
+            font-size: 38px
+            text-align: center
 
-        div:last-child
-            margin-right: 7px
-
-        .nameDashboard
-            width: 60%
-
-        .nameDashboard img
+        .overAroused_content
             width: 100%
+            display: flex
+            justify-content: center
+            align-items: center
 
-        .arrowLeft img,
-        .arrowRight img
-            width: 85%
+            .nameDashboard
+                display: flex
+                justify-content: center
+                align-items: center
+                width: 80%
+                margin: 0 auto
+
+            .nameDashboard img
+                width: 100%
+                margin: 0 auto
+
+            // .arrowLeft img,
+            // .arrowRight img
+            //     width: 85%

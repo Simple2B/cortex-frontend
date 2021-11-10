@@ -53,17 +53,17 @@ export default function MenuInfoPatient(): ReactElement {
             <div className={splitLocation[splitLocation.length - 1] === `${client.firstName}` ? "active" : "menuInfoPatientItem"}>
               <NavLink to={`/${api_key}/${client.firstName}`} className="item">{ client.firstName + " " + client.lastName.split("")[0] + '.'}</NavLink>
             </div>
-            <div className={splitLocation[splitLocation.length - 1] === "#" ? "active" : "menuInfoPatientItem"}>
-              <NavLink to="#">Care Plan</NavLink>
+            <div className={splitLocation[splitLocation.length - 1] === "care_plane" ? "active" : "menuInfoPatientItem"}>
+              <NavLink to={`/${api_key}/care_plane`}>Care Plan</NavLink>
             </div>
-            <div className={splitLocation[splitLocation.length - 1] === "#" ? "active" : "menuInfoPatientItem"}>
-              <NavLink to="#">Notes</NavLink>
+            <div className={splitLocation[splitLocation.length - 1] === "notes" ? "active" : "menuInfoPatientItem"}>
+              <NavLink to={`/${api_key}/notes`}>Notes</NavLink>
             </div>
             <div className={splitLocation[splitLocation.length - 1] === 'intake' ? "active" : "menuInfoPatientItem"}>
               <NavLink to={`/${api_key}/intake`}>Intake</NavLink>
             </div>
-            <div className={splitLocation[splitLocation.length - 1] === "#" ? "active" : "menuInfoPatientItem"}>
-              <NavLink to="#">Report</NavLink>
+            <div className={splitLocation[splitLocation.length - 1] === "report" ? "active" : "menuInfoPatientItem"}>
+              <NavLink to={`/${api_key}/report`}>Report</NavLink>
             </div>
             <div className={splitLocation[splitLocation.length - 1] === "account" ? "active" : "menuInfoPatientItem"}>
               <NavLink to={`/${api_key}/account`}>Account</NavLink>

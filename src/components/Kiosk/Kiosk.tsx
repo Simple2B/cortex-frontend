@@ -91,8 +91,8 @@ export default function Kiosk(): ReactElement {
           disabled={
             phoneQuery === ""
           } className="kiosk_button">LOGIN</button>
-        <div className="redirect_registr">New here?</div>
-        <NavLink className="form_registr" to="patient-registration">Sign up</ NavLink>
+        <div className="redirect_registr"> New here? <NavLink className="form_registr" to="patient-registration">Sign up</ NavLink>
+        </div>
       </form>
     </div>
   )
