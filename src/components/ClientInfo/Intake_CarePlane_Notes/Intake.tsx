@@ -63,22 +63,6 @@ export default function Intake(): ReactElement {
     }
   }, [value]);
 
-  const styles: { [name: string]: React.CSSProperties } = {
-    container: {
-      marginTop: 50,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    },
-    textareaDefaultStyle: {
-      padding: 5,
-      width: 400,
-      display: "block",
-      resize: "none",
-      backgroundColor: "#eee",
-    },
-  };
-
 
   return (
     <>
@@ -152,16 +136,14 @@ export default function Intake(): ReactElement {
 
             <div className={activeBtn == "Consult" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
               <div className="containerResult">
-                {/* <span className="clientIntakeInfo_item"> */}
                     <textarea
                       ref={textareaRef}
                       className="intakeTextAreaResult"
                       onChange={textAreaChange}
-                      placeholder="Write result"
+                      placeholder="Write Result"
                     >
                       {value}
                     </textarea>
-                  {/* </span> */}
                 </div>
             </div>
 

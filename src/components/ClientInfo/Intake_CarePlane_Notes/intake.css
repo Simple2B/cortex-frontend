@@ -179,6 +179,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	cursor: pointer;
 }
 
 .notesBtnAdd .text {
@@ -187,6 +188,61 @@
 
 .notesBtnAdd svg {
 	margin-right: 10px;
+}
+
+/* modal window */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modalOpen {
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modalContentNotes {
+	width: 55%;
+	height: 55vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modalContentNotes .modalText {
+	width: 100%;
+	height: 100%;
+}
+
+.modalContentNotes .btnsModal {
+	width: 100%;
+	justify-content: space-around;
+}
+.modalContentNotes .btnsModal .btnModalOk, .modalContentNotes .btnsModal .btnModalCancel{
+	width: 30%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.modalContentNotes .modalContentNotesText  textarea::placeholder{
+	color: #fff;
 }
 
 .notesBtnToggle {
@@ -267,19 +323,31 @@
 	visibility: hidden;
 }
 
-.clientIntakeInfo  .containerResult {
-	width: 100%;
+.clientIntakeInfo  .containerResult, .modalContentNotes .modalOpen  {
+	width: 95%;
 	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.clientIntakeInfo  .containerResult .intakeTextAreaResult {
-	width: 100%;
-	height: 100%;
+.clientIntakeInfo  .containerResult .intakeTextAreaResult, .modalOpen .textAreaChange {
+	width: 95%;
+	height: 100% !important;
 	background-color: transparent;
 	outline: none;
 	color: #FFF;
 	font-size: 22px;
 	border: transparent;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.modalOpen .textAreaChange:placeholder {
+	color: #FFF;
+	font-size: 22px;
 }
 
 .clientIntakeInfo div {
