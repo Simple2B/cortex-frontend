@@ -20,7 +20,7 @@ export default function Name(): ReactElement {
   const [client, setClient] = useState<Client>(ClientDefault);
 
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
-  const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("L");
+  const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("X");
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
   const [ dashboard, setDashboard] = useState<string>("arousal");

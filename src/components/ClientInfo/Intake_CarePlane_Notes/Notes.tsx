@@ -80,7 +80,7 @@ export function Notes(): ReactElement {
       </div>
       <div className="intakeInfo">
         <div className="intakeInfoText">
-          <div className="intakeInfoText_health">
+          <div className="intakeInfoText_health notesInfoText">
             <div className="intakeInfoText_healthTitle">Notes</div>
             <div className="notesInfo">
 
