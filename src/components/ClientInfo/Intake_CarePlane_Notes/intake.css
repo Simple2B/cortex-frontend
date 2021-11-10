@@ -371,7 +371,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 531px;
+	width: 354px;
 	background-color: #4e4e4e;
 	border-radius: 38px;
 
@@ -380,7 +380,7 @@
 
 .intake_btn {
 	margin-right: 30px;
-	width: 33%;
+	width: 50%;
 	color: #aaaaaa;
 	display: flex;
 	justify-content: center;
@@ -391,7 +391,7 @@
 
 .intake_btnActive {
 	margin-right: 30px;
-	width: 33%;
+	width: 50%;
 	background-color: #b1b1b1;
 	color: #fff;
 	border-radius: 38px;
@@ -522,7 +522,6 @@
 		justify-content: space-around;
 		align-items: center;
 		width: 75%;
-		height: 24%;
 		padding-top: 10px;
 		padding-bottom: 10px;
 		order: 1;

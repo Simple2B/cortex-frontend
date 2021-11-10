@@ -154,9 +154,9 @@ export default function Intake(): ReactElement {
               <div onClick={handleChangeBtn} className={activeBtn == "Health HX" ? "intake_btnActive" : "intake_btn"}>
                 Health HX
               </div>
-              <div onClick={handleChangeBtn} className={activeBtn == "Family HX" ? "intake_btnActive" : "intake_btn"}>
+              {/* <div onClick={handleChangeBtn} className={activeBtn == "Family HX" ? "intake_btnActive" : "intake_btn"}>
                 Family HX
-              </div>
+              </div> */}
             </div>
 
           </div>
