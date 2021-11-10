@@ -103,20 +103,29 @@ export function Notes(): ReactElement {
             <div className="intakeInfoText_healthTitle">Notes</div>
             <div className="notesInfo">
 
+             { value ?
               <div className="notesInfo_item">
-                <div className="title">Increase H2O</div>
+                <div className="title">{value}</div>
                 <div className="text"></div>
               </div>
+              :
+              <>
+                <div className="notesInfo_item">
+                  <div className="title">Increase H2O</div>
+                  <div className="text"></div>
+                </div>
 
-              <div className="notesInfo_item">
-                <div className="title">Stretch hamstrings</div>
-                <div className="text"></div>
-              </div>
+                <div className="notesInfo_item">
+                  <div className="title">Stretch hamstrings</div>
+                  <div className="text"></div>
+                </div>
 
-              <div className="notesInfo_item">
-                <div className="title">Spinal exercises</div>
-                <div className="text"></div>
-              </div>
+                <div className="notesInfo_item">
+                  <div className="title">Spinal exercises</div>
+                  <div className="text"></div>
+                </div>
+              </>
+              }
 
             </div>
             <div className="notesBtnAdd">
@@ -140,7 +149,7 @@ export function Notes(): ReactElement {
                           </textarea>
                         </div>
                         <div className="btnsModal">
-                          <div className="btnModalOk" >
+                          <div className="btnModalOk" onClick={() => setModalOpen(false)}>
                               add
                           </div>
                           <div className="btnModalCancel" onClick={() => setModalOpen(false)}>Cancel</div>
