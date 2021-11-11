@@ -9,6 +9,10 @@ import BrainWaves from '../Dashboard/BrainWaves';
 import Coherence from '../Dashboard/Coherence';
 import arrowRight  from "../../../images/arrowRight.svg";
 import  arrowLeft  from "../../../images/arrowLeft.svg";
+import { useActions } from '../../../redux/useActions';
+import { IDashboard } from '../../../types/dashboardTypes';
+import { initialDashboard } from '../../../redux/reducers/dashboardReducer';
+import { store } from '../../../redux';
 
 
 export default function Dashboards(props: {activeBtnRogueMode: string}): ReactElement {
@@ -26,41 +30,24 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
     if (componentUrl === 'care_plane') {
         return null
     }
-
     return componentUrl
   }
 
-//   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
-
-  const [ dashboard, setDashboard] = useState<string>("arousal");
-
+  const [ dashboard, setDashboard ] = useState<IDashboard>(store.getState().dashboard);
   const history = useHistory();
 
-  const getClient = async () => {
-    try {
-      const response = await instance()
-      .get(`api/client/client_intake/${api_key}`);
-      console.log("GET: client_intake name => ", response.data);
-      setClient(response.data);
-      return response.data
-    } catch (error: any) {
-      console.log('GET: error message get_client_intake name =>  ', error.message);
-      console.log('error response data get_client_intake name => ', error.response.data);
-      throw new Error(error.message);
-    };
-  }
+  const { dashboardUrl } = useActions();
+
+  console.log("dashboardUrl", initialDashboard)
+
 
   useEffect(() => {
-    getClient()
-  }, []);
-
-  useEffect(() => {
+    dashboardUrl(dashboard);
     if (props.activeBtnRogueMode === "on") {
-      history.push(`/nameOn/${dashboard}`);
+      history.push(`/nameOn/${initialDashboard}`);
     }
   }, [props.activeBtnRogueMode, dashboard]);
 
-  console.log("activeBtnRogueMode", props.activeBtnRogueMode);
 
 
   return (
@@ -70,7 +57,7 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
           <div className="containerCoherence">
               { getUrl(componentUrl) &&
                   <div className="arrowLeft">
-                    <img src={arrowLeft} alt="arrowLeft" onClick={() => dashboard === "coherence" ? setDashboard("brainWaves"): dashboard === "brainWaves" ?  setDashboard("arousal") :  setDashboard("coherence")}/>
+                    <img src={arrowLeft} alt="arrowLeft" onClick={() => dashboard === "coherence" ? setDashboard("brainWaves"): dashboard === "brainWaves" ?  setDashboard( "arousal") :  setDashboard( "coherence" )}/>
                   </div>
               }
               {
@@ -82,15 +69,15 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
               }
               { getUrl(componentUrl)  &&
                 <div className="arrowRight">
-                    <img src={arrowRight} alt="arrowRight" onClick={() => dashboard === "coherence" ? setDashboard("arousal"): dashboard === "arousal" ?  setDashboard("brainWaves") :  setDashboard("coherence")}/>
+                    <img src={arrowRight} alt="arrowRight" onClick={() => dashboard === "coherence" ? setDashboard("arousal"): dashboard === "arousal" ?  setDashboard( "brainWaves") :  setDashboard( "coherence" )}/>
                 </div>}
           </div>
 
           <div className="containerComplete">
             <div className="btn_circles">
-              <div className={`${dashboard === 'arousal' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard("arousal")}></div>
-              <div className={`${dashboard === 'brainWaves' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard("brainWaves")}></div>
-              <div className={`${dashboard === 'coherence' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard("coherence")}></div>
+              <div className={`${dashboard === 'arousal' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard( "arousal")}></div>
+              <div className={`${dashboard === 'brainWaves' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard( "brainWaves")}></div>
+              <div className={`${dashboard === 'coherence' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard( "coherence")}></div>
             </div>
             <div className="coherenceBtn_complete" onClick={() => {
                   clientApi.completeClient({"api_key": api_key,
@@ -105,4 +92,4 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
       </div>
     </>
   )
-}
+};
