@@ -7,20 +7,17 @@ import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg'
 import Arousal from '../Dashboard/Arousal';
 import BrainWaves from '../Dashboard/BrainWaves';
 import Coherence from '../Dashboard/Coherence';
+import Dashboards from '../Dashboard/Dashboards';
 
 
-export function Notes(): ReactElement {
+export function Notes(props: {activeBtnRogueMode: string}): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
   console.log("Care Plane -> api_key", api_key);
   const [client, setClient] = useState<Client>(ClientDefault);
 
-  const [ dashboard, setDashboard] = useState<string>("coherence");
-
   const [activeBtn, setActiveBtn] = useState("Preset");
-
-  const history = useHistory();
 
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -66,38 +63,9 @@ export function Notes(): ReactElement {
 
   return (
     <>
-      <div className="coherence">
-        <div className="containerCoherence">
 
-            {
-            dashboard === 'arousal' && <Arousal/>
-            ||
-            dashboard === 'brainWaves' && <BrainWaves />
-            ||
-            dashboard === 'coherence' && <Coherence />
-            }
+      <Dashboards activeBtnRogueMode={props.activeBtnRogueMode}/>
 
-        </div>
-
-        <div className="coherenceBtn">
-            <div className="coherenceBtn_circles">
-              <div className={`${dashboard === 'arousal' ? "coherenceBtn_circleActive" : "coherenceBtn_circle"}`} onClick={() => setDashboard("arousal")}></div>
-              <div className={`${dashboard === 'brainWaves' ? "coherenceBtn_circleActive" : "coherenceBtn_circle"}`} onClick={() => setDashboard("brainWaves")}></div>
-              <div className={`${dashboard === 'coherence' ? "coherenceBtn_circleActive" : "coherenceBtn_circle"}`} onClick={() => setDashboard("coherence")}></div>
-            </div>
-            <div className="coherenceBtn_complete"
-                onClick={() => {
-                  clientApi.completeClient({"api_key": api_key,
-                  "rougue_mode": false, "place_in_queue": client.place_in_queue});
-                  history.push('/queue');
-                  console.log("client" , {"api_key": api_key,
-                  "rougue_mode": false, "first_name": client.firstName, "place_in_queue": client.place_in_queue})
-              }}
-            >
-              Complete
-            </div>
-        </div>
-      </div>
       <div className="intakeInfo">
         <div className="intakeInfoText">
           <div className="intakeInfoText_health notesInfoText">
