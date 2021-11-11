@@ -2,7 +2,6 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
-import {instance} from '../../../api/axiosInstance';
 import "../Name/name.sass";
 import Arousal from '../Dashboard/Arousal';
 import BrainWaves from '../Dashboard/BrainWaves';
@@ -38,16 +37,12 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
 
   const { dashboardUrl } = useActions();
 
-  console.log("dashboardUrl", initialDashboard)
-
-
   useEffect(() => {
     dashboardUrl(dashboard);
     if (props.activeBtnRogueMode === "on") {
       history.push(`/nameOn/${initialDashboard}`);
     }
   }, [props.activeBtnRogueMode, dashboard]);
-
 
 
   return (

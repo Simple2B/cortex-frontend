@@ -1,12 +1,9 @@
 import React, { ReactElement, useEffect, useState, useRef } from 'react';
-import { useHistory, useLocation } from "react-router-dom";
-import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
+import { useLocation } from "react-router-dom";
+import { Client, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
 import './intake.css';
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
-import Arousal from '../Dashboard/Arousal';
-import BrainWaves from '../Dashboard/BrainWaves';
-import Coherence from '../Dashboard/Coherence';
 import Dashboards from '../Dashboard/Dashboards';
 
 
@@ -16,11 +13,8 @@ export function Notes(props: {activeBtnRogueMode: string}): ReactElement {
   const api_key = splitLocation[splitLocation.length - 2];
   console.log("Care Plane -> api_key", api_key);
   const [client, setClient] = useState<Client>(ClientDefault);
-
   const [activeBtn, setActiveBtn] = useState("Preset");
-
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   // The value of the textarea
   const defaultValue = "Increase H2O";

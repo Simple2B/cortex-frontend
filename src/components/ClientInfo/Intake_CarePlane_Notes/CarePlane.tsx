@@ -42,7 +42,6 @@ export function CarePlane(props: {activeBtnRogueMode: string}): ReactElement {
 
   return (
     <>
-
       <Dashboards activeBtnRogueMode={props.activeBtnRogueMode}/>
 
       <div className="intakeInfo">
