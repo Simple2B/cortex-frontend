@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState, useRef } from 'react';
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Client, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
 import './intake.css';
@@ -57,7 +57,6 @@ export default function Intake(props: {activeBtnRogueMode: string}): ReactElemen
   return (
     <>
       <Dashboards activeBtnRogueMode={props.activeBtnRogueMode}/>
-
       <div className="intakeInfo">
         <div className="intakeInfoText">
           <div className="intakeInfoText_health">

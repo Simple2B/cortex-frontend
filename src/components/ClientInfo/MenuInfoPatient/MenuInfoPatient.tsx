@@ -12,7 +12,6 @@ interface MyProps {
   lastName: string,
 }
 
-
 export default function MenuInfoPatient(): ReactElement {
     //assigning location variable
     const location = useLocation();

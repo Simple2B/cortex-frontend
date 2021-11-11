@@ -3,7 +3,6 @@ import { instance } from '../../../api/axiosInstance';
 import { User } from '../../../types/patientsTypes';
 import "./InfoDevice.sass";
 
-
 export default function InfoDevice(): ReactElement {
 
   const [queue, setQueue] = useState<User[]>([]);

@@ -46,7 +46,6 @@ export default function NavBar(): ReactElement {
     console.log("!!! removeItem dateNow  !!!");
   }
 
-
   return (
     <div className="nav_bar">
       <div onClick={handleMenuSwitch} className="menu_button"><Menu /></div>
