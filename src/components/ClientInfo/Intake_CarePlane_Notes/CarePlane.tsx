@@ -47,7 +47,7 @@ export function CarePlane(props: {activeBtnRogueMode: string}): ReactElement {
       <div className="intakeInfo">
         <div className="intakeInfoText">
           <div className="intakeInfoText_health carePlaneInfoText">
-            <div className="intakeInfoText_healthTitle carePlaneTitle">Care Plane</div>
+            <div className="intakeInfoText_healthTitle carePlaneTitle">Care Plan</div>
             <div className="carePlaneInfo">
 
               <div className="carePlaneInfo_item">
