@@ -1,5 +1,7 @@
 .registration {
   text-align: center;
+  height: 100%;
+  overflow: scroll;
 }
 
 .registration_title {
