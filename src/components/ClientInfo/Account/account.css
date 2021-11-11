@@ -1,17 +1,17 @@
-.accountContainer {
+/* .accountContainer {
 	display: flex;
 	justify-content: center;
 	height: 100%;
-	/* width: 98%; */
+	width: 98%;
 	padding: 10px;
-}
+} */
 
-.accountContainer .clientInfo,
-.accountContainer .visitHistory {
+.clientInfo, .visitHistory {
 	margin-right: 20px;
 }
 
 .clientInfo {
+	align-self: baseline;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -75,6 +75,7 @@
 }
 
 .visitHistory {
+	align-self: baseline;
 	width: 34.6%;
 	display: flex;
 	flex-direction: column;
@@ -165,6 +166,7 @@
 }
 
 .billing {
+	align-self: baseline;
 	width: 29.4%;
 }
 
@@ -291,14 +293,14 @@
 }
 
 @media (max-width: 1024px) {
-	.accountContainer {
+	/* .accountContainer {
 		flex-wrap: wrap;
 		justify-content: space-between;
 	}
 	.accountContainer .visitHistory {
 		width: 60%;
 		margin-right: 35px;
-	}
+	} */
 
 	.billing {
 		margin-top: 1em;

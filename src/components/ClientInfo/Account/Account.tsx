@@ -30,7 +30,7 @@ export default function Account(): ReactElement {
 
   return (
     <>
-        <div className="accountContainer">
+        {/* <div className="accountContainer"> */}
           <div className="clientInfo">
             <div className="clientInfo_tittle">Client info</div>
             <div className="clientInfoAccount">
@@ -173,7 +173,7 @@ export default function Account(): ReactElement {
               </div>
             </div>
           </div>
-        </div>
+        {/* </div> */}
     </>
   )
 }
