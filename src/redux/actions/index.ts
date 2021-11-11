@@ -1,6 +1,7 @@
 import * as AuthActionCreators from "./authActions";
+import * as DashboardActionCreator from "./dashboardActions";
 
-const actions = {
+export const actionsCreator = {
   ...AuthActionCreators,
+  ...DashboardActionCreator
 };
-export default actions;

@@ -1,17 +1,12 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { useLocation } from "react-router-dom";
-import { useHistory } from 'react-router-dom';
-import { Client, clientApi, ClientDefault } from '../../../api/clientApi';
+import { Client, ClientDefault } from '../../../api/clientApi';
 import {instance} from '../../../api/axiosInstance';
 import "./name.sass";
 import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
 import { ReactComponent as Brain } from '../../../images/brain.svg';
 import Dashboards from '../Dashboard/Dashboards';
-// import Arousal from '../Dashboard/Arousal';
-// import BrainWaves from '../Dashboard/BrainWaves';
-// import Coherence from '../Dashboard/Coherence';
-// import arrowRight  from "../../../images/arrowRight.svg";
-// import  arrowLeft  from "../../../images/arrowLeft.svg";
+import { useActions } from '../../../redux/useActions';
 
 
 export default function Name(): ReactElement {
@@ -23,6 +18,9 @@ export default function Name(): ReactElement {
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
   const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("X");
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
+
+  const { dashboardUrl } = useActions();
+
 
   const getClient = async () => {
     try {
@@ -40,11 +38,15 @@ export default function Name(): ReactElement {
 
   useEffect(() => {
     getClient()
-  }, []);
+  }, [api_key]);
 
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
+    // if (props.activeBtnRogueMode === "on") {
+    //   history.push(`/nameOn/${dashboard}`);
+    // }
   }, [activeBtnRogueMode]);
+
 
   console.log("activeBtnRogueMode", activeBtnRogueMode);
 
@@ -128,4 +130,4 @@ export default function Name(): ReactElement {
       </div>
     </>
   )
-}
+};

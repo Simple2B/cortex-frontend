@@ -30,7 +30,7 @@ export default function Intake(props: {activeBtnRogueMode: string}): ReactElemen
 
   useEffect(() => {
     getClient()
-  }, []);
+  }, [api_key]);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
@@ -53,7 +53,6 @@ export default function Intake(props: {activeBtnRogueMode: string}): ReactElemen
       textareaRef.current.style.height = scrollHeight + "px";
     }
   }, [value]);
-
 
   return (
     <>

@@ -21,6 +21,15 @@ export function Notes(props: {activeBtnRogueMode: string}): ReactElement {
 
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  // The value of the textarea
+  const defaultValue = "Increase H2O";
+  const [value, setValue] = useState<String>("");
+  // This function is triggered when textarea changes
+  const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(event.target.value);
+  };
+
   const getClient = async () => {
     try {
       const response = await instance()
@@ -41,14 +50,6 @@ export function Notes(props: {activeBtnRogueMode: string}): ReactElement {
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
-  };
-
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  // The value of the textarea
-  const [value, setValue] = useState<String>("");
-  // This function is triggered when textarea changes
-  const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
   };
 
   useEffect(() => {
@@ -113,7 +114,9 @@ export function Notes(props: {activeBtnRogueMode: string}): ReactElement {
                     onChange={textAreaChange}
                     placeholder="Write Notes"
                   >
-                    {value}
+                    {
+                      value
+                    }
                   </textarea>
                 </div>
                 <div className="btnsModal">
