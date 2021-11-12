@@ -12,15 +12,9 @@ export default function Coherence(): ReactElement {
         <div className="title">Coherence</div>
         <div className="overAroused">
             <div className="overAroused_content">
-                {/* <div className="arrowLeft" >
-                    <img src={arrowLeft} alt="arrowLeft" onClick={() => {}} />
-                </div> */}
                 <div className="nameDashboard">
                     <img src={CoherenceDashboard} alt="brainWaves" onClick={() => {}} />
                 </div>
-                {/* <div className="arrowRight">
-                    <img src={arrowRight} alt="arrowRight" onClick={() => {}} />
-                </div> */}
             </div>
         </div>
     </div>

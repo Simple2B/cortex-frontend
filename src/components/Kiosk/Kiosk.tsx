@@ -63,7 +63,7 @@ export default function Kiosk(): ReactElement {
 
         } else {
           setStyle(false);
-          setWelcomeText(`No such patience in base. Please fill Register Form`);
+          setWelcomeText('You are not registered. The registration link is below!');
           setPhoneQuery('');
 
           const interval = setInterval(() => {

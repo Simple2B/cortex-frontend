@@ -4,7 +4,6 @@ import { instance } from '../../../api/axiosInstance';
 import { Client, ClientDefault } from '../../../api/clientApi';
 import './account.css';
 
-
 export default function Account(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
@@ -19,7 +18,6 @@ export default function Account(): ReactElement {
       console.log("GET: account => ", response.data);
       setClient(response.data);
     } catch (error: any) {
-      // place to handle errors and rise custom errors
       console.log('GET: error message account =>  ', error.message);
       console.log('error response data account => ', error.response.data);
       throw new Error(error.message);
@@ -30,13 +28,9 @@ export default function Account(): ReactElement {
     getClient()
   }, []);
 
-
-  console.log("location in ClientInfo => ", location.pathname);
-
-
   return (
     <>
-        <div className="accountContainer">
+        {/* <div className="accountContainer"> */}
           <div className="clientInfo">
             <div className="clientInfo_tittle">Client info</div>
             <div className="clientInfoAccount">
@@ -44,7 +38,6 @@ export default function Account(): ReactElement {
                 <div className="info_title">Name </div>
                 <div className="clientInfo_text">{client.firstName} {client.lastName}</div>
               </div>
-
               <div className="info"><div>DOB: </div><div className="clientInfo_text">{client.birthday}</div></div>
               <div className="info"><div>Address: </div><div className="clientInfo_text">{client.address}</div></div>
               <div className="info"><div>City: </div><div className="clientInfo_text">{client.city}</div></div>
@@ -180,7 +173,7 @@ export default function Account(): ReactElement {
               </div>
             </div>
           </div>
-        </div>
+        {/* </div> */}
     </>
   )
 }

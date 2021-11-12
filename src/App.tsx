@@ -6,7 +6,6 @@ import {
 } from "react-router-dom";
 import './App.sass';
 import Account from './components/ClientInfo/Account/Account';
-// import Intake from './components/ClientInfo/Intake/Intake';
 import Name from './components/ClientInfo/Name/Name';
 import Kiosk from './components/Kiosk/Kiosk';
 import Login from './components/Login/Login';
@@ -27,7 +26,6 @@ import Intake from './components/ClientInfo/Intake_CarePlane_Notes/Intake';
 import { CarePlane } from './components/ClientInfo/Intake_CarePlane_Notes/CarePlane';
 import { Notes } from './components/ClientInfo/Intake_CarePlane_Notes/Notes';
 import { AccountReport } from './components/ClientInfo/AccountReport/AccountReport';
-// import { CarePlane } from './components/ClientInfo/Intake/CarePlane';
 
 function App() {
   const loggedIn = useTypedSelector((state) => state.auth.loggedIn);
