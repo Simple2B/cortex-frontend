@@ -59,11 +59,11 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
                   </div>
               }
               {
-                dashboard === 'arousal' && <Arousal/>
+                dashboard === 'arousal' && <Arousal/> && componentUrl !== 'start'
                 ||
                 dashboard === 'brainWaves' && <BrainWaves />
                 ||
-                dashboard === 'coherence' && <Coherence />
+                dashboard === 'coherence' && <Coherence /> && componentUrl !== 'start'
               }
               { getUrl(componentUrl)  &&
                 <div className="arrowRight">
@@ -72,11 +72,15 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
           </div>
 
           <div className="containerComplete">
-            <div className="btn_circles">
-              <div className={`${dashboard === 'arousal' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard( "arousal")}></div>
-              <div className={`${dashboard === 'brainWaves' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard( "brainWaves")}></div>
-              <div className={`${dashboard === 'coherence' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard( "coherence")}></div>
-            </div>
+
+            { componentUrl !== 'start' &&
+              <div className="btn_circles">
+                <div className={`${dashboard === 'arousal' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard( "arousal")}></div>
+                <div className={`${dashboard === 'brainWaves' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard( "brainWaves")}></div>
+                <div className={`${dashboard === 'coherence' ? "btn_circleActive" : "btn_circle"}`} onClick={() => setDashboard( "coherence")}></div>
+              </div>
+            }
+
             <div className="coherenceBtn_complete" onClick={() => {
                   clientApi.completeClient({"api_key": api_key,
                   "rougue_mode": false, "place_in_queue": client.place_in_queue});
