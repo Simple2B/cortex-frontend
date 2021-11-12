@@ -29,6 +29,9 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
     if (componentUrl === 'care_plane') {
         return null
     }
+    if (componentUrl === 'start') {
+      return null
+    }
     return componentUrl
   }
 
