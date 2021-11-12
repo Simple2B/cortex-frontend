@@ -240,28 +240,28 @@ export default function PatientRegistration(): ReactElement {
             value={values.address.trim()}
             name="address"
             onChange={onChange}
-            className="registration_input"
+            className="registration_input registration_input_address"
             placeholder="Address"
           />
           <input
             value={values.city.trim()}
             name="city"
             onChange={onChange}
-            className="registration_input"
+            className="registration_input registration_input_address"
             placeholder="City"
           />
           <input
             value={values.state.trim()}
             name="state"
             onChange={onChange}
-            className="registration_input"
+            className="registration_input registration_input_address"
             placeholder="State"
           />
           <input
             value={values.zip.trim()}
             name="zip"
             onChange={onChange}
-            className="registration_input"
+            className="registration_input registration_input_address"
             placeholder="ZIP"
           />
 
@@ -300,7 +300,7 @@ export default function PatientRegistration(): ReactElement {
             value={values.referring.trim()}
             name="referring"
             onChange={onChange}
-            className="registration_input"
+            className="registration_input registration_input_referring"
             placeholder="Who can we thank for referring you?"
           />
           <div
