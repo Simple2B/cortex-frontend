@@ -53,22 +53,31 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
       <div className="nameContainer_arousal">
 
           <div className="containerCoherence">
-              { getUrl(componentUrl) &&
+              {
+                getUrl(componentUrl) &&
                   <div className="arrowLeft">
                     <img src={arrowLeft} alt="arrowLeft" onClick={() => dashboard === "coherence" ? setDashboard("brainWaves"): dashboard === "brainWaves" ?  setDashboard( "arousal") :  setDashboard( "coherence" )}/>
                   </div>
               }
               {
-                dashboard === 'arousal' && <Arousal/> && componentUrl !== 'start'
+                componentUrl === 'start'
+                  ?
+                <BrainWaves />
+                  :
+                dashboard === 'arousal' && <Arousal/>
                 ||
                 dashboard === 'brainWaves' && <BrainWaves />
                 ||
-                dashboard === 'coherence' && <Coherence /> && componentUrl !== 'start'
+                dashboard === 'coherence' && <Coherence />
+                // ||
+                // componentUrl === 'start' && <BrainWaves />
               }
-              { getUrl(componentUrl)  &&
-                <div className="arrowRight">
-                    <img src={arrowRight} alt="arrowRight" onClick={() => dashboard === "coherence" ? setDashboard("arousal"): dashboard === "arousal" ?  setDashboard( "brainWaves") :  setDashboard( "coherence" )}/>
-                </div>}
+              {
+                getUrl(componentUrl)  &&
+                  <div className="arrowRight">
+                      <img src={arrowRight} alt="arrowRight" onClick={() => dashboard === "coherence" ? setDashboard("arousal"): dashboard === "arousal" ?  setDashboard( "brainWaves") :  setDashboard( "coherence" )}/>
+                  </div>
+              }
           </div>
 
           <div className="containerComplete">
