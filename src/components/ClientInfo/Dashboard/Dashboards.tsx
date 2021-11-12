@@ -69,8 +69,6 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
                 dashboard === 'brainWaves' && <BrainWaves />
                 ||
                 dashboard === 'coherence' && <Coherence />
-                // ||
-                // componentUrl === 'start' && <BrainWaves />
               }
               {
                 getUrl(componentUrl)  &&
