@@ -20,12 +20,12 @@ import Patient from './components/Patients/Patients';
 import NavBar from './components/NavBar/NavBar';
 import MenuInfoPatient from './components/ClientInfo/MenuInfoPatient/MenuInfoPatient';
 import NameOn from './components/ClientInfo/Name/NameOn';
-import { directive } from '@babel/types';
 import InfoDevice from './components/ClientInfo/InfoDevice/InfoDevice';
 import Intake from './components/ClientInfo/Intake_CarePlane_Notes/Intake';
 import { CarePlane } from './components/ClientInfo/Intake_CarePlane_Notes/CarePlane';
 import { Notes } from './components/ClientInfo/Intake_CarePlane_Notes/Notes';
 import { AccountReport } from './components/ClientInfo/AccountReport/AccountReport';
+import AccountReportStart from './components/ClientInfo/AccountReport/AccountReportStart';
 
 function App() {
   const loggedIn = useTypedSelector((state) => state.auth.loggedIn);
@@ -147,6 +147,12 @@ function App() {
                         {...defaultProtectedRouteProps}
                         exact path="/:api_key/report"
                         component={AccountReport}
+                    />
+
+                    <ProtectedRoute
+                        {...defaultProtectedRouteProps}
+                        exact path="/:api_key/start"
+                        component={AccountReportStart}
                     />
 
                     <ProtectedRoute
