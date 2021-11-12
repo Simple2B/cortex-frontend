@@ -191,7 +191,7 @@ export default function PatientRegistration(): ReactElement {
             <input
               name="firstName"
 
-              value={values.firstName.trim() || ""}
+              value={values.firstName}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.firstName && "is-invalid"
@@ -207,7 +207,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input" data-error={"lastName"}>
             <input
               name="lastName"
-              value={values.lastName.trim() || ""}
+              value={values.lastName}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.lastName && "is-invalid"
@@ -237,38 +237,38 @@ export default function PatientRegistration(): ReactElement {
           </div>
 
           <input
-            value={values.address.trim()}
+            value={values.address}
             name="address"
             onChange={onChange}
-            className="registration_input"
+            className="registration_input registration_input_address"
             placeholder="Address"
           />
           <input
-            value={values.city.trim()}
+            value={values.city}
             name="city"
             onChange={onChange}
-            className="registration_input"
+            className="registration_input registration_input_address"
             placeholder="City"
           />
           <input
-            value={values.state.trim()}
+            value={values.state}
             name="state"
             onChange={onChange}
-            className="registration_input"
+            className="registration_input registration_input_address"
             placeholder="State"
           />
           <input
-            value={values.zip.trim()}
+            value={values.zip}
             name="zip"
             onChange={onChange}
-            className="registration_input"
+            className="registration_input registration_input_address"
             placeholder="ZIP"
           />
 
           <div className="registration_input" data-error={"phone"}>
             <input
               name="phone"
-              value={values.phone.trim()}
+              value={values.phone}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.phone && "is-invalid"
@@ -284,7 +284,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input" data-error={"email"}>
             <input
               name="email"
-              value={values.email.trim() || ""}
+              value={values.email}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.email && "is-invalid"
@@ -297,10 +297,10 @@ export default function PatientRegistration(): ReactElement {
             )}
           </div>
           <input
-            value={values.referring.trim()}
+            value={values.referring}
             name="referring"
             onChange={onChange}
-            className="registration_input"
+            className="registration_input registration_input_referring"
             placeholder="Who can we thank for referring you?"
           />
           <div
@@ -358,7 +358,7 @@ export default function PatientRegistration(): ReactElement {
             <input
               name="medications"
 
-              value={values.medications.trim() || ""}
+              value={values.medications}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.medications && "is-invalid"
@@ -503,7 +503,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="reqFormTitleText">Relationship to child</div>
           <input
             name="relationshipChild"
-            value={values.relationshipChild.trim()}
+            value={values.relationshipChild}
             onChange={onChange}
             className="inputRelationshipChild"
             placeholder=""

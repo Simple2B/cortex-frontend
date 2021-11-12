@@ -68,7 +68,6 @@ export default function Login(): ReactElement {
       <form className="login_form">
         <input type="email" value={form.username} onChange={handleEmailChange} className="login_input" placeholder="EMAIL" />
         <input type="password" value={form.password} onChange={handlePasswordChange} className="login_input" placeholder="PASSWORD" />
-        {/* <div className="errorMessage"></div> */}
         <button onClick={handleSubmit}
           disabled={
           (form.password === "" || form.username === "") && isLoading
