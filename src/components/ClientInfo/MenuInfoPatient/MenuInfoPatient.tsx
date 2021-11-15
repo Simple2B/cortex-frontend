@@ -24,8 +24,8 @@ export default function MenuInfoPatient(): ReactElement {
 
     const splitLocationForApi = location.pathname.split("/");
     const api_key = splitLocationForApi[splitLocationForApi.length - 2];
+
     const [client, setClient] = useState<Client>(ClientDefault);
-    console.log("props.name ", client.firstName );
 
       const getClient = async () => {
         try {

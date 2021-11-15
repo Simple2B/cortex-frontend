@@ -12,6 +12,7 @@ import { useActions } from '../../../redux/useActions';
 import { IDashboard } from '../../../types/dashboardTypes';
 import { initialDashboard } from '../../../redux/reducers/dashboardReducer';
 import { store } from '../../../redux';
+import { instance } from '../../../api/axiosInstance';
 
 
 export default function Dashboards(props: {activeBtnRogueMode: string}): ReactElement {
@@ -19,6 +20,26 @@ export default function Dashboards(props: {activeBtnRogueMode: string}): ReactEl
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
+
+  console.log("Dashboard api_key ->", api_key);
+
+  const getClient = async () => {
+    try {
+      const response = await instance()
+      .get(`api/client/client_intake/${api_key}`);
+      console.log("GET: client_intake response !!!!!!!!! => ", response);
+      setClient(response.data);
+    } catch (error: any) {
+      console.log('GET->dashboard: error message get_client_intake name =>  ', error.message);
+      console.log('error response data get_client_intake name => ', error.response.data);
+      throw new Error(error.message);
+    };
+  }
+
+  useEffect(() => {
+    getClient()
+    console.log("Dashboard client -> !!!", client)
+  }, [api_key]);
 
   const componentUrl = splitLocation[splitLocation.length - 1];
 

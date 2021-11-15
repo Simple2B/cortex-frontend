@@ -101,7 +101,8 @@ export const ClientDefault = {
   stressfulLevel: 1,
   consentMinorChild: false,
   relationshipChild: "",
-  place_in_queue: null
+  place_in_queue: null,
+  // visits: null,
 };
 
 export const clientApi = {
@@ -202,6 +203,27 @@ export const clientApi = {
     } catch (error: any) {
       console.log("POST: error message completeClient => ", new Error(error.message));
       console.log('POST: error data  completeClient =>', error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
+  writeNote: async (data_note: {
+    "date": string | null,
+    "notes": string,
+    "client_id": number | null,
+    "doctor_id": number | null,
+    "id": number | null,
+  }): Promise<void> => {
+    console.log('writeNote: data_note =>', data_note);
+    try {
+      const response = await instance()
+      .post('api/client/note', data_note);
+      console.log('POST: response writeNote ', response);
+      console.log('POST: response write note successfully ', response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("POST: error message writeNote => ", new Error(error.message));
+      console.log('POST: error data writeNote =>', error.message.data);
       throw new Error(error.message);
     }
   },
