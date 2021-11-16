@@ -22,7 +22,7 @@ export default function Dashboards(props: {
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
 
-  console.log("Dashboard api_key ->", api_key);
+  // console.log("Dashboard api_key ->", api_key);
 
   const getClient = async () => {
     try {
@@ -48,7 +48,6 @@ export default function Dashboards(props: {
     if (api_key !== "nameOn") {
       getClient();
     }
-    console.log("Dashboard client -> !!!", client);
   }, [api_key]);
 
   const componentUrl = splitLocation[splitLocation.length - 1];

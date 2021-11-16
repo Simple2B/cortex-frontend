@@ -53,6 +53,19 @@ export const ClientNotes = {
   ],
 };
 
+interface INote {
+  client_id: number;
+  date: string;
+  doctor_id: number;
+  id: number;
+  notes: string;
+  visit_id: number;
+}
+
+// interface INotes {
+//   notes: Array<INote>;
+// }
+
 export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
@@ -62,6 +75,8 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
   const [activeBtn, setActiveBtn] = useState("Preset");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const [notesData, setNotes] = useState<Array<INote>>();
 
   // The value of the textarea
   const defaultValue = "Increase H2O";
@@ -76,7 +91,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
       const response = await instance().get(
         `api/client/client_intake/${api_key}`
       );
-      console.log("GET: client_intake => ", response.data);
+      // console.log("GET: client_intake => ", response.data);
       setClient(response.data);
       return response.data;
     } catch (error: any) {
@@ -89,11 +104,25 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
     }
   };
 
+  const getNotes = async () => {
+    try {
+      const response = await instance().get(`api/client/note/${api_key}`);
+      console.log("GET: get notes => ", response.data);
+      setNotes(response.data);
+    } catch (error: any) {
+      console.log("GET: error message get notes => ", error.message);
+      console.log("error response data get notes => ", error.response.data);
+      throw new Error(error.message);
+    }
+  };
+
   useEffect(() => {
     getClient();
   }, [api_key]);
 
-  console.log("Notes -> client visits", client.visits);
+  useEffect(() => {
+    getNotes();
+  }, []);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
@@ -108,6 +137,15 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
     }
     setModalOpen(isModalOpen);
   }, [value, isModalOpen]);
+
+  const deleteNote = (deleteNoteData: {
+    id: number;
+    client_id: number;
+    doctor_id: number;
+    visit_id: number;
+  }) => {
+    clientApi.deleteNote(deleteNoteData);
+  };
 
   const addNotes = () => {
     setModalOpen(!isModalOpen);
@@ -133,6 +171,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
     } else {
       console.log("Error write note");
     }
+    getNotes();
   };
 
   return (
@@ -145,14 +184,33 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
 
             {activeBtn === "Preset" ? (
               <div className="notesInfo">
-                {value ? (
-                  <div className="notesInfo_item">
-                    <div className="title">{value}</div>
-                    <div className="text"></div>
-                  </div>
-                ) : (
-                  <></>
-                )}
+                {notesData &&
+                  notesData.map((note) => {
+                    return (
+                      <div className="notesInfo_item">
+                        <div className="title">
+                          {note.notes}{" "}
+                          <sup
+                            className="deleteCross"
+                            title="delete note"
+                            onClick={() => {
+                              deleteNote({
+                                id: note.id,
+                                client_id: note.client_id,
+                                doctor_id: note.doctor_id,
+                                visit_id: note.visit_id,
+                              });
+                              getNotes();
+                            }}
+                          >
+                            x
+                          </sup>
+                        </div>
+
+                        <div className="text"></div>
+                      </div>
+                    );
+                  })}
               </div>
             ) : (
               <div className="notesInfo">Notes</div>
