@@ -256,8 +256,6 @@ export const clientApi = {
     doctor_id: number;
     visit_id: number;
   }): Promise<void> => {
-    console.log("writeNote: data_note =>", data_note);
-
     try {
       const response = await instance().post("api/client/note", data_note);
       console.log("POST: response writeNote ", response);
@@ -269,6 +267,32 @@ export const clientApi = {
         new Error(error.message)
       );
       console.log("POST: error data writeNote =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
+  deleteNote: async (data_delete_note: {
+    id: number;
+    client_id: number;
+    doctor_id: number;
+    visit_id: number;
+  }): Promise<void> => {
+    console.log("deleteNote: data_delete_note =>", data_delete_note);
+
+    try {
+      const response = await instance().post(
+        "api/client/note_delete",
+        data_delete_note
+      );
+      console.log("POST: response deleteNote ", response);
+      console.log("POST: response deleteNote successfully ", response.data);
+      // return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message deleteNote => ",
+        new Error(error.message)
+      );
+      console.log("POST: error data deleteNote =>", error.message.data);
       throw new Error(error.message);
     }
   },
