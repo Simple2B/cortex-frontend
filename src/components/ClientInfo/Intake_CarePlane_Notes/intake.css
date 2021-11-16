@@ -306,6 +306,7 @@
 
 .notesInfo .notesInfo_item .title .deleteCross {
   /* margin-left: 20px; */
+  cursor: pointer;
 }
 
 .carePlaneInfo .carePlaneInfo_item .text,
