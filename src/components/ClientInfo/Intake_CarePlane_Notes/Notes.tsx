@@ -109,6 +109,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
       const response = await instance().get(`api/client/note/${api_key}`);
       console.log("GET: get notes => ", response.data);
       setNotes(response.data);
+      return response.data;
     } catch (error: any) {
       console.log("GET: error message get notes => ", error.message);
       console.log("error response data get notes => ", error.response.data);
@@ -122,7 +123,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
 
   useEffect(() => {
     getNotes();
-  }, []);
+  }, [notesData]);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
