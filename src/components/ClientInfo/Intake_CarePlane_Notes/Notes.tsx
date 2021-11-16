@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
+import { Client, clientApi } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
 import "./intake.css";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
@@ -62,10 +62,6 @@ interface INote {
   visit_id: number;
 }
 
-// interface INotes {
-//   notes: Array<INote>;
-// }
-
 export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
@@ -119,11 +115,12 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
 
   useEffect(() => {
     getClient();
+    getNotes();
   }, [api_key]);
 
   useEffect(() => {
     getNotes();
-  }, [notesData]);
+  }, []);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
@@ -137,6 +134,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
       textareaRef.current.style.height = scrollHeight + "px";
     }
     setModalOpen(isModalOpen);
+    getNotes();
   }, [value, isModalOpen]);
 
   const deleteNote = (deleteNoteData: {
@@ -169,6 +167,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
         doctor_id: visit.doctor_id,
         visit_id: visit.id,
       });
+      setValue("");
     } else {
       console.log("Error write note");
     }
@@ -182,7 +181,6 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
         <div className="intakeInfoText">
           <div className="intakeInfoText_health notesInfoText">
             <div className="intakeInfoText_healthTitle">Notes</div>
-
             {activeBtn === "Preset" ? (
               <div className="notesInfo">
                 {notesData &&
@@ -220,7 +218,10 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
             {activeBtn === "Preset" && (
               <div
                 className="notesBtnAdd"
-                onClick={() => setModalOpen(!isModalOpen)}
+                onClick={() => {
+                  setValue("");
+                  setModalOpen(!isModalOpen);
+                }}
               >
                 <svg
                   id="plus-symbol-button"
