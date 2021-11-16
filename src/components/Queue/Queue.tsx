@@ -1,5 +1,4 @@
 import React, { ReactElement, useState, useEffect } from "react";
-import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { clientApi } from "../../api/clientApi";
 import NavBar from "../NavBar/NavBar";
