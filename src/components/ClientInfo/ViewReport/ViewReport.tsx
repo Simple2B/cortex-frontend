@@ -44,24 +44,59 @@ export default function ViewReport(): ReactElement {
 
   return (
     <div className="containerViewReport">
-      <div className="containerViewReport_dashboards">
-        <div className="containerDashboard">
-          <div className="dashboard">dashboard</div>
-          <div className="title">BETA</div>
+      {activeBtn === "Brainwaves" && (
+        <div className="containerViewReport_dashboards">
+          <div className="containerDashboard">
+            <div className="dashboard">dashboard</div>
+            <div className="title">BETA</div>
+          </div>
+          <div className="containerDashboard">
+            <div className="dashboard">dashboard</div>
+            <div className="title">SMR</div>
+          </div>
+          <div className="containerDashboard">
+            <div className="dashboard">dashboard</div>
+            <div className="title">ALPHA</div>
+          </div>
+          <div className="containerDashboard">
+            <div className="dashboard">dashboard</div>
+            <div className="title">THETA</div>
+          </div>
         </div>
-        <div className="containerDashboard">
-          <div className="dashboard">dashboard</div>
-          <div className="title">SMR</div>
+      )}
+
+      {activeBtn === "HRV" && (
+        <div className="containerViewReport_dashboards">
+          <div className="containerDashboard">
+            <div className="dashboard">dashboard</div>
+            <div className="title">Very Low Frequency</div>
+          </div>
+          <div className="containerDashboard">
+            <div className="dashboard">dashboard</div>
+            <div className="title">Low Frequency</div>
+          </div>
+          <div className="containerDashboard">
+            <div className="dashboard">dashboard</div>
+            <div className="title">High Frequency</div>
+          </div>
         </div>
-        <div className="containerDashboard">
-          <div className="dashboard">dashboard</div>
-          <div className="title">ALPHA</div>
+      )}
+
+      {activeBtn === "Resp/HR/SpO2" && (
+        <div className="containerViewReport_dashboards">
+          <div className="containerDashboard"></div>
+          <div className="containerDashboard">
+            <div className="dashboard">dashboard</div>
+            <div className="title">Heart Rate</div>
+          </div>
+          <div className="containerDashboard"></div>
         </div>
-        <div className="containerDashboard">
-          <div className="dashboard">dashboard</div>
-          <div className="title">THETA</div>
-        </div>
-      </div>
+      )}
+
+      {activeBtn === "Care plan" && (
+        <div className="containerViewReport_dashboards">Care plan</div>
+      )}
+
       <div className="containerViewReport_toggleBtn">
         <div
           onClick={handleChangeBtn}
