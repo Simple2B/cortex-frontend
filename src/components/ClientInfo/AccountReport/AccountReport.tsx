@@ -10,8 +10,6 @@ export function AccountReport(): ReactElement {
 
   const history = useHistory();
 
-  const { dashboardUrl } = useActions();
-
   useEffect(() => {}, [api_key]);
 
   return (

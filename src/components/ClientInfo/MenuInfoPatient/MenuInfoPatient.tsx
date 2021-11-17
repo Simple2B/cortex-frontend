@@ -96,7 +96,8 @@ export default function MenuInfoPatient(): ReactElement {
         <div
           className={
             splitLocation[splitLocation.length - 1] === "report" ||
-            splitLocation[splitLocation.length - 1] === "start"
+            splitLocation[splitLocation.length - 1] === "start" ||
+            splitLocation[splitLocation.length - 1] === "view_report"
               ? "active"
               : "menuInfoPatientItem"
           }

@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { Client, ClientDefault } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
 // import "../Name/name.sass";
@@ -16,6 +16,7 @@ export default function AccountReportStart(): ReactElement {
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
   const [counter, setCounter] = useState<number>(3);
+  const history = useHistory();
 
   // 07:47 -> 467 seconds
 
@@ -135,7 +136,12 @@ export default function AccountReportStart(): ReactElement {
                 <div className="viewReport_content">
                   <div>Assessment Complete</div>
                 </div>
-                <div className="viewReport_btn">View Report</div>
+                <div
+                  className="viewReport_btn"
+                  onClick={() => history.push(`/${api_key}/view_report`)}
+                >
+                  View Report
+                </div>
               </div>
             ) : (
               <div
