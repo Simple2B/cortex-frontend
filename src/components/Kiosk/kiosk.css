@@ -1,134 +1,172 @@
 .kiosk {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	text-align: center;
-	/* height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  /* height: 100vh; */
 }
 
 .kiosk_image {
-	width: 90%;
-	max-width: 497px;
-	height: 36.6vh;
-	margin: 2% auto;
+  width: 90%;
+  max-width: 497px;
+  height: 36.6vh;
+  margin: 2% auto;
 }
 
 .kiosk_image svg {
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .cortex_logo {
-	width: 85%;
-	height: 7vh;
+  width: 85%;
+  height: 7vh;
 }
 
 .cortex_logo svg {
-	width: 100%;
-	height: 100%;
-	margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
 }
 
 .kiosk_welcome_text {
-	width: 100%;
-	max-width: 554px;
-	height: 9vh;
-	font-size: 21px;
-	line-height: 25px;
-	text-align: center;
-	color: #fff;
-	opacity: 0.81;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0 auto;
-	box-shadow: 0px 14px 15px rgba(0, 0, 0, 0.16);
-	background-image: url('/src/images/text-back.svg');
+  width: 100%;
+  max-width: 554px;
+  height: 9vh;
+  font-size: 21px;
+  line-height: 25px;
+  text-align: center;
+  color: #fff;
+  opacity: 0.81;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  box-shadow: 0px 14px 15px rgba(0, 0, 0, 0.16);
+  background-image: url("/src/images/text-back.svg");
 }
 
 .kiosk_form {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 95%;
-	margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 95%;
+  margin: 0 auto;
 }
 
 .kiosk_input {
-	width: 100%;
-	max-width: 448px;
-	height: 84px;
-	border-radius: 42px;
-	background: transparent;
-	border: 2px solid #707070;
-	font-size: 35px;
-	text-align: left;
-	color: #fff;
-	opacity: 0.66;
-	padding-left: 30px;
-	margin-bottom: 5px;
+  width: 100%;
+  max-width: 448px;
+  height: 84px;
+  border-radius: 42px;
+  background: transparent;
+  border: 2px solid #707070;
+  font-size: 35px;
+  text-align: left;
+  color: #fff;
+  opacity: 0.66;
+  padding-left: 30px;
+  margin-bottom: 5px;
 }
 
 .alert_text {
-	color: #0f5132;
-	background-color: #d1e7dd;
-	border-color: #badbcc;
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
 }
 .welcome_text {
-	/* position: absolute; */
-	padding: 1rem 1rem;
-	margin-bottom: 1rem;
-	border: 1px solid transparent;
-	border-radius: 0.25rem;
-	z-index: 1000;
+  /* position: absolute; */
+  padding: 1rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  z-index: 1000;
 
-	/* width: 554px; */
-	height: 96px;
-	font-size: 21px;
-	line-height: 25px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+  /* width: 554px; */
+  height: 96px;
+  font-size: 21px;
+  line-height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .kiosk_button {
-	display: block;
-	width: 100%;
-	max-width: 448px;
-	height: 90px;
-	border-radius: 48px;
-	background: linear-gradient(#00e5ff 0%, #085e67 100%);
-	border: 1px solid #707070;
-	color: white;
-	font-size: 35px;
-	cursor: pointer;
-	margin-top: 15px;
+  display: block;
+  width: 100%;
+  max-width: 448px;
+  height: 90px;
+  border-radius: 48px;
+  background: linear-gradient(#00e5ff 0%, #085e67 100%);
+  border: 1px solid #707070;
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+  margin-top: 15px;
 }
 
 .kiosk_button:hover {
-	background: linear-gradient(#02adc0 0%, #053f46 100%);
+  background: linear-gradient(#02adc0 0%, #053f46 100%);
 }
 
 .kiosk_button:disabled {
-	background: linear-gradient(#bcc7c8 0%, #464c4d 100%);
+  background: linear-gradient(#bcc7c8 0%, #464c4d 100%);
 }
 
 .redirect_registr {
-	margin: 20px;
-	font-size: 21px;
-	line-height: 2vh;
-	text-align: center;
-	color: #fff;
-	opacity: 0.81;
+  margin: 20px;
+  font-size: 21px;
+  line-height: 2vh;
+  text-align: center;
+  color: #fff;
+  opacity: 0.81;
 }
 
 .form_registr {
-	width: 100%;
-	color: #02adc0;
-	font-size: 21px;
-	line-height: 2vh;
-	text-decoration: none;
-	margin-bottom: 1%;
+  width: 100%;
+  color: #02adc0;
+  font-size: 21px;
+  line-height: 2vh;
+  text-decoration: none;
+  margin-bottom: 1%;
+}
+
+@media (max-width: 1024px) {
+  .kiosk_form {
+  }
+
+  .kiosk_input {
+    width: 100%;
+    max-width: 448px;
+    height: 78px;
+    border-radius: 42px;
+    background: transparent;
+    border: 2px solid #707070;
+    font-size: 33px;
+    text-align: left;
+    color: #fff;
+    opacity: 0.66;
+    padding-left: 30px;
+    margin-bottom: 3px;
+  }
+
+  .kiosk_button {
+    display: block;
+    width: 100%;
+    max-width: 448px;
+    height: 78px;
+    border-radius: 48px;
+    background: linear-gradient(#00e5ff 0%, #085e67 100%);
+    border: 1px solid #707070;
+    color: white;
+    font-size: 35px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  .kiosk .cortex_logo {
+    margin: 0 auto;
+  }
 }
 
 /* @media (max-width: 1440px) {
