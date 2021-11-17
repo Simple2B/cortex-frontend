@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Client, ClientDefault } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
@@ -15,7 +15,7 @@ export default function AccountReportStart(): ReactElement {
   const [client, setClient] = useState<Client>(ClientDefault);
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
-  const [counter, setCounter] = useState<number>(467);
+  const [counter, setCounter] = useState<number>(3);
 
   // 07:47 -> 467 seconds
 
@@ -63,17 +63,36 @@ export default function AccountReportStart(): ReactElement {
     return `${minutes}:${padTime(seconds)}`;
   };
 
-  useEffect(() => {
-    let timer: any;
-    if (counter > 0) {
-      timer = setTimeout(() => setCounter((c) => c - 1), 1000);
-    }
+  // const [timerId, setTimerId] = useState<NodeJS.Timeout>();
+  const timerId = useRef<NodeJS.Timeout>();
 
-    return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
-    };
+  const startTimer = () => {
+    console.log("startTimer !");
+
+    const timer = setInterval(() => {
+      console.log("timer", timer);
+      console.log("counter  inside!", counter);
+
+      setCounter((counter) => counter - 1);
+    }, 1000);
+    // setTimerId(timer);
+    timerId.current = timer;
+  };
+
+  console.log("counter !", counter);
+
+  const resetTimer = () => {
+    timerId.current && clearInterval(timerId.current);
+    timerId.current = undefined;
+  };
+
+  useEffect(() => {
+    if (counter < 1) {
+      console.log("timerOver");
+      resetTimer();
+      setCounter(0);
+      return resetTimer();
+    }
   }, [counter]);
 
   return (
@@ -119,7 +138,9 @@ export default function AccountReportStart(): ReactElement {
             <div className="modalWindow_time">
               {counter === 0 ? "Time over" : <>{format(counter)}</>}
             </div>
-            <div className="modalWindow_btnStart">Start</div>
+            <div className="modalWindow_btnStart" onClick={() => startTimer()}>
+              Start
+            </div>
           </div>
         </div>
       </div>
