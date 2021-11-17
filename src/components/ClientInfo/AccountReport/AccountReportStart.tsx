@@ -67,19 +67,11 @@ export default function AccountReportStart(): ReactElement {
   const timerId = useRef<NodeJS.Timeout>();
 
   const startTimer = () => {
-    console.log("startTimer !");
-
     const timer = setInterval(() => {
-      console.log("timer", timer);
-      console.log("counter  inside!", counter);
-
       setCounter((counter) => counter - 1);
     }, 1000);
-    // setTimerId(timer);
     timerId.current = timer;
   };
-
-  console.log("counter !", counter);
 
   const resetTimer = () => {
     timerId.current && clearInterval(timerId.current);
@@ -138,9 +130,21 @@ export default function AccountReportStart(): ReactElement {
             <div className="modalWindow_time">
               {counter === 0 ? "Time over" : <>{format(counter)}</>}
             </div>
-            <div className="modalWindow_btnStart" onClick={() => startTimer()}>
-              Start
-            </div>
+            {counter === 0 ? (
+              <div className="viewReport">
+                <div className="viewReport_content">
+                  <div>Assessment Complete</div>
+                </div>
+                <div className="viewReport_btn">View Report</div>
+              </div>
+            ) : (
+              <div
+                className="modalWindow_btnStart"
+                onClick={() => startTimer()}
+              >
+                Start
+              </div>
+            )}
           </div>
         </div>
       </div>
