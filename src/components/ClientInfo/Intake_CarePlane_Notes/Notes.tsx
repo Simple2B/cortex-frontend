@@ -144,6 +144,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
     visit_id: number;
   }) => {
     clientApi.deleteNote(deleteNoteData);
+    getNotes();
   };
 
   const addNotes = () => {
@@ -181,65 +182,65 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
         <div className="intakeInfoText">
           <div className="intakeInfoText_health notesInfoText">
             <div className="intakeInfoText_healthTitle">Notes</div>
-            {activeBtn === "Preset" ? (
-              <div className="notesInfo">
-                {notesData &&
-                  notesData.map((note) => {
-                    return (
-                      <div className="notesInfo_item">
-                        <div className="title">
-                          {note.notes}{" "}
-                          <sup
-                            className="deleteCross"
-                            title="delete note"
-                            onClick={() => {
-                              deleteNote({
-                                id: note.id,
-                                client_id: note.client_id,
-                                doctor_id: note.doctor_id,
-                                visit_id: note.visit_id,
-                              });
-                              getNotes();
-                            }}
-                          >
-                            x
-                          </sup>
-                        </div>
-
-                        <div className="text"></div>
+            {/* {activeBtn === "Preset" ? ( */}
+            <div className="notesInfo">
+              {notesData &&
+                notesData.map((note) => {
+                  return (
+                    <div className="notesInfo_item">
+                      <div className="title">
+                        {note.notes}{" "}
+                        <sup
+                          className="deleteCross"
+                          title="delete note"
+                          onClick={() => {
+                            deleteNote({
+                              id: note.id,
+                              client_id: note.client_id,
+                              doctor_id: note.doctor_id,
+                              visit_id: note.visit_id,
+                            });
+                            getNotes();
+                          }}
+                        >
+                          x
+                        </sup>
                       </div>
-                    );
-                  })}
-              </div>
-            ) : (
-              <div className="notesInfo">Notes</div>
-            )}
 
-            {activeBtn === "Preset" && (
-              <div
-                className="notesBtnAdd"
-                onClick={() => {
-                  setValue("");
-                  setModalOpen(!isModalOpen);
-                }}
+                      <div className="text"></div>
+                    </div>
+                  );
+                })}
+            </div>
+            {/* ) : (
+              <div className="notesInfo">Notes</div>
+            )} */}
+
+            {/* {activeBtn === "Preset" && ( */}
+            <div
+              className="notesBtnAdd"
+              onClick={() => {
+                setValue("");
+                setModalOpen(!isModalOpen);
+              }}
+            >
+              <svg
+                id="plus-symbol-button"
+                xmlns="http://www.w3.org/2000/svg"
+                width="30.957"
+                height="30.957"
+                viewBox="0 0 30.957 30.957"
               >
-                <svg
-                  id="plus-symbol-button"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="30.957"
-                  height="30.957"
-                  viewBox="0 0 30.957 30.957"
-                >
-                  <path
-                    id="Path_1148"
-                    data-name="Path 1148"
-                    d="M30.957,12.526v5.905a.805.805,0,0,1-.805.805H19.236V30.152a.805.805,0,0,1-.805.805H12.526a.805.805,0,0,1-.805-.805V19.236H.805A.805.805,0,0,1,0,18.431V12.526a.805.805,0,0,1,.805-.805H11.721V.805A.805.805,0,0,1,12.526,0h5.905a.805.805,0,0,1,.805.805V11.721H30.152A.805.805,0,0,1,30.957,12.526Z"
-                    fill="#fff"
-                  />
-                </svg>
-                <div className="text">Add new</div>
-              </div>
-            )}
+                <path
+                  id="Path_1148"
+                  data-name="Path 1148"
+                  d="M30.957,12.526v5.905a.805.805,0,0,1-.805.805H19.236V30.152a.805.805,0,0,1-.805.805H12.526a.805.805,0,0,1-.805-.805V19.236H.805A.805.805,0,0,1,0,18.431V12.526a.805.805,0,0,1,.805-.805H11.721V.805A.805.805,0,0,1,12.526,0h5.905a.805.805,0,0,1,.805.805V11.721H30.152A.805.805,0,0,1,30.957,12.526Z"
+                  fill="#fff"
+                />
+              </svg>
+              <div className="text">Add new</div>
+            </div>
+            {/* )} */}
 
             <div className={isModalOpen ? "modalOpen" : "modal"}>
               <div className="modal-content modalContentNotes">
@@ -272,7 +273,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
                 </div>
               </div>
             </div>
-            <div className="notesBtnToggle">
+            {/* <div className="notesBtnToggle">
               <div
                 onClick={handleChangeBtn}
                 className={activeBtn === "Preset" ? "btnActive" : "btn"}
@@ -285,7 +286,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
               >
                 Manual
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="intakeInfoText_results">
             <div className="results">
