@@ -13,8 +13,11 @@ export default function AccountReportStart(): ReactElement {
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
-
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
+
+  const [counter, setCounter] = useState<number>(467);
+
+  // 07:47 -> 467 seconds
 
   const getClient = async () => {
     try {
@@ -44,6 +47,34 @@ export default function AccountReportStart(): ReactElement {
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
   }, [activeBtnRogueMode]);
+
+  const padTime = (time: number) => {
+    return String(time).length === 1 ? `0${time}` : `${time}`;
+  };
+
+  const format = (time: number) => {
+    // Convert seconds into minutes and take the whole part
+    const minutes = Math.floor(time / 60);
+
+    // Get the seconds left after converting minutes
+    const seconds = time % 60;
+
+    //Return combined values as string in format mm:ss
+    return `${minutes}:${padTime(seconds)}`;
+  };
+
+  useEffect(() => {
+    let timer: any;
+    if (counter > 0) {
+      timer = setTimeout(() => setCounter((c) => c - 1), 1000);
+    }
+
+    return () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [counter]);
 
   return (
     <>
@@ -85,7 +116,9 @@ export default function AccountReportStart(): ReactElement {
       <div className="accountReportStart_modalWindow">
         <div className="modalWindow_content">
           <div className="content">
-            <div className="modalWindow_time">07:47</div>
+            <div className="modalWindow_time">
+              {counter === 0 ? "Time over" : <>{format(counter)}</>}
+            </div>
             <div className="modalWindow_btnStart">Start</div>
           </div>
         </div>
