@@ -10,9 +10,9 @@ export const instance = (): AxiosInstance => {
     baseURL: domain.REACT_DOMAIN,
     headers: {
       Authorization: `Bearer ${token}`,
-      // "Content-Type": "application/json; charset=utf-8",
+      "Content-Type": "application/json; charset=utf-8",
       'Access-Control-Allow-Origin' : '*',
-      // 'Access-Control-Allow-Methods':'GET, PUT, POST, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Methods':'GET, PUT, POST, DELETE, PATCH, OPTIONS',
     },
   });
 };
