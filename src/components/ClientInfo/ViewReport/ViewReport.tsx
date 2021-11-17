@@ -37,8 +37,31 @@ export default function ViewReport(): ReactElement {
   }, [api_key]);
 
   return (
-    <>
-      <div className="accountReportStart_nameContainer_brain"></div>
-    </>
+    <div className="containerViewReport">
+      <div className="containerViewReport_dashboards">
+        <div className="containerDashboard">
+          <div className="dashboard">dashboard</div>
+          <div className="title">BETA</div>
+        </div>
+        <div className="containerDashboard">
+          <div className="dashboard">dashboard</div>
+          <div className="title">SMR</div>
+        </div>
+        <div className="containerDashboard">
+          <div className="dashboard">dashboard</div>
+          <div className="title">ALPHA</div>
+        </div>
+        <div className="containerDashboard">
+          <div className="dashboard">dashboard</div>
+          <div className="title">THETA</div>
+        </div>
+      </div>
+      <div className="containerViewReport_toggleBtn">
+        <div className="btn activeBtn">Brainwaves</div>
+        <div className="btn">HRV</div>
+        <div className="btn">Resp/HR/SpO2</div>
+        <div className="btn">Care plan</div>
+      </div>
+    </div>
   );
 }
