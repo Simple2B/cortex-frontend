@@ -1,9 +1,9 @@
 .kiosk {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
-  /* height: 100vh; */
+  height: 100vh;
 }
 
 .kiosk_image {
@@ -166,6 +166,10 @@
 
   .kiosk .cortex_logo {
     margin: 0 auto;
+  }
+
+  .kiosk_welcome_text {
+    height: 7vh;
   }
 }
 
