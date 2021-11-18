@@ -11,7 +11,7 @@ export default function ViewReport(): ReactElement {
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
 
-  const [activeBtn, setActiveBtn] = useState<string>("Brainwaves");
+  const [activeBtn, setActiveBtn] = useState<string>("Brain");
 
   const getClient = async () => {
     try {
@@ -44,6 +44,13 @@ export default function ViewReport(): ReactElement {
 
   return (
     <div className="containerViewReport">
+      {activeBtn === "Brain" && (
+        <div className="containerViewReport_dashboards">
+          <div className="exampleBrain">exampleBrain</div>
+          <div className="patientBrain">patientBrain</div>
+        </div>
+      )}
+
       {activeBtn === "Brainwaves" && (
         <div className="containerViewReport_dashboards">
           <div className="containerDashboard">
@@ -80,17 +87,14 @@ export default function ViewReport(): ReactElement {
             <div className="title">High Frequency</div>
           </div>
         </div>
-      )}
-
-      {activeBtn === "Resp/HR/SpO2" && (
-        <div className="containerViewReport_dashboards">
-          <div className="containerDashboard"></div>
-          <div className="containerDashboard">
-            <div className="dashboard">dashboard</div>
-            <div className="title">Heart Rate</div>
-          </div>
-          <div className="containerDashboard"></div>
-        </div>
+        // <div className="containerViewReport_dashboards">
+        //   <div className="containerDashboard"></div>
+        //   <div className="containerDashboard">
+        //     <div className="dashboard">dashboard</div>
+        //     <div className="title">Heart Rate</div>
+        //   </div>
+        //   <div className="containerDashboard"></div>
+        // </div>
       )}
 
       {activeBtn === "Care plan" && (
@@ -98,6 +102,12 @@ export default function ViewReport(): ReactElement {
       )}
 
       <div className="containerViewReport_toggleBtn">
+        <div
+          onClick={handleChangeBtn}
+          className={activeBtn == "Brain" ? "activeBtn" : "btn"}
+        >
+          Brain
+        </div>
         <div
           onClick={handleChangeBtn}
           className={activeBtn == "Brainwaves" ? "activeBtn" : "btn"}
@@ -109,12 +119,6 @@ export default function ViewReport(): ReactElement {
           className={activeBtn == "HRV" ? "activeBtn" : "btn"}
         >
           HRV
-        </div>
-        <div
-          onClick={handleChangeBtn}
-          className={activeBtn == "Resp/HR/SpO2" ? "activeBtn" : "btn"}
-        >
-          Resp/HR/SpO2
         </div>
         <div
           onClick={handleChangeBtn}
