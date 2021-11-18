@@ -4,6 +4,11 @@ import { instance } from "../../../api/axiosInstance";
 import { Client, ClientDefault } from "../../../api/clientApi";
 import "./account.css";
 
+interface IVisit {
+  date: string;
+  doctor_name: string;
+}
+
 export default function Account(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
@@ -11,7 +16,9 @@ export default function Account(): ReactElement {
 
   const [client, setClient] = useState<Client>(ClientDefault);
 
-  const [visit, setVisit] = useState<any>();
+  const [visits, setVisits] = useState<Array<IVisit>>([
+    { date: "", doctor_name: "" },
+  ]);
 
   const getClient = async () => {
     try {
@@ -27,13 +34,13 @@ export default function Account(): ReactElement {
     }
   };
 
-  const getHistoryVisit = async () => {
+  const getHistoryVisits = async () => {
     try {
       const response = await instance().get(
         `api/client/visit_history/${api_key}`
       );
       console.log("GET: account visits=> ", response.data);
-      setVisit(response.data);
+      setVisits(response.data);
     } catch (error: any) {
       console.log("GET: error message account visits =>  ", error.message);
       console.log(
@@ -46,10 +53,10 @@ export default function Account(): ReactElement {
 
   useEffect(() => {
     getClient();
-    getHistoryVisit();
+    getHistoryVisits();
   }, [api_key]);
 
-  console.log("account history visits", visit);
+  console.log("account history visits", visits);
 
   return (
     <>
@@ -96,36 +103,40 @@ export default function Account(): ReactElement {
         <div className="visitHistory">
           <div className="clientInfo_tittle">Visit History</div>
           <div className="visitHistory_table">
-            <table>
-              <thead>
+            <table className="table">
+              {/* <thead className="thead">
                 <tr>
-                  <th>Date</th>
-                  <th>Service</th>
-                  <th>Practitioner</th>
+                  <th className="date">Date</th>
+                  <th className="service">Service</th>
+                  <th className="practitioner">Practitioner</th>
                 </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>02/12/2020</td>
-                  <td>Upgrade</td>
-                  <td>Trevor Colm</td>
-                </tr>
-                <tr>
-                  <td>02/12/2020</td>
-                  <td>Upgrade</td>
-                  <td>Trevor Colm</td>
-                </tr>
-                <tr>
-                  <td>02/12/2020</td>
-                  <td>Upgrade</td>
-                  <td>Trevor Colm</td>
-                </tr>
-                <tr>
-                  <td>02/12/2020</td>
-                  <td>Upgrade</td>
-                  <td>Trevor Colm</td>
-                </tr>
-              </tbody>
+              </thead> */}
+              {/* <tbody className="tbody"> */}
+              <tr className="tableHeader">
+                <th className="date">Date</th>
+                <th className="service">Service</th>
+                <th className="practitioner">Practitioner</th>
+              </tr>
+              {visits.map((visit) => {
+                return (
+                  <tr>
+                    <td>{visit.date}</td>
+                    <td>Upgrade</td>
+                    <td>{visit.doctor_name}</td>
+                  </tr>
+                );
+              })}
+
+              {/* {visits.map((visit) => {
+                return (
+                  <tr>
+                    <td>{visit.date}</td>
+                    <td>Upgrade</td>
+                    <td>{visit.doctor_name}</td>
+                  </tr>
+                );
+              })} */}
+              {/* </tbody> */}
             </table>
           </div>
           <div className="visitHistory_inputs">
