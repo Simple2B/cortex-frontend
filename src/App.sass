@@ -12,11 +12,12 @@ body
   margin: 0
   padding: 0
   width: 100%
-  height: 100%
+  height: 100vh
 
   #root, .App
+    background-color: black
     width: 100%
-    height: 100vh
+    height: 100%
     .fullScreenBtn
       position: absolute
       right: 5px
@@ -24,13 +25,11 @@ body
       transition: all .3s ease-in-out
       color: #6e6d6d
       z-index: 50000
-    .FullScreen
-      height: 100vh
+    div
       .containerNavBarMenuInfoPatient, .containerNameOn
         position: relative
         width: 100%
         height: 25vh
-        // padding-bottom: 35px
         border-bottom: solid #707070 3px
       .containerForClientInfo, .nameContainerOn
         width: 100%

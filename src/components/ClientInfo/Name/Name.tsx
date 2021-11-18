@@ -1,16 +1,13 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from "react";
 import "./name.sass";
-import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
-import { ReactComponent as Brain } from '../../../images/brain.svg';
-import Dashboards from '../Dashboard/Dashboards';
-
+import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
+import { ReactComponent as Brain } from "../../../images/brain.svg";
+import Dashboards from "../Dashboard/Dashboards";
 
 export default function Name(): ReactElement {
-
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
   const [activeBtnShortLeg, setActiveBtnShortLeg] = useState("X");
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
-
 
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
@@ -28,42 +25,90 @@ export default function Name(): ReactElement {
     setActiveBtnRogueMode(e.currentTarget.innerHTML);
   };
 
-
   return (
     <>
-      <Dashboards activeBtnRogueMode={activeBtnRogueMode}/>
+      <Dashboards activeBtnRogueMode={activeBtnRogueMode} />
 
       <div className="nameContainer_brain">
-
         <div className="nameContainer_brainContent">
           <div className="brain_btns">
             <div className="btn">
               <div className="btn_Title">Atlas</div>
               <div className="btnContainer">
-                <div onClick={handleChangeBtn} className={activeBtnAtlas == "L" ? "btnActive" : "name_btn"}>L</div>
-                <div onClick={handleChangeBtn} className={activeBtnAtlas == "X" ? "btnActive" : "name_btn"}>X</div>
-                <div onClick={handleChangeBtn} className={activeBtnAtlas == "R" ? "btnActive" : "name_btn"}>R</div>
+                <div
+                  onClick={handleChangeBtn}
+                  className={activeBtnAtlas == "L" ? "btnActive" : "name_btn"}
+                >
+                  L
+                </div>
+                <div
+                  onClick={handleChangeBtn}
+                  className={activeBtnAtlas == "X" ? "btnActive" : "name_btn"}
+                >
+                  X
+                </div>
+                <div
+                  onClick={handleChangeBtn}
+                  className={activeBtnAtlas == "R" ? "btnActive" : "name_btn"}
+                >
+                  R
+                </div>
               </div>
             </div>
             <div className="btn">
               <div className="btn_Title">ShortLeg</div>
               <div className="btnContainer">
-                <div onClick={handleChangeBtnShortLeg} className={activeBtnShortLeg == "L" ? "btnActive" : "name_btn"}>L</div>
-                <div onClick={handleChangeBtnShortLeg} className={activeBtnShortLeg == "X" ? "btnActive" : "name_btn"}>X</div>
-                <div onClick={handleChangeBtnShortLeg} className={activeBtnShortLeg == "R" ? "btnActive" : "name_btn"}>R</div>
+                <div
+                  onClick={handleChangeBtnShortLeg}
+                  className={
+                    activeBtnShortLeg == "L" ? "btnActive" : "name_btn"
+                  }
+                >
+                  L
+                </div>
+                <div
+                  onClick={handleChangeBtnShortLeg}
+                  className={
+                    activeBtnShortLeg == "X" ? "btnActive" : "name_btn"
+                  }
+                >
+                  X
+                </div>
+                <div
+                  onClick={handleChangeBtnShortLeg}
+                  className={
+                    activeBtnShortLeg == "R" ? "btnActive" : "name_btn"
+                  }
+                >
+                  R
+                </div>
               </div>
             </div>
             <div className="btn containerRogueMode">
               <div className="btn_Title titleRogueMode">Rogue Mode</div>
               <div className="btnContainer btnRogueMode">
-                <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "on" ? "btnActive" : "name_btn"}>on</div>
-                <div onClick={handleChangeBtnRogueMode} className={activeBtnRogueMode == "off" ? "btnActive" : "name_btn"}>off</div>
+                <div
+                  onClick={handleChangeBtnRogueMode}
+                  className={
+                    activeBtnRogueMode == "on" ? "btnActive" : "name_btn"
+                  }
+                >
+                  on
+                </div>
+                <div
+                  onClick={handleChangeBtnRogueMode}
+                  className={
+                    activeBtnRogueMode == "off" ? "btnActive" : "name_btn"
+                  }
+                >
+                  off
+                </div>
               </div>
             </div>
           </div>
 
           <div className="brain">
-              <Brain/>
+            <Brain />
           </div>
 
           <div className="intakeInfoText_results">
@@ -82,18 +127,16 @@ export default function Name(): ReactElement {
           </div>
         </div>
         <div className="alphaContainer">
-          <div className="alphaContainer_text">
-            Alpha
-          </div>
+          <div className="alphaContainer_text">Alpha</div>
           <div className="alphaContainer_letters">
             <div className="letter">R</div>
             <div className="letter">L</div>
           </div>
           <div className="alphaContainer_dashboard">
-            <IntakeAlpha/>
+            <IntakeAlpha />
           </div>
         </div>
       </div>
     </>
-  )
-};
+  );
+}
