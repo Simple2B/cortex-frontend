@@ -120,7 +120,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
 
   useEffect(() => {
     getNotes();
-  }, []);
+  }, [api_key]);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
