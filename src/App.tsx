@@ -44,7 +44,12 @@ function App() {
 
   return (
     <div className="App">
-      <Fullscreen enabled={fullScreenMode}>
+      <Fullscreen
+        enabled={fullScreenMode}
+        onChange={(fullScreenMode: boolean) =>
+          setFullScreenMode(fullScreenMode)
+        }
+      >
         <i
           className={
             fullScreenMode
