@@ -34,10 +34,6 @@ function App() {
 
   const [fullScreenMode, setFullScreenMode] = useState<boolean>(false);
 
-  // const fullScreenToggler = () => {
-  //   setFullScreenMode(!fullScreenMode);
-  // };
-
   useEffect(() => {
     setFullScreenMode(fullScreenMode);
   }, [fullScreenMode]);
