@@ -11,6 +11,8 @@ export default function Account(): ReactElement {
 
   const [client, setClient] = useState<Client>(ClientDefault);
 
+  const [visit, setVisit] = useState<any>();
+
   const getClient = async () => {
     try {
       const response = await instance().get(
@@ -25,9 +27,29 @@ export default function Account(): ReactElement {
     }
   };
 
+  const getHistoryVisit = async () => {
+    try {
+      const response = await instance().get(
+        `api/client/visit_history/${api_key}`
+      );
+      console.log("GET: account visits=> ", response.data);
+      setVisit(response.data);
+    } catch (error: any) {
+      console.log("GET: error message account visits =>  ", error.message);
+      console.log(
+        "error response data account visits => ",
+        error.response.data
+      );
+      throw new Error(error.message);
+    }
+  };
+
   useEffect(() => {
     getClient();
+    getHistoryVisit();
   }, [api_key]);
+
+  console.log("account history visits", visit);
 
   return (
     <>
