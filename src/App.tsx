@@ -34,9 +34,9 @@ function App() {
 
   const [fullScreenMode, setFullScreenMode] = useState<boolean>(false);
 
-  const fullScreenToggler = () => {
-    setFullScreenMode(!fullScreenMode);
-  };
+  // const fullScreenToggler = () => {
+  //   setFullScreenMode(!fullScreenMode);
+  // };
 
   useEffect(() => {
     setFullScreenMode(fullScreenMode);
@@ -50,14 +50,17 @@ function App() {
           setFullScreenMode(fullScreenMode)
         }
       >
-        <i
-          className={
-            fullScreenMode
-              ? "fas fa-compress-arrows-alt fullScreenBtn"
-              : "fas fa-expand-arrows-alt fullScreenBtn"
-          }
-          onClick={fullScreenToggler}
-        />
+        {fullScreenMode ? (
+          <i
+            className="fas fa-compress-arrows-alt fullScreenBtn"
+            onClick={() => setFullScreenMode(!fullScreenMode)}
+          />
+        ) : (
+          <i
+            className="fas fa-expand-arrows-alt fullScreenBtn"
+            onClick={() => setFullScreenMode(!fullScreenMode)}
+          />
+        )}
         <Switch>
           <Route exact path="/">
             {loggedIn ? (
