@@ -1,13 +1,14 @@
-import React, { ReactElement, useEffect, useState, useRef } from 'react';
+import React, { ReactElement, useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { Client, ClientDefault } from '../../../api/clientApi';
-import {instance} from '../../../api/axiosInstance';
-import './intake.css';
-import { ReactComponent as IntakeAlpha } from '../../../images/intake_alpha.svg';
-import Dashboards from '../Dashboard/Dashboards';
+import { Client, ClientDefault } from "../../../api/clientApi";
+import { instance } from "../../../api/axiosInstance";
+import "./intake.css";
+import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
+import Dashboards from "../Dashboard/Dashboards";
 
-
-export default function Intake(props: {activeBtnRogueMode: string}): ReactElement {
+export default function Intake(props: {
+  activeBtnRogueMode: string;
+}): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
@@ -16,20 +17,24 @@ export default function Intake(props: {activeBtnRogueMode: string}): ReactElemen
 
   const getClient = async () => {
     try {
-      const response = await instance()
-      .get(`api/client/client_intake/${api_key}`);
+      const response = await instance().get(
+        `api/client/client_intake/${api_key}`
+      );
       console.log("GET: client_intake => ", response.data);
       setClient(response.data);
-      return response.data
+      return response.data;
     } catch (error: any) {
-      console.log('GET: error message get_client_intake =>  ', error.message);
-      console.log('error response data get_client_intake => ', error.response.data);
+      console.log("GET: error message get_client_intake =>  ", error.message);
+      console.log(
+        "error response data get_client_intake => ",
+        error.response.data
+      );
       throw new Error(error.message);
-    };
-  }
+    }
+  };
 
   useEffect(() => {
-    getClient()
+    getClient();
   }, [api_key]);
 
   const handleChangeBtn = (e: any) => {
@@ -56,63 +61,141 @@ export default function Intake(props: {activeBtnRogueMode: string}): ReactElemen
 
   return (
     <>
-      <Dashboards activeBtnRogueMode={props.activeBtnRogueMode}/>
+      <Dashboards activeBtnRogueMode={props.activeBtnRogueMode} />
       <div className="intakeInfo">
         <div className="intakeInfoText">
           <div className="intakeInfoText_health">
             <div className="intakeInfoText_healthTitle">Intake</div>
-            <div className={activeBtn == "Health HX" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
-              <div>Referring: <span className="clientIntakeInfo_item">{client.referring === "" ? " - " : client.referring}</span></div>
-              <div>Condition: {client.conditions.map((condition, index) => (
-                  <span className="clientIntakeInfo_item itemsConditions" key={index}>
+            <div
+              className={
+                activeBtn == "Health HX"
+                  ? "clientIntakeInfo"
+                  : "clientIntakeInfoBlock"
+              }
+            >
+              <div>
+                Referred by:{" "}
+                <span className="clientIntakeInfo_item">
+                  {client.referring === "" ? " - " : client.referring}
+                </span>
+              </div>
+              <div>
+                Condition:{" "}
+                {client.conditions.map((condition, index) => (
+                  <span
+                    className="clientIntakeInfo_item itemsConditions"
+                    key={index}
+                  >
                     {condition},
                   </span>
                 ))}
               </div>
-              <div>Diseases: {client.diseases.map((disease, index) => (
-                  <span className="clientIntakeInfo_item itemsConditions" key={index}>
+              <div>
+                Diseases:{" "}
+                {client.diseases.map((disease, index) => (
+                  <span
+                    className="clientIntakeInfo_item itemsConditions"
+                    key={index}
+                  >
                     {disease},
                   </span>
                 ))}
               </div>
-              <div>Medications: <span className="clientIntakeInfo_item">{client.medications}</span></div>
-              <div>Covid tested: <span className="clientIntakeInfo_item">{client.covidTestedPositive === "null" ? "rather not say" : client.covidTestedPositive}</span></div>
-              <div>Covid vaccine:  <span className="clientIntakeInfo_item">{client.covidVaccine === "null" ? "rather not say" : client.covidVaccine}</span></div>
-              <div>Stressfull level: <span className="clientIntakeInfo_item">{client.stressfulLevel}</span></div>
-              <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild }</span></div>
-              <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild === "" ? " - " : client.relationshipChild}</span></div>
+              <div>
+                Medications:{" "}
+                <span className="clientIntakeInfo_item">
+                  {client.medications}
+                </span>
+              </div>
+              <div>
+                Covid+:{" "}
+                <span className="clientIntakeInfo_item">
+                  {client.covidTestedPositive === "null"
+                    ? "rather not say"
+                    : client.covidTestedPositive}
+                </span>
+              </div>
+              <div>
+                Covid vaccine:{" "}
+                <span className="clientIntakeInfo_item">
+                  {client.covidVaccine === "null"
+                    ? "rather not say"
+                    : client.covidVaccine}
+                </span>
+              </div>
+              <div>
+                Stress level:{" "}
+                <span className="clientIntakeInfo_item">
+                  {client.stressfulLevel}
+                </span>
+              </div>
+              <div>
+                Consent for minor:{" "}
+                <span className="clientIntakeInfo_item">
+                  {client.consentMinorChild}
+                </span>
+              </div>
+              <div>
+                Relationship child:{" "}
+                <span className="clientIntakeInfo_item">
+                  {client.relationshipChild === ""
+                    ? " - "
+                    : client.relationshipChild}
+                </span>
+              </div>
             </div>
 
-            <div className={activeBtn == "Family HX" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
+            <div
+              className={
+                activeBtn == "Family HX"
+                  ? "clientIntakeInfo"
+                  : "clientIntakeInfoBlock"
+              }
+            >
               {/* <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild }</span></div>
               <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild === "" ? " - " : client.relationshipChild}</span></div> */}
             </div>
 
-            <div className={activeBtn == "Consult" ? "clientIntakeInfo" : "clientIntakeInfoBlock"}>
+            <div
+              className={
+                activeBtn == "Consult"
+                  ? "clientIntakeInfo"
+                  : "clientIntakeInfoBlock"
+              }
+            >
               <div className="containerResult">
-                    <textarea
-                      ref={textareaRef}
-                      className="intakeTextAreaResult"
-                      onChange={textAreaChange}
-                      placeholder="Write Result"
-                    >
-                      {value}
-                    </textarea>
-                </div>
+                <textarea
+                  ref={textareaRef}
+                  className="intakeTextAreaResult"
+                  onChange={textAreaChange}
+                  placeholder="Write Result"
+                >
+                  {value}
+                </textarea>
+              </div>
             </div>
 
             <div className="intakeInfoText_healthBtn">
-              <div onClick={handleChangeBtn} className={activeBtn == "Consult" ? "intake_btnActive" : "intake_btn"}>
+              <div
+                onClick={handleChangeBtn}
+                className={
+                  activeBtn == "Consult" ? "intake_btnActive" : "intake_btn"
+                }
+              >
                 Consult
               </div>
-              <div onClick={handleChangeBtn} className={activeBtn == "Health HX" ? "intake_btnActive" : "intake_btn"}>
+              <div
+                onClick={handleChangeBtn}
+                className={
+                  activeBtn == "Health HX" ? "intake_btnActive" : "intake_btn"
+                }
+              >
                 Health HX
               </div>
               {/* <div onClick={handleChangeBtn} className={activeBtn == "Family HX" ? "intake_btnActive" : "intake_btn"}>
                 Family HX
               </div> */}
             </div>
-
           </div>
           <div className="intakeInfoText_results">
             <div className="results">
@@ -130,18 +213,16 @@ export default function Intake(props: {activeBtnRogueMode: string}): ReactElemen
           </div>
         </div>
         <div className="intakeInfoAlpha">
-          <div className="intakeInfoAlpha_text">
-            Alpha
-          </div>
+          <div className="intakeInfoAlpha_text">Alpha</div>
           <div className="intakeInfoAlpha_letters">
             <div className="letter">R</div>
             <div className="letter">L</div>
           </div>
           <div className="intakeInfoAlpha_dashboard">
-            <IntakeAlpha/>
+            <IntakeAlpha />
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }
