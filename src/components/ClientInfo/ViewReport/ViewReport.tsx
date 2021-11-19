@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./ViewReport.sass";
-import DatePicker from "react-datepicker";
 import Select, { components } from "react-select";
 import { ReactComponent as Arrow } from "../../../images/arrow.svg";
 import { Client, ClientDefault } from "../../../api/clientApi";
