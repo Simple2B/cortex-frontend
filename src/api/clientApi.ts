@@ -296,4 +296,32 @@ export const clientApi = {
       throw new Error(error.message);
     }
   },
+
+  filteredHistoryVisits: async (data: {
+    api_key: string;
+    start_time: string;
+    end_time: string;
+  }): Promise<void> => {
+    console.log("filteredHistoryVisits: data =>", data);
+
+    try {
+      const response = await instance().post("api/client/visit_history", data);
+      console.log("POST: response filteredHistoryVisits ", response);
+      console.log(
+        "POST: response filteredHistoryVisits successfully ",
+        response.data
+      );
+      // return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message filteredHistoryVisits => ",
+        new Error(error.message)
+      );
+      console.log(
+        "POST: error data filteredHistoryVisits =>",
+        error.message.data
+      );
+      throw new Error(error.message);
+    }
+  },
 };
