@@ -46,17 +46,20 @@ function App() {
           setFullScreenMode(fullScreenMode)
         }
       >
-        {fullScreenMode ? (
-          <i
-            className="fas fa-compress-arrows-alt fullScreenBtn"
-            onClick={() => setFullScreenMode(!fullScreenMode)}
-          />
-        ) : (
-          <i
-            className="fas fa-expand-arrows-alt fullScreenBtn"
-            onClick={() => setFullScreenMode(!fullScreenMode)}
-          />
-        )}
+        <div className="containerFullScreenBtn">
+          {fullScreenMode ? (
+            <i
+              className="fas fa-compress-arrows-alt fullScreenBtn"
+              onClick={() => setFullScreenMode(!fullScreenMode)}
+            />
+          ) : (
+            <i
+              className="fas fa-expand-arrows-alt fullScreenBtn"
+              onClick={() => setFullScreenMode(!fullScreenMode)}
+            />
+          )}
+        </div>
+
         <Switch>
           <Route exact path="/">
             {loggedIn ? (
