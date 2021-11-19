@@ -160,6 +160,26 @@
   margin-right: 0;
 }
 
+.visitHistory_inputsContainer {
+  width: 356px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.visitHistory_inputContainer {
+  width: 49%;
+}
+
+.datetimeContainer,
+.datetimeContainer input {
+  width: 100%;
+  padding: 5px 0;
+}
+
+.datetimeContainer input[value] {
+  font-size: 18px;
+}
+
 .visitHistory_inputContainer div,
 .visitHistory_inputContainer div input {
   width: 100%;
@@ -261,6 +281,7 @@
   margin-top: 25px;
   background: radial-gradient(#00e5ff, #085e67);
   border-radius: 34px;
+  cursor: pointer;
 }
 
 @media (max-width: 1440px) {

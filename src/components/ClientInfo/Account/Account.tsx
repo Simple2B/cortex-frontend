@@ -20,6 +20,9 @@ export default function Account(): ReactElement {
     { date: "", doctor_name: "" },
   ]);
 
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
+
   const getClient = async () => {
     try {
       const response = await instance().get(
@@ -57,6 +60,14 @@ export default function Account(): ReactElement {
   }, [api_key]);
 
   console.log("account history visits", visits);
+
+  const dataForBack = {
+    api_key: api_key,
+    start_time: startTime,
+    end_time: endTime,
+  };
+
+  console.log("Account history visit dataForBack", dataForBack);
 
   return (
     <>
@@ -140,22 +151,40 @@ export default function Account(): ReactElement {
             </table>
           </div>
           <div className="visitHistory_inputs">
-            <div className="visitHistory_inputContainer">
-              <div className="inputTitle">Start date</div>
-              <div>
-                <input type="datetime-local" placeholder="" />
+            <div className="visitHistory_inputsContainer">
+              <div className="visitHistory_inputContainer">
+                <div className="inputTitle">Start date</div>
+                <div className="datetimeContainer">
+                  <input
+                    type="datetime-local"
+                    placeholder=""
+                    value={startTime}
+                    onChange={() => {
+                      setStartTime(startTime);
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="visitHistory_inputContainer">
+                <div className="inputTitle">End date</div>
+                <div className="datetimeContainer">
+                  <input
+                    type="datetime-local"
+                    placeholder=""
+                    value={endTime}
+                    onChange={() => {
+                      setEndTime(endTime);
+                    }}
+                  />
+                </div>
               </div>
             </div>
-            <div className="visitHistory_inputContainer">
-              <div className="inputTitle">End date</div>
-              <div>
-                <input type="datetime-local" placeholder="" />
-              </div>
-            </div>
+
             {/* <div className="visitHistory_inputContainer">
                 <div className="inputTitle">Remaining</div>
                 <div><input type="text" placeholder=""/></div>
               </div> */}
+            <div className="btnComplete">Get visits</div>
           </div>
         </div>
         <div className="billing">
