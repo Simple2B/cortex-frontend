@@ -311,7 +311,7 @@ export const clientApi = {
         "POST: response filteredHistoryVisits successfully ",
         response.data
       );
-      // return response.data;
+      return response.data;
     } catch (error: any) {
       console.log(
         "POST: error message filteredHistoryVisits => ",

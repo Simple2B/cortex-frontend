@@ -1,10 +1,10 @@
-import React, { ReactElement, useState, useEffect } from 'react'
-import './login.css'
-import { useHistory } from 'react-router-dom';
-import { ReactComponent as Brain } from '../../images/brain.svg'
-import { ReactComponent as Logo } from '../../images/cortex_logo.svg'
-import { useActions } from '../../redux/useActions';
-import { useTypedSelector } from '../../redux/useTypeSelector';
+import React, { ReactElement, useState, useEffect } from "react";
+import "./login.css";
+import { useHistory } from "react-router-dom";
+import { ReactComponent as Brain } from "../../images/brain.svg";
+import { ReactComponent as Logo } from "../../images/cortex_logo.svg";
+import { useActions } from "../../redux/useActions";
+import { useTypedSelector } from "../../redux/useTypeSelector";
 
 export interface ILogin {
   username: string;
@@ -12,7 +12,7 @@ export interface ILogin {
 }
 
 export default function Login(): ReactElement {
-  const [ form, setForm ] = useState<ILogin>({
+  const [form, setForm] = useState<ILogin>({
     username: "",
     password: "",
   });
@@ -36,20 +36,20 @@ export default function Login(): ReactElement {
   };
 
   useEffect(() => {
-    isLogin && history.push('/queue');
+    isLogin && history.push("/queue");
     setForm({
       username: "",
       password: "",
     });
-  }, [isLogin, isLoading, errorMessage])
+  }, [isLogin, isLoading, errorMessage]);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
     login({
-        password: form.password,
-        username: form.username,
-      });
+      password: form.password,
+      username: form.username,
+    });
   };
 
   return (
@@ -60,19 +60,34 @@ export default function Login(): ReactElement {
       <div className="cortex_logo">
         <Logo />
       </div>
-      { errorMessage.length > 0 &&
+      {errorMessage.length > 0 && (
         <div className="alert alert-danger loginAlertError" role="alert">
-            {errorMessage}
+          {errorMessage}
         </div>
-      }
+      )}
       <form className="login_form">
-        <input type="email" value={form.username} onChange={handleEmailChange} className="login_input" placeholder="EMAIL" />
-        <input type="password" value={form.password} onChange={handlePasswordChange} className="login_input" placeholder="PASSWORD" />
-        <button onClick={handleSubmit}
-          disabled={
-          (form.password === "" || form.username === "") && isLoading
-          } className="login_button">LOGIN</button>
+        <input
+          type="email"
+          value={form.username}
+          onChange={handleEmailChange}
+          className="login_input"
+          placeholder="EMAIL"
+        />
+        <input
+          type="password"
+          value={form.password}
+          onChange={handlePasswordChange}
+          className="login_input"
+          placeholder="PASSWORD"
+        />
+        <button
+          onClick={handleSubmit}
+          disabled={(form.password === "" || form.username === "") && isLoading}
+          className="login_button"
+        >
+          LOGIN
+        </button>
       </form>
     </div>
-  )
+  );
 }

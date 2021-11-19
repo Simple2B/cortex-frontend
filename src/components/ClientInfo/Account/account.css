@@ -146,7 +146,7 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 
 .visitHistory_inputContainer {
@@ -163,29 +163,34 @@
 .visitHistory_inputsContainer {
   width: 356px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
 .visitHistory_inputContainer {
-  width: 49%;
+  width: 100%;
 }
 
 .datetimeContainer,
 .datetimeContainer input {
   width: 100%;
+  height: 100%;
+}
+
+.datetimeContainer input {
   padding: 5px 0;
 }
 
 .datetimeContainer input[value] {
   font-size: 18px;
 }
-
-.visitHistory_inputContainer div,
-.visitHistory_inputContainer div input {
-  width: 100%;
+.datetimeContainer .react-datepicker__close-icon {
+  top: 5px;
+  right: 10px;
 }
 
 .visitHistory_inputContainer div input {
+  width: 100%;
   border: #707070 1px solid;
   border-radius: 7px;
   background-color: #191919;
@@ -201,6 +206,12 @@
 .visitHistory_inputContainer .inputTitle {
   font-size: 25px;
   color: #b1b1b1;
+}
+
+.visitHistory_inputsContainer
+  .visitHistory_inputContainer:last-child
+  .inputTitle {
+  margin-top: 7px;
 }
 
 .billing {

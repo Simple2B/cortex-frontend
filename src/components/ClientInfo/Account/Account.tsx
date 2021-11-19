@@ -1,7 +1,9 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { instance } from "../../../api/axiosInstance";
-import { Client, ClientDefault } from "../../../api/clientApi";
+import DatePicker from "react-datepicker";
+import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
+import "react-datepicker/dist/react-datepicker.css";
 import "./account.css";
 
 interface IVisit {
@@ -20,8 +22,8 @@ export default function Account(): ReactElement {
     { date: "", doctor_name: "" },
   ]);
 
-  const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState();
+  const [startTime, setStartTime] = useState<any>(null);
+  const [endTime, setEndTime] = useState<any>(null);
 
   const getClient = async () => {
     try {
@@ -61,13 +63,41 @@ export default function Account(): ReactElement {
 
   console.log("account history visits", visits);
 
-  const dataForBack = {
-    api_key: api_key,
-    start_time: startTime,
-    end_time: endTime,
-  };
+  if (startTime && endTime) {
+    const dateStart = new Date(
+      startTime.toString().replace(/GMT.*$/, "GMT+0000")
+    ).toISOString();
+    const fullStartDate = dateStart
+      .replace("T", " ")
+      .replace(".", " ")
+      .split(" ");
+    const dStart = fullStartDate[0].split("-");
+    const fullTime = fullStartDate[1];
+    const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
 
-  console.log("Account history visit dataForBack", dataForBack);
+    const dateEnd = new Date(
+      endTime.toString().replace(/GMT.*$/, "GMT+0000")
+    ).toISOString();
+    const fullEndDate = dateEnd.replace("T", " ").replace(".", " ").split(" ");
+    const dEnd = fullEndDate[0].split("-");
+    const fullTimeEnd = fullEndDate[1];
+    const endDateToBack = `${dEnd[1]}/${dEnd[2]}/${dEnd[0]}, ${fullTimeEnd}`;
+
+    const dataForBack = {
+      api_key: api_key,
+      start_time: startDateToBack,
+      end_time: endDateToBack,
+    };
+
+    console.log("dataForBack", dataForBack);
+
+    clientApi.filteredHistoryVisits(dataForBack);
+
+    setTimeout(() => {
+      setStartTime(null);
+      setEndTime(null);
+    }, 3000);
+  }
 
   return (
     <>
@@ -115,14 +145,6 @@ export default function Account(): ReactElement {
           <div className="clientInfo_tittle">Visit History</div>
           <div className="visitHistory_table">
             <table className="table">
-              {/* <thead className="thead">
-                <tr>
-                  <th className="date">Date</th>
-                  <th className="service">Service</th>
-                  <th className="practitioner">Practitioner</th>
-                </tr>
-              </thead> */}
-              {/* <tbody className="tbody"> */}
               <tr className="tableHeader">
                 <th className="date">Date</th>
                 <th className="service">Service</th>
@@ -137,17 +159,6 @@ export default function Account(): ReactElement {
                   </tr>
                 );
               })}
-
-              {/* {visits.map((visit) => {
-                return (
-                  <tr>
-                    <td>{visit.date}</td>
-                    <td>Upgrade</td>
-                    <td>{visit.doctor_name}</td>
-                  </tr>
-                );
-              })} */}
-              {/* </tbody> */}
             </table>
           </div>
           <div className="visitHistory_inputs">
@@ -155,36 +166,39 @@ export default function Account(): ReactElement {
               <div className="visitHistory_inputContainer">
                 <div className="inputTitle">Start date</div>
                 <div className="datetimeContainer">
-                  <input
-                    type="datetime-local"
-                    placeholder=""
-                    value={startTime}
-                    onChange={() => {
-                      setStartTime(startTime);
-                    }}
+                  <DatePicker
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    className="dataInput"
+                    selected={startTime}
+                    onChange={(data) => setStartTime(data)}
+                    selectsStart
+                    showTimeInput
+                    startDate={startTime}
+                    endDate={endTime}
+                    isClearable
+                    placeholderText="Start date"
                   />
                 </div>
               </div>
               <div className="visitHistory_inputContainer">
                 <div className="inputTitle">End date</div>
                 <div className="datetimeContainer">
-                  <input
-                    type="datetime-local"
-                    placeholder=""
-                    value={endTime}
-                    onChange={() => {
-                      setEndTime(endTime);
-                    }}
+                  <DatePicker
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    className="dataInput"
+                    selected={endTime}
+                    onChange={(data) => setEndTime(data)}
+                    selectsEnd
+                    showTimeInput
+                    startDate={startTime}
+                    endDate={endTime}
+                    minDate={startTime}
+                    isClearable
+                    placeholderText="End date"
                   />
                 </div>
               </div>
             </div>
-
-            {/* <div className="visitHistory_inputContainer">
-                <div className="inputTitle">Remaining</div>
-                <div><input type="text" placeholder=""/></div>
-              </div> */}
-            <div className="btnComplete">Get visits</div>
           </div>
         </div>
         <div className="billing">
