@@ -22,6 +22,10 @@ export default function Account(): ReactElement {
     { date: "", doctor_name: "" },
   ]);
 
+  const [filterVisits, setFilterVisits] = useState<Array<IVisit>>([
+    { date: "", doctor_name: "" },
+  ]);
+
   const [startTime, setStartTime] = useState<any>(null);
   const [endTime, setEndTime] = useState<any>(null);
 
@@ -30,7 +34,7 @@ export default function Account(): ReactElement {
       const response = await instance().get(
         `api/client/client_intake/${api_key}`
       );
-      console.log("GET: account => ", response.data);
+      // console.log("GET: account => ", response.data);
       setClient(response.data);
     } catch (error: any) {
       console.log("GET: error message account =>  ", error.message);
@@ -44,7 +48,7 @@ export default function Account(): ReactElement {
       const response = await instance().get(
         `api/client/visit_history/${api_key}`
       );
-      console.log("GET: account visits=> ", response.data);
+      // console.log("GET: account visits=> ", response.data);
       setVisits(response.data);
     } catch (error: any) {
       console.log("GET: error message account visits =>  ", error.message);
@@ -61,7 +65,7 @@ export default function Account(): ReactElement {
     getHistoryVisits();
   }, [api_key]);
 
-  console.log("account history visits", visits);
+  // console.log("account history visits", visits);
 
   if (startTime && endTime) {
     const dateStart = new Date(
@@ -89,15 +93,21 @@ export default function Account(): ReactElement {
       end_time: endDateToBack,
     };
 
-    console.log("dataForBack", dataForBack);
-
-    clientApi.filteredHistoryVisits(dataForBack);
+    clientApi.filteredHistoryVisits(dataForBack).then((res) => {
+      const filteredDateVisits = res.map((visit: any) => {
+        const date = visit.date.split("-");
+        return `${date[1]}/${date[2]}/${date[0]}`;
+      });
+      console.log("filteredDateVisits", filteredDateVisits);
+    });
 
     setTimeout(() => {
       setStartTime(null);
       setEndTime(null);
-    }, 3000);
+    }, 5000);
   }
+
+  // console.log("!!! filterVisits => ", filterVisits);
 
   return (
     <>
@@ -150,9 +160,9 @@ export default function Account(): ReactElement {
                 <th className="service">Service</th>
                 <th className="practitioner">Practitioner</th>
               </tr>
-              {visits.map((visit) => {
+              {visits.map((visit, index) => {
                 return (
-                  <tr>
+                  <tr key={index}>
                     <td>{visit.date}</td>
                     <td>Upgrade</td>
                     <td>{visit.doctor_name}</td>

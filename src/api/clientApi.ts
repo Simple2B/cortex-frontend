@@ -1,4 +1,5 @@
 // import { AxiosError, AxiosResponse } from "axios";
+import { useState } from "react";
 import { instance, authInstance } from "./axiosInstance";
 import { IPatientForm, User } from "../types/patientsTypes";
 
@@ -301,9 +302,8 @@ export const clientApi = {
     api_key: string;
     start_time: string;
     end_time: string;
-  }): Promise<void> => {
+  }): Promise<any> => {
     console.log("filteredHistoryVisits: data =>", data);
-
     try {
       const response = await instance().post("api/client/visit_history", data);
       console.log("POST: response filteredHistoryVisits ", response);
