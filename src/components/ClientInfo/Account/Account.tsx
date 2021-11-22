@@ -1,7 +1,9 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { instance } from "../../../api/axiosInstance";
-import { Client, ClientDefault } from "../../../api/clientApi";
+import DatePicker from "react-datepicker";
+import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
+import "react-datepicker/dist/react-datepicker.css";
 import "./account.css";
 
 interface IVisit {
@@ -20,12 +22,19 @@ export default function Account(): ReactElement {
     { date: "", doctor_name: "" },
   ]);
 
+  const [filterVisits, setFilterVisits] = useState<Array<IVisit>>([
+    { date: "", doctor_name: "" },
+  ]);
+
+  const [startTime, setStartTime] = useState<any>(null);
+  const [endTime, setEndTime] = useState<any>(null);
+
   const getClient = async () => {
     try {
       const response = await instance().get(
         `api/client/client_intake/${api_key}`
       );
-      console.log("GET: account => ", response.data);
+      // console.log("GET: account => ", response.data);
       setClient(response.data);
     } catch (error: any) {
       console.log("GET: error message account =>  ", error.message);
@@ -39,7 +48,7 @@ export default function Account(): ReactElement {
       const response = await instance().get(
         `api/client/visit_history/${api_key}`
       );
-      console.log("GET: account visits=> ", response.data);
+      // console.log("GET: account visits=> ", response.data);
       setVisits(response.data);
     } catch (error: any) {
       console.log("GET: error message account visits =>  ", error.message);
@@ -56,7 +65,49 @@ export default function Account(): ReactElement {
     getHistoryVisits();
   }, [api_key]);
 
-  console.log("account history visits", visits);
+  useEffect(() => {
+    if (startTime && endTime) {
+      const dateStart = new Date(
+        startTime.toString().replace(/GMT.*$/, "GMT+0000")
+      ).toISOString();
+      const fullStartDate = dateStart
+        .replace("T", " ")
+        .replace(".", " ")
+        .split(" ");
+      const dStart = fullStartDate[0].split("-");
+      const fullTime = fullStartDate[1];
+      const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
+
+      const dateEnd = new Date(
+        endTime.toString().replace(/GMT.*$/, "GMT+0000")
+      ).toISOString();
+      const fullEndDate = dateEnd
+        .replace("T", " ")
+        .replace(".", " ")
+        .split(" ");
+      const dEnd = fullEndDate[0].split("-");
+      const fullTimeEnd = fullEndDate[1];
+      const endDateToBack = `${dEnd[1]}/${dEnd[2]}/${dEnd[0]}, ${fullTimeEnd}`;
+
+      const filterVisits = async () => {
+        const filteredVisits = await clientApi.filteredHistoryVisits({
+          api_key: api_key,
+          start_time: startDateToBack,
+          end_time: endDateToBack,
+        });
+        console.log("filteredVisits", filteredVisits);
+        setFilterVisits(filteredVisits);
+      };
+      filterVisits();
+
+      // setTimeout(() => {
+      //   setStartTime(null);
+      //   setEndTime(null);
+      // }, 15000);
+    }
+  }, [startTime, endTime]);
+
+  console.log("!!! filterVisits !!!s", filterVisits);
 
   return (
     <>
@@ -104,58 +155,70 @@ export default function Account(): ReactElement {
           <div className="clientInfo_tittle">Visit History</div>
           <div className="visitHistory_table">
             <table className="table">
-              {/* <thead className="thead">
-                <tr>
-                  <th className="date">Date</th>
-                  <th className="service">Service</th>
-                  <th className="practitioner">Practitioner</th>
-                </tr>
-              </thead> */}
-              {/* <tbody className="tbody"> */}
               <tr className="tableHeader">
                 <th className="date">Date</th>
                 <th className="service">Service</th>
                 <th className="practitioner">Practitioner</th>
               </tr>
-              {visits.map((visit) => {
-                return (
-                  <tr>
-                    <td>{visit.date}</td>
-                    <td>Upgrade</td>
-                    <td>{visit.doctor_name}</td>
-                  </tr>
-                );
-              })}
-
-              {/* {visits.map((visit) => {
-                return (
-                  <tr>
-                    <td>{visit.date}</td>
-                    <td>Upgrade</td>
-                    <td>{visit.doctor_name}</td>
-                  </tr>
-                );
-              })} */}
-              {/* </tbody> */}
+              {filterVisits[0].date.length > 0 && startTime && endTime
+                ? filterVisits.map((visit, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{visit.date}</td>
+                        <td>Upgrade</td>
+                        <td>{visit.doctor_name}</td>
+                      </tr>
+                    );
+                  })
+                : visits.map((visit, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{visit.date}</td>
+                        <td>Upgrade</td>
+                        <td>{visit.doctor_name}</td>
+                      </tr>
+                    );
+                  })}
             </table>
           </div>
           <div className="visitHistory_inputs">
-            <div className="visitHistory_inputContainer">
-              <div className="inputTitle">Start date</div>
-              <div>
-                <input type="datetime-local" placeholder="" />
+            <div className="visitHistory_inputsContainer">
+              <div className="visitHistory_inputContainer">
+                <div className="inputTitle">Start date</div>
+                <div className="datetimeContainer">
+                  <DatePicker
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    className="dataInput"
+                    selected={startTime}
+                    onChange={(data) => setStartTime(data)}
+                    selectsStart
+                    showTimeInput
+                    startDate={startTime}
+                    endDate={endTime}
+                    isClearable
+                    placeholderText="Start date"
+                  />
+                </div>
+              </div>
+              <div className="visitHistory_inputContainer">
+                <div className="inputTitle">End date</div>
+                <div className="datetimeContainer">
+                  <DatePicker
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    className="dataInput"
+                    selected={endTime}
+                    onChange={(data) => setEndTime(data)}
+                    selectsEnd
+                    showTimeInput
+                    startDate={startTime}
+                    endDate={endTime}
+                    minDate={startTime}
+                    isClearable
+                    placeholderText="End date"
+                  />
+                </div>
               </div>
             </div>
-            <div className="visitHistory_inputContainer">
-              <div className="inputTitle">End date</div>
-              <div>
-                <input type="datetime-local" placeholder="" />
-              </div>
-            </div>
-            {/* <div className="visitHistory_inputContainer">
-                <div className="inputTitle">Remaining</div>
-                <div><input type="text" placeholder=""/></div>
-              </div> */}
           </div>
         </div>
         <div className="billing">
