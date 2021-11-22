@@ -1,4 +1,5 @@
 // import { AxiosError, AxiosResponse } from "axios";
+import { useState } from "react";
 import { instance, authInstance } from "./axiosInstance";
 import { IPatientForm, User } from "../types/patientsTypes";
 
@@ -293,6 +294,33 @@ export const clientApi = {
         new Error(error.message)
       );
       console.log("POST: error data deleteNote =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
+  filteredHistoryVisits: async (data: {
+    api_key: string;
+    start_time: string;
+    end_time: string;
+  }): Promise<any> => {
+    console.log("filteredHistoryVisits: data =>", data);
+    try {
+      const response = await instance().post("api/client/visit_history", data);
+      console.log("POST: response filteredHistoryVisits ", response);
+      console.log(
+        "POST: response filteredHistoryVisits successfully ",
+        response.data
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message filteredHistoryVisits => ",
+        new Error(error.message)
+      );
+      console.log(
+        "POST: error data filteredHistoryVisits =>",
+        error.message.data
+      );
       throw new Error(error.message);
     }
   },
