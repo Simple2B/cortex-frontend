@@ -1,16 +1,46 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { useActions } from "../../../redux/useActions";
+import { instance } from "../../../api/axiosInstance";
 import "./AccountReport.sass";
+
+interface ITest {
+  date: string;
+  client_name: string;
+  doctor_name: string;
+}
 
 export function AccountReport(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
 
+  const [tests, setClientTests] = useState<Array<ITest>>([
+    { client_name: "", date: "", doctor_name: "" },
+  ]);
+
   const history = useHistory();
 
-  useEffect(() => {}, [api_key]);
+  const getClientTests = async () => {
+    try {
+      const response = await instance().get(`api/test/client_tests/${api_key}`);
+      console.log("GET: getClientTests => ", response.data);
+      setClientTests(response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("GET: error message getClientTests =>  ", error.message);
+      console.log(
+        "error response data getClientTests => ",
+        error.response.data
+      );
+      throw new Error(error.message);
+    }
+  };
+
+  console.log("tests", tests);
+
+  useEffect(() => {
+    getClientTests();
+  }, [api_key]);
 
   return (
     <div className="containerReportAccount">
@@ -21,9 +51,9 @@ export function AccountReport(): ReactElement {
         New Test
       </div>
       <div className="reportAccountTestTime">
-        <div>March 12, 2020</div>
-        <div>February 14, 2020</div>
-        <div>January 13, 2020</div>
+        {tests.map((test, index) => {
+          return <div key={index}>{test.date}</div>;
+        })}
       </div>
     </div>
   );

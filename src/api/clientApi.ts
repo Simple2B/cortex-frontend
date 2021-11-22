@@ -324,4 +324,22 @@ export const clientApi = {
       throw new Error(error.message);
     }
   },
+
+  createTest: async (data: { api_key: string; date: string }): Promise<any> => {
+    console.log("filteredHistoryVisits: data =>", data);
+    try {
+      const response = await instance().post("api/test/test_create", data);
+
+      console.log("POST: response createTest ", response);
+      console.log("POST: response createTest successfully ", response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message createTest => ",
+        new Error(error.message)
+      );
+      console.log("POST: error data createTest =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
 };

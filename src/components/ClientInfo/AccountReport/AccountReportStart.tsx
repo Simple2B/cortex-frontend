@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Client, ClientDefault } from "../../../api/clientApi";
+import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
 // import "../Name/name.sass";
 import "./AccountReport.sass";
@@ -16,6 +16,7 @@ export default function AccountReportStart(): ReactElement {
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
   const [counter, setCounter] = useState<number>(3);
+
   const history = useHistory();
 
   // 07:47 -> 467 seconds
@@ -64,7 +65,6 @@ export default function AccountReportStart(): ReactElement {
     return `${minutes}:${padTime(seconds)}`;
   };
 
-  // const [timerId, setTimerId] = useState<NodeJS.Timeout>();
   const timerId = useRef<NodeJS.Timeout>();
 
   const startTimer = () => {
@@ -87,6 +87,21 @@ export default function AccountReportStart(): ReactElement {
       return resetTimer();
     }
   }, [counter]);
+
+  const createTest = () => {
+    startTimer();
+    const date = new Date().toISOString().replace(/GMT.*$/, "GMT+0000");
+    const fullDate = date.replace("T", " ").replace(".", " ").split(" ");
+    const dStart = fullDate[0].split("-");
+    const fullTime = fullDate[1];
+    const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
+    const startTest = {
+      api_key: api_key,
+      date: startDateToBack,
+    };
+    console.log("start test", startTest);
+    clientApi.createTest(startTest);
+  };
 
   return (
     <>
@@ -144,10 +159,7 @@ export default function AccountReportStart(): ReactElement {
                 </div>
               </div>
             ) : (
-              <div
-                className="modalWindow_btnStart"
-                onClick={() => startTimer()}
-              >
+              <div className="modalWindow_btnStart" onClick={createTest}>
                 Start
               </div>
             )}
