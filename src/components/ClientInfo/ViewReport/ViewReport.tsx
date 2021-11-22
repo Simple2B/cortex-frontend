@@ -1,5 +1,6 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import DatePicker from "react-datepicker";
 import "./ViewReport.sass";
 import Select, { components } from "react-select";
 import { ReactComponent as Arrow } from "../../../images/arrow.svg";
@@ -94,34 +95,29 @@ export default function ViewReport(): ReactElement {
 
   const [activeBtn, setActiveBtn] = useState<string>("Brain");
 
-  const [typeCaraPlan, setTypeCaraPlan] = useState<any>(null);
-  const [typeFrequency, setTypeFrequency] = useState<any>(null);
+  const [typeCaraPlan, setTypeCaraPlan] = useState<string>("");
+  const [typeFrequency, setTypeFrequency] = useState<string>("");
+
   const [typeProgressTest, setTypeProgressTest] = useState<any>(null);
   const [file, setFile] = useState<string | any>(null);
 
-  const optionsCarePlane = [
-    { value: "Care plan option", label: "Care plan option" },
-    { value: "Care plan option", label: "Care plan option" },
-    { value: "Care plan option", label: "Care plan option" },
-    { value: "Care plan option", label: "Care plan option" },
-    { value: "Care plan option", label: "Care plan option" },
-  ];
+  const [date, setDate] = useState<any>(null);
 
-  const optionsFrequency = [
-    { value: "Frequency option", label: "Frequency option" },
-    { value: "Frequency option", label: "Frequency option" },
-    { value: "Frequency option", label: "Frequency option" },
-    { value: "Frequency option", label: "Frequency option" },
-    { value: "Frequency option", label: "Frequency option" },
-  ];
+  // const optionsCarePlane = [
+  //   { value: "Care plan option", label: "Care plan option" },
+  //   { value: "Care plan option", label: "Care plan option" },
+  //   { value: "Care plan option", label: "Care plan option" },
+  //   { value: "Care plan option", label: "Care plan option" },
+  //   { value: "Care plan option", label: "Care plan option" },
+  // ];
 
-  const optionsProgressTest = [
-    { value: "Progress option", label: "Progress option" },
-    { value: "Progress option", label: "Progress option" },
-    { value: "Progress option", label: "Progress option" },
-    { value: "Progress option", label: "Progress option" },
-    { value: "Progress option", label: "Progress option" },
-  ];
+  // const optionsFrequency = [
+  //   { value: "Frequency option", label: "Frequency option" },
+  //   { value: "Frequency option", label: "Frequency option" },
+  //   { value: "Frequency option", label: "Frequency option" },
+  //   { value: "Frequency option", label: "Frequency option" },
+  //   { value: "Frequency option", label: "Frequency option" },
+  // ];
 
   const getClient = async () => {
     try {
@@ -150,18 +146,6 @@ export default function ViewReport(): ReactElement {
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
-  };
-
-  const handleSelectCaraPlan = (type: string) => {
-    setTypeCaraPlan(type);
-  };
-
-  const handleSelectFrequency = (type: string) => {
-    setTypeFrequency(type);
-  };
-
-  const handleSelectProgressTest = (type: string) => {
-    setTypeProgressTest(type);
   };
 
   return (
@@ -217,33 +201,34 @@ export default function ViewReport(): ReactElement {
             <div className="reports">
               <div className="reportsGeneration">
                 <div className="reportTypeSelector">
-                  <Select
-                    components={{ DropdownIndicator }}
-                    placeholder={"Care plan"}
-                    options={optionsCarePlane}
-                    onChange={handleSelectCaraPlan}
-                    styles={customStyles}
+                  <input
+                    type="text"
+                    className="dataInput"
+                    placeholder="Care plan"
                     value={typeCaraPlan}
+                    onChange={(e) => setTypeCaraPlan(e.target.value)}
                   />
                 </div>
                 <div className="reportTypeSelector">
-                  <Select
-                    components={{ DropdownIndicator }}
-                    placeholder={"Frequency"}
-                    options={optionsFrequency}
-                    onChange={handleSelectFrequency}
-                    styles={customStyles}
+                  <input
+                    type="text"
+                    className="dataInput"
+                    placeholder="Frequency"
                     value={typeFrequency}
+                    onChange={(e) => setTypeFrequency(e.target.value)}
                   />
                 </div>
                 <div className="reportTypeSelector">
-                  <Select
-                    components={{ DropdownIndicator }}
-                    placeholder={"Progress Test"}
-                    options={optionsProgressTest}
-                    onChange={handleSelectProgressTest}
-                    styles={customStyles}
-                    value={typeProgressTest}
+                  <DatePicker
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    className="dataInput"
+                    selected={date}
+                    onChange={(data) => setDate(data)}
+                    selectsEnd
+                    showTimeInput
+                    startDate={date}
+                    isClearable
+                    placeholderText="Progress Test"
                   />
                 </div>
               </div>
