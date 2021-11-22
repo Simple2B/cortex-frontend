@@ -7,85 +7,85 @@ import { ReactComponent as Arrow } from "../../../images/arrow.svg";
 import { Client, ClientDefault } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
 
-interface IDataReport {
-  startDate: Date;
-  endDate: Date;
-  type: string;
-}
+// interface IDataReport {
+//   startDate: Date;
+//   endDate: Date;
+//   type: string;
+// }
 
-interface IDataReportToBack {
-  startDate: string;
-  endDate: string;
-  type: string;
-}
+// interface IDataReportToBack {
+//   startDate: string;
+//   endDate: string;
+//   type: string;
+// }
 
-const customStyles: any = {
-  option: (provided: any, state: { isSelected: any }) => ({
-    ...provided,
-    border: "1px solid #fff",
-    background: "black",
-    fontSize: "25px",
-    color: "white",
-    padding: 20,
-  }),
+// const customStyles: any = {
+//   option: (provided: any, state: { isSelected: any }) => ({
+//     ...provided,
+//     border: "1px solid #fff",
+//     background: "black",
+//     fontSize: "25px",
+//     color: "white",
+//     padding: 20,
+//   }),
 
-  control: () => ({
-    position: "relative",
-    width: 290,
-    height: 61,
-  }),
+//   control: () => ({
+//     position: "relative",
+//     width: 290,
+//     height: 61,
+//   }),
 
-  menu: () => ({
-    background: "black",
-    marginTop: "-12px",
-  }),
+//   menu: () => ({
+//     background: "black",
+//     marginTop: "-12px",
+//   }),
 
-  valueContainer: () => ({
-    position: "relative",
-    border: "1px solid #aef7ff",
-    fontSize: "25px",
-    color: "#aef7ff",
-    borderRadius: "10px",
-    zIndex: "100",
-    background: "black",
-  }),
+//   valueContainer: () => ({
+//     position: "relative",
+//     border: "1px solid #aef7ff",
+//     fontSize: "25px",
+//     color: "#aef7ff",
+//     borderRadius: "10px",
+//     zIndex: "100",
+//     background: "black",
+//   }),
 
-  indicatorsContainer: () => ({
-    position: "absolute",
-    zIndex: "1000",
-    top: "20px",
-    right: "20px",
-  }),
+//   indicatorsContainer: () => ({
+//     position: "absolute",
+//     zIndex: "1000",
+//     top: "20px",
+//     right: "20px",
+//   }),
 
-  input: () => ({
-    height: 61,
-    paddingLeft: "20px",
-    lineHeight: "61px",
-  }),
+//   input: () => ({
+//     height: 61,
+//     paddingLeft: "20px",
+//     lineHeight: "61px",
+//   }),
 
-  placeholder: () => ({
-    paddingLeft: "20px",
-    position: "absolute",
-    lineHeight: "61px",
-  }),
+//   placeholder: () => ({
+//     paddingLeft: "20px",
+//     position: "absolute",
+//     lineHeight: "61px",
+//   }),
 
-  singleValue: (provided: any, state: { isDisabled: any }) => {
-    const transition = "opacity 300ms";
-    const color = "#aef7ff";
-    const fontSize = "25px";
-    const paddingLeft = "20px";
+//   singleValue: (provided: any, state: { isDisabled: any }) => {
+//     const transition = "opacity 300ms";
+//     const color = "#aef7ff";
+//     const fontSize = "25px";
+//     const paddingLeft = "20px";
 
-    return { ...provided, transition, color, fontSize, paddingLeft };
-  },
-};
+//     return { ...provided, transition, color, fontSize, paddingLeft };
+//   },
+// };
 
-const DropdownIndicator = (props: any) => {
-  return (
-    <components.DropdownIndicator {...props}>
-      <Arrow />
-    </components.DropdownIndicator>
-  );
-};
+// const DropdownIndicator = (props: any) => {
+//   return (
+//     <components.DropdownIndicator {...props}>
+//       <Arrow />
+//     </components.DropdownIndicator>
+//   );
+// };
 
 export default function ViewReport(): ReactElement {
   const location = useLocation();
