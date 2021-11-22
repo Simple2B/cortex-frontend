@@ -65,49 +65,49 @@ export default function Account(): ReactElement {
     getHistoryVisits();
   }, [api_key]);
 
-  // console.log("account history visits", visits);
+  useEffect(() => {
+    if (startTime && endTime) {
+      const dateStart = new Date(
+        startTime.toString().replace(/GMT.*$/, "GMT+0000")
+      ).toISOString();
+      const fullStartDate = dateStart
+        .replace("T", " ")
+        .replace(".", " ")
+        .split(" ");
+      const dStart = fullStartDate[0].split("-");
+      const fullTime = fullStartDate[1];
+      const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
 
-  if (startTime && endTime) {
-    const dateStart = new Date(
-      startTime.toString().replace(/GMT.*$/, "GMT+0000")
-    ).toISOString();
-    const fullStartDate = dateStart
-      .replace("T", " ")
-      .replace(".", " ")
-      .split(" ");
-    const dStart = fullStartDate[0].split("-");
-    const fullTime = fullStartDate[1];
-    const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
+      const dateEnd = new Date(
+        endTime.toString().replace(/GMT.*$/, "GMT+0000")
+      ).toISOString();
+      const fullEndDate = dateEnd
+        .replace("T", " ")
+        .replace(".", " ")
+        .split(" ");
+      const dEnd = fullEndDate[0].split("-");
+      const fullTimeEnd = fullEndDate[1];
+      const endDateToBack = `${dEnd[1]}/${dEnd[2]}/${dEnd[0]}, ${fullTimeEnd}`;
 
-    const dateEnd = new Date(
-      endTime.toString().replace(/GMT.*$/, "GMT+0000")
-    ).toISOString();
-    const fullEndDate = dateEnd.replace("T", " ").replace(".", " ").split(" ");
-    const dEnd = fullEndDate[0].split("-");
-    const fullTimeEnd = fullEndDate[1];
-    const endDateToBack = `${dEnd[1]}/${dEnd[2]}/${dEnd[0]}, ${fullTimeEnd}`;
+      const filterVisits = async () => {
+        const filteredVisits = await clientApi.filteredHistoryVisits({
+          api_key: api_key,
+          start_time: startDateToBack,
+          end_time: endDateToBack,
+        });
+        console.log("filteredVisits", filteredVisits);
+        setFilterVisits(filteredVisits);
+      };
+      filterVisits();
 
-    const dataForBack = {
-      api_key: api_key,
-      start_time: startDateToBack,
-      end_time: endDateToBack,
-    };
+      // setTimeout(() => {
+      //   setStartTime(null);
+      //   setEndTime(null);
+      // }, 15000);
+    }
+  }, [startTime, endTime]);
 
-    clientApi.filteredHistoryVisits(dataForBack).then((res) => {
-      const filteredDateVisits = res.map((visit: any) => {
-        const date = visit.date.split("-");
-        return `${date[1]}/${date[2]}/${date[0]}`;
-      });
-      console.log("filteredDateVisits", filteredDateVisits);
-    });
-
-    setTimeout(() => {
-      setStartTime(null);
-      setEndTime(null);
-    }, 5000);
-  }
-
-  // console.log("!!! filterVisits => ", filterVisits);
+  console.log("!!! filterVisits !!!s", filterVisits);
 
   return (
     <>
@@ -160,15 +160,25 @@ export default function Account(): ReactElement {
                 <th className="service">Service</th>
                 <th className="practitioner">Practitioner</th>
               </tr>
-              {visits.map((visit, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{visit.date}</td>
-                    <td>Upgrade</td>
-                    <td>{visit.doctor_name}</td>
-                  </tr>
-                );
-              })}
+              {filterVisits[0].date.length > 0 && startTime && endTime
+                ? filterVisits.map((visit, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{visit.date}</td>
+                        <td>Upgrade</td>
+                        <td>{visit.doctor_name}</td>
+                      </tr>
+                    );
+                  })
+                : visits.map((visit, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{visit.date}</td>
+                        <td>Upgrade</td>
+                        <td>{visit.doctor_name}</td>
+                      </tr>
+                    );
+                  })}
             </table>
           </div>
           <div className="visitHistory_inputs">
