@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IPatientForm } from '../../types/patientsTypes';
+import { IPatientForm } from "../../types/patientsTypes";
 
 const defaultPageFormData: IPatientForm = {
   firstName: "",
@@ -23,85 +23,104 @@ const defaultPageFormData: IPatientForm = {
   covidVaccine: null,
   stressfulLevel: "",
   consentMinorChild: false,
-  relationshipChild: "",
-}
+  diagnosticProcedures: false,
+  // relationshipChild: "",
+};
 
-export const useForm = (callback: (values: IPatientForm) => Promise<void>, initialState = defaultPageFormData,  validate: Function) => {
+export const useForm = (
+  callback: (values: IPatientForm) => Promise<void>,
+  initialState = defaultPageFormData,
+  validate: Function
+) => {
+  const [values, setValues] = useState<IPatientForm>(initialState);
+  const [errors, setErrors] = useState<IPatientForm>(initialState);
+  const [submitted, setSubmitted] = useState(false);
 
-    const [values, setValues] = useState<IPatientForm>(initialState);
-    const [errors, setErrors] = useState<IPatientForm>(initialState);
-    const [submitted, setSubmitted] = useState(false);
+  const toggleCheckboxChange = (event: any) => {
+    setValues((values) => ({
+      ...values,
+      checkedOtherCondition: !values.checkedOtherCondition,
+    }));
+  };
 
-    const toggleCheckboxChange = (event: any) => {
-      setValues(values  => ({ ...values, checkedOtherCondition: !values.checkedOtherCondition}));
-    };
+  const toggleCheckboxConsent = (event: any) => {
+    setValues((values) => ({
+      ...values,
+      consentMinorChild: !values.consentMinorChild,
+    }));
+  };
 
-    const toggleCheckboxConsent = (event: any) => {
-      setValues(values  => ({ ...values, consentMinorChild: !values.consentMinorChild}));
-    };
+  const toggleCheckboxDiagnosticProcedures = (event: any) => {
+    setValues((values) => ({
+      ...values,
+      diagnosticProcedures: !values.diagnosticProcedures,
+    }));
+  };
 
-    const onChange = (event: any) => {
+  const onChange = (event: any) => {
+    setValues((values) => ({
+      ...values,
+      [event.target.name]: event.target.value,
+    }));
+  };
 
-      setValues(values  => ({ ...values, [event.target.name]: event.target.value }));
-    };
-
-    const toggleCheckboxFollowing = (label: string) => {
-      const updatedCheckboxes = new Set(values.diseases);
-      if (values.diseases.has(label)) {
-        updatedCheckboxes.delete(label);
-      } else {
-        updatedCheckboxes.add(label);
-      }
-
-      setValues(values  => ({ ...values, "diseases":  updatedCheckboxes}));
-    };
-
-    const toggleCheckbox = (label: string) => {
-      const updatedCheckboxes = new Set(values.conditions);
-      if (values.conditions.has(label)) {
-        updatedCheckboxes.delete(label);
-      } else {
-        updatedCheckboxes.add(label);
-      }
-      setValues(values  => ({ ...values, "conditions":  updatedCheckboxes}));
-
-    };
-
-    const scrollToError = (errorBuffer: IPatientForm) => {
-      const firstErrorNodeName: string = Object.keys(errorBuffer)[0]
-      const firstErrorNode: Element | null = document.querySelector(`[data-error=${firstErrorNodeName}]`)
-      firstErrorNode?.scrollIntoView({behavior: 'smooth', block: 'start'})
+  const toggleCheckboxFollowing = (label: string) => {
+    const updatedCheckboxes = new Set(values.diseases);
+    if (values.diseases.has(label)) {
+      updatedCheckboxes.delete(label);
+    } else {
+      updatedCheckboxes.add(label);
     }
 
-    const onSubmit = (event: any) => {
+    setValues((values) => ({ ...values, diseases: updatedCheckboxes }));
+  };
 
-      event.preventDefault();
+  const toggleCheckbox = (label: string) => {
+    const updatedCheckboxes = new Set(values.conditions);
+    if (values.conditions.has(label)) {
+      updatedCheckboxes.delete(label);
+    } else {
+      updatedCheckboxes.add(label);
+    }
+    setValues((values) => ({ ...values, conditions: updatedCheckboxes }));
+  };
 
-      const errorBuffer = validate(values);
-      console.log({errorBuffer});
+  const scrollToError = (errorBuffer: IPatientForm) => {
+    const firstErrorNodeName: string = Object.keys(errorBuffer)[0];
+    const firstErrorNode: Element | null = document.querySelector(
+      `[data-error=${firstErrorNodeName}]`
+    );
+    firstErrorNode?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
+  const onSubmit = (event: any) => {
+    event.preventDefault();
 
-      if (Object.keys(errorBuffer).length === 0) {
-        callback(values);
-        setSubmitted(true);
-        setValues(initialState);
-        setErrors(initialState);
-      } else {
-        setErrors(errorBuffer);
-        setSubmitted(false);
-        scrollToError(errorBuffer)
-      }
-    };
+    const errorBuffer = validate(values);
+    console.log({ errorBuffer });
 
-    return {
-        toggleCheckboxConsent,
-        toggleCheckboxFollowing,
-        toggleCheckboxChange,
-        toggleCheckbox,
-        onChange,
-        onSubmit,
-        errors,
-        values,
-        submitted,
+    if (Object.keys(errorBuffer).length === 0) {
+      callback(values);
+      setSubmitted(true);
+      setValues(initialState);
+      setErrors(initialState);
+    } else {
+      setErrors(errorBuffer);
+      setSubmitted(false);
+      scrollToError(errorBuffer);
     }
   };
+
+  return {
+    toggleCheckboxConsent,
+    toggleCheckboxDiagnosticProcedures,
+    toggleCheckboxFollowing,
+    toggleCheckboxChange,
+    toggleCheckbox,
+    onChange,
+    onSubmit,
+    errors,
+    values,
+    submitted,
+  };
+};
