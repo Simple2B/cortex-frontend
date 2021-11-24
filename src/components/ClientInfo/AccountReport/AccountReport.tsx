@@ -4,6 +4,7 @@ import { instance } from "../../../api/axiosInstance";
 import "./AccountReport.sass";
 
 interface ITest {
+  id: null | number;
   date: string;
   client_name: string;
   doctor_name: string;
@@ -15,7 +16,7 @@ export function AccountReport(): ReactElement {
   const api_key = splitLocation[splitLocation.length - 2];
 
   const [tests, setClientTests] = useState<Array<ITest>>([
-    { client_name: "", date: "", doctor_name: "" },
+    { id: null, client_name: "", date: "", doctor_name: "" },
   ]);
 
   const history = useHistory();
@@ -53,8 +54,8 @@ export function AccountReport(): ReactElement {
       <div className="reportAccountTestTime">
         {tests.map((test, index) => {
           return (
-            <NavLink to={""}>
-              <div key={index}>{test.date}</div>
+            <NavLink key={index} to={`/${api_key}/view_report_` + `${test.id}`}>
+              <div>{test.date}</div>
             </NavLink>
           );
         })}
