@@ -98,8 +98,8 @@ export default function ViewReport(): ReactElement {
   const [typeCaraPlan, setTypeCaraPlan] = useState<string>("");
   const [typeFrequency, setTypeFrequency] = useState<string>("");
 
-  const [typeProgressTest, setTypeProgressTest] = useState<any>(null);
-  const [file, setFile] = useState<string | any>(null);
+  // const [typeProgressTest, setTypeProgressTest] = useState<any>(null);
+  // const [file, setFile] = useState<string | any>(null);
 
   const [date, setDate] = useState<any>(null);
 
