@@ -178,11 +178,10 @@ function App() {
                   path="/:api_key/start"
                   component={AccountReportStart}
                 />
-
                 <ProtectedRoute
                   {...defaultProtectedRouteProps}
                   exact
-                  path="/:api_key/view_report/:test_id"
+                  path={"/:api_key/view_report_" + ":report_id"}
                   component={ViewReport}
                 />
 

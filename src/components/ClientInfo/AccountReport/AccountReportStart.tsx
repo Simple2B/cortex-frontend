@@ -16,10 +16,20 @@ export default function AccountReportStart(): ReactElement {
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
   const [counter, setCounter] = useState<number>(3);
+  // 07:47 -> 467 seconds
 
   const history = useHistory();
+  const [startTest, setStartTest] = useState({
+    api_key: "",
+    date: "",
+  });
 
-  // 07:47 -> 467 seconds
+  const [test, setTest] = useState({
+    client_id: null,
+    date: "",
+    doctor_id: null,
+    id: null,
+  });
 
   const getClient = async () => {
     try {
@@ -100,7 +110,15 @@ export default function AccountReportStart(): ReactElement {
       date: startDateToBack,
     };
     console.log("start test", startTest);
-    clientApi.createTest(startTest);
+    setStartTest(startTest);
+    // clientApi.createTest(startTest);
+
+    const getCreateTest = async () => {
+      const test = await clientApi.createTest(startTest);
+      console.log("get test", test);
+      setTest(test);
+    };
+    getCreateTest();
   };
 
   return (
@@ -153,7 +171,9 @@ export default function AccountReportStart(): ReactElement {
                 </div>
                 <div
                   className="viewReport_btn"
-                  onClick={() => history.push(`/${api_key}/view_report`)}
+                  onClick={() =>
+                    history.push(`/${api_key}/view_report_` + `${test.id}`)
+                  }
                 >
                   View Report
                 </div>
