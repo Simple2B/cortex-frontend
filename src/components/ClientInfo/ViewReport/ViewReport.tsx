@@ -2,90 +2,15 @@ import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "./ViewReport.sass";
-import Select, { components } from "react-select";
-import { ReactComponent as Arrow } from "../../../images/arrow.svg";
-import { Client, ClientDefault } from "../../../api/clientApi";
+import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
 
-// interface IDataReport {
-//   startDate: Date;
-//   endDate: Date;
-//   type: string;
-// }
-
-// interface IDataReportToBack {
-//   startDate: string;
-//   endDate: string;
-//   type: string;
-// }
-
-// const customStyles: any = {
-//   option: (provided: any, state: { isSelected: any }) => ({
-//     ...provided,
-//     border: "1px solid #fff",
-//     background: "black",
-//     fontSize: "25px",
-//     color: "white",
-//     padding: 20,
-//   }),
-
-//   control: () => ({
-//     position: "relative",
-//     width: 290,
-//     height: 61,
-//   }),
-
-//   menu: () => ({
-//     background: "black",
-//     marginTop: "-12px",
-//   }),
-
-//   valueContainer: () => ({
-//     position: "relative",
-//     border: "1px solid #aef7ff",
-//     fontSize: "25px",
-//     color: "#aef7ff",
-//     borderRadius: "10px",
-//     zIndex: "100",
-//     background: "black",
-//   }),
-
-//   indicatorsContainer: () => ({
-//     position: "absolute",
-//     zIndex: "1000",
-//     top: "20px",
-//     right: "20px",
-//   }),
-
-//   input: () => ({
-//     height: 61,
-//     paddingLeft: "20px",
-//     lineHeight: "61px",
-//   }),
-
-//   placeholder: () => ({
-//     paddingLeft: "20px",
-//     position: "absolute",
-//     lineHeight: "61px",
-//   }),
-
-//   singleValue: (provided: any, state: { isDisabled: any }) => {
-//     const transition = "opacity 300ms";
-//     const color = "#aef7ff";
-//     const fontSize = "25px";
-//     const paddingLeft = "20px";
-
-//     return { ...provided, transition, color, fontSize, paddingLeft };
-//   },
-// };
-
-// const DropdownIndicator = (props: any) => {
-//   return (
-//     <components.DropdownIndicator {...props}>
-//       <Arrow />
-//     </components.DropdownIndicator>
-//   );
-// };
+interface ITest {
+  id: null | number;
+  date: string;
+  client_name: string;
+  doctor_name: string;
+}
 
 export default function ViewReport(): ReactElement {
   const location = useLocation();
@@ -98,26 +23,31 @@ export default function ViewReport(): ReactElement {
   const [typeCaraPlan, setTypeCaraPlan] = useState<string>("");
   const [typeFrequency, setTypeFrequency] = useState<string>("");
 
-  // const [typeProgressTest, setTypeProgressTest] = useState<any>(null);
-  // const [file, setFile] = useState<string | any>(null);
-
   const [date, setDate] = useState<any>(null);
+  const [testWithCarePlan, setTestWithCarePlan] = useState();
 
-  // const optionsCarePlane = [
-  //   { value: "Care plan option", label: "Care plan option" },
-  //   { value: "Care plan option", label: "Care plan option" },
-  //   { value: "Care plan option", label: "Care plan option" },
-  //   { value: "Care plan option", label: "Care plan option" },
-  //   { value: "Care plan option", label: "Care plan option" },
-  // ];
+  const test_id = splitLocation[splitLocation.length - 1].split("_")[2];
+  console.log("test_id", Number(test_id));
 
-  // const optionsFrequency = [
-  //   { value: "Frequency option", label: "Frequency option" },
-  //   { value: "Frequency option", label: "Frequency option" },
-  //   { value: "Frequency option", label: "Frequency option" },
-  //   { value: "Frequency option", label: "Frequency option" },
-  //   { value: "Frequency option", label: "Frequency option" },
-  // ];
+  const [tests, setClientTests] = useState<Array<ITest>>([
+    { id: null, client_name: "", date: "", doctor_name: "" },
+  ]);
+
+  const getClientTests = async () => {
+    try {
+      const response = await instance().get(`api/test/client_tests/${api_key}`);
+      console.log("GET: getClientTests => ", response.data);
+      setClientTests(response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("GET: error message getClientTests =>  ", error.message);
+      console.log(
+        "error response data getClientTests => ",
+        error.response.data
+      );
+      throw new Error(error.message);
+    }
+  };
 
   const getClient = async () => {
     try {
@@ -141,12 +71,34 @@ export default function ViewReport(): ReactElement {
   };
 
   useEffect(() => {
+    getClientTests();
     getClient();
   }, [api_key]);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
   };
+
+  const dataForTest = {
+    test_id: Number(test_id),
+    api_key: api_key,
+    care_plan: typeCaraPlan,
+    frequency: typeFrequency,
+  };
+
+  useEffect(() => {
+    if (typeCaraPlan !== "" && typeFrequency !== "") {
+      const postCarePlanToTest = async () => {
+        const test = await clientApi.putToTestInfoCarePlan(dataForTest);
+        console.log("post care plan to test", test);
+        setTestWithCarePlan(test);
+      };
+      postCarePlanToTest();
+    }
+  }, [typeCaraPlan, typeFrequency]);
+
+  console.log("testWithCarePlan => ", testWithCarePlan);
+  console.log("tests", tests);
 
   return (
     <div className="containerViewReport">

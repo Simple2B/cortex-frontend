@@ -341,4 +341,36 @@ export const clientApi = {
       throw new Error(error.message);
     }
   },
+
+  putToTestInfoCarePlan: async (data: {
+    test_id: number;
+    api_key: string;
+    care_plan: string;
+    frequency: string;
+  }): Promise<any> => {
+    console.log("putToTestInfoCarePlan: data =>", data);
+    try {
+      const response = await instance().post(
+        "api/test/care_plan_frequency",
+        data
+      );
+
+      console.log("POST: response putToTestInfoCarePlan ", response);
+      console.log(
+        "POST: response putToTestInfoCarePlan successfully ",
+        response.data
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message putToTestInfoCarePlan => ",
+        new Error(error.message)
+      );
+      console.log(
+        "POST: error data putToTestInfoCarePlan =>",
+        error.message.data
+      );
+      throw new Error(error.message);
+    }
+  },
 };
