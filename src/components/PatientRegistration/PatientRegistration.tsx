@@ -117,7 +117,7 @@ export default function PatientRegistration(): ReactElement {
       errors.email = "Incorrect email. Must be like email@email.com";
     }
 
-    if (values.conditions.size === 0) {
+    if (values.conditions.size === 0 && values.otherCondition.trim() === "") {
       errors.conditionError = "You must choose some condition";
     }
 

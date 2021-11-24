@@ -113,7 +113,6 @@ export const ClientDefault = {
 export const clientApi = {
   registrationClient: async (data: IPatientForm): Promise<void> => {
     console.log("dataReqPatient =>", data);
-
     try {
       const response = await instance().post(
         "api/client/registration",
