@@ -182,7 +182,7 @@ function App() {
                 <ProtectedRoute
                   {...defaultProtectedRouteProps}
                   exact
-                  path="/:api_key/view_report"
+                  path="/:api_key/view_report/:test_id"
                   component={ViewReport}
                 />
 

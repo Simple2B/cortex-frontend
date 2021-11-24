@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { NavLink, useHistory, useLocation } from "react-router-dom";
 import { instance } from "../../../api/axiosInstance";
 import "./AccountReport.sass";
 
@@ -52,7 +52,11 @@ export function AccountReport(): ReactElement {
       </div>
       <div className="reportAccountTestTime">
         {tests.map((test, index) => {
-          return <div key={index}>{test.date}</div>;
+          return (
+            <NavLink to={""}>
+              <div key={index}>{test.date}</div>
+            </NavLink>
+          );
         })}
       </div>
     </div>

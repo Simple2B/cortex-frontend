@@ -21,7 +21,7 @@ interface IPatientFormForBackend {
   covidTestedPositive: boolean | null;
   covidVaccine: boolean | null;
   stressfulLevel: string;
-  relationshipChild: string;
+  // relationshipChild: string;
 }
 
 const formatRequestData = (
@@ -49,7 +49,7 @@ const formatRequestData = (
     otherCondition: modifyDataForBackend.checkedOtherCondition
       ? modifyDataForBackend.otherCondition
       : "",
-    relationshipChild: modifyDataForBackend.relationshipChild,
+    // relationshipChild: modifyDataForBackend.relationshipChild,
   };
   return params;
 };
@@ -114,22 +114,22 @@ export const clientApi = {
   registrationClient: async (data: IPatientForm): Promise<void> => {
     console.log("dataReqPatient =>", data);
 
-    try {
-      const response = await instance().post(
-        "api/client/registration",
-        formatRequestData(data)
-      );
-      console.log(`!!!!! response registration `, response);
+    // try {
+    //   const response = await instance().post(
+    //     "api/client/registration",
+    //     formatRequestData(data)
+    //   );
+    //   console.log(`!!!!! response registration `, response);
 
-      const res = response.data;
-      console.log(`response received successfully `, res);
-      return res;
-    } catch (error: any) {
-      // place to handle errors and rise custom errors
-      console.log(`POST: error message => ${error.message}`);
-      // console.log("error.response.data) => ", error.response.data);
-      throw new Error(error.message);
-    }
+    //   const res = response.data;
+    //   console.log(`response received successfully `, res);
+    //   return res;
+    // } catch (error: any) {
+    //   // place to handle errors and rise custom errors
+    //   console.log(`POST: error message => ${error.message}`);
+    //   // console.log("error.response.data) => ", error.response.data);
+    //   throw new Error(error.message);
+    // }
   },
 
   addClientToQueue: async (data: IClientQueue): Promise<void> => {
