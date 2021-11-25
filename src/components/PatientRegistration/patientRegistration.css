@@ -272,6 +272,7 @@
 
 .reqFormSubTitleText {
   font-size: 14px;
+  text-align: justify;
 }
 
 .inputRelationshipChild {
@@ -394,6 +395,17 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-size: 19px;
     padding-bottom: 12px;
     padding-left: 8px;
+    text-align: justify;
+  }
+
+  .reqFormTitleText .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    font-size: 22px;
+    color: #02adc0;
+    /* border-bottom: 1px solid #aef7ff; */
   }
 
   .checkboxRegisterForms {
@@ -409,7 +421,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 58%;
     font-size: 16px;
     padding-bottom: 12px;
-    text-align: left;
+    text-align: justify;
   }
 
   .containerCheckboxStressfulLevel {
@@ -454,28 +466,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     text-align: left;
     color: #fff;
     opacity: 0.66;
-    /* padding-left: 30px; */
-    /* margin-bottom: 10px; */
   }
-
-  /* .registration_input_birth {
-    position: relative;
-  }
-
-  .registration_input_birth .input_birth {
-    color: transparent;
-  }
-
-  .registration_input_birth .label_birth {
-    width: 100%;
-    position: absolute;
-    top: 22%;
-    color: #AEF7FF;
-  } */
 
   .registration_input_birth input[type="data"]::placeholder {
     width: 100%;
-    /* position: absolute; */
     top: 22%;
     color: #aef7ff;
     background-color: #00e5ff;
