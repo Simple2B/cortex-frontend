@@ -81,7 +81,8 @@ export interface Client {
   covidVaccine: string;
   stressfulLevel: number;
   consentMinorChild: boolean;
-  relationshipChild: string;
+  diagnosticProcedures: boolean;
+  // relationshipChild: string;
   place_in_queue: number | null;
 }
 
@@ -105,7 +106,8 @@ export const ClientDefault = {
   covidVaccine: "",
   stressfulLevel: 1,
   consentMinorChild: false,
-  relationshipChild: "",
+  diagnosticProcedures: false,
+  // relationshipChild: "",
   place_in_queue: null,
   // visits: null,
 };

@@ -135,12 +135,11 @@ export default function Intake(props: {
                   {client.consentMinorChild}
                 </span>
               </div>
+
               <div>
-                Relationship child:{" "}
+                Consent:{" "}
                 <span className="clientIntakeInfo_item">
-                  {client.relationshipChild === ""
-                    ? " - "
-                    : client.relationshipChild}
+                  {client.diagnosticProcedures}
                 </span>
               </div>
             </div>
