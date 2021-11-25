@@ -483,31 +483,12 @@ export default function PatientRegistration(): ReactElement {
 
           <div className="reqFormTitleText">
             {" "}
-            Consent for a minor child
+            <span className="title">Consent</span>
             <br />
             <div className="reqFormSubTitleText">
-              I authorize Doctor to perform diagnostic procedures and render
-              chiropractic care and adjustments to my minor child.
+              I authorize the doctor to perform diagnostic procedures and render
+              chiropractic care and adjustments
             </div>
-          </div>
-          {/* <div className="reqFormTitleText">Consent</div> */}
-
-          <div className="checkboxRegisterForms checkboxOtherRegisterForms">
-            <label className="container">
-              <input
-                name="consentMinorChild"
-                type="checkbox"
-                // value="I consent"
-                checked={values.consentMinorChild}
-                onChange={toggleCheckboxConsent}
-              />
-              <span className="checkMark"></span>consent
-            </label>
-          </div>
-
-          <div className="reqFormTitleText">
-            I authorize the doctor to perform diagnostic procedures and render
-            chiropractic care and adjustments
           </div>
 
           <div className="checkboxRegisterForms checkboxOtherRegisterForms">
@@ -515,7 +496,6 @@ export default function PatientRegistration(): ReactElement {
               <input
                 name="diagnosticProcedures"
                 type="checkbox"
-                // value="I consent"
                 checked={values.diagnosticProcedures}
                 onChange={toggleCheckboxDiagnosticProcedures}
               />
@@ -523,14 +503,27 @@ export default function PatientRegistration(): ReactElement {
             </label>
           </div>
 
-          {/* <div className="reqFormTitleText">Relationship to child</div>
-          <input
-            name="relationshipChild"
-            value={values.relationshipChild}
-            onChange={onChange}
-            className="inputRelationshipChild"
-            placeholder=""
-          /> */}
+          <div className="reqFormTitleText">
+            {" "}
+            <span className="title">Consent for a minor child</span>
+            <br />
+            <div className="reqFormSubTitleText">
+              I authorize Doctor to perform diagnostic procedures and render
+              chiropractic care and adjustments to my minor child.
+            </div>
+          </div>
+
+          <div className="checkboxRegisterForms checkboxOtherRegisterForms">
+            <label className="container">
+              <input
+                name="consentMinorChild"
+                type="checkbox"
+                checked={values.consentMinorChild}
+                onChange={toggleCheckboxConsent}
+              />
+              <span className="checkMark"></span>consent
+            </label>
+          </div>
 
           <button type="submit" className="registration_button">
             Registration
