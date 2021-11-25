@@ -10,6 +10,8 @@ interface ITest {
   date: string;
   client_name: string;
   doctor_name: string;
+  care_plan: string;
+  frequency: string;
 }
 
 export default function ViewReport(): ReactElement {
@@ -19,6 +21,14 @@ export default function ViewReport(): ReactElement {
   const [client, setClient] = useState<Client>(ClientDefault);
 
   const [activeBtn, setActiveBtn] = useState<string>("Brain");
+  const [test, setTest] = useState<ITest>({
+    id: null,
+    client_name: "",
+    date: "",
+    doctor_name: "",
+    care_plan: "",
+    frequency: "",
+  });
 
   const [typeCaraPlan, setTypeCaraPlan] = useState<string>("");
   const [typeFrequency, setTypeFrequency] = useState<string>("");
@@ -29,25 +39,7 @@ export default function ViewReport(): ReactElement {
   const test_id = splitLocation[splitLocation.length - 1].split("_")[2];
   console.log("test_id", Number(test_id));
 
-  const [tests, setClientTests] = useState<Array<ITest>>([
-    { id: null, client_name: "", date: "", doctor_name: "" },
-  ]);
-
-  const getClientTests = async () => {
-    try {
-      const response = await instance().get(`api/test/client_tests/${api_key}`);
-      console.log("GET: getClientTests => ", response.data);
-      setClientTests(response.data);
-      return response.data;
-    } catch (error: any) {
-      console.log("GET: error message getClientTests =>  ", error.message);
-      console.log(
-        "error response data getClientTests => ",
-        error.response.data
-      );
-      throw new Error(error.message);
-    }
-  };
+  const [carePlanNames, setCarePlanNames] = useState();
 
   const getClient = async () => {
     try {
@@ -70,10 +62,56 @@ export default function ViewReport(): ReactElement {
     }
   };
 
+  const getTest = async () => {
+    try {
+      const response = await instance().get(`api/test/test/${test_id}`);
+      console.log("GET: getTest => ", response.data);
+      setTest(response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("GET: error message getTest =>  ", error.message);
+      console.log("error response data getTest => ", error.response.data);
+      throw new Error(error.message);
+    }
+  };
+
+  // get_care_plan_names
+
+  const getCarePlanNames = async () => {
+    try {
+      const response = await instance().get(`api/test/care_plan_names`);
+      console.log("GET: getCarePlanNames => ", response.data);
+      setCarePlanNames(response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("GET: error message getCarePlanNames =>  ", error.message);
+      console.log(
+        "error response data getCarePlanNames => ",
+        error.response.data
+      );
+      throw new Error(error.message);
+    }
+  };
+
   useEffect(() => {
-    getClientTests();
     getClient();
+    getCarePlanNames();
   }, [api_key]);
+
+  console.log("carePlanNames", carePlanNames);
+
+  useEffect(() => {
+    getTest();
+    setTypeCaraPlan(test.care_plan);
+    setTypeFrequency(test.frequency);
+  }, [test_id]);
+
+  useEffect(() => {
+    if (test.care_plan && test.frequency) {
+      setTypeCaraPlan(test.care_plan);
+      setTypeFrequency(test.frequency);
+    }
+  }, [test]);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
@@ -87,7 +125,7 @@ export default function ViewReport(): ReactElement {
   };
 
   useEffect(() => {
-    if (typeCaraPlan !== "" && typeFrequency !== "") {
+    if (typeCaraPlan !== "" && typeFrequency !== "" && test.care_plan) {
       const postCarePlanToTest = async () => {
         const test = await clientApi.putToTestInfoCarePlan(dataForTest);
         console.log("post care plan to test", test);
@@ -98,7 +136,7 @@ export default function ViewReport(): ReactElement {
   }, [typeCaraPlan, typeFrequency]);
 
   console.log("testWithCarePlan => ", testWithCarePlan);
-  console.log("tests", tests);
+  console.log("test with id=> ", test);
 
   return (
     <div className="containerViewReport">
