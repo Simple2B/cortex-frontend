@@ -75,8 +75,6 @@ export default function ViewReport(): ReactElement {
     }
   };
 
-  // get_care_plan_names
-
   const getCarePlanNames = async () => {
     try {
       const response = await instance().get(`api/test/care_plan_names`);
