@@ -1,15 +1,30 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import "./account.css";
 import { useLocation } from "react-router-dom";
 import { instance } from "../../../api/axiosInstance";
 import DatePicker from "react-datepicker";
+import StripeCheckout from "react-stripe-checkout";
+import brain from "../../../images/brain.svg";
 import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
-import "./account.css";
+import { toast } from "react-toastify";
 
 interface IVisit {
   date: string;
   doctor_name: string;
 }
+toast.configure();
+
+let stripeProm: any = null;
+// let stripePromise: any = null;
+
+const getStripeKey = async () => {
+  const stripeKeys = await instance().get(`api/client/get_secret`);
+  console.log("stripeKeys", stripeKeys);
+  // stripePromise = loadStripe(stripeKeys.data.pk_test);
+  stripeProm = stripeKeys.data.pk_test;
+};
+getStripeKey();
 
 export default function Account(): ReactElement {
   const location = useLocation();
@@ -27,12 +42,14 @@ export default function Account(): ReactElement {
   const [startTime, setStartTime] = useState<any>(null);
   const [endTime, setEndTime] = useState<any>(null);
 
+  const [amount, setAmount] = useState<string>("");
+  const [type, setType] = useState<string>("");
+
   const getClient = async () => {
     try {
       const response = await instance().get(
         `api/client/client_intake/${api_key}`
       );
-      // console.log("GET: account => ", response.data);
       setClient(response.data);
     } catch (error: any) {
       console.log("GET: error message account =>  ", error.message);
@@ -46,7 +63,6 @@ export default function Account(): ReactElement {
       const response = await instance().get(
         `api/client/visit_history/${api_key}`
       );
-      // console.log("GET: account visits=> ", response.data);
       setVisits(response.data);
     } catch (error: any) {
       console.log("GET: error message account visits =>  ", error.message);
@@ -101,15 +117,32 @@ export default function Account(): ReactElement {
         setFilterVisits(filteredVisits);
       };
       filterVisits();
-
-      // setTimeout(() => {
-      //   setStartTime(null);
-      //   setEndTime(null);
-      // }, 15000);
     }
   }, [startTime, endTime]);
 
-  console.log("!!! filterVisits !!!s", filterVisits);
+  const handleToken = (data: any): void => {
+    console.log("data", data);
+
+    const sessionData = {
+      id: data.id,
+      description: type,
+      amount: Number(amount) * 100,
+    };
+
+    try {
+      const stripeSession = async () => {
+        const session = await clientApi.createStripeSession(sessionData);
+        console.log("session", session);
+        // if (session === "ok") {
+        toast("Success!");
+        // }
+      };
+      stripeSession();
+    } catch (e: any) {
+      console.log("error message", e.message);
+      // toast(e.message);
+    }
+  };
 
   return (
     <>
@@ -248,14 +281,35 @@ export default function Account(): ReactElement {
               </tbody>
               <tfoot>
                 <tr>
-                  <td>
+                  <td colSpan={3}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Type</div>
                       <div>
-                        <input type="text" placeholder="" />
+                        <input
+                          type="text"
+                          placeholder=""
+                          value={type}
+                          onChange={(e) => setType(e.target.value)}
+                        />
                       </div>
                     </div>
                   </td>
+                </tr>
+                <tr>
+                  <td colSpan={2}>
+                    <div className="visitHistory_inputContainer">
+                      <div className="inputTitle">Amount</div>
+                      <div>
+                        <input
+                          type="number"
+                          placeholder=""
+                          value={amount}
+                          onChange={(e) => setAmount(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </td>
+
                   <td>
                     <div className="visitHistory_inputContainer">
                       {stripeProm && (
@@ -308,40 +362,12 @@ export default function Account(): ReactElement {
               </tfoot>
             </table>
           </div>
-          <div className="billing_form">
-            <div className="billing_formInputs">
-              <div className="billing_formBlock">
-                <div className="billing_formBlockInput">
-                  <div className="titleAccount">Card number</div>
-                  <div className="inputContainer">
-                    <input type="" placeholder="" />
-                  </div>
-                </div>
-                <div className="billing_formBlockInput">
-                  <div className="titleAccount">Expiration</div>
-                  <div className="inputContainer">
-                    <input type="" placeholder="" />
-                  </div>
-                </div>
-              </div>
 
-              <div className="billing_formBlock">
-                <div className="billing_formBlockInput">
-                  <div className="titleAccount">CVV</div>
-                  <div className="inputContainer">
-                    <input type="" placeholder="" />
-                  </div>
-                </div>
-                <div className="billing_formBlockInput">
-                  <div className="titleAccount">Zip</div>
-                  <div className="inputContainer">
-                    <input type="" placeholder="" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="btnComplete">COMPLETE</div>
-          </div>
+          {/* {stripeProm && (
+            <Elements stripe={stripeProm}>
+              <CheckoutForm />
+            </Elements>
+          )} */}
         </div>
       </div>
     </>
