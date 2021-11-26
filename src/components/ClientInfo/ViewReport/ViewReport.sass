@@ -43,6 +43,7 @@
             font-size: 26px
             color: #A2A2A2
         .activeBtn
+            cursor: pointer
             width: 238px
             height: 63px
             display: flex
@@ -52,6 +53,25 @@
             border-radius: 38px
             font-size: 26px
             color: #FFF
+
+.dataInput
+    width: 321px
+    height: 61px
+    border-radius: 10px
+    background: #000
+    border: 1px solid #aef7ff
+    text-align: left
+    font-size: 25px
+    padding-left: 20px
+    cursor: pointer
+    &::placeholder
+        color: #aef7ff
+    &[value]
+        color: #aef7ff
+.react-datepicker__close-icon::after
+    cursor: pointer
+    margin-right: 20px
+
 
 
 @media (max-width: 768px)

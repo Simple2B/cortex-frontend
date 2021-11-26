@@ -21,7 +21,7 @@ interface IPatientFormForBackend {
   covidTestedPositive: boolean | null;
   covidVaccine: boolean | null;
   stressfulLevel: string;
-  relationshipChild: string;
+  // relationshipChild: string;
 }
 
 const formatRequestData = (
@@ -49,7 +49,7 @@ const formatRequestData = (
     otherCondition: modifyDataForBackend.checkedOtherCondition
       ? modifyDataForBackend.otherCondition
       : "",
-    relationshipChild: modifyDataForBackend.relationshipChild,
+    // relationshipChild: modifyDataForBackend.relationshipChild,
   };
   return params;
 };
@@ -81,7 +81,8 @@ export interface Client {
   covidVaccine: string;
   stressfulLevel: number;
   consentMinorChild: boolean;
-  relationshipChild: string;
+  diagnosticProcedures: boolean;
+  // relationshipChild: string;
   place_in_queue: number | null;
 }
 
@@ -105,7 +106,8 @@ export const ClientDefault = {
   covidVaccine: "",
   stressfulLevel: 1,
   consentMinorChild: false,
-  relationshipChild: "",
+  diagnosticProcedures: false,
+  // relationshipChild: "",
   place_in_queue: null,
   // visits: null,
 };
@@ -113,7 +115,6 @@ export const ClientDefault = {
 export const clientApi = {
   registrationClient: async (data: IPatientForm): Promise<void> => {
     console.log("dataReqPatient =>", data);
-
     try {
       const response = await instance().post(
         "api/client/registration",
@@ -319,6 +320,56 @@ export const clientApi = {
       );
       console.log(
         "POST: error data filteredHistoryVisits =>",
+        error.message.data
+      );
+      throw new Error(error.message);
+    }
+  },
+
+  createTest: async (data: { api_key: string; date: string }): Promise<any> => {
+    console.log("filteredHistoryVisits: data =>", data);
+    try {
+      const response = await instance().post("api/test/test_create", data);
+
+      console.log("POST: response createTest ", response);
+      console.log("POST: response createTest successfully ", response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message createTest => ",
+        new Error(error.message)
+      );
+      console.log("POST: error data createTest =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
+  putToTestInfoCarePlan: async (data: {
+    test_id: number;
+    api_key: string;
+    care_plan: string;
+    frequency: string;
+  }): Promise<any> => {
+    console.log("putToTestInfoCarePlan: data =>", data);
+    try {
+      const response = await instance().post(
+        "api/test/care_plan_frequency",
+        data
+      );
+
+      console.log("POST: response putToTestInfoCarePlan ", response);
+      console.log(
+        "POST: response putToTestInfoCarePlan successfully ",
+        response.data
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message putToTestInfoCarePlan => ",
+        new Error(error.message)
+      );
+      console.log(
+        "POST: error data putToTestInfoCarePlan =>",
         error.message.data
       );
       throw new Error(error.message);

@@ -41,7 +41,7 @@ export default function Intake(props: {
     setActiveBtn(e.currentTarget.innerHTML);
   };
 
-  console.log("client intake", client);
+  console.log("client intake", client.consentMinorChild);
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   // The value of the textarea
@@ -132,15 +132,14 @@ export default function Intake(props: {
               <div>
                 Consent for minor:{" "}
                 <span className="clientIntakeInfo_item">
-                  {client.consentMinorChild}
+                  {client.consentMinorChild ? "yes" : "no"}
                 </span>
               </div>
+
               <div>
-                Relationship child:{" "}
+                Consent:{" "}
                 <span className="clientIntakeInfo_item">
-                  {client.relationshipChild === ""
-                    ? " - "
-                    : client.relationshipChild}
+                  {client.diagnosticProcedures ? "yes" : "no"}
                 </span>
               </div>
             </div>
@@ -151,10 +150,7 @@ export default function Intake(props: {
                   ? "clientIntakeInfo"
                   : "clientIntakeInfoBlock"
               }
-            >
-              {/* <div>Consent minor child: <span className="clientIntakeInfo_item">{client.consentMinorChild }</span></div>
-              <div>Relationship child: <span className="clientIntakeInfo_item">{client.relationshipChild === "" ? " - " : client.relationshipChild}</span></div> */}
-            </div>
+            ></div>
 
             <div
               className={

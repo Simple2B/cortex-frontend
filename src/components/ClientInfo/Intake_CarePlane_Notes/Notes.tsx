@@ -39,7 +39,8 @@ export const ClientNotes = {
   covidVaccine: "",
   stressfulLevel: 1,
   consentMinorChild: false,
-  relationshipChild: "",
+  diagnosticProcedures: false,
+  // relationshipChild: "",
   place_in_queue: null,
   visits: [
     {

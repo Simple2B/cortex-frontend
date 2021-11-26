@@ -149,19 +149,16 @@ export default function Dashboards(props: {
           <div
             className="coherenceBtn_complete"
             onClick={() => {
-              clientApi.completeClient({
-                api_key: api_key,
-                rougue_mode: false,
-                place_in_queue: client.place_in_queue,
-              });
-              history.push("/queue");
-              window.location.reload();
-              console.log("client", {
-                api_key: api_key,
-                rougue_mode: false,
-                first_name: client.firstName,
-                place_in_queue: client.place_in_queue,
-              });
+              const completeVisitClient = async () => {
+                const completeVisit = await clientApi.completeClient({
+                  api_key: api_key,
+                  rougue_mode: false,
+                  place_in_queue: client.place_in_queue,
+                });
+                console.log("completeVisit", completeVisit);
+                history.push("/queue");
+              };
+              completeVisitClient();
             }}
           >
             Complete
