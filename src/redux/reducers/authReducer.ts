@@ -3,7 +3,6 @@ import { AuthAction, AuthActionTypes, IAuthState } from "../../types/authTypes";
 let initialState: IAuthState = (function () {
   const tokenInfo = localStorage.getItem("token");
   if (tokenInfo) {
-
     return {
       loggedIn: true,
       errorMessage: "",
@@ -36,7 +35,7 @@ export const authReducer = (
         isLoading: true,
       };
     case AuthActionTypes.LOGOUT:
-      return { ...state, loggedIn: false, errorMessage: "",};
+      return { ...state, loggedIn: false, errorMessage: "" };
     case AuthActionTypes.CHECK_TOKEN:
       return { ...state, loggedIn: true };
     default:
