@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { Redirect } from 'react-router';
+import { Redirect } from "react-router";
 import "./patientRegistration.css";
 import Checkbox from "./Checkbox";
 import { IPatientForm } from "../../types/patientsTypes";
@@ -82,11 +82,11 @@ const initialState: IPatientForm = {
   covidVaccine: null,
   stressfulLevel: "",
   consentMinorChild: false,
-  relationshipChild: "",
+  // relationshipChild: "",
+  diagnosticProcedures: false,
 };
 
 export default function PatientRegistration(): ReactElement {
-
   const validateForm = (values: IPatientForm) => {
     let errors: Partial<IPatientForm> = {};
     if (values.firstName.trim() === "") {
@@ -117,13 +117,13 @@ export default function PatientRegistration(): ReactElement {
       errors.email = "Incorrect email. Must be like email@email.com";
     }
 
-    if (values.conditions.size === 0) {
+    if (values.conditions.size === 0 && values.otherCondition.trim() === "") {
       errors.conditionError = "You must choose some condition";
     }
 
-    if (values.diseases.size === 0) {
-      errors.diseaseError = "You must choose some disease";
-    }
+    // if (values.diseases.size === 0) {
+    //   errors.diseaseError = "You must choose some disease";
+    // }
 
     if (values.medications.trim() === "") {
       errors.medications = "Medications must not be empty";
@@ -162,10 +162,10 @@ export default function PatientRegistration(): ReactElement {
     toggleCheckboxFollowing,
     toggleCheckboxChange,
     toggleCheckboxConsent,
+    toggleCheckboxDiagnosticProcedures,
     onChange,
     onSubmit,
   } = useForm(clientApi.registrationClient, initialState, validateForm);
-
 
   const createCheckboxes = () => itemsConditions.map(createCheckbox);
 
@@ -174,12 +174,15 @@ export default function PatientRegistration(): ReactElement {
 
   const stressLevel = Array.from({ length: 10 }, (_, i) => i + 1);
 
-
   if (submitted) {
-    return <Redirect push to={{
-      pathname: '/kiosk',
-    }}
-    />
+    return (
+      <Redirect
+        push
+        to={{
+          pathname: "/kiosk",
+        }}
+      />
+    );
   }
 
   return (
@@ -190,7 +193,6 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input" data-error={"firstName"}>
             <input
               name="firstName"
-
               value={values.firstName}
               onChange={onChange}
               className={`registration_input_data ${
@@ -229,10 +231,7 @@ export default function PatientRegistration(): ReactElement {
               type="date"
             />
             <div className="label_birth">
-              { values.birthday ?
-                 values.birthday :
-                 'Date of birth'
-              }
+              {values.birthday ? values.birthday : "Date of birth"}
             </div>
           </div>
 
@@ -310,9 +309,13 @@ export default function PatientRegistration(): ReactElement {
             }`}
           >
             Check any conditions you CURRENTLY have{" "}
-            <span  className="asterisk">*</span>
+            <span className="asterisk">*</span>
             {errors.conditionError && (
-              <div data-error={"conditionError"} className="invalid-feedback" style={{ display: "block" }}>
+              <div
+                data-error={"conditionError"}
+                className="invalid-feedback"
+                style={{ display: "block" }}
+              >
                 {errors.conditionError}
               </div>
             )}
@@ -339,25 +342,25 @@ export default function PatientRegistration(): ReactElement {
           </div>
 
           <div
-          data-error={"diseaseError"}
-            className={`reqFormTitleText ${
-              errors.diseaseError && "is-invalid"
-            }`}
+            // data-error={"diseaseError"}
+            className="reqFormTitleText"
+            // className={`reqFormTitleText ${
+            //   errors.diseaseError && "is-invalid"
+            // }`}
           >
-            Have you ever had any of the following?{" "}
-            <span className="asterisk">*</span>
-            {errors.diseaseError && (
+            Have you ever had any of the following?
+            {/* <span className="asterisk">*</span> */}
+            {/* {errors.diseaseError && (
               <div className="invalid-feedback" style={{ display: "block" }}>
                 {errors.diseaseError}
               </div>
-            )}
+            )} */}
           </div>
           {createCheckboxesFollowing()}
 
-          <div className="registration_input"  data-error={"medications"}>
+          <div className="registration_input" data-error={"medications"}>
             <input
               name="medications"
-
               value={values.medications}
               onChange={onChange}
               className={`registration_input_data ${
@@ -380,7 +383,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Yes
               <input
-                value={'yes'}
+                value={"yes"}
                 name="covidTestedPositive"
                 type="radio"
                 onChange={onChange}
@@ -390,7 +393,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               No
               <input
-                value={'no'}
+                value={"no"}
                 name="covidTestedPositive"
                 type="radio"
                 onChange={onChange}
@@ -400,7 +403,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Rather not say
               <input
-                value={'null'}
+                value={"null"}
                 name="covidTestedPositive"
                 type="radio"
                 onChange={onChange}
@@ -418,7 +421,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Yes
               <input
-                value={'yes'}
+                value={"yes"}
                 name="covidVaccine"
                 type="radio"
                 onChange={onChange}
@@ -428,7 +431,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               No
               <input
-                value={'no'}
+                value={"no"}
                 name="covidVaccine"
                 type="radio"
                 onChange={onChange}
@@ -438,7 +441,7 @@ export default function PatientRegistration(): ReactElement {
             <label className="containerRadiobutton">
               Rather not say
               <input
-                value={'null'}
+                value={"null"}
                 name="covidVaccine"
                 type="radio"
                 onChange={onChange}
@@ -451,7 +454,9 @@ export default function PatientRegistration(): ReactElement {
             On a scale of 1-10 how stressfull has your life been?{" "}
             <span className="asterisk">*</span>
           </div>
-          <div data-error={"stressfulLevel"} className="reqFormTitleText error">{errors.stressfulLevel}</div>
+          <div data-error={"stressfulLevel"} className="reqFormTitleText error">
+            {errors.stressfulLevel}
+          </div>
 
           <div className="containerCheckboxStressfulLevel">
             <div className="reqFormSubTitleText">Not stressful</div>
@@ -478,36 +483,47 @@ export default function PatientRegistration(): ReactElement {
 
           <div className="reqFormTitleText">
             {" "}
-            Consent for a minor child
+            <span className="title">Consent</span>
+            <br />
+            <div className="reqFormSubTitleText">
+              I authorize the doctor to perform diagnostic procedures and render
+              chiropractic care and adjustments
+            </div>
+          </div>
+
+          <div className="checkboxRegisterForms checkboxOtherRegisterForms">
+            <label className="container">
+              <input
+                name="diagnosticProcedures"
+                type="checkbox"
+                checked={values.diagnosticProcedures}
+                onChange={toggleCheckboxDiagnosticProcedures}
+              />
+              <span className="checkMark"></span>I consent
+            </label>
+          </div>
+
+          <div className="reqFormTitleText">
+            {" "}
+            <span className="title">Consent for a minor child</span>
             <br />
             <div className="reqFormSubTitleText">
               I authorize Doctor to perform diagnostic procedures and render
               chiropractic care and adjustments to my minor child.
             </div>
           </div>
-          <div className="reqFormTitleText">Consent</div>
 
           <div className="checkboxRegisterForms checkboxOtherRegisterForms">
             <label className="container">
               <input
                 name="consentMinorChild"
                 type="checkbox"
-                // value="I consent"
                 checked={values.consentMinorChild}
                 onChange={toggleCheckboxConsent}
               />
-              <span className="checkMark"></span>I consent
+              <span className="checkMark"></span>consent
             </label>
           </div>
-
-          <div className="reqFormTitleText">Relationship to child</div>
-          <input
-            name="relationshipChild"
-            value={values.relationshipChild}
-            onChange={onChange}
-            className="inputRelationshipChild"
-            placeholder=""
-          />
 
           <button type="submit" className="registration_button">
             Registration

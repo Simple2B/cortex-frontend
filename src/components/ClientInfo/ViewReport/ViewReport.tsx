@@ -1,90 +1,18 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
+import DatePicker from "react-datepicker";
 import "./ViewReport.sass";
-import Select, { components } from "react-select";
-import { ReactComponent as Arrow } from "../../../images/arrow.svg";
-import { Client, ClientDefault } from "../../../api/clientApi";
+import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
 
-interface IDataReport {
-  startDate: Date;
-  endDate: Date;
-  type: string;
+interface ITest {
+  id: null | number;
+  date: string;
+  client_name: string;
+  doctor_name: string;
+  care_plan: string;
+  frequency: string;
 }
-
-interface IDataReportToBack {
-  startDate: string;
-  endDate: string;
-  type: string;
-}
-
-const customStyles: any = {
-  option: (provided: any, state: { isSelected: any }) => ({
-    ...provided,
-    border: "1px solid #fff",
-    background: "black",
-    fontSize: "25px",
-    color: "white",
-    padding: 20,
-  }),
-
-  control: () => ({
-    position: "relative",
-    width: 290,
-    height: 61,
-  }),
-
-  menu: () => ({
-    background: "black",
-    marginTop: "-12px",
-  }),
-
-  valueContainer: () => ({
-    position: "relative",
-    border: "1px solid #aef7ff",
-    fontSize: "25px",
-    color: "#aef7ff",
-    borderRadius: "10px",
-    zIndex: "100",
-    background: "black",
-  }),
-
-  indicatorsContainer: () => ({
-    position: "absolute",
-    zIndex: "1000",
-    top: "20px",
-    right: "20px",
-  }),
-
-  input: () => ({
-    height: 61,
-    paddingLeft: "20px",
-    lineHeight: "61px",
-  }),
-
-  placeholder: () => ({
-    paddingLeft: "20px",
-    position: "absolute",
-    lineHeight: "61px",
-  }),
-
-  singleValue: (provided: any, state: { isDisabled: any }) => {
-    const transition = "opacity 300ms";
-    const color = "#aef7ff";
-    const fontSize = "25px";
-    const paddingLeft = "20px";
-
-    return { ...provided, transition, color, fontSize, paddingLeft };
-  },
-};
-
-const DropdownIndicator = (props: any) => {
-  return (
-    <components.DropdownIndicator {...props}>
-      <Arrow />
-    </components.DropdownIndicator>
-  );
-};
 
 export default function ViewReport(): ReactElement {
   const location = useLocation();
@@ -93,35 +21,25 @@ export default function ViewReport(): ReactElement {
   const [client, setClient] = useState<Client>(ClientDefault);
 
   const [activeBtn, setActiveBtn] = useState<string>("Brain");
+  const [test, setTest] = useState<ITest>({
+    id: null,
+    client_name: "",
+    date: "",
+    doctor_name: "",
+    care_plan: "",
+    frequency: "",
+  });
 
-  const [typeCaraPlan, setTypeCaraPlan] = useState<any>(null);
-  const [typeFrequency, setTypeFrequency] = useState<any>(null);
-  const [typeProgressTest, setTypeProgressTest] = useState<any>(null);
-  const [file, setFile] = useState<string | any>(null);
+  const [typeCaraPlan, setTypeCaraPlan] = useState<string>("");
+  const [typeFrequency, setTypeFrequency] = useState<string>("");
 
-  const optionsCarePlane = [
-    { value: "Care plan option", label: "Care plan option" },
-    { value: "Care plan option", label: "Care plan option" },
-    { value: "Care plan option", label: "Care plan option" },
-    { value: "Care plan option", label: "Care plan option" },
-    { value: "Care plan option", label: "Care plan option" },
-  ];
+  const [date, setDate] = useState<any>(null);
+  const [testWithCarePlan, setTestWithCarePlan] = useState();
 
-  const optionsFrequency = [
-    { value: "Frequency option", label: "Frequency option" },
-    { value: "Frequency option", label: "Frequency option" },
-    { value: "Frequency option", label: "Frequency option" },
-    { value: "Frequency option", label: "Frequency option" },
-    { value: "Frequency option", label: "Frequency option" },
-  ];
+  const test_id = splitLocation[splitLocation.length - 1].split("_")[2];
+  console.log("test_id", Number(test_id));
 
-  const optionsProgressTest = [
-    { value: "Progress option", label: "Progress option" },
-    { value: "Progress option", label: "Progress option" },
-    { value: "Progress option", label: "Progress option" },
-    { value: "Progress option", label: "Progress option" },
-    { value: "Progress option", label: "Progress option" },
-  ];
+  const [carePlanNames, setCarePlanNames] = useState();
 
   const getClient = async () => {
     try {
@@ -144,25 +62,79 @@ export default function ViewReport(): ReactElement {
     }
   };
 
+  const getTest = async () => {
+    try {
+      const response = await instance().get(`api/test/test/${test_id}`);
+      console.log("GET: getTest => ", response.data);
+      setTest(response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("GET: error message getTest =>  ", error.message);
+      console.log("error response data getTest => ", error.response.data);
+      throw new Error(error.message);
+    }
+  };
+
+  const getCarePlanNames = async () => {
+    try {
+      const response = await instance().get(`api/test/care_plan_names`);
+      console.log("GET: getCarePlanNames => ", response.data);
+      setCarePlanNames(response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("GET: error message getCarePlanNames =>  ", error.message);
+      console.log(
+        "error response data getCarePlanNames => ",
+        error.response.data
+      );
+      throw new Error(error.message);
+    }
+  };
+
   useEffect(() => {
     getClient();
+    getCarePlanNames();
   }, [api_key]);
+
+  console.log("carePlanNames", carePlanNames);
+
+  useEffect(() => {
+    getTest();
+    setTypeCaraPlan(test.care_plan);
+    setTypeFrequency(test.frequency);
+  }, [test_id]);
+
+  useEffect(() => {
+    if (test.care_plan && test.frequency) {
+      setTypeCaraPlan(test.care_plan);
+      setTypeFrequency(test.frequency);
+    }
+  }, [test]);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
   };
 
-  const handleSelectCaraPlan = (type: string) => {
-    setTypeCaraPlan(type);
+  const dataForTest = {
+    test_id: Number(test_id),
+    api_key: api_key,
+    care_plan: typeCaraPlan,
+    frequency: typeFrequency,
   };
 
-  const handleSelectFrequency = (type: string) => {
-    setTypeFrequency(type);
-  };
+  useEffect(() => {
+    if (typeCaraPlan !== "" && typeFrequency !== "" && test.care_plan) {
+      const postCarePlanToTest = async () => {
+        const test = await clientApi.putToTestInfoCarePlan(dataForTest);
+        console.log("post care plan to test", test);
+        setTestWithCarePlan(test);
+      };
+      postCarePlanToTest();
+    }
+  }, [typeCaraPlan, typeFrequency]);
 
-  const handleSelectProgressTest = (type: string) => {
-    setTypeProgressTest(type);
-  };
+  console.log("testWithCarePlan => ", testWithCarePlan);
+  console.log("test with id=> ", test);
 
   return (
     <div className="containerViewReport">
@@ -217,33 +189,34 @@ export default function ViewReport(): ReactElement {
             <div className="reports">
               <div className="reportsGeneration">
                 <div className="reportTypeSelector">
-                  <Select
-                    components={{ DropdownIndicator }}
-                    placeholder={"Care plan"}
-                    options={optionsCarePlane}
-                    onChange={handleSelectCaraPlan}
-                    styles={customStyles}
+                  <input
+                    type="text"
+                    className="dataInput"
+                    placeholder="Care plan"
                     value={typeCaraPlan}
+                    onChange={(e) => setTypeCaraPlan(e.target.value)}
                   />
                 </div>
                 <div className="reportTypeSelector">
-                  <Select
-                    components={{ DropdownIndicator }}
-                    placeholder={"Frequency"}
-                    options={optionsFrequency}
-                    onChange={handleSelectFrequency}
-                    styles={customStyles}
+                  <input
+                    type="text"
+                    className="dataInput"
+                    placeholder="Frequency"
                     value={typeFrequency}
+                    onChange={(e) => setTypeFrequency(e.target.value)}
                   />
                 </div>
                 <div className="reportTypeSelector">
-                  <Select
-                    components={{ DropdownIndicator }}
-                    placeholder={"Progress Test"}
-                    options={optionsProgressTest}
-                    onChange={handleSelectProgressTest}
-                    styles={customStyles}
-                    value={typeProgressTest}
+                  <DatePicker
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    className="dataInput"
+                    selected={date}
+                    onChange={(data) => setDate(data)}
+                    selectsEnd
+                    showTimeInput
+                    startDate={date}
+                    isClearable
+                    placeholderText="Progress Test"
                   />
                 </div>
               </div>

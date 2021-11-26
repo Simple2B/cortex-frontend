@@ -42,20 +42,24 @@ function App() {
     <div className="App">
       <Fullscreen
         enabled={fullScreenMode}
-        onChange={(fullScreenMode: boolean) =>
-          setFullScreenMode(fullScreenMode)
-        }
+        onChange={(fullScreenMode: boolean) => {
+          setFullScreenMode(fullScreenMode);
+        }}
       >
         <div className="containerFullScreenBtn">
           {fullScreenMode ? (
             <i
               className="fas fa-compress-arrows-alt fullScreenBtn"
-              onClick={() => setFullScreenMode(!fullScreenMode)}
+              onClick={() => {
+                setFullScreenMode(!fullScreenMode);
+              }}
             />
           ) : (
             <i
               className="fas fa-expand-arrows-alt fullScreenBtn"
-              onClick={() => setFullScreenMode(!fullScreenMode)}
+              onClick={() => {
+                setFullScreenMode(!fullScreenMode);
+              }}
             />
           )}
         </div>
@@ -178,11 +182,10 @@ function App() {
                   path="/:api_key/start"
                   component={AccountReportStart}
                 />
-
                 <ProtectedRoute
                   {...defaultProtectedRouteProps}
                   exact
-                  path="/:api_key/view_report"
+                  path={"/:api_key/view_report_" + ":report_id"}
                   component={ViewReport}
                 />
 

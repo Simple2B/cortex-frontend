@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Client, ClientDefault } from "../../../api/clientApi";
+import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
 // import "../Name/name.sass";
 import "./AccountReport.sass";
@@ -16,9 +16,20 @@ export default function AccountReportStart(): ReactElement {
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
   const [counter, setCounter] = useState<number>(3);
-  const history = useHistory();
-
   // 07:47 -> 467 seconds
+
+  const history = useHistory();
+  const [startTest, setStartTest] = useState({
+    api_key: "",
+    date: "",
+  });
+
+  const [test, setTest] = useState({
+    client_id: null,
+    date: "",
+    doctor_id: null,
+    id: null,
+  });
 
   const getClient = async () => {
     try {
@@ -64,7 +75,6 @@ export default function AccountReportStart(): ReactElement {
     return `${minutes}:${padTime(seconds)}`;
   };
 
-  // const [timerId, setTimerId] = useState<NodeJS.Timeout>();
   const timerId = useRef<NodeJS.Timeout>();
 
   const startTimer = () => {
@@ -87,6 +97,29 @@ export default function AccountReportStart(): ReactElement {
       return resetTimer();
     }
   }, [counter]);
+
+  const createTest = () => {
+    startTimer();
+    const date = new Date().toISOString().replace(/GMT.*$/, "GMT+0000");
+    const fullDate = date.replace("T", " ").replace(".", " ").split(" ");
+    const dStart = fullDate[0].split("-");
+    const fullTime = fullDate[1];
+    const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
+    const startTest = {
+      api_key: api_key,
+      date: startDateToBack,
+    };
+    console.log("start test", startTest);
+    setStartTest(startTest);
+    // clientApi.createTest(startTest);
+
+    const getCreateTest = async () => {
+      const test = await clientApi.createTest(startTest);
+      console.log("get test", test);
+      setTest(test);
+    };
+    getCreateTest();
+  };
 
   return (
     <>
@@ -138,16 +171,15 @@ export default function AccountReportStart(): ReactElement {
                 </div>
                 <div
                   className="viewReport_btn"
-                  onClick={() => history.push(`/${api_key}/view_report`)}
+                  onClick={() =>
+                    history.push(`/${api_key}/view_report_` + `${test.id}`)
+                  }
                 >
                   View Report
                 </div>
               </div>
             ) : (
-              <div
-                className="modalWindow_btnStart"
-                onClick={() => startTimer()}
-              >
+              <div className="modalWindow_btnStart" onClick={createTest}>
                 Start
               </div>
             )}
