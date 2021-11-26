@@ -22,9 +22,7 @@ export default function Account(): ReactElement {
     { date: "", doctor_name: "" },
   ]);
 
-  const [filterVisits, setFilterVisits] = useState<Array<IVisit>>([
-    { date: "", doctor_name: "" },
-  ]);
+  const [filterVisits, setFilterVisits] = useState<Array<IVisit>>();
 
   const [startTime, setStartTime] = useState<any>(null);
   const [endTime, setEndTime] = useState<any>(null);
@@ -89,12 +87,16 @@ export default function Account(): ReactElement {
       const fullTimeEnd = fullEndDate[1];
       const endDateToBack = `${dEnd[1]}/${dEnd[2]}/${dEnd[0]}, ${fullTimeEnd}`;
 
+      const dataToFilterVisit = {
+        api_key: api_key,
+        start_time: startDateToBack,
+        end_time: endDateToBack,
+      };
+
       const filterVisits = async () => {
-        const filteredVisits = await clientApi.filteredHistoryVisits({
-          api_key: api_key,
-          start_time: startDateToBack,
-          end_time: endDateToBack,
-        });
+        const filteredVisits = await clientApi.filteredHistoryVisits(
+          dataToFilterVisit
+        );
         console.log("filteredVisits", filteredVisits);
         setFilterVisits(filteredVisits);
       };
@@ -160,7 +162,7 @@ export default function Account(): ReactElement {
                 <th className="service">Service</th>
                 <th className="practitioner">Practitioner</th>
               </tr>
-              {filterVisits[0].date.length > 0 && startTime && endTime
+              {filterVisits && startTime && endTime
                 ? filterVisits.map((visit, index) => {
                     return (
                       <tr key={index}>
