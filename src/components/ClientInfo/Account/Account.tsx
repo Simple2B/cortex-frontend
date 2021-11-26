@@ -258,18 +258,50 @@ export default function Account(): ReactElement {
                   </td>
                   <td>
                     <div className="visitHistory_inputContainer">
-                      <div className="inputTitle">Number</div>
-                      <div>
-                        <input type="text" placeholder="" />
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="visitHistory_inputContainer">
-                      <div className="inputTitle">Amount</div>
-                      <div>
-                        <input type="text" placeholder="" />
-                      </div>
+                      {stripeProm && (
+                        <StripeCheckout
+                          name="medical services"
+                          // description="Payment for medical services"
+                          image={brain}
+                          ComponentClass="div"
+                          panelLabel="Pay"
+                          amount={Number(amount) * 100} // cents
+                          currency="USD"
+                          stripeKey={stripeProm}
+                          // shippingAddress
+                          // billingAddress={false}
+                          // locale="zh"
+                          email="info@vidhub.co"
+                          // Note: Enabling either address option will give the user the ability to
+                          // fill out both. Addresses are sent as a second parameter in the token callback.
+
+                          // Note: enabling both zipCode checks and billing or shipping address will
+                          // cause zipCheck to be pulled from billing address (set to shipping if none provided).
+                          // zipCode={false}
+                          // alipay // accept Alipay (default false)
+                          // bitcoin // accept Bitcoins (default false)
+                          // allowRememberMe // "Remember Me" option (default true)
+                          token={handleToken}
+                          // opened={this.onOpened} // called when the checkout popin is opened (no IE6/7)
+                          // closed={this.onClosed} // called when the checkout popin is closed (no IE6/7)
+                          // Note: `reconfigureOnUpdate` should be set to true IFF, for some reason
+                          // you are using multiple stripe keys
+                          reconfigureOnUpdate={false}
+                          // Note: you can change the event to `onTouchTap`, `onClick`, `onTouchStart`
+                          // useful if you're using React-Tap-Event-Plugin
+                          // triggerEvent="onTouchTap"
+                        >
+                          {amount === "" ? (
+                            <button disabled className="completeBtnDisable">
+                              Pay with Card
+                            </button>
+                          ) : (
+                            <button className="completeBtn">
+                              Pay with Card
+                            </button>
+                          )}
+                        </StripeCheckout>
+                      )}
                     </div>
                   </td>
                 </tr>
