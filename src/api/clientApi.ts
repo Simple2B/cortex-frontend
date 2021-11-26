@@ -375,4 +375,35 @@ export const clientApi = {
       throw new Error(error.message);
     }
   },
+
+  createStripeSession: async (data: {
+    id: string;
+    description: string;
+    amount: number;
+  }): Promise<any> => {
+    console.log("createStripeSession: data =>", data);
+    try {
+      const response = await instance().post(
+        "api/client/create_stripe_session",
+        data
+      );
+
+      console.log("POST: response createStripeSession ", response);
+      console.log(
+        "POST: response createStripeSession successfully ",
+        response.data
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message createStripeSession => ",
+        new Error(error.message)
+      );
+      console.log(
+        "POST: error data createStripeSession =>",
+        error.message.data
+      );
+      throw new Error(error.message);
+    }
+  },
 };
