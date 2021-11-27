@@ -312,7 +312,7 @@ export default function Account(): ReactElement {
 
                   <td>
                     <div className="visitHistory_inputContainer">
-                      {stripeProm && (
+                      {stripeProm ? (
                         <StripeCheckout
                           name="medical services"
                           // description="Payment for medical services"
@@ -355,6 +355,10 @@ export default function Account(): ReactElement {
                             </button>
                           )}
                         </StripeCheckout>
+                      ) : (
+                        <button disabled className="completeBtnDisable">
+                          Pay with Card
+                        </button>
                       )}
                     </div>
                   </td>
