@@ -13,18 +13,6 @@ interface IVisit {
   date: string;
   doctor_name: string;
 }
-toast.configure();
-
-let stripeProm: any = null;
-// let stripePromise: any = null;
-
-const getStripeKey = async () => {
-  const stripeKeys = await instance().get(`api/client/get_secret`);
-  console.log("stripeKeys", stripeKeys);
-  // stripePromise = loadStripe(stripeKeys.data.pk_test);
-  stripeProm = stripeKeys.data.pk_test;
-};
-getStripeKey();
 
 export default function Account(): ReactElement {
   const location = useLocation();
@@ -44,6 +32,8 @@ export default function Account(): ReactElement {
 
   const [amount, setAmount] = useState<string>("");
   const [type, setType] = useState<string>("");
+
+  const [stripeKey, setStripeKey] = useState<string>("");
 
   const getClient = async () => {
     try {
@@ -72,6 +62,15 @@ export default function Account(): ReactElement {
       );
       throw new Error(error.message);
     }
+  };
+
+  toast.configure();
+
+  const getStripeKey = async () => {
+    const stripeKeys = await instance().get(`api/client/get_secret`);
+    console.log("stripeKeys", stripeKeys);
+    // stripePromise = loadStripe(stripeKeys.data.pk_test);
+    setStripeKey(stripeKeys.data.pk_test);
   };
 
   useEffect(() => {
@@ -119,6 +118,10 @@ export default function Account(): ReactElement {
       filterVisits();
     }
   }, [startTime, endTime]);
+
+  useEffect(() => {
+    getStripeKey();
+  }, []);
 
   const handleToken = (data: any): void => {
     console.log("data", data);
@@ -312,7 +315,8 @@ export default function Account(): ReactElement {
 
                   <td>
                     <div className="visitHistory_inputContainer">
-                      {stripeProm ? (
+                      {/* {stripeProm ? ( */}
+                      {stripeKey !== "" && (
                         <StripeCheckout
                           name="medical services"
                           // description="Payment for medical services"
@@ -321,7 +325,7 @@ export default function Account(): ReactElement {
                           panelLabel="Pay"
                           amount={Number(amount) * 100} // cents
                           currency="USD"
-                          stripeKey={stripeProm}
+                          stripeKey={stripeKey}
                           // shippingAddress
                           // billingAddress={false}
                           // locale="zh"
@@ -355,11 +359,13 @@ export default function Account(): ReactElement {
                             </button>
                           )}
                         </StripeCheckout>
-                      ) : (
+                      )}
+
+                      {/* ) : (
                         <button disabled className="completeBtnDisable">
                           Pay with Card
                         </button>
-                      )}
+                      )} */}
                     </div>
                   </td>
                 </tr>
