@@ -9,6 +9,8 @@ import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
 
+toast.configure();
+
 interface IVisit {
   date: string;
   doctor_name: string;
@@ -63,8 +65,6 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
-
-  toast.configure();
 
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
@@ -315,7 +315,6 @@ export default function Account(): ReactElement {
 
                   <td>
                     <div className="visitHistory_inputContainer">
-                      {/* {stripeProm ? ( */}
                       {stripeKey !== "" && (
                         <StripeCheckout
                           name="medical services"
@@ -326,28 +325,9 @@ export default function Account(): ReactElement {
                           amount={Number(amount) * 100} // cents
                           currency="USD"
                           stripeKey={stripeKey}
-                          // shippingAddress
-                          // billingAddress={false}
-                          // locale="zh"
                           email="info@vidhub.co"
-                          // Note: Enabling either address option will give the user the ability to
-                          // fill out both. Addresses are sent as a second parameter in the token callback.
-
-                          // Note: enabling both zipCode checks and billing or shipping address will
-                          // cause zipCheck to be pulled from billing address (set to shipping if none provided).
-                          // zipCode={false}
-                          // alipay // accept Alipay (default false)
-                          // bitcoin // accept Bitcoins (default false)
-                          // allowRememberMe // "Remember Me" option (default true)
                           token={handleToken}
-                          // opened={this.onOpened} // called when the checkout popin is opened (no IE6/7)
-                          // closed={this.onClosed} // called when the checkout popin is closed (no IE6/7)
-                          // Note: `reconfigureOnUpdate` should be set to true IFF, for some reason
-                          // you are using multiple stripe keys
                           reconfigureOnUpdate={false}
-                          // Note: you can change the event to `onTouchTap`, `onClick`, `onTouchStart`
-                          // useful if you're using React-Tap-Event-Plugin
-                          // triggerEvent="onTouchTap"
                         >
                           {amount === "" ? (
                             <button disabled className="completeBtnDisable">
@@ -360,24 +340,12 @@ export default function Account(): ReactElement {
                           )}
                         </StripeCheckout>
                       )}
-
-                      {/* ) : (
-                        <button disabled className="completeBtnDisable">
-                          Pay with Card
-                        </button>
-                      )} */}
                     </div>
                   </td>
                 </tr>
               </tfoot>
             </table>
           </div>
-
-          {/* {stripeProm && (
-            <Elements stripe={stripeProm}>
-              <CheckoutForm />
-            </Elements>
-          )} */}
         </div>
       </div>
     </>
