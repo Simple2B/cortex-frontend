@@ -1,10 +1,13 @@
 import React, { ReactElement, useEffect, useState } from "react";
+import "./account.css";
 import { useLocation } from "react-router-dom";
 import { instance } from "../../../api/axiosInstance";
 import DatePicker from "react-datepicker";
+import StripeCheckout from "react-stripe-checkout";
+import brain from "../../../images/brain.svg";
 import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
-import "./account.css";
+import { toast } from "react-toastify";
 
 interface IVisit {
   date: string;
@@ -27,12 +30,16 @@ export default function Account(): ReactElement {
   const [startTime, setStartTime] = useState<any>(null);
   const [endTime, setEndTime] = useState<any>(null);
 
+  const [amount, setAmount] = useState<string>("");
+  const [type, setType] = useState<string>("");
+
+  const [stripeKey, setStripeKey] = useState<string>("");
+
   const getClient = async () => {
     try {
       const response = await instance().get(
         `api/client/client_intake/${api_key}`
       );
-      // console.log("GET: account => ", response.data);
       setClient(response.data);
     } catch (error: any) {
       console.log("GET: error message account =>  ", error.message);
@@ -46,7 +53,6 @@ export default function Account(): ReactElement {
       const response = await instance().get(
         `api/client/visit_history/${api_key}`
       );
-      // console.log("GET: account visits=> ", response.data);
       setVisits(response.data);
     } catch (error: any) {
       console.log("GET: error message account visits =>  ", error.message);
@@ -56,6 +62,15 @@ export default function Account(): ReactElement {
       );
       throw new Error(error.message);
     }
+  };
+
+  toast.configure();
+
+  const getStripeKey = async () => {
+    const stripeKeys = await instance().get(`api/client/get_secret`);
+    console.log("stripeKeys", stripeKeys);
+    // stripePromise = loadStripe(stripeKeys.data.pk_test);
+    setStripeKey(stripeKeys.data.pk_test);
   };
 
   useEffect(() => {
@@ -101,15 +116,36 @@ export default function Account(): ReactElement {
         setFilterVisits(filteredVisits);
       };
       filterVisits();
-
-      // setTimeout(() => {
-      //   setStartTime(null);
-      //   setEndTime(null);
-      // }, 15000);
     }
   }, [startTime, endTime]);
 
-  console.log("!!! filterVisits !!!s", filterVisits);
+  useEffect(() => {
+    getStripeKey();
+  }, []);
+
+  const handleToken = (data: any): void => {
+    console.log("data", data);
+
+    const sessionData = {
+      id: data.id,
+      description: type,
+      amount: Number(amount) * 100,
+    };
+
+    try {
+      const stripeSession = async () => {
+        const session = await clientApi.createStripeSession(sessionData);
+        console.log("session", session);
+        // if (session === "ok") {
+        toast("Success!");
+        // }
+      };
+      stripeSession();
+    } catch (e: any) {
+      console.log("error message", e.message);
+      // toast(e.message);
+    }
+  };
 
   return (
     <>
@@ -248,68 +284,100 @@ export default function Account(): ReactElement {
               </tbody>
               <tfoot>
                 <tr>
-                  <td>
+                  <td colSpan={3}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Type</div>
                       <div>
-                        <input type="text" placeholder="" />
+                        <input
+                          type="text"
+                          placeholder=""
+                          value={type}
+                          onChange={(e) => setType(e.target.value)}
+                        />
                       </div>
                     </div>
                   </td>
-                  <td>
-                    <div className="visitHistory_inputContainer">
-                      <div className="inputTitle">Number</div>
-                      <div>
-                        <input type="text" placeholder="" />
-                      </div>
-                    </div>
-                  </td>
-                  <td>
+                </tr>
+                <tr>
+                  <td colSpan={2}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Amount</div>
                       <div>
-                        <input type="text" placeholder="" />
+                        <input
+                          type="number"
+                          placeholder=""
+                          value={amount}
+                          onChange={(e) => setAmount(e.target.value)}
+                        />
                       </div>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div className="visitHistory_inputContainer">
+                      {/* {stripeProm ? ( */}
+                      {stripeKey !== "" && (
+                        <StripeCheckout
+                          name="medical services"
+                          // description="Payment for medical services"
+                          image={brain}
+                          ComponentClass="div"
+                          panelLabel="Pay"
+                          amount={Number(amount) * 100} // cents
+                          currency="USD"
+                          stripeKey={stripeKey}
+                          // shippingAddress
+                          // billingAddress={false}
+                          // locale="zh"
+                          email="info@vidhub.co"
+                          // Note: Enabling either address option will give the user the ability to
+                          // fill out both. Addresses are sent as a second parameter in the token callback.
+
+                          // Note: enabling both zipCode checks and billing or shipping address will
+                          // cause zipCheck to be pulled from billing address (set to shipping if none provided).
+                          // zipCode={false}
+                          // alipay // accept Alipay (default false)
+                          // bitcoin // accept Bitcoins (default false)
+                          // allowRememberMe // "Remember Me" option (default true)
+                          token={handleToken}
+                          // opened={this.onOpened} // called when the checkout popin is opened (no IE6/7)
+                          // closed={this.onClosed} // called when the checkout popin is closed (no IE6/7)
+                          // Note: `reconfigureOnUpdate` should be set to true IFF, for some reason
+                          // you are using multiple stripe keys
+                          reconfigureOnUpdate={false}
+                          // Note: you can change the event to `onTouchTap`, `onClick`, `onTouchStart`
+                          // useful if you're using React-Tap-Event-Plugin
+                          // triggerEvent="onTouchTap"
+                        >
+                          {amount === "" ? (
+                            <button disabled className="completeBtnDisable">
+                              Pay with Card
+                            </button>
+                          ) : (
+                            <button className="completeBtn">
+                              Pay with Card
+                            </button>
+                          )}
+                        </StripeCheckout>
+                      )}
+
+                      {/* ) : (
+                        <button disabled className="completeBtnDisable">
+                          Pay with Card
+                        </button>
+                      )} */}
                     </div>
                   </td>
                 </tr>
               </tfoot>
             </table>
           </div>
-          <div className="billing_form">
-            <div className="billing_formInputs">
-              <div className="billing_formBlock">
-                <div className="billing_formBlockInput">
-                  <div className="titleAccount">Card number</div>
-                  <div className="inputContainer">
-                    <input type="" placeholder="" />
-                  </div>
-                </div>
-                <div className="billing_formBlockInput">
-                  <div className="titleAccount">Expiration</div>
-                  <div className="inputContainer">
-                    <input type="" placeholder="" />
-                  </div>
-                </div>
-              </div>
 
-              <div className="billing_formBlock">
-                <div className="billing_formBlockInput">
-                  <div className="titleAccount">CVV</div>
-                  <div className="inputContainer">
-                    <input type="" placeholder="" />
-                  </div>
-                </div>
-                <div className="billing_formBlockInput">
-                  <div className="titleAccount">Zip</div>
-                  <div className="inputContainer">
-                    <input type="" placeholder="" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="btnComplete">COMPLETE</div>
-          </div>
+          {/* {stripeProm && (
+            <Elements stripe={stripeProm}>
+              <CheckoutForm />
+            </Elements>
+          )} */}
         </div>
       </div>
     </>
