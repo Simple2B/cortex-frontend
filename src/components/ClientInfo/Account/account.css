@@ -43,7 +43,6 @@
 
 .clientInfoAccount div {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   text-align: center;
   font-size: 30px;
@@ -90,9 +89,6 @@
   display: flex;
   flex-direction: column;
 }
-/* .visitHistory_table table .thead {
-  display: inline-block;
-} */
 
 .visitHistory_table .table {
   position: relative;
@@ -101,13 +97,6 @@
   overflow: auto;
 }
 
-.visitHistory .table .tableHeader {
-  /* width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0; */
-}
 
 .visitHistory_table table tr th {
   font-size: 30px;
@@ -125,7 +114,7 @@
   padding: 7px 10px;
 }
 
-.billing_table table tfoot tr:last-child td {
+.billing_table table tfoot tr td {
   border: 1px solid transparent;
   text-align: left;
   padding: 0;
@@ -146,14 +135,12 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  /* margin-top: 30px; */
 }
 
 .visitHistory_inputContainer {
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* margin-right: 7px; */
 }
 
 .visitHistory_inputs div:last-child {
@@ -248,7 +235,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  /* flex-direction: column; */
   margin-top: 5px;
 }
 
@@ -281,19 +268,26 @@
   margin-right: 5px;
 }
 
-.btnComplete {
+.completeBtn, .completeBtnDisable  {
   display: flex;
   justify-content: center;
   align-items: center;
   color: #fff;
-  font-size: 25px;
-  width: 262px;
-  height: 68px;
+  font-weight: bold;
+  font-size: 18px;
+  width: 165px;
+  height: 45px;
   margin-top: 25px;
   background: radial-gradient(#00e5ff, #085e67);
   border-radius: 34px;
   cursor: pointer;
 }
+
+.completeBtnDisable {
+  background: radial-gradient(#b1b1b1, #7a7a7a);
+  font-weight: bold;
+}
+
 
 @media (max-width: 1440px) {
   .clientInfo_tittle {
@@ -322,7 +316,6 @@
   .visitHistory_table table tr td,
   .billing_table table tr td {
     font-size: 20px;
-    /* padding: 5px; */
   }
 
   .visitHistory_inputContainer .inputTitle {
@@ -342,75 +335,49 @@
   }
 }
 
+/* billing */
+.FormGroup {
+	margin: 25px auto;
+	padding: 0;
+	border-style: none;
+	background-color: #191919;
+	will-change: opacity, transform;
+	border-radius: 4px;
+}
+
+.FormRow {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-align: center;
+	align-items: center;
+  padding-left: 10px;
+  border: none;
+	border-bottom: 1px solid #fff;
+}
+
+.StripeElement--webkit-autofill {
+	background: transparent !important;
+}
+
+.StripeElement {
+	width: 100%;
+  border: none;
+	padding: 15px 19px 11px 0;
+}
+
+h1,
+h3 {
+	text-align: center;
+}
+
+
 @media (max-width: 1024px) {
-  /* .accountContainer {
-		flex-wrap: wrap;
-		justify-content: space-between;
-	}
-	.accountContainer .visitHistory {
-		width: 60%;
-		margin-right: 35px;
-	} */
 
   .billing {
     margin-top: 1em;
     width: 97%;
   }
 }
-
-/* @media (max-width: 721px) {
-	.accountContainer {
-		margin: 0 15px 25px 25px;
-		flex-direction: column;
-		align-items: flex-start;
-	}
-	.accountContainer .clientInfo {
-		align-items: flex-start;
-	}
-	.accountContainer .visitHistory {
-		width: 97%;
-		margin-right: 15px;
-	}
-	.billing {
-		margin-top: 0;
-		width: 97%;
-	}
-} */
-
-/* @media (max-width: 431px) {
-	.accountContainer {
-		margin: 0 15px 25px 15px;
-	}
-	.clientInfo div {
-		font-size: 0.85em;
-	}
-
-	.visitHistory_table table tr th,
-	.billing_table table tr th {
-		font-size: 0.5em;
-		padding: 5px;
-	}
-
-	.visitHistory_table table tr td,
-	.billing_table table tr td {
-		font-size: 0.4em;
-		padding: 5px;
-	}
-
-	.accountContainer .visitHistory {
-		width: 97%;
-		margin-right: 15px;
-	}
-	.visitHistory_inputContainer div input {
-		padding: 5px 0;
-	}
-	.billing {
-		width: 100%;
-	}
-	.billing_formBlock .titleAccount {
-		font-size: 15px;
-	}
-} */
 
 @media (max-width: 684px) {
   .accountContainer {
