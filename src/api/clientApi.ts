@@ -362,20 +362,20 @@ export const clientApi = {
     }
   },
 
-  putToTestInfoCarePlan: async (data: {
+  putInfoToCarePlan: async (data: {
     test_id: number;
     api_key: string;
     care_plan: string;
     frequency: string;
   }): Promise<any> => {
-    console.log("putToTestInfoCarePlan: data =>", data);
+    console.log("putInfoToCarePlan: data =>", data);
     try {
       const response = await instance().post(
         "api/test/care_plan_frequency",
         data
       );
 
-      console.log("POST: response putToTestInfoCarePlan ", response);
+      // console.log("POST: response putToTestInfoCarePlan ", response);
       console.log(
         "POST: response putToTestInfoCarePlan successfully ",
         response.data
