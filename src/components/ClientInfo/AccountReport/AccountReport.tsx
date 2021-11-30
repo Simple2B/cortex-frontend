@@ -1,6 +1,7 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { NavLink, useHistory, useLocation } from "react-router-dom";
 import { instance } from "../../../api/axiosInstance";
+import { clientApi } from "../../../api/clientApi";
 import "./AccountReport.sass";
 
 interface ITest {
@@ -37,18 +38,27 @@ export function AccountReport(): ReactElement {
     }
   };
 
-  console.log("tests", tests);
+  console.log("AccountReport: tests => ", tests);
 
   useEffect(() => {
     getClientTests();
   }, [api_key]);
 
+  const handleCreateCarePlan = () => {
+    const createCarePlan = async () => {
+      const carePlan = await clientApi.createCarePlan({
+        api_key: api_key,
+      });
+      console.log("AccountReport: created care plan", carePlan);
+      // setCarePlan(carePlan);
+    };
+    createCarePlan();
+    history.push(`/${api_key}/start`);
+  };
+
   return (
     <div className="containerReportAccount">
-      <div
-        className="reportAccountBtn"
-        onClick={() => history.push(`/${api_key}/start`)}
-      >
+      <div className="reportAccountBtn" onClick={handleCreateCarePlan}>
         New Test
       </div>
       <div className="reportAccountTestTime">
