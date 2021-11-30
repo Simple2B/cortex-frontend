@@ -19,7 +19,6 @@ export default function ViewReport(): ReactElement {
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
-
   const [activeBtn, setActiveBtn] = useState<string>("Brain");
   const [test, setTest] = useState<ITest>({
     id: null,
@@ -34,19 +33,26 @@ export default function ViewReport(): ReactElement {
   const [typeFrequency, setTypeFrequency] = useState<string>("");
 
   const [date, setDate] = useState<any>(null);
-  const [testWithCarePlan, setTestWithCarePlan] = useState();
+  const [carePlan, setCarePlan] = useState({
+    date: "",
+    care_plan: "",
+    frequency: "",
+    client_id: null,
+    doctor_id: null,
+  });
 
   const test_id = splitLocation[splitLocation.length - 1].split("_")[2];
-  console.log("test_id", Number(test_id));
+  // console.log("test_id", Number(test_id));
 
   const [carePlanNames, setCarePlanNames] = useState();
+  const [frequencyNames, setFrequencyNames] = useState();
 
   const getClient = async () => {
     try {
       const response = await instance().get(
         `api/client/client_intake/${api_key}`
       );
-      console.log("GET: client_intake name => ", response.data);
+      // console.log("GET: client_intake name => ", response.data);
       setClient(response.data);
       return response.data;
     } catch (error: any) {
@@ -65,7 +71,7 @@ export default function ViewReport(): ReactElement {
   const getTest = async () => {
     try {
       const response = await instance().get(`api/test/test/${test_id}`);
-      console.log("GET: getTest => ", response.data);
+      // console.log("GET: getTest => ", response.data);
       setTest(response.data);
       return response.data;
     } catch (error: any) {
@@ -78,7 +84,7 @@ export default function ViewReport(): ReactElement {
   const getCarePlanNames = async () => {
     try {
       const response = await instance().get(`api/test/care_plan_names`);
-      console.log("GET: getCarePlanNames => ", response.data);
+      // console.log("GET: getCarePlanNames => ", response.data);
       setCarePlanNames(response.data);
       return response.data;
     } catch (error: any) {
@@ -91,12 +97,33 @@ export default function ViewReport(): ReactElement {
     }
   };
 
+  const getFrequencyNames = async () => {
+    try {
+      const response = await instance().get(`api/test/frequency_names`);
+      // console.log("GET: getFrequencyNames => ", response.data);
+      setFrequencyNames(response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("GET: error message getFrequencyNames =>  ", error.message);
+      console.log(
+        "error response data getFrequencyNames => ",
+        error.response.data
+      );
+      throw new Error(error.message);
+    }
+  };
+
   useEffect(() => {
     getClient();
-    getCarePlanNames();
   }, [api_key]);
 
-  console.log("carePlanNames", carePlanNames);
+  useEffect(() => {
+    getCarePlanNames();
+    getFrequencyNames();
+  }, [carePlan]);
+
+  console.log("ViewReport: info care plan => ", carePlanNames);
+  console.log("ViewReport: info frequency => ", frequencyNames);
 
   useEffect(() => {
     getTest();
@@ -115,26 +142,29 @@ export default function ViewReport(): ReactElement {
     setActiveBtn(e.currentTarget.innerHTML);
   };
 
-  const dataForTest = {
-    test_id: Number(test_id),
-    api_key: api_key,
-    care_plan: typeCaraPlan,
-    frequency: typeFrequency,
-  };
-
   useEffect(() => {
-    if (typeCaraPlan !== "" && typeFrequency !== "" && test.care_plan) {
-      const postCarePlanToTest = async () => {
-        const test = await clientApi.putToTestInfoCarePlan(dataForTest);
-        console.log("post care plan to test", test);
-        setTestWithCarePlan(test);
+    if (
+      typeCaraPlan &&
+      typeFrequency &&
+      typeCaraPlan !== "" &&
+      typeFrequency !== ""
+    ) {
+      const postCarePlanInfo = async () => {
+        const carePlan = await clientApi.putInfoToCarePlan({
+          test_id: Number(test_id),
+          api_key: api_key,
+          care_plan: typeCaraPlan,
+          frequency: typeFrequency,
+        });
+        console.log("ViewReport: write to care plan info => ", carePlan);
+        setCarePlan(carePlan);
       };
-      postCarePlanToTest();
+      postCarePlanInfo();
     }
   }, [typeCaraPlan, typeFrequency]);
 
-  console.log("testWithCarePlan => ", testWithCarePlan);
-  console.log("test with id=> ", test);
+  // console.log("ViewReport: care plan with info=> ", carePlan);
+  // console.log("ViewReport: test with id=> ", test);
 
   return (
     <div className="containerViewReport">
