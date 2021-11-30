@@ -10,6 +10,7 @@ interface ITest {
   date: string;
   client_name: string;
   doctor_name: string;
+  care_plan_id: null | number;
   care_plan: string;
   frequency: string;
 }
@@ -22,9 +23,10 @@ export default function ViewReport(): ReactElement {
   const [activeBtn, setActiveBtn] = useState<string>("Brain");
   const [test, setTest] = useState<ITest>({
     id: null,
-    client_name: "",
     date: "",
+    client_name: "",
     doctor_name: "",
+    care_plan_id: null,
     care_plan: "",
     frequency: "",
   });
@@ -52,7 +54,7 @@ export default function ViewReport(): ReactElement {
       const response = await instance().get(
         `api/client/client_intake/${api_key}`
       );
-      // console.log("GET: client_intake name => ", response.data);
+      console.log("GET: client_intake name => ", response.data);
       setClient(response.data);
       return response.data;
     } catch (error: any) {
@@ -71,7 +73,7 @@ export default function ViewReport(): ReactElement {
   const getTest = async () => {
     try {
       const response = await instance().get(`api/test/test/${test_id}`);
-      // console.log("GET: getTest => ", response.data);
+      console.log("GET: getTest => ", response.data);
       setTest(response.data);
       return response.data;
     } catch (error: any) {
@@ -129,7 +131,7 @@ export default function ViewReport(): ReactElement {
     getTest();
     setTypeCaraPlan(test.care_plan);
     setTypeFrequency(test.frequency);
-  }, [test_id]);
+  }, [test_id, typeCaraPlan, typeFrequency]);
 
   useEffect(() => {
     if (test.care_plan && test.frequency) {
@@ -143,12 +145,7 @@ export default function ViewReport(): ReactElement {
   };
 
   useEffect(() => {
-    if (
-      typeCaraPlan &&
-      typeFrequency &&
-      typeCaraPlan !== "" &&
-      typeFrequency !== ""
-    ) {
+    if (typeCaraPlan && typeFrequency) {
       const postCarePlanInfo = async () => {
         const carePlan = await clientApi.putInfoToCarePlan({
           test_id: Number(test_id),
