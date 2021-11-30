@@ -7,9 +7,6 @@ import StripeCheckout from "react-stripe-checkout";
 import brain from "../../../images/brain.svg";
 import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
-import { toast } from "react-toastify";
-
-toast.configure();
 
 interface IVisit {
   date: string;
@@ -112,7 +109,7 @@ export default function Account(): ReactElement {
         const filteredVisits = await clientApi.filteredHistoryVisits(
           dataToFilterVisit
         );
-        console.log("filteredVisits", filteredVisits);
+        console.log("Account: filteredVisits => ", filteredVisits);
         setFilterVisits(filteredVisits);
       };
       filterVisits();
@@ -124,7 +121,7 @@ export default function Account(): ReactElement {
   }, []);
 
   const handleToken = (data: any): void => {
-    console.log("data", data);
+    console.log("Account: data for stripe => ", data);
 
     const sessionData = {
       id: data.id,
@@ -135,15 +132,11 @@ export default function Account(): ReactElement {
     try {
       const stripeSession = async () => {
         const session = await clientApi.createStripeSession(sessionData);
-        console.log("session", session);
-        // if (session === "ok") {
-        toast("Success!");
-        // }
+        console.log("Account: stripe session => ", session);
       };
       stripeSession();
     } catch (e: any) {
-      console.log("error message", e.message);
-      // toast(e.message);
+      console.log("Account: stripe error message", e.message);
     }
   };
 
@@ -327,7 +320,7 @@ export default function Account(): ReactElement {
                           stripeKey={stripeKey}
                           email="info@vidhub.co"
                           token={handleToken}
-                          reconfigureOnUpdate={false}
+                          // reconfigureOnUpdate={false}
                         >
                           {amount === "" ? (
                             <button disabled className="completeBtnDisable">
