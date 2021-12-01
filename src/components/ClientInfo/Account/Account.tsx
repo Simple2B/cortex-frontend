@@ -3,12 +3,12 @@ import "./account.css";
 import { useLocation } from "react-router-dom";
 import { instance } from "../../../api/axiosInstance";
 import DatePicker from "react-datepicker";
-import StripeCheckout from "react-stripe-checkout";
-import brain from "../../../images/brain.svg";
 import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
-
+import { loadStripe, Stripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { CheckoutForm } from "./CheckoutForm";
 interface IVisit {
   date: string;
   doctor_name: string;
@@ -34,7 +34,7 @@ export default function Account(): ReactElement {
   const [type, setType] = useState<string>("");
 
   const [stripeKey, setStripeKey] = useState<string>("");
-
+  const [stripe, setStripe] = useState<Stripe | null>(null);
   const getClient = async () => {
     try {
       const response = await instance().get(
@@ -47,7 +47,6 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
-
   const getHistoryVisits = async () => {
     try {
       const response = await instance().get(
@@ -69,7 +68,8 @@ export default function Account(): ReactElement {
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
     console.log("stripeKeys", stripeKeys);
-    // stripePromise = loadStripe(stripeKeys.data.pk_test);
+    const res = await loadStripe(stripeKeys.data.pk_test);
+    setStripe(res);
     setStripeKey(stripeKeys.data.pk_test);
   };
 
@@ -123,30 +123,17 @@ export default function Account(): ReactElement {
     getStripeKey();
   }, []);
 
-  const handleToken = (data: any): void => {
-    console.log("data", data);
-
-    const sessionData = {
-      id: data.id,
-      description: type,
-      amount: Number(amount) * 100,
-    };
-
-    try {
-      const stripeSession = async () => {
-        const session = await clientApi.createStripeSession(sessionData);
-        console.log("session", session);
-        // if (session === "ok") {
-        toast("Success!");
-        // }
-      };
-      stripeSession();
-    } catch (e: any) {
-      console.log("error message", e.message);
-      // toast(e.message);
-    }
+  const appearance: any = {
+    theme: "night",
   };
-
+  const options: any = {
+    stripeKey,
+    appearance,
+  };
+  const setStatuses = () => {
+    setType("");
+    setAmount("");
+  };
   return (
     <>
       <div className="accountContainer">
@@ -284,7 +271,7 @@ export default function Account(): ReactElement {
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan={3}>
+                  <td colSpan={2}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Type</div>
                       <div>
@@ -297,87 +284,39 @@ export default function Account(): ReactElement {
                       </div>
                     </div>
                   </td>
-                </tr>
-                <tr>
-                  <td colSpan={2}>
+                  <td colSpan={1}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Amount</div>
                       <div>
                         <input
                           type="number"
                           placeholder=""
+                          maxLength={6}
                           value={amount}
                           onChange={(e) => setAmount(e.target.value)}
                         />
                       </div>
                     </div>
                   </td>
-
-                  <td>
+                </tr>
+                <tr>
+                  <td colSpan={3}>
                     <div className="visitHistory_inputContainer">
-                      {/* {stripeProm ? ( */}
-                      {stripeKey !== "" && (
-                        <StripeCheckout
-                          name="medical services"
-                          // description="Payment for medical services"
-                          image={brain}
-                          ComponentClass="div"
-                          panelLabel="Pay"
-                          amount={Number(amount) * 100} // cents
-                          currency="USD"
-                          stripeKey={stripeKey}
-                          // shippingAddress
-                          // billingAddress={false}
-                          // locale="zh"
-                          email="info@vidhub.co"
-                          // Note: Enabling either address option will give the user the ability to
-                          // fill out both. Addresses are sent as a second parameter in the token callback.
-
-                          // Note: enabling both zipCode checks and billing or shipping address will
-                          // cause zipCheck to be pulled from billing address (set to shipping if none provided).
-                          // zipCode={false}
-                          // alipay // accept Alipay (default false)
-                          // bitcoin // accept Bitcoins (default false)
-                          // allowRememberMe // "Remember Me" option (default true)
-                          token={handleToken}
-                          // opened={this.onOpened} // called when the checkout popin is opened (no IE6/7)
-                          // closed={this.onClosed} // called when the checkout popin is closed (no IE6/7)
-                          // Note: `reconfigureOnUpdate` should be set to true IFF, for some reason
-                          // you are using multiple stripe keys
-                          reconfigureOnUpdate={false}
-                          // Note: you can change the event to `onTouchTap`, `onClick`, `onTouchStart`
-                          // useful if you're using React-Tap-Event-Plugin
-                          // triggerEvent="onTouchTap"
-                        >
-                          {amount === "" ? (
-                            <button disabled className="completeBtnDisable">
-                              Pay with Card
-                            </button>
-                          ) : (
-                            <button className="completeBtn">
-                              Pay with Card
-                            </button>
-                          )}
-                        </StripeCheckout>
+                      {stripeKey && (
+                        <Elements options={options} stripe={stripe}>
+                          <CheckoutForm
+                            onUpdateCallback={setStatuses}
+                            amount={amount}
+                            type={type}
+                          />
+                        </Elements>
                       )}
-
-                      {/* ) : (
-                        <button disabled className="completeBtnDisable">
-                          Pay with Card
-                        </button>
-                      )} */}
                     </div>
                   </td>
                 </tr>
               </tfoot>
             </table>
           </div>
-
-          {/* {stripeProm && (
-            <Elements stripe={stripeProm}>
-              <CheckoutForm />
-            </Elements>
-          )} */}
         </div>
       </div>
     </>
