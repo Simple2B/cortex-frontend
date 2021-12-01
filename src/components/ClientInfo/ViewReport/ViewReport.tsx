@@ -146,7 +146,6 @@ export default function ViewReport(): ReactElement {
     setActiveBtn(e.currentTarget.innerHTML);
   };
 
-  // console.log("ViewReport: date => ", date);
   useEffect(() => {
     if (date) {
       const testDate = new Date(
@@ -179,9 +178,6 @@ export default function ViewReport(): ReactElement {
       postCarePlanInfo();
     }
   }, [typeCaraPlan, typeFrequency, date, progressTestDate]);
-
-  // console.log("ViewReport: care plan with info=> ", carePlan);
-  // console.log("ViewReport: test with id=> ", test);
 
   return (
     <div className="containerViewReport">
