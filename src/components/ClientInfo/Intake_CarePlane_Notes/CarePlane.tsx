@@ -104,7 +104,7 @@ export function CarePlane(props: { activeBtnRogueMode: string }): ReactElement {
               </div>
 
               <div className="carePlaneInfo_item">
-                <div className="title">Next visit:</div>
+                <div className="title">Next progress test:</div>
                 <div className="text">{carePlanInfo.next_visit}</div>
               </div>
 
