@@ -7,6 +7,7 @@ import StripeCheckout from "react-stripe-checkout";
 import brain from "../../../images/brain.svg";
 import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
+// import { loadStripe } from "@stripe/stripe-js";
 
 interface IVisit {
   date: string;
@@ -32,7 +33,8 @@ export default function Account(): ReactElement {
   const [amount, setAmount] = useState<string>("");
   const [type, setType] = useState<string>("");
 
-  const [stripeKey, setStripeKey] = useState<string>("");
+  const [pkStripeKey, setPKStripeKey] = useState<string>("");
+  const [skStripeKey, setSKStripeKey] = useState<string>("");
 
   const getClient = async () => {
     try {
@@ -62,12 +64,14 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
+  // const stripePromise = loadStripe(pkStripeKey);
 
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
     console.log("stripeKeys", stripeKeys);
     // stripePromise = loadStripe(stripeKeys.data.pk_test);
-    setStripeKey(stripeKeys.data.pk_test);
+    setPKStripeKey(stripeKeys.data.pk_test);
+    setSKStripeKey(stripeKeys.data.sk_test);
   };
 
   useEffect(() => {
@@ -138,6 +142,14 @@ export default function Account(): ReactElement {
     } catch (e: any) {
       console.log("Account: stripe error message", e.message);
     }
+  };
+
+  const appearance = {
+    theme: "night",
+  };
+  const options: any = {
+    skStripeKey,
+    appearance,
   };
 
   return (
@@ -277,7 +289,7 @@ export default function Account(): ReactElement {
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan={3}>
+                  <td colSpan={1}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Type</div>
                       <div>
@@ -290,8 +302,6 @@ export default function Account(): ReactElement {
                       </div>
                     </div>
                   </td>
-                </tr>
-                <tr>
                   <td colSpan={2}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Amount</div>
@@ -305,10 +315,11 @@ export default function Account(): ReactElement {
                       </div>
                     </div>
                   </td>
-
-                  <td>
+                </tr>
+                <tr>
+                  <td colSpan={3}>
                     <div className="visitHistory_inputContainer">
-                      {stripeKey !== "" && (
+                      {pkStripeKey !== "" && (
                         <StripeCheckout
                           name="medical services"
                           // description="Payment for medical services"
@@ -317,7 +328,7 @@ export default function Account(): ReactElement {
                           panelLabel="Pay"
                           amount={Number(amount) * 100} // cents
                           currency="USD"
-                          stripeKey={stripeKey}
+                          stripeKey={pkStripeKey}
                           email="info@vidhub.co"
                           token={handleToken}
                           // reconfigureOnUpdate={false}
