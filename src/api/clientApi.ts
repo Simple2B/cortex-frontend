@@ -365,6 +365,7 @@ export const clientApi = {
   putInfoToCarePlan: async (data: {
     test_id: number;
     api_key: string;
+    progress_date: null | string;
     care_plan: string;
     frequency: string;
   }): Promise<any> => {
