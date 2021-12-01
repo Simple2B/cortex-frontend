@@ -43,6 +43,8 @@ export default function ViewReport(): ReactElement {
     doctor_id: null,
   });
 
+  const [progressTestDate, setProgressTestDate] = useState<string | null>(null);
+
   const test_id = splitLocation[splitLocation.length - 1].split("_")[2];
   // console.log("test_id", Number(test_id));
 
@@ -144,12 +146,30 @@ export default function ViewReport(): ReactElement {
     setActiveBtn(e.currentTarget.innerHTML);
   };
 
+  // console.log("ViewReport: date => ", date);
   useEffect(() => {
+    if (date) {
+      const testDate = new Date(
+        date.toString().replace(/GMT.*$/, "GMT+0000")
+      ).toISOString();
+      const fullStartDate = testDate
+        .replace("T", " ")
+        .replace(".", " ")
+        .split(" ");
+      const dStart = fullStartDate[0].split("-");
+      const fullTime = fullStartDate[1];
+      const progressTestDate = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
+
+      setProgressTestDate(progressTestDate);
+      console.log("ViewReport: progressTestDate => ", progressTestDate);
+    }
+
     if (typeCaraPlan && typeFrequency) {
       const postCarePlanInfo = async () => {
         const carePlan = await clientApi.putInfoToCarePlan({
           test_id: Number(test_id),
           api_key: api_key,
+          progress_date: progressTestDate,
           care_plan: typeCaraPlan,
           frequency: typeFrequency,
         });
@@ -158,7 +178,7 @@ export default function ViewReport(): ReactElement {
       };
       postCarePlanInfo();
     }
-  }, [typeCaraPlan, typeFrequency]);
+  }, [typeCaraPlan, typeFrequency, date, progressTestDate]);
 
   // console.log("ViewReport: care plan with info=> ", carePlan);
   // console.log("ViewReport: test with id=> ", test);
