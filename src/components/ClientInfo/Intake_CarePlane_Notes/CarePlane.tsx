@@ -1,12 +1,9 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
+import { Client, ClientDefault } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
 import "./intake.css";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
-import Arousal from "../Dashboard/Arousal";
-import BrainWaves from "../Dashboard/BrainWaves";
-import Coherence from "../Dashboard/Coherence";
 import Dashboards from "../Dashboard/Dashboards";
 
 export function CarePlane(props: { activeBtnRogueMode: string }): ReactElement {
@@ -16,10 +13,6 @@ export function CarePlane(props: { activeBtnRogueMode: string }): ReactElement {
 
   console.log("Care Plane -> api_key", api_key);
   const [client, setClient] = useState<Client>(ClientDefault);
-
-  const [dashboard, setDashboard] = useState<string>("arousal");
-
-  const history = useHistory();
 
   const getClient = async () => {
     try {
