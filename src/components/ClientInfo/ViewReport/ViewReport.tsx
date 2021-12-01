@@ -131,9 +131,9 @@ export default function ViewReport(): ReactElement {
 
   useEffect(() => {
     getTest();
-    setTypeCaraPlan(test.care_plan);
-    setTypeFrequency(test.frequency);
-  }, [test_id, typeCaraPlan, typeFrequency]);
+    // setTypeCaraPlan(test.care_plan);
+    // setTypeFrequency(test.frequency);
+  }, [test_id, typeCaraPlan, typeFrequency, date]);
 
   useEffect(() => {
     if (test.care_plan && test.frequency) {
@@ -163,6 +163,14 @@ export default function ViewReport(): ReactElement {
       console.log("ViewReport: progressTestDate => ", progressTestDate);
     }
 
+    console.log("!!!!!!carePlan", {
+      test_id: Number(test_id),
+      api_key: api_key,
+      progress_date: progressTestDate,
+      care_plan: typeCaraPlan,
+      frequency: typeFrequency,
+    });
+
     if (typeCaraPlan && typeFrequency) {
       const postCarePlanInfo = async () => {
         const carePlan = await clientApi.putInfoToCarePlan({
@@ -177,7 +185,7 @@ export default function ViewReport(): ReactElement {
       };
       postCarePlanInfo();
     }
-  }, [typeCaraPlan, typeFrequency, date, progressTestDate]);
+  }, [typeCaraPlan, typeFrequency, progressTestDate, date]);
 
   return (
     <div className="containerViewReport">
