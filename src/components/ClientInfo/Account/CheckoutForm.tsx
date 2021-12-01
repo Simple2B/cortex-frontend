@@ -1,12 +1,7 @@
 import { useState } from "react";
 import "./account.css";
-import {
-  useStripe,
-  useElements,
-  PaymentElement,
-  CardElement,
-} from "@stripe/react-stripe-js";
-import axios from "axios";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import { clientApi } from "../../../api/clientApi";
 
 const CARD_OPTIONS: any = {
   iconStyle: "solid",
@@ -27,8 +22,12 @@ const CARD_OPTIONS: any = {
     },
   },
 };
-
-export const CheckoutForm = () => {
+interface Props {
+  amount: string;
+  type: string;
+  onUpdateCallback(): void;
+}
+export const CheckoutForm = ({ amount, type, onUpdateCallback }: Props) => {
   const [success, setSuccess] = useState<boolean>(false);
   const stripe: any = useStripe();
   const elements = useElements();
@@ -43,13 +42,16 @@ export const CheckoutForm = () => {
     if (!error) {
       try {
         const { id } = paymentMethod;
-        const res = await axios.post("http://localhost:4000/payment", {
-          amount: 10,
+        const sessionData = {
           id: id,
-        });
-        if (res.data.success) {
+          description: type,
+          amount: Number(amount) * 100,
+        };
+        const res = await clientApi.createStripeSession(sessionData);
+        if (res === "ok") {
           console.log("Successful payment");
           setSuccess(true);
+          onUpdateCallback();
         }
       } catch (error) {
         console.log("Error", error);
@@ -68,15 +70,13 @@ export const CheckoutForm = () => {
               <CardElement options={CARD_OPTIONS} />
             </div>
           </fieldset>
-
-          {/* <PaymentElement /> */}
-          <button disabled={!stripe} className="btnComplete">
+          <button disabled={!stripe} className="completeBtn">
             COMPLETE
           </button>
         </form>
       ) : (
         <div>
-          <h2></h2>
+          <h2>Done!</h2>
         </div>
       )}
     </>
