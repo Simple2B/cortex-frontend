@@ -7,7 +7,7 @@ import StripeCheckout from "react-stripe-checkout";
 import brain from "../../../images/brain.svg";
 import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
-import { toast } from "react-toastify";
+// import { loadStripe } from "@stripe/stripe-js";
 
 interface IVisit {
   date: string;
@@ -33,7 +33,8 @@ export default function Account(): ReactElement {
   const [amount, setAmount] = useState<string>("");
   const [type, setType] = useState<string>("");
 
-  const [stripeKey, setStripeKey] = useState<string>("");
+  const [pkStripeKey, setPKStripeKey] = useState<string>("");
+  const [skStripeKey, setSKStripeKey] = useState<string>("");
 
   const getClient = async () => {
     try {
@@ -63,14 +64,14 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
-
-  toast.configure();
+  // const stripePromise = loadStripe(pkStripeKey);
 
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
     console.log("stripeKeys", stripeKeys);
     // stripePromise = loadStripe(stripeKeys.data.pk_test);
-    setStripeKey(stripeKeys.data.pk_test);
+    setPKStripeKey(stripeKeys.data.pk_test);
+    setSKStripeKey(stripeKeys.data.sk_test);
   };
 
   useEffect(() => {
@@ -112,7 +113,7 @@ export default function Account(): ReactElement {
         const filteredVisits = await clientApi.filteredHistoryVisits(
           dataToFilterVisit
         );
-        console.log("filteredVisits", filteredVisits);
+        console.log("Account: filteredVisits => ", filteredVisits);
         setFilterVisits(filteredVisits);
       };
       filterVisits();
@@ -124,7 +125,7 @@ export default function Account(): ReactElement {
   }, []);
 
   const handleToken = (data: any): void => {
-    console.log("data", data);
+    console.log("Account: data for stripe => ", data);
 
     const sessionData = {
       id: data.id,
@@ -135,16 +136,20 @@ export default function Account(): ReactElement {
     try {
       const stripeSession = async () => {
         const session = await clientApi.createStripeSession(sessionData);
-        console.log("session", session);
-        // if (session === "ok") {
-        toast("Success!");
-        // }
+        console.log("Account: stripe session => ", session);
       };
       stripeSession();
     } catch (e: any) {
-      console.log("error message", e.message);
-      // toast(e.message);
+      console.log("Account: stripe error message", e.message);
     }
+  };
+
+  const appearance = {
+    theme: "night",
+  };
+  const options: any = {
+    skStripeKey,
+    appearance,
   };
 
   return (
@@ -284,7 +289,7 @@ export default function Account(): ReactElement {
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan={3}>
+                  <td colSpan={1}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Type</div>
                       <div>
@@ -297,8 +302,6 @@ export default function Account(): ReactElement {
                       </div>
                     </div>
                   </td>
-                </tr>
-                <tr>
                   <td colSpan={2}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Amount</div>
@@ -312,11 +315,11 @@ export default function Account(): ReactElement {
                       </div>
                     </div>
                   </td>
-
-                  <td>
+                </tr>
+                <tr>
+                  <td colSpan={3}>
                     <div className="visitHistory_inputContainer">
-                      {/* {stripeProm ? ( */}
-                      {stripeKey !== "" && (
+                      {pkStripeKey !== "" && (
                         <StripeCheckout
                           name="medical services"
                           // description="Payment for medical services"
@@ -325,29 +328,10 @@ export default function Account(): ReactElement {
                           panelLabel="Pay"
                           amount={Number(amount) * 100} // cents
                           currency="USD"
-                          stripeKey={stripeKey}
-                          // shippingAddress
-                          // billingAddress={false}
-                          // locale="zh"
+                          stripeKey={pkStripeKey}
                           email="info@vidhub.co"
-                          // Note: Enabling either address option will give the user the ability to
-                          // fill out both. Addresses are sent as a second parameter in the token callback.
-
-                          // Note: enabling both zipCode checks and billing or shipping address will
-                          // cause zipCheck to be pulled from billing address (set to shipping if none provided).
-                          // zipCode={false}
-                          // alipay // accept Alipay (default false)
-                          // bitcoin // accept Bitcoins (default false)
-                          // allowRememberMe // "Remember Me" option (default true)
                           token={handleToken}
-                          // opened={this.onOpened} // called when the checkout popin is opened (no IE6/7)
-                          // closed={this.onClosed} // called when the checkout popin is closed (no IE6/7)
-                          // Note: `reconfigureOnUpdate` should be set to true IFF, for some reason
-                          // you are using multiple stripe keys
-                          reconfigureOnUpdate={false}
-                          // Note: you can change the event to `onTouchTap`, `onClick`, `onTouchStart`
-                          // useful if you're using React-Tap-Event-Plugin
-                          // triggerEvent="onTouchTap"
+                          // reconfigureOnUpdate={false}
                         >
                           {amount === "" ? (
                             <button disabled className="completeBtnDisable">
@@ -360,24 +344,12 @@ export default function Account(): ReactElement {
                           )}
                         </StripeCheckout>
                       )}
-
-                      {/* ) : (
-                        <button disabled className="completeBtnDisable">
-                          Pay with Card
-                        </button>
-                      )} */}
                     </div>
                   </td>
                 </tr>
               </tfoot>
             </table>
           </div>
-
-          {/* {stripeProm && (
-            <Elements stripe={stripeProm}>
-              <CheckoutForm />
-            </Elements>
-          )} */}
         </div>
       </div>
     </>
