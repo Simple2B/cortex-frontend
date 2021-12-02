@@ -47,8 +47,10 @@ export function CarePlane(props: { activeBtnRogueMode: string }): ReactElement {
       const response = await instance().get(
         `api/test/info_for_care_plan_page/${api_key}`
       );
-      console.log("GET: getCarePlanInfo => ", response.data);
+      console.log("GET: getCarePlanInfo => ", response);
+
       setCarePlanInfo(response.data);
+
       return response.data;
     } catch (error: any) {
       console.log("GET: error message getCarePlanInfo =>  ", error.message);
