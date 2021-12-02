@@ -51,14 +51,16 @@ export default function ViewReport(): ReactElement {
   const [carePlanNames, setCarePlanNames] = useState();
   const [frequencyNames, setFrequencyNames] = useState();
 
+  useEffect(() => {
+    getTest();
+  }, [test_id]);
+
   const getClient = async () => {
     try {
       const response = await instance().get(
         `api/client/client_intake/${api_key}`
       );
-      // console.log("GET: client_intake name => ", response.data);
       setClient(response.data);
-      return response.data;
     } catch (error: any) {
       console.log(
         "GET: error message get_client_intake name =>  ",
@@ -75,13 +77,11 @@ export default function ViewReport(): ReactElement {
   const getTest = async () => {
     try {
       const response = await instance().get(`api/test/test/${test_id}`);
-      // console.log("GET: getTest => ", response.data);
       setTest(response.data);
       if (response.data.care_plan && response.data.frequency) {
         setTypeCaraPlan(response.data.care_plan);
         setTypeFrequency(response.data.frequency);
       }
-      // return response.data;
     } catch (error: any) {
       console.log("GET: error message getTest =>  ", error.message);
       console.log("error response data getTest => ", error.response.data);
@@ -92,9 +92,7 @@ export default function ViewReport(): ReactElement {
   const getCarePlanNames = async () => {
     try {
       const response = await instance().get(`api/test/care_plan_names`);
-      // console.log("GET: getCarePlanNames => ", response.data);
       setCarePlanNames(response.data);
-      // return response.data;
     } catch (error: any) {
       console.log("GET: error message getCarePlanNames =>  ", error.message);
       console.log(
@@ -108,9 +106,7 @@ export default function ViewReport(): ReactElement {
   const getFrequencyNames = async () => {
     try {
       const response = await instance().get(`api/test/frequency_names`);
-      // console.log("GET: getFrequencyNames => ", response.data);
       setFrequencyNames(response.data);
-      // return response.data;
     } catch (error: any) {
       console.log("GET: error message getFrequencyNames =>  ", error.message);
       console.log(
@@ -130,10 +126,6 @@ export default function ViewReport(): ReactElement {
   console.log("ViewReport: info care plan => ", carePlanNames);
   console.log("ViewReport: info frequency => ", frequencyNames);
 
-  useEffect(() => {
-    getTest();
-  }, [test_id]);
-
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
   };
@@ -150,9 +142,7 @@ export default function ViewReport(): ReactElement {
       const dStart = fullStartDate[0].split("-");
       const fullTime = fullStartDate[1];
       const progressTestDate = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
-
       setProgressTestDate(progressTestDate);
-      console.log("ViewReport: progressTestDate => ", progressTestDate);
     }
 
     console.log("!!!!!!carePlan", {
@@ -172,14 +162,11 @@ export default function ViewReport(): ReactElement {
           care_plan: typeCaraPlan,
           frequency: typeFrequency,
         });
-        // console.log("ViewReport: write to care plan info => ", carePlan);
         setCarePlan(carePlan);
       };
       postCarePlanInfo();
     }
   };
-
-  // console.log("ViewReport: carePlanNames => ", carePlanNames);
 
   return (
     <div className="containerViewReport">
@@ -268,11 +255,11 @@ export default function ViewReport(): ReactElement {
               <button
                 onClick={handleCompleteCarePlan}
                 className={`${
-                  typeCaraPlan === "" && typeFrequency === ""
+                  typeCaraPlan === "" || typeFrequency === ""
                     ? "btnReportsDisabled"
                     : "btnReports"
                 }`}
-                disabled={typeCaraPlan === "" && typeFrequency === ""}
+                disabled={typeCaraPlan === "" || typeFrequency === ""}
               >
                 Complete
               </button>
