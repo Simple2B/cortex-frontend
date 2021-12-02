@@ -56,7 +56,7 @@ export default function ViewReport(): ReactElement {
       const response = await instance().get(
         `api/client/client_intake/${api_key}`
       );
-      console.log("GET: client_intake name => ", response.data);
+      // console.log("GET: client_intake name => ", response.data);
       setClient(response.data);
       return response.data;
     } catch (error: any) {
@@ -75,9 +75,13 @@ export default function ViewReport(): ReactElement {
   const getTest = async () => {
     try {
       const response = await instance().get(`api/test/test/${test_id}`);
-      console.log("GET: getTest => ", response.data);
+      // console.log("GET: getTest => ", response.data);
       setTest(response.data);
-      return response.data;
+      if (response.data.care_plan && response.data.frequency) {
+        setTypeCaraPlan(response.data.care_plan);
+        setTypeFrequency(response.data.frequency);
+      }
+      // return response.data;
     } catch (error: any) {
       console.log("GET: error message getTest =>  ", error.message);
       console.log("error response data getTest => ", error.response.data);
@@ -90,7 +94,7 @@ export default function ViewReport(): ReactElement {
       const response = await instance().get(`api/test/care_plan_names`);
       // console.log("GET: getCarePlanNames => ", response.data);
       setCarePlanNames(response.data);
-      return response.data;
+      // return response.data;
     } catch (error: any) {
       console.log("GET: error message getCarePlanNames =>  ", error.message);
       console.log(
@@ -106,7 +110,7 @@ export default function ViewReport(): ReactElement {
       const response = await instance().get(`api/test/frequency_names`);
       // console.log("GET: getFrequencyNames => ", response.data);
       setFrequencyNames(response.data);
-      return response.data;
+      // return response.data;
     } catch (error: any) {
       console.log("GET: error message getFrequencyNames =>  ", error.message);
       console.log(
@@ -118,35 +122,23 @@ export default function ViewReport(): ReactElement {
   };
 
   useEffect(() => {
-    getClient();
-  }, [api_key]);
-
-  useEffect(() => {
     getCarePlanNames();
     getFrequencyNames();
-  }, [carePlan]);
+    getClient();
+  }, []);
 
   console.log("ViewReport: info care plan => ", carePlanNames);
   console.log("ViewReport: info frequency => ", frequencyNames);
 
   useEffect(() => {
     getTest();
-    // setTypeCaraPlan(test.care_plan);
-    // setTypeFrequency(test.frequency);
-  }, [test_id, typeCaraPlan, typeFrequency, date]);
-
-  useEffect(() => {
-    if (test.care_plan && test.frequency) {
-      setTypeCaraPlan(test.care_plan);
-      setTypeFrequency(test.frequency);
-    }
-  }, [test]);
+  }, [test_id]);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
   };
 
-  useEffect(() => {
+  const handleCompleteCarePlan = () => {
     if (date) {
       const testDate = new Date(
         date.toString().replace(/GMT.*$/, "GMT+0000")
@@ -180,12 +172,14 @@ export default function ViewReport(): ReactElement {
           care_plan: typeCaraPlan,
           frequency: typeFrequency,
         });
-        console.log("ViewReport: write to care plan info => ", carePlan);
+        // console.log("ViewReport: write to care plan info => ", carePlan);
         setCarePlan(carePlan);
       };
       postCarePlanInfo();
     }
-  }, [typeCaraPlan, typeFrequency, progressTestDate, date]);
+  };
+
+  // console.log("ViewReport: carePlanNames => ", carePlanNames);
 
   return (
     <div className="containerViewReport">
@@ -271,6 +265,17 @@ export default function ViewReport(): ReactElement {
                   />
                 </div>
               </div>
+              <button
+                onClick={handleCompleteCarePlan}
+                className={`${
+                  typeCaraPlan === "" && typeFrequency === ""
+                    ? "btnReportsDisabled"
+                    : "btnReports"
+                }`}
+                disabled={typeCaraPlan === "" && typeFrequency === ""}
+              >
+                Complete
+              </button>
             </div>
           </div>
         )}
