@@ -326,6 +326,24 @@ export const clientApi = {
     }
   },
 
+  createCarePlan: async (data: { api_key: string }): Promise<any> => {
+    console.log("createCarePlan: data =>", data);
+    try {
+      const response = await instance().post("api/test/care_plan_create", data);
+
+      console.log("POST: response createCarePlan ", response);
+      console.log("POST: response createCarePlan successfully ", response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message createCarePlan => ",
+        new Error(error.message)
+      );
+      console.log("POST: error data createCarePlan =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
   createTest: async (data: { api_key: string; date: string }): Promise<any> => {
     console.log("filteredHistoryVisits: data =>", data);
     try {
@@ -344,20 +362,21 @@ export const clientApi = {
     }
   },
 
-  putToTestInfoCarePlan: async (data: {
+  putInfoToCarePlan: async (data: {
     test_id: number;
     api_key: string;
+    progress_date: null | string;
     care_plan: string;
     frequency: string;
   }): Promise<any> => {
-    console.log("putToTestInfoCarePlan: data =>", data);
+    console.log("putInfoToCarePlan: data =>", data);
     try {
       const response = await instance().post(
         "api/test/care_plan_frequency",
         data
       );
 
-      console.log("POST: response putToTestInfoCarePlan ", response);
+      // console.log("POST: response putToTestInfoCarePlan ", response);
       console.log(
         "POST: response putToTestInfoCarePlan successfully ",
         response.data

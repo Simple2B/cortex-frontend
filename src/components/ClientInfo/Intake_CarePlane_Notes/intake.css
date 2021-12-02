@@ -316,6 +316,10 @@
   color: #ffffff;
 }
 
+.carePlaneInfo .carePlaneInfo_item .text {
+  font-size: 22px;
+}
+
 .intakeInfoText_health .clientIntakeInfo {
   width: 95%;
   height: 270px;

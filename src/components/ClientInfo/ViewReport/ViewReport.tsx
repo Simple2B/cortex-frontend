@@ -10,6 +10,7 @@ interface ITest {
   date: string;
   client_name: string;
   doctor_name: string;
+  care_plan_id: null | number;
   care_plan: string;
   frequency: string;
 }
@@ -19,13 +20,13 @@ export default function ViewReport(): ReactElement {
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
-
   const [activeBtn, setActiveBtn] = useState<string>("Brain");
   const [test, setTest] = useState<ITest>({
     id: null,
-    client_name: "",
     date: "",
+    client_name: "",
     doctor_name: "",
+    care_plan_id: null,
     care_plan: "",
     frequency: "",
   });
@@ -34,12 +35,21 @@ export default function ViewReport(): ReactElement {
   const [typeFrequency, setTypeFrequency] = useState<string>("");
 
   const [date, setDate] = useState<any>(null);
-  const [testWithCarePlan, setTestWithCarePlan] = useState();
+  const [carePlan, setCarePlan] = useState({
+    date: "",
+    care_plan: "",
+    frequency: "",
+    client_id: null,
+    doctor_id: null,
+  });
+
+  const [progressTestDate, setProgressTestDate] = useState<string | null>(null);
 
   const test_id = splitLocation[splitLocation.length - 1].split("_")[2];
-  console.log("test_id", Number(test_id));
+  // console.log("test_id", Number(test_id));
 
   const [carePlanNames, setCarePlanNames] = useState();
+  const [frequencyNames, setFrequencyNames] = useState();
 
   const getClient = async () => {
     try {
@@ -78,7 +88,7 @@ export default function ViewReport(): ReactElement {
   const getCarePlanNames = async () => {
     try {
       const response = await instance().get(`api/test/care_plan_names`);
-      console.log("GET: getCarePlanNames => ", response.data);
+      // console.log("GET: getCarePlanNames => ", response.data);
       setCarePlanNames(response.data);
       return response.data;
     } catch (error: any) {
@@ -91,18 +101,39 @@ export default function ViewReport(): ReactElement {
     }
   };
 
+  const getFrequencyNames = async () => {
+    try {
+      const response = await instance().get(`api/test/frequency_names`);
+      // console.log("GET: getFrequencyNames => ", response.data);
+      setFrequencyNames(response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("GET: error message getFrequencyNames =>  ", error.message);
+      console.log(
+        "error response data getFrequencyNames => ",
+        error.response.data
+      );
+      throw new Error(error.message);
+    }
+  };
+
   useEffect(() => {
     getClient();
-    getCarePlanNames();
   }, [api_key]);
 
-  console.log("carePlanNames", carePlanNames);
+  useEffect(() => {
+    getCarePlanNames();
+    getFrequencyNames();
+  }, [carePlan]);
+
+  console.log("ViewReport: info care plan => ", carePlanNames);
+  console.log("ViewReport: info frequency => ", frequencyNames);
 
   useEffect(() => {
     getTest();
-    setTypeCaraPlan(test.care_plan);
-    setTypeFrequency(test.frequency);
-  }, [test_id]);
+    // setTypeCaraPlan(test.care_plan);
+    // setTypeFrequency(test.frequency);
+  }, [test_id, typeCaraPlan, typeFrequency, date]);
 
   useEffect(() => {
     if (test.care_plan && test.frequency) {
@@ -115,26 +146,46 @@ export default function ViewReport(): ReactElement {
     setActiveBtn(e.currentTarget.innerHTML);
   };
 
-  const dataForTest = {
-    test_id: Number(test_id),
-    api_key: api_key,
-    care_plan: typeCaraPlan,
-    frequency: typeFrequency,
-  };
-
   useEffect(() => {
-    if (typeCaraPlan !== "" && typeFrequency !== "" && test.care_plan) {
-      const postCarePlanToTest = async () => {
-        const test = await clientApi.putToTestInfoCarePlan(dataForTest);
-        console.log("post care plan to test", test);
-        setTestWithCarePlan(test);
-      };
-      postCarePlanToTest();
-    }
-  }, [typeCaraPlan, typeFrequency]);
+    if (date) {
+      const testDate = new Date(
+        date.toString().replace(/GMT.*$/, "GMT+0000")
+      ).toISOString();
+      const fullStartDate = testDate
+        .replace("T", " ")
+        .replace(".", " ")
+        .split(" ");
+      const dStart = fullStartDate[0].split("-");
+      const fullTime = fullStartDate[1];
+      const progressTestDate = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
 
-  console.log("testWithCarePlan => ", testWithCarePlan);
-  console.log("test with id=> ", test);
+      setProgressTestDate(progressTestDate);
+      console.log("ViewReport: progressTestDate => ", progressTestDate);
+    }
+
+    console.log("!!!!!!carePlan", {
+      test_id: Number(test_id),
+      api_key: api_key,
+      progress_date: progressTestDate,
+      care_plan: typeCaraPlan,
+      frequency: typeFrequency,
+    });
+
+    if (typeCaraPlan && typeFrequency) {
+      const postCarePlanInfo = async () => {
+        const carePlan = await clientApi.putInfoToCarePlan({
+          test_id: Number(test_id),
+          api_key: api_key,
+          progress_date: progressTestDate,
+          care_plan: typeCaraPlan,
+          frequency: typeFrequency,
+        });
+        console.log("ViewReport: write to care plan info => ", carePlan);
+        setCarePlan(carePlan);
+      };
+      postCarePlanInfo();
+    }
+  }, [typeCaraPlan, typeFrequency, progressTestDate, date]);
 
   return (
     <div className="containerViewReport">

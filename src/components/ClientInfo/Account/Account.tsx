@@ -5,7 +5,6 @@ import { instance } from "../../../api/axiosInstance";
 import DatePicker from "react-datepicker";
 import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
-import { toast } from "react-toastify";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
@@ -33,8 +32,10 @@ export default function Account(): ReactElement {
   const [amount, setAmount] = useState<string>("");
   const [type, setType] = useState<string>("");
 
-  const [stripeKey, setStripeKey] = useState<string>("");
   const [stripe, setStripe] = useState<Stripe | null>(null);
+  const [pkStripeKey, setPKStripeKey] = useState<string>("");
+  const [skStripeKey, setSKStripeKey] = useState<string>("");
+
   const getClient = async () => {
     try {
       const response = await instance().get(
@@ -63,14 +64,13 @@ export default function Account(): ReactElement {
     }
   };
 
-  toast.configure();
-
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
     console.log("stripeKeys", stripeKeys);
     const res = await loadStripe(stripeKeys.data.pk_test);
     setStripe(res);
-    setStripeKey(stripeKeys.data.pk_test);
+    setPKStripeKey(stripeKeys.data.pk_test);
+    setSKStripeKey(stripeKeys.data.sk_test);
   };
 
   useEffect(() => {
@@ -112,7 +112,7 @@ export default function Account(): ReactElement {
         const filteredVisits = await clientApi.filteredHistoryVisits(
           dataToFilterVisit
         );
-        console.log("filteredVisits", filteredVisits);
+        console.log("Account: filteredVisits => ", filteredVisits);
         setFilterVisits(filteredVisits);
       };
       filterVisits();
@@ -127,7 +127,7 @@ export default function Account(): ReactElement {
     theme: "night",
   };
   const options: any = {
-    stripeKey,
+    pkStripeKey,
     appearance,
   };
   const setStatuses = () => {
@@ -302,7 +302,7 @@ export default function Account(): ReactElement {
                 <tr>
                   <td colSpan={3}>
                     <div className="visitHistory_inputContainer">
-                      {stripeKey && (
+                      {pkStripeKey && (
                         <Elements options={options} stripe={stripe}>
                           <CheckoutForm
                             onUpdateCallback={setStatuses}

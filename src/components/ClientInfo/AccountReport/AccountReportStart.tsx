@@ -115,7 +115,7 @@ export default function AccountReportStart(): ReactElement {
 
     const getCreateTest = async () => {
       const test = await clientApi.createTest(startTest);
-      console.log("get test", test);
+      console.log("AccountReportStart: create test for client", test);
       setTest(test);
     };
     getCreateTest();
