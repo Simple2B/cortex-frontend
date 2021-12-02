@@ -123,15 +123,13 @@ export default function ViewReport(): ReactElement {
     getClient();
   }, []);
 
-  console.log("ViewReport: info care plan => ", carePlanNames);
-  console.log("ViewReport: info frequency => ", frequencyNames);
-
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
   };
 
-  const handleCompleteCarePlan = () => {
+  useEffect(() => {
     if (date) {
+      console.log("!!!!!!!date => ", date);
       const testDate = new Date(
         date.toString().replace(/GMT.*$/, "GMT+0000")
       ).toISOString();
@@ -142,9 +140,12 @@ export default function ViewReport(): ReactElement {
       const dStart = fullStartDate[0].split("-");
       const fullTime = fullStartDate[1];
       const progressTestDate = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
+
       setProgressTestDate(progressTestDate);
     }
+  }, [date]);
 
+  const handleCompleteCarePlan = () => {
     console.log("!!!!!!carePlan", {
       test_id: Number(test_id),
       api_key: api_key,
@@ -153,19 +154,21 @@ export default function ViewReport(): ReactElement {
       frequency: typeFrequency,
     });
 
-    if (typeCaraPlan && typeFrequency) {
-      const postCarePlanInfo = async () => {
-        const carePlan = await clientApi.putInfoToCarePlan({
-          test_id: Number(test_id),
-          api_key: api_key,
-          progress_date: progressTestDate,
-          care_plan: typeCaraPlan,
-          frequency: typeFrequency,
-        });
-        setCarePlan(carePlan);
-      };
-      postCarePlanInfo();
-    }
+    const postCarePlanInfo = async () => {
+      const carePlan = await clientApi.putInfoToCarePlan({
+        test_id: Number(test_id),
+        api_key: api_key,
+        progress_date: progressTestDate,
+        care_plan: typeCaraPlan,
+        frequency: typeFrequency,
+      });
+      setCarePlan(carePlan);
+    };
+    postCarePlanInfo();
+
+    setTypeCaraPlan("");
+    setTypeFrequency("");
+    setDate(null);
   };
 
   return (
