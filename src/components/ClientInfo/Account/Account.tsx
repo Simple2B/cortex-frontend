@@ -307,7 +307,7 @@ export default function Account(): ReactElement {
                           <CheckoutForm
                             onUpdateCallback={setStatuses}
                             amount={amount}
-                            type={type}
+                            type_description={type}
                           />
                         </Elements>
                       )}
