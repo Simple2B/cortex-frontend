@@ -60,20 +60,23 @@ export const CheckoutForm = ({
         if (res === "ok") {
           console.log("Successful payment");
           setSuccess(true);
+          setInterval(() => {
+            setSuccess(false);
+          }, 3000);
           setPayment(PAYMENT_OK);
         }
       } catch (error) {
         setPayment(PAYMENT_FAIL);
-
+        setInterval(() => {
+          setPayment("");
+        }, 3000);
         console.log("Error from Stripe", error);
       }
     } else {
       console.log("Error message => ", error.message);
     }
   };
-  const handleCloseAlert = () => {
-    setSuccess(!success);
-  };
+
   const checkInputs = (): boolean => {
     if (!amount || !type_description) {
       return false;
@@ -90,30 +93,28 @@ export const CheckoutForm = ({
             <CardElement options={CARD_OPTIONS} />
           </div>
         </fieldset>
-        <button
-          className={`${!checkInputs() ? "completeBtnDisable" : "completeBtn"}`}
-          disabled={!stripe || !checkInputs()}
-        >
-          Complete
-        </button>
-      </form>
-      {success ? (
-        <div
-          className="alert alert-success alert-dismissible fade show "
-          role="alert"
-        >
-          <strong> {payment}</strong>
+        {!success && payment !== PAYMENT_FAIL ? (
           <button
-            type="button"
-            className="close"
-            data-dismiss="alert"
-            aria-label="Close"
-            onClick={handleCloseAlert}
+            className={`${
+              !checkInputs() ? "completeBtnDisable" : "completeBtn"
+            }`}
+            disabled={!stripe || !checkInputs()}
           >
-            <span aria-hidden="true">&times;</span>
+            Complete
           </button>
-        </div>
-      ) : null}
+        ) : (
+          <div
+            className={`${
+              payment === PAYMENT_OK
+                ? "alert alert-success alert-dismissible fade show "
+                : "alert alert-danger alert-dismissible fade show "
+            }`}
+            role="alert"
+          >
+            <strong> {payment}</strong>
+          </div>
+        )}
+      </form>
     </>
   );
 };
