@@ -193,7 +193,7 @@ export default function Intake(props: {
               </div> */}
             </div>
           </div>
-          <div className="intakeInfoText_results">
+          {/* <div className="intakeInfoText_results">
             <div className="results">
               <div>63bpm</div>
               <div>HR</div>
@@ -206,7 +206,7 @@ export default function Intake(props: {
               <div>98%</div>
               <div>SpO2</div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="intakeInfoAlpha">
           <div className="intakeInfoAlpha_text">Alpha</div>
