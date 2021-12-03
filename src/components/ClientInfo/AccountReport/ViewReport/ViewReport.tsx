@@ -165,14 +165,6 @@ export default function ViewReport(): ReactElement {
   }, [date]);
 
   const handleCompleteCarePlan = () => {
-    // console.log("!!!!!!carePlan", {
-    //   test_id: Number(test_id),
-    //   api_key: api_key,
-    //   progress_date: progressTestDate,
-    //   care_plan: typeCaraPlan,
-    //   frequency: typeFrequency,
-    // });
-
     const postCarePlanInfo = async () => {
       const carePlan = await clientApi.putInfoToCarePlan({
         test_id: Number(test_id),
@@ -189,9 +181,6 @@ export default function ViewReport(): ReactElement {
     setTypeFrequency("");
     setDate(null);
   };
-
-  console.log("carePlanNames", carePlanNames);
-  console.log("frequencyNames", frequencyNames);
 
   return (
     <div className="containerViewReport">
@@ -254,20 +243,22 @@ export default function ViewReport(): ReactElement {
                     onChange={(e) => setTypeCaraPlan(e.target.value)}
                   />
                   <div className="reportTypeSelector_names">
-                    {carePlanNames.map((name, index) => {
-                      return (
-                        <div
-                          key={index}
-                          onClick={(e) => {
-                            console.log("name cara plan ", name.care_plan);
-                            setTypeCaraPlan(name.care_plan);
-                          }}
-                          className="name"
-                        >
-                          {name.care_plan}
-                        </div>
-                      );
-                    })}
+                    <div className="names">
+                      {carePlanNames.map((name, index) => {
+                        return (
+                          <div
+                            key={index}
+                            onClick={(e) => {
+                              console.log("name cara plan ", name.care_plan);
+                              setTypeCaraPlan(name.care_plan);
+                            }}
+                            className="name"
+                          >
+                            {name.care_plan}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
                 <div className="reportTypeSelector">
@@ -279,20 +270,22 @@ export default function ViewReport(): ReactElement {
                     onChange={(e) => setTypeFrequency(e.target.value)}
                   />
                   <div className="reportTypeSelector_names">
-                    {frequencyNames.map((name, index) => {
-                      return (
-                        <div
-                          key={index}
-                          onClick={(e) => {
-                            console.log("name frequency ", name.frequency);
-                            setTypeFrequency(name.frequency);
-                          }}
-                          className="name"
-                        >
-                          {name.frequency}
-                        </div>
-                      );
-                    })}
+                    <div className="names">
+                      {frequencyNames.map((name, index) => {
+                        return (
+                          <div
+                            key={index}
+                            onClick={(e) => {
+                              console.log("name frequency ", name.frequency);
+                              setTypeFrequency(name.frequency);
+                            }}
+                            className="name"
+                          >
+                            {name.frequency}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
                 <div className="reportTypeSelector">
