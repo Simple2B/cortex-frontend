@@ -94,9 +94,8 @@
   position: relative;
   height: 178px;
   display: block;
-  overflow: auto;
+  overflow-y: auto;
 }
-
 
 .visitHistory_table table tr th {
   font-size: 30px;
@@ -268,7 +267,8 @@
   margin-right: 5px;
 }
 
-.completeBtn, .completeBtnDisable  {
+.completeBtn,
+.completeBtnDisable {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -287,7 +287,6 @@
   background: radial-gradient(#b1b1b1, #7a7a7a);
   font-weight: bold;
 }
-
 
 @media (max-width: 1440px) {
   .clientInfo_tittle {
@@ -337,42 +336,40 @@
 
 /* billing */
 .FormGroup {
-	margin: 25px auto;
-	padding: 0;
-	border-style: none;
-	background-color: #191919;
-	will-change: opacity, transform;
-	border-radius: 4px;
+  margin: 25px auto;
+  padding: 0;
+  border-style: none;
+  background-color: #191919;
+  will-change: opacity, transform;
+  border-radius: 4px;
 }
 
 .FormRow {
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-align: center;
-	align-items: center;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
   padding-left: 10px;
   border: none;
-	border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #fff;
 }
 
 .StripeElement--webkit-autofill {
-	background: transparent !important;
+  background: transparent !important;
 }
 
 .StripeElement {
-	width: 100%;
+  width: 100%;
   border: none;
-	padding: 15px 19px 11px 0;
+  padding: 15px 19px 11px 0;
 }
 
 h1,
 h3 {
-	text-align: center;
+  text-align: center;
 }
 
-
 @media (max-width: 1024px) {
-
   .billing {
     margin-top: 1em;
     width: 97%;
