@@ -15,6 +15,16 @@ interface ITest {
   frequency: string;
 }
 
+interface INameCarePlan {
+  number: null | number;
+  care_plan: string;
+}
+
+interface INameFrequency {
+  number: null | number;
+  frequency: string;
+}
+
 export default function ViewReport(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
@@ -46,10 +56,19 @@ export default function ViewReport(): ReactElement {
   const [progressTestDate, setProgressTestDate] = useState<string | null>(null);
 
   const test_id = splitLocation[splitLocation.length - 1].split("_")[2];
-  // console.log("test_id", Number(test_id));
 
-  const [carePlanNames, setCarePlanNames] = useState();
-  const [frequencyNames, setFrequencyNames] = useState();
+  const [carePlanNames, setCarePlanNames] = useState<Array<INameCarePlan>>([
+    {
+      number: null,
+      care_plan: "",
+    },
+  ]);
+  const [frequencyNames, setFrequencyNames] = useState<Array<INameFrequency>>([
+    {
+      number: null,
+      frequency: "",
+    },
+  ]);
 
   useEffect(() => {
     getTest();
@@ -129,7 +148,7 @@ export default function ViewReport(): ReactElement {
 
   useEffect(() => {
     if (date) {
-      console.log("!!!!!!!date => ", date);
+      // console.log("!!!!!!!date => ", date);
       const testDate = new Date(
         date.toString().replace(/GMT.*$/, "GMT+0000")
       ).toISOString();
@@ -146,13 +165,13 @@ export default function ViewReport(): ReactElement {
   }, [date]);
 
   const handleCompleteCarePlan = () => {
-    console.log("!!!!!!carePlan", {
-      test_id: Number(test_id),
-      api_key: api_key,
-      progress_date: progressTestDate,
-      care_plan: typeCaraPlan,
-      frequency: typeFrequency,
-    });
+    // console.log("!!!!!!carePlan", {
+    //   test_id: Number(test_id),
+    //   api_key: api_key,
+    //   progress_date: progressTestDate,
+    //   care_plan: typeCaraPlan,
+    //   frequency: typeFrequency,
+    // });
 
     const postCarePlanInfo = async () => {
       const carePlan = await clientApi.putInfoToCarePlan({
@@ -170,6 +189,27 @@ export default function ViewReport(): ReactElement {
     setTypeFrequency("");
     setDate(null);
   };
+
+  // console.log("ViewReport: carePlanNames => ", carePlanNames);
+
+  const uniqueCarePlanNames = carePlanNames
+    .filter((name: INameCarePlan) => {
+      if (name.care_plan !== "") {
+        return name.care_plan;
+      }
+    })
+    .filter((v, i, a) => a.indexOf(v) === i);
+  const uniqueFrequencyNames = frequencyNames
+    .filter((name: INameFrequency) => {
+      if (name.frequency !== "") {
+        return name.frequency;
+      }
+    })
+    .filter((v, i, a) => a.indexOf(v) === i);
+
+  console.log("ViewReport: uniqueCarePlanNames => ", uniqueCarePlanNames);
+
+  console.log("ViewReport: uniqueFrequencyNames => ", uniqueFrequencyNames);
 
   return (
     <div className="containerViewReport">
