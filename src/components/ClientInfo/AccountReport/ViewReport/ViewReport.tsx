@@ -2,8 +2,8 @@ import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "./ViewReport.sass";
-import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
-import { instance } from "../../../api/axiosInstance";
+import { Client, clientApi, ClientDefault } from "../../../../api/clientApi";
+import { instance } from "../../../../api/axiosInstance";
 
 interface ITest {
   id: null | number;
