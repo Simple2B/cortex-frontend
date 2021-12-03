@@ -84,6 +84,13 @@ export default function Name(): ReactElement {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="brain">
+            <Brain />
+          </div>
+
+          <div className="intakeInfoText_results brain_btns">
             <div className="btn containerRogueMode">
               <div className="btn_Title titleRogueMode">Rogue Mode</div>
               <div className="btnContainer btnRogueMode">
@@ -105,14 +112,7 @@ export default function Name(): ReactElement {
                 </div>
               </div>
             </div>
-          </div>
-
-          <div className="brain">
-            <Brain />
-          </div>
-
-          {/* <div className="intakeInfoText_results">
-            <div className="results">
+            {/* <div className="results">
               <div>63bpm</div>
               <div>HR</div>
             </div>
@@ -123,8 +123,8 @@ export default function Name(): ReactElement {
             <div className="results">
               <div>98%</div>
               <div>SpO2</div>
-            </div>
-          </div> */}
+            </div> */}
+          </div>
         </div>
         <div className="alphaContainer">
           <div className="alphaContainer_text">Alpha</div>
