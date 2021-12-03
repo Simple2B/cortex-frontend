@@ -331,7 +331,7 @@ export const clientApi = {
     try {
       const response = await instance().post("api/test/care_plan_create", data);
 
-      console.log("POST: response createCarePlan ", response);
+      // console.log("POST: response createCarePlan ", response);
       console.log("POST: response createCarePlan successfully ", response.data);
       return response.data;
     } catch (error: any) {
