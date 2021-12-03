@@ -123,7 +123,7 @@ export default function NameOn(): ReactElement {
               <Brain />
             </div>
 
-            <div className="intakeInfoText_results">
+            {/* <div className="intakeInfoText_results">
               <div className="results">
                 <div>63bpm</div>
                 <div>HR</div>
@@ -136,7 +136,7 @@ export default function NameOn(): ReactElement {
                 <div>98%</div>
                 <div>SpO2</div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="alphaContainer">
             <div className="alphaContainer_text">Alpha</div>
