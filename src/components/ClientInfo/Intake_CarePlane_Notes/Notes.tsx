@@ -186,9 +186,9 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
             {/* {activeBtn === "Preset" ? ( */}
             <div className="notesInfo">
               {notesData &&
-                notesData.map((note) => {
+                notesData.map((note, index) => {
                   return (
-                    <div className="notesInfo_item">
+                    <div key={index} className="notesInfo_item">
                       <div className="title">
                         {note.notes}{" "}
                         <sup
@@ -289,7 +289,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
               </div>
             </div> */}
           </div>
-          {/* <div className="intakeInfoText_results">
+          {/* `<div className="intakeInfoText_results">
             <div className="results">
               <div>63bpm</div>
               <div>HR</div>
@@ -302,7 +302,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
               <div>98%</div>
               <div>SpO2</div>
             </div>
-          </div> */}
+          </div>` */}
         </div>
         <div className="intakeInfoAlpha">
           <div className="intakeInfoAlpha_text">Alpha</div>
