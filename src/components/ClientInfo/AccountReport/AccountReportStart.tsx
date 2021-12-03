@@ -37,7 +37,7 @@ export default function AccountReportStart(): ReactElement {
       const response = await instance().get(
         `api/client/client_intake/${api_key}`
       );
-      console.log("GET: client_intake name => ", response.data);
+      // console.log("GET: client_intake name => ", response.data);
       setClient(response.data);
       return response.data;
     } catch (error: any) {
@@ -120,13 +120,12 @@ export default function AccountReportStart(): ReactElement {
       api_key: api_key,
       date: startDateToBack,
     };
-    console.log("start test", startTest);
+    // console.log("start test", startTest);
     setStartTest(startTest);
-    // clientApi.createTest(startTest);
 
     const getCreateTest = async () => {
       const test = await clientApi.createTest(startTest);
-      console.log("AccountReportStart: create test for client", test);
+      // console.log("AccountReportStart: create test for client", test);
       setTest(test);
     };
     getCreateTest();
