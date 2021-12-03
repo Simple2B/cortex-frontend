@@ -45,16 +45,20 @@
                         position: relative
                         .reportTypeSelector_names
                             width: 100%
+                            max-height: 184px
                             display: flex
                             flex-direction: column
                             background-color: black
                             border-left: 1px solid #aef7ff
                             border-right: 1px solid #aef7ff
+                            overflow-x: hidden
+                            overflow-y: auto
                             position: absolute
                             z-index: 100
                             visibility: hidden
                             opacity: 0
                             transition: visibility .3s linear, opacity 0.3s linear
+
                             .name
                                 display: flex
                                 justify-content: flex-start
