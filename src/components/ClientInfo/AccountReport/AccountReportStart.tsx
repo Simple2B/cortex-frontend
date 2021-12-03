@@ -16,7 +16,7 @@ export default function AccountReportStart(): ReactElement {
   const [client, setClient] = useState<Client>(ClientDefault);
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
   const [play, exposedData] = useSound("/cortex_sound.mp3");
-  const [counter, setCounter] = useState<number>(3);
+  const [counter, setCounter] = useState<number>(5);
   // 07:47 -> 467 seconds
   const [isTestStarted, setIsTestStarted] = useState<boolean>(false);
   const history = useHistory();
