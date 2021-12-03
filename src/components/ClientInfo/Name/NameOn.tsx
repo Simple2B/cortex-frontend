@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "./name.sass";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import { ReactComponent as Brain } from "../../../images/brain.svg";
@@ -96,6 +96,13 @@ export default function NameOn(): ReactElement {
                   </div>
                 </div>
               </div>
+            </div>
+
+            <div className="brain">
+              <Brain />
+            </div>
+
+            <div className="intakeInfoText_results brain_btns">
               <div className="btn containerRogueMode">
                 <div className="btn_Title titleRogueMode">Rogue Mode</div>
                 <div className="btnContainer btnRogueMode">
@@ -117,14 +124,7 @@ export default function NameOn(): ReactElement {
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div className="brain">
-              <Brain />
-            </div>
-
-            {/* <div className="intakeInfoText_results">
-              <div className="results">
+              {/* <div className="results">
                 <div>63bpm</div>
                 <div>HR</div>
               </div>
@@ -135,8 +135,8 @@ export default function NameOn(): ReactElement {
               <div className="results">
                 <div>98%</div>
                 <div>SpO2</div>
-              </div>
-            </div> */}
+              </div> */}
+            </div>
           </div>
           <div className="alphaContainer">
             <div className="alphaContainer_text">Alpha</div>
