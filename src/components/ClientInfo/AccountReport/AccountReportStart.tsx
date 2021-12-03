@@ -8,7 +8,6 @@ import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg"
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
 import useSound from "use-sound";
-import * as _ from "lodash";
 
 export default function AccountReportStart(): ReactElement {
   const location = useLocation();
@@ -17,7 +16,7 @@ export default function AccountReportStart(): ReactElement {
   const [client, setClient] = useState<Client>(ClientDefault);
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
   const [play, exposedData] = useSound("/cortex_sound.mp3");
-  const [counter, setCounter] = useState<number>(5);
+  const [counter, setCounter] = useState<number>(3);
   // 07:47 -> 467 seconds
 
   const history = useHistory();
@@ -99,21 +98,18 @@ export default function AccountReportStart(): ReactElement {
       return resetTimer();
     }
   }, [counter]);
-  const handleStop = () => {
-    console.log("STOPING PLAY");
 
-    exposedData.stop();
-  };
-  const debouncedSearch = _.debounce(handleStop, counter * 1000);
   const handlePlay = () => {
     console.log("START PLAY");
-
     play();
-    debouncedSearch();
+    setInterval(() => {
+      exposedData.stop();
+    }, counter * 1000);
+    console.log("STOPPED!");
   };
   const createTest = () => {
-    handlePlay();
     startTimer();
+    handlePlay();
     const date = new Date().toISOString().replace(/GMT.*$/, "GMT+0000");
     const fullDate = date.replace("T", " ").replace(".", " ").split(" ");
     const dStart = fullDate[0].split("-");
