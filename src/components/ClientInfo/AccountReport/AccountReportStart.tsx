@@ -18,7 +18,7 @@ export default function AccountReportStart(): ReactElement {
   const [play, exposedData] = useSound("/cortex_sound.mp3");
   const [counter, setCounter] = useState<number>(3);
   // 07:47 -> 467 seconds
-
+  const [isTestStarted, setIsTestStarted] = useState<boolean>(false);
   const history = useHistory();
   const [startTest, setStartTest] = useState({
     api_key: "",
@@ -100,12 +100,13 @@ export default function AccountReportStart(): ReactElement {
   }, [counter]);
 
   const handlePlay = () => {
-    console.log("START PLAY");
+    console.log("Record START PLAYING");
+    setIsTestStarted(true);
     play();
     setInterval(() => {
       exposedData.stop();
     }, counter * 1000);
-    console.log("STOPPED!");
+    console.log("Record STOPPED!");
   };
   const createTest = () => {
     startTimer();
@@ -188,11 +189,11 @@ export default function AccountReportStart(): ReactElement {
                   View Report
                 </div>
               </div>
-            ) : (
+            ) : !isTestStarted ? (
               <div className="modalWindow_btnStart" onClick={createTest}>
                 Start
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
