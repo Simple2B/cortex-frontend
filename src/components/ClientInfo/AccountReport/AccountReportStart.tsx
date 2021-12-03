@@ -7,6 +7,7 @@ import "./AccountReport.sass";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
+import useSound from "use-sound";
 
 export default function AccountReportStart(): ReactElement {
   const location = useLocation();
@@ -14,10 +15,10 @@ export default function AccountReportStart(): ReactElement {
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
-
+  const [play, exposedData] = useSound("/cortex_sound.mp3");
   const [counter, setCounter] = useState<number>(3);
   // 07:47 -> 467 seconds
-
+  const [isTestStarted, setIsTestStarted] = useState<boolean>(false);
   const history = useHistory();
   const [startTest, setStartTest] = useState({
     api_key: "",
@@ -98,8 +99,18 @@ export default function AccountReportStart(): ReactElement {
     }
   }, [counter]);
 
+  const handlePlay = () => {
+    console.log("Record START PLAYING");
+    setIsTestStarted(true);
+    play();
+    setInterval(() => {
+      exposedData.stop();
+    }, counter * 1000);
+    console.log("Record STOPPED!");
+  };
   const createTest = () => {
     startTimer();
+    handlePlay();
     const date = new Date().toISOString().replace(/GMT.*$/, "GMT+0000");
     const fullDate = date.replace("T", " ").replace(".", " ").split(" ");
     const dStart = fullDate[0].split("-");
@@ -177,11 +188,11 @@ export default function AccountReportStart(): ReactElement {
                   View Report
                 </div>
               </div>
-            ) : (
+            ) : !isTestStarted ? (
               <div className="modalWindow_btnStart" onClick={createTest}>
                 Start
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
