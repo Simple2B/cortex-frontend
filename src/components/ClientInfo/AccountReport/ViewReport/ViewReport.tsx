@@ -190,26 +190,8 @@ export default function ViewReport(): ReactElement {
     setDate(null);
   };
 
-  // console.log("ViewReport: carePlanNames => ", carePlanNames);
-
-  const uniqueCarePlanNames = carePlanNames
-    .filter((name: INameCarePlan) => {
-      if (name.care_plan !== "") {
-        return name.care_plan;
-      }
-    })
-    .filter((v, i, a) => a.indexOf(v) === i);
-  const uniqueFrequencyNames = frequencyNames
-    .filter((name: INameFrequency) => {
-      if (name.frequency !== "") {
-        return name.frequency;
-      }
-    })
-    .filter((v, i, a) => a.indexOf(v) === i);
-
-  console.log("ViewReport: uniqueCarePlanNames => ", uniqueCarePlanNames);
-
-  console.log("ViewReport: uniqueFrequencyNames => ", uniqueFrequencyNames);
+  console.log("carePlanNames", carePlanNames);
+  console.log("frequencyNames", frequencyNames);
 
   return (
     <div className="containerViewReport">
