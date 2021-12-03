@@ -22,7 +22,7 @@ import { CarePlane } from "./components/ClientInfo/Intake_CarePlane_Notes/CarePl
 import { Notes } from "./components/ClientInfo/Intake_CarePlane_Notes/Notes";
 import { AccountReport } from "./components/ClientInfo/AccountReport/AccountReport";
 import AccountReportStart from "./components/ClientInfo/AccountReport/AccountReportStart";
-import ViewReport from "./components/ClientInfo/ViewReport/ViewReport";
+import ViewReport from "./components/ClientInfo/AccountReport/ViewReport/ViewReport";
 
 function App() {
   const loggedIn = useTypedSelector((state) => state.auth.loggedIn);
