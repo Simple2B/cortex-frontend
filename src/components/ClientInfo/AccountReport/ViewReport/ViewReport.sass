@@ -40,6 +40,46 @@
                     &:hover
                         background: linear-gradient(#085E67, #00E5FF)
                         transition: background 0.3s ease
+                .reportsGeneration
+                    .reportTypeSelector
+                        position: relative
+                        .reportTypeSelector_names
+                            width: 100%
+                            display: flex
+                            flex-direction: column
+                            background-color: black
+                            border-left: 1px solid #aef7ff
+                            border-right: 1px solid #aef7ff
+                            position: absolute
+                            z-index: 100
+                            visibility: hidden
+                            opacity: 0
+                            transition: visibility .3s linear, opacity 0.3s linear
+                            .name
+                                display: flex
+                                justify-content: flex-start
+                                align-items: center
+                                border-radius: 10px
+                                border: transparent
+                                width: 100%
+                                height: 61px
+                                padding-left: 20px
+                                font-size: 25px
+                                cursor: pointer
+                                &:hover
+                                    background-color: #A2A2A2
+                        .reportTypeSelector_names:last-child
+                            border-bottom: 1px solid #aef7ff
+                            border-bottom-left-radius: 10px
+                            border-bottom-right-radius: 10px
+                    .reportTypeSelector:hover .reportTypeSelector_names
+                        visibility: visible
+                        opacity: 1
+                    .reportTypeSelector:hover .dataInput
+                        // border-bottom: none
+                        border-bottom-left-radius: 0px
+                        border-bottom-right-radius: 0px
+
 
             .containerDashboard
                 width: 100%
