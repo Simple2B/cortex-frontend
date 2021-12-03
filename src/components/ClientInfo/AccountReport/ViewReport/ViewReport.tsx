@@ -242,24 +242,25 @@ export default function ViewReport(): ReactElement {
                     value={typeCaraPlan}
                     onChange={(e) => setTypeCaraPlan(e.target.value)}
                   />
-                  <div className="reportTypeSelector_names">
-                    <div className="names">
-                      {carePlanNames.map((name, index) => {
-                        return (
-                          <div
-                            key={index}
-                            onClick={(e) => {
-                              console.log("name cara plan ", name.care_plan);
-                              setTypeCaraPlan(name.care_plan);
-                            }}
-                            className="name"
-                          >
-                            {name.care_plan}
-                          </div>
-                        );
-                      })}
+                  {carePlanNames.length > 1 && (
+                    <div className="reportTypeSelector_names">
+                      <div className="names">
+                        {carePlanNames.map((name, index) => {
+                          return (
+                            <div
+                              key={index}
+                              onClick={(e) => {
+                                setTypeCaraPlan(name.care_plan);
+                              }}
+                              className="name"
+                            >
+                              {name.care_plan}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
                 <div className="reportTypeSelector">
                   <input
@@ -269,24 +270,25 @@ export default function ViewReport(): ReactElement {
                     value={typeFrequency}
                     onChange={(e) => setTypeFrequency(e.target.value)}
                   />
-                  <div className="reportTypeSelector_names">
-                    <div className="names">
-                      {frequencyNames.map((name, index) => {
-                        return (
-                          <div
-                            key={index}
-                            onClick={(e) => {
-                              console.log("name frequency ", name.frequency);
-                              setTypeFrequency(name.frequency);
-                            }}
-                            className="name"
-                          >
-                            {name.frequency}
-                          </div>
-                        );
-                      })}
+                  {frequencyNames.length > 1 && (
+                    <div className="reportTypeSelector_names">
+                      <div className="names">
+                        {frequencyNames.map((name, index) => {
+                          return (
+                            <div
+                              key={index}
+                              onClick={(e) => {
+                                setTypeFrequency(name.frequency);
+                              }}
+                              className="name"
+                            >
+                              {name.frequency}
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
                 <div className="reportTypeSelector">
                   <DatePicker
