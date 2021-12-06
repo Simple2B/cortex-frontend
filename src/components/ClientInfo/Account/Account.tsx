@@ -64,13 +64,20 @@ export default function Account(): ReactElement {
     }
   };
 
-  const getStripeKey = async () => {
-    const stripeKeys = await instance().get(`api/client/get_secret`);
-    console.log("stripeKeys", stripeKeys);
-    const res = await loadStripe(stripeKeys.data.pk_test);
-    setStripe(res);
-    setPKStripeKey(stripeKeys.data.pk_test);
-    setSKStripeKey(stripeKeys.data.sk_test);
+  const getBilling = async () => {
+    try {
+      const response = await instance().get(
+        `api/client/billing_history/${api_key}`
+      );
+      setVisits(response.data);
+    } catch (error: any) {
+      console.log("GET: error message billing history =>  ", error.message);
+      console.log(
+        "error response data billing history => ",
+        error.response.data
+      );
+      throw new Error(error.message);
+    }
   };
 
   useEffect(() => {
@@ -118,6 +125,15 @@ export default function Account(): ReactElement {
       filterVisits();
     }
   }, [startTime, endTime]);
+
+  const getStripeKey = async () => {
+    const stripeKeys = await instance().get(`api/client/get_secret`);
+    console.log("stripeKeys", stripeKeys);
+    const res = await loadStripe(stripeKeys.data.pk_test);
+    setStripe(res);
+    setPKStripeKey(stripeKeys.data.pk_test);
+    setSKStripeKey(stripeKeys.data.sk_test);
+  };
 
   useEffect(() => {
     getStripeKey();
@@ -308,6 +324,7 @@ export default function Account(): ReactElement {
                             onUpdateCallback={setStatuses}
                             amount={amount}
                             type_description={type}
+                            api_key={api_key}
                           />
                         </Elements>
                       )}

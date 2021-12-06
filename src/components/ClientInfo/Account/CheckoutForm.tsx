@@ -29,11 +29,13 @@ interface CheckoutFormProps {
   amount: string;
   type_description: string;
   onUpdateCallback(): void;
+  api_key: string;
 }
 export const CheckoutForm = ({
   amount,
   type_description,
   onUpdateCallback,
+  api_key,
 }: CheckoutFormProps) => {
   const [success, setSuccess] = useState<boolean>(false);
   const stripe: any = useStripe();
@@ -55,6 +57,7 @@ export const CheckoutForm = ({
           id: id,
           description: type_description,
           amount: Number(amount) * 100,
+          api_key: api_key,
         };
         const res = await clientApi.createStripeSession(sessionData);
         if (res === "ok") {

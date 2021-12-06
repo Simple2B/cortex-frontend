@@ -399,8 +399,9 @@ export const clientApi = {
     id: string;
     description: string;
     amount: number;
+    api_key: string;
   }): Promise<any> => {
-    console.log("createStripeSession: data =>", data);
+    console.log("POST: createStripeSession: data =>", data);
     try {
       const response = await instance().post(
         "api/client/create_stripe_session",
