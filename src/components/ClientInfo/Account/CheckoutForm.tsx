@@ -3,7 +3,7 @@ import "./account.css";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { clientApi } from "../../../api/clientApi";
 
-const PAYMENT_OK = "Payment successful !";
+const PAYMENT_OK = "Payment successful!";
 const PAYMENT_FAIL = "Payment FAILED! ";
 
 const CARD_OPTIONS: any = {
@@ -114,6 +114,7 @@ export const CheckoutForm = ({
                 : "alert alert-danger alert-dismissible fade show "
             }`}
             role="alert"
+            // className="alert alert-success alert-dismissible fade show "
           >
             <strong> {payment}</strong>
           </div>

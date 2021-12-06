@@ -52,9 +52,10 @@
 /* needed for alert on CheckoutForm */
 .alert {
   margin-bottom: 1px;
-  height: 40px;
-  line-height: 30px;
+  /* height: 40px;
+  line-height: 30px; */
   padding: 0px 15px;
+  position: absolute;
 }
 
 .clientInfoAccount .info {
@@ -105,6 +106,10 @@
   height: 178px;
   display: block;
   overflow-y: auto;
+}
+
+.billing_table .table tr td {
+  width: 100%;
 }
 
 .visitHistory_table table tr th {
