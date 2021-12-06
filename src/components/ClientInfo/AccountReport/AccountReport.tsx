@@ -25,7 +25,7 @@ export function AccountReport(): ReactElement {
   const getClientTests = async () => {
     try {
       const response = await instance().get(`api/test/client_tests/${api_key}`);
-      console.log("GET: getClientTests => ", response.data);
+      // console.log("GET: getClientTests => ", response.data);
       setClientTests(response.data);
       return response.data;
     } catch (error: any) {
@@ -50,7 +50,6 @@ export function AccountReport(): ReactElement {
         api_key: api_key,
       });
       console.log("AccountReport: created care plan", carePlan);
-      // setCarePlan(carePlan);
     };
     createCarePlan();
     history.push(`/${api_key}/start`);
