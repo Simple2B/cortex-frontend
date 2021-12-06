@@ -78,7 +78,7 @@ export const CheckoutForm = ({
   };
 
   const checkInputs = (): boolean => {
-    if (!amount || !type_description) {
+    if (!amount) {
       return false;
     } else {
       return true;
@@ -93,6 +93,7 @@ export const CheckoutForm = ({
             <CardElement options={CARD_OPTIONS} />
           </div>
         </fieldset>
+
         {!success && payment !== PAYMENT_FAIL ? (
           <button
             className={`${
