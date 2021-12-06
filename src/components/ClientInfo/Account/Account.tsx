@@ -8,8 +8,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
+
 interface IVisit {
   date: string;
+  doctor_name: string;
+}
+
+interface IBilling {
+  date: string;
+  description: string;
+  amount: number | null;
+  client_name: string;
   doctor_name: string;
 }
 
@@ -35,6 +44,15 @@ export default function Account(): ReactElement {
   const [stripe, setStripe] = useState<Stripe | null>(null);
   const [pkStripeKey, setPKStripeKey] = useState<string>("");
   const [skStripeKey, setSKStripeKey] = useState<string>("");
+  const [billingData, setBillingData] = useState<Array<IBilling>>([
+    {
+      date: "",
+      description: "",
+      amount: null,
+      client_name: "",
+      doctor_name: "",
+    },
+  ]);
 
   const getClient = async () => {
     try {
@@ -69,7 +87,8 @@ export default function Account(): ReactElement {
       const response = await instance().get(
         `api/client/billing_history/${api_key}`
       );
-      setVisits(response.data);
+      console.log("Account: getBilling => ", response.data);
+      setBillingData(response.data);
     } catch (error: any) {
       console.log("GET: error message billing history =>  ", error.message);
       console.log(
@@ -84,6 +103,10 @@ export default function Account(): ReactElement {
     getClient();
     getHistoryVisits();
   }, [api_key]);
+
+  useEffect(() => {
+    getBilling();
+  }, [api_key, amount]);
 
   useEffect(() => {
     if (startTime && endTime) {
@@ -265,74 +288,63 @@ export default function Account(): ReactElement {
         <div className="billing">
           <div className="clientInfo_tittle">Billing</div>
           <div className="billing_table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>02/12/2020</td>
-                  <td>$580</td>
-                  <td>Paid</td>
-                </tr>
-                <tr>
-                  <td>02/12/2020</td>
-                  <td>$580</td>
-                  <td>Failed</td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colSpan={2}>
-                    <div className="visitHistory_inputContainer">
-                      <div className="inputTitle">Type</div>
-                      <div>
-                        <input
-                          type="text"
-                          placeholder=""
-                          value={type}
-                          onChange={(e) => setType(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </td>
-                  <td colSpan={1}>
-                    <div className="visitHistory_inputContainer">
-                      <div className="inputTitle">Amount</div>
-                      <div>
-                        <input
-                          type="number"
-                          placeholder=""
-                          maxLength={6}
-                          value={amount}
-                          onChange={(e) => setAmount(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td colSpan={3}>
-                    <div className="visitHistory_inputContainer">
-                      {pkStripeKey && (
-                        <Elements options={options} stripe={stripe}>
-                          <CheckoutForm
-                            onUpdateCallback={setStatuses}
-                            amount={amount}
-                            type_description={type}
-                            api_key={api_key}
-                          />
-                        </Elements>
-                      )}
-                    </div>
-                  </td>
-                </tr>
-              </tfoot>
+            <table className="table">
+              <tr className="tableHeader">
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+              {billingData[0].amount &&
+                billingData.map((billing, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{billing.date}</td>
+                      <td>${billing.amount}</td>
+                      <td>Paid</td>
+                    </tr>
+                  );
+                })}
             </table>
+          </div>
+
+          <div className="visitHistory_billing">
+            <div className="visitHistory_inputContainer">
+              <div className="inputTitle">Type</div>
+              <div>
+                <input
+                  type="text"
+                  placeholder=""
+                  value={type}
+                  onChange={(e) => setType(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="visitHistory_inputContainer">
+              <div className="inputTitle">Amount</div>
+              <div>
+                <input
+                  type="number"
+                  placeholder=""
+                  maxLength={6}
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="visitHistory_inputContainer">
+            {pkStripeKey && (
+              <Elements options={options} stripe={stripe}>
+                <CheckoutForm
+                  onUpdateCallback={setStatuses}
+                  amount={amount}
+                  type_description={type}
+                  api_key={api_key}
+                />
+              </Elements>
+            )}
           </div>
         </div>
       </div>
