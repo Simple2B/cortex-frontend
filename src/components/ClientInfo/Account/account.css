@@ -49,6 +49,14 @@
   color: #fff;
 }
 
+/* needed for alert on CheckoutForm */
+.alert {
+  margin-bottom: 1px;
+  height: 40px;
+  line-height: 30px;
+  padding: 0px 15px;
+}
+
 .clientInfoAccount .info {
   display: flex;
   justify-content: left;
