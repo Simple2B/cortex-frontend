@@ -184,7 +184,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
           <div className="intakeInfoText_health notesInfoText">
             <div className="intakeInfoText_healthTitle">Notes</div>
             {/* {activeBtn === "Preset" ? ( */}
-            <div className="notesInfo">
+            <div className="notesInfo clientIntakeInfo">
               {notesData &&
                 notesData.map((note, index) => {
                   return (
@@ -256,9 +256,12 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
                     ref={textareaRef}
                     className="textAreaChange"
                     onChange={textAreaChange}
-                    placeholder="Write Notes"
+                    placeholder="Write a Note"
+                    value={value}
+                    // autoFocus={true}
+                    maxLength={128}
                   >
-                    {value}
+                    {/* {value} */}
                   </textarea>
                 </div>
                 <div className="btnsModal">
