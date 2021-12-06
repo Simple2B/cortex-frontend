@@ -7,7 +7,6 @@ import "./AccountReport.sass";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
-import useSound from "use-sound";
 
 export default function AccountReportStart(): ReactElement {
   const location = useLocation();
@@ -15,7 +14,9 @@ export default function AccountReportStart(): ReactElement {
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
-  const [play, exposedData] = useSound("/cortex_sound.mp3");
+
+  const sound = new Audio("/cortex_sound.mp3");
+
   const [counter, setCounter] = useState<number>(5);
   // 07:47 -> 467 seconds
   const [isTestStarted, setIsTestStarted] = useState<boolean>(false);
@@ -99,18 +100,16 @@ export default function AccountReportStart(): ReactElement {
     }
   }, [counter]);
 
-  const handlePlay = () => {
-    console.log("Record START PLAYING");
-    setIsTestStarted(true);
-    play();
-    setInterval(() => {
-      exposedData.stop();
-    }, counter * 1000);
-    console.log("Record STOPPED!");
-  };
   const createTest = () => {
+    console.log("Record START PLAYING");
+    sound.play();
     startTimer();
-    handlePlay();
+    setIsTestStarted(true);
+    setInterval(() => {
+      sound.pause();
+    }, counter * 1000);
+
+    console.log("Record STOPPED!");
     const date = new Date().toISOString().replace(/GMT.*$/, "GMT+0000");
     const fullDate = date.replace("T", " ").replace(".", " ").split(" ");
     const dStart = fullDate[0].split("-");
@@ -120,12 +119,10 @@ export default function AccountReportStart(): ReactElement {
       api_key: api_key,
       date: startDateToBack,
     };
-    // console.log("start test", startTest);
     setStartTest(startTest);
 
     const getCreateTest = async () => {
       const test = await clientApi.createTest(startTest);
-      // console.log("AccountReportStart: create test for client", test);
       setTest(test);
     };
     getCreateTest();
