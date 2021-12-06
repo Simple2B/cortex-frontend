@@ -3,12 +3,11 @@ import "./account.css";
 import { useLocation } from "react-router-dom";
 import { instance } from "../../../api/axiosInstance";
 import DatePicker from "react-datepicker";
-import StripeCheckout from "react-stripe-checkout";
-import brain from "../../../images/brain.svg";
 import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
-// import { loadStripe } from "@stripe/stripe-js";
-
+import { loadStripe, Stripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import { CheckoutForm } from "./CheckoutForm";
 interface IVisit {
   date: string;
   doctor_name: string;
@@ -33,6 +32,7 @@ export default function Account(): ReactElement {
   const [amount, setAmount] = useState<string>("");
   const [type, setType] = useState<string>("");
 
+  const [stripe, setStripe] = useState<Stripe | null>(null);
   const [pkStripeKey, setPKStripeKey] = useState<string>("");
   const [skStripeKey, setSKStripeKey] = useState<string>("");
 
@@ -48,7 +48,6 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
-
   const getHistoryVisits = async () => {
     try {
       const response = await instance().get(
@@ -64,12 +63,12 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
-  // const stripePromise = loadStripe(pkStripeKey);
 
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
     console.log("stripeKeys", stripeKeys);
-    // stripePromise = loadStripe(stripeKeys.data.pk_test);
+    const res = await loadStripe(stripeKeys.data.pk_test);
+    setStripe(res);
     setPKStripeKey(stripeKeys.data.pk_test);
     setSKStripeKey(stripeKeys.data.sk_test);
   };
@@ -124,34 +123,17 @@ export default function Account(): ReactElement {
     getStripeKey();
   }, []);
 
-  const handleToken = (data: any): void => {
-    console.log("Account: data for stripe => ", data);
-
-    const sessionData = {
-      id: data.id,
-      description: type,
-      amount: Number(amount) * 100,
-    };
-
-    try {
-      const stripeSession = async () => {
-        const session = await clientApi.createStripeSession(sessionData);
-        console.log("Account: stripe session => ", session);
-      };
-      stripeSession();
-    } catch (e: any) {
-      console.log("Account: stripe error message", e.message);
-    }
-  };
-
-  const appearance = {
+  const appearance: any = {
     theme: "night",
   };
   const options: any = {
-    skStripeKey,
+    pkStripeKey,
     appearance,
   };
-
+  const setStatuses = () => {
+    setType("");
+    setAmount("");
+  };
   return (
     <>
       <div className="accountContainer">
@@ -289,7 +271,7 @@ export default function Account(): ReactElement {
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan={1}>
+                  <td colSpan={2}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Type</div>
                       <div>
@@ -302,13 +284,14 @@ export default function Account(): ReactElement {
                       </div>
                     </div>
                   </td>
-                  <td colSpan={2}>
+                  <td colSpan={1}>
                     <div className="visitHistory_inputContainer">
                       <div className="inputTitle">Amount</div>
                       <div>
                         <input
                           type="number"
                           placeholder=""
+                          maxLength={6}
                           value={amount}
                           onChange={(e) => setAmount(e.target.value)}
                         />
@@ -319,30 +302,14 @@ export default function Account(): ReactElement {
                 <tr>
                   <td colSpan={3}>
                     <div className="visitHistory_inputContainer">
-                      {pkStripeKey !== "" && (
-                        <StripeCheckout
-                          name="medical services"
-                          // description="Payment for medical services"
-                          image={brain}
-                          ComponentClass="div"
-                          panelLabel="Pay"
-                          amount={Number(amount) * 100} // cents
-                          currency="USD"
-                          stripeKey={pkStripeKey}
-                          email="info@vidhub.co"
-                          token={handleToken}
-                          // reconfigureOnUpdate={false}
-                        >
-                          {amount === "" ? (
-                            <button disabled className="completeBtnDisable">
-                              Pay with Card
-                            </button>
-                          ) : (
-                            <button className="completeBtn">
-                              Pay with Card
-                            </button>
-                          )}
-                        </StripeCheckout>
+                      {pkStripeKey && (
+                        <Elements options={options} stripe={stripe}>
+                          <CheckoutForm
+                            onUpdateCallback={setStatuses}
+                            amount={amount}
+                            type_description={type}
+                          />
+                        </Elements>
                       )}
                     </div>
                   </td>
