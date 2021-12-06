@@ -183,7 +183,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
         <div className="intakeInfoText">
           <div className="intakeInfoText_health notesInfoText">
             <div className="intakeInfoText_healthTitle">Notes</div>
-            {/* {activeBtn === "Preset" ? ( */}
+
             <div className="notesInfo">
               {notesData &&
                 notesData.map((note, index) => {
@@ -213,11 +213,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
                   );
                 })}
             </div>
-            {/* ) : (
-              <div className="notesInfo">Notes</div>
-            )} */}
 
-            {/* {activeBtn === "Preset" && ( */}
             <div
               className="notesBtnAdd"
               onClick={() => {
@@ -257,8 +253,9 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
                     className="textAreaChange"
                     onChange={textAreaChange}
                     placeholder="Write Notes"
+                    value={value}
                   >
-                    {value}
+                    {/* {value} */}
                   </textarea>
                 </div>
                 <div className="btnsModal">
