@@ -33,8 +33,8 @@ export default function Name(): ReactElement {
         <div className="nameContainer_brainContent">
           <div className="brain_btns">
             <div className="btn">
-              <div className="btn_Title">Atlas</div>
-              <div className="btnContainer">
+              <div className="btn_Title">Atlas/ShortLeg</div>
+              <div className="btnContainer btnAtlasShortLeg">
                 <div
                   onClick={handleChangeBtn}
                   className={activeBtnAtlas == "L" ? "btnActive" : "name_btn"}
@@ -54,9 +54,7 @@ export default function Name(): ReactElement {
                   R
                 </div>
               </div>
-            </div>
-            <div className="btn">
-              <div className="btn_Title">ShortLeg</div>
+
               <div className="btnContainer">
                 <div
                   onClick={handleChangeBtnShortLeg}
@@ -84,13 +82,37 @@ export default function Name(): ReactElement {
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="brain">
-            <Brain />
-          </div>
+            <div className="btn">
+              {/* <div className="btn_Title">ShortLeg</div> */}
+              {/* <div className="btnContainer">
+                <div
+                  onClick={handleChangeBtnShortLeg}
+                  className={
+                    activeBtnShortLeg == "L" ? "btnActive" : "name_btn"
+                  }
+                >
+                  L
+                </div>
+                <div
+                  onClick={handleChangeBtnShortLeg}
+                  className={
+                    activeBtnShortLeg == "X" ? "btnActive" : "name_btn"
+                  }
+                >
+                  X
+                </div>
+                <div
+                  onClick={handleChangeBtnShortLeg}
+                  className={
+                    activeBtnShortLeg == "R" ? "btnActive" : "name_btn"
+                  }
+                >
+                  R
+                </div>
+              </div> */}
+            </div>
 
-          <div className="intakeInfoText_results brain_btns">
             <div className="btn containerRogueMode">
               <div className="btn_Title titleRogueMode">Rogue Mode</div>
               <div className="btnContainer btnRogueMode">
@@ -112,6 +134,13 @@ export default function Name(): ReactElement {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="brain">
+            <Brain />
+          </div>
+
+          <div className="intakeInfoText_results">
             {/* <div className="results">
               <div>63bpm</div>
               <div>HR</div>

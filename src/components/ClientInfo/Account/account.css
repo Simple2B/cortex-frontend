@@ -52,9 +52,10 @@
 /* needed for alert on CheckoutForm */
 .alert {
   margin-bottom: 1px;
-  height: 40px;
-  line-height: 30px;
+  /* height: 40px;
+  line-height: 30px; */
   padding: 0px 15px;
+  position: absolute;
 }
 
 .clientInfoAccount .info {
@@ -98,11 +99,17 @@
   flex-direction: column;
 }
 
-.visitHistory_table .table {
+.visitHistory_table .table,
+.billing_table .table {
+  width: 100%;
   position: relative;
   height: 178px;
   display: block;
   overflow-y: auto;
+}
+
+.billing_table .table tr td {
+  width: 100%;
 }
 
 .visitHistory_table table tr th {
@@ -144,8 +151,14 @@
   flex-direction: column;
 }
 
+.visitHistory_billing {
+  /* width: 100%; */
+  display: flex;
+  justify-content: space-between;
+}
+
 .visitHistory_inputContainer {
-  width: 100%;
+  /* width: 49%; */
   display: flex;
   flex-direction: column;
 }
@@ -162,7 +175,7 @@
 }
 
 .visitHistory_inputContainer {
-  width: 100%;
+  /* width: 100%; */
 }
 
 .datetimeContainer,
@@ -193,6 +206,14 @@
   padding-left: 5px;
 }
 
+.visitHistory_billing .visitHistory_inputContainer {
+  width: 49%;
+}
+
+.visitHistory_billing .visitHistory_inputContainer div input {
+  width: 100%;
+}
+
 .visitHistory_inputContainer div input::placeholder {
   margin-left: 5px;
 }
@@ -216,9 +237,10 @@
 .billing_table {
   width: 100%;
 }
-.billing_table table {
+.billing_table table,
+.billing_table table tr {
   width: 100%;
-  border: 1px solid #707070;
+  /* border: 1px solid #707070; */
 }
 
 .billing_table table tr th {

@@ -3,7 +3,7 @@ import "./account.css";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { clientApi } from "../../../api/clientApi";
 
-const PAYMENT_OK = "Payment successful !";
+const PAYMENT_OK = "Payment successful!";
 const PAYMENT_FAIL = "Payment FAILED! ";
 
 const CARD_OPTIONS: any = {
@@ -29,11 +29,13 @@ interface CheckoutFormProps {
   amount: string;
   type_description: string;
   onUpdateCallback(): void;
+  api_key: string;
 }
 export const CheckoutForm = ({
   amount,
   type_description,
   onUpdateCallback,
+  api_key,
 }: CheckoutFormProps) => {
   const [success, setSuccess] = useState<boolean>(false);
   const stripe: any = useStripe();
@@ -55,6 +57,7 @@ export const CheckoutForm = ({
           id: id,
           description: type_description,
           amount: Number(amount) * 100,
+          api_key: api_key,
         };
         const res = await clientApi.createStripeSession(sessionData);
         if (res === "ok") {
@@ -111,6 +114,7 @@ export const CheckoutForm = ({
                 : "alert alert-danger alert-dismissible fade show "
             }`}
             role="alert"
+            // className="alert alert-success alert-dismissible fade show "
           >
             <strong> {payment}</strong>
           </div>
