@@ -61,7 +61,7 @@ export default function Login(): ReactElement {
         <Logo />
       </div>
       {errorMessage.length > 0 && (
-        <div className="alert alert-danger loginAlertError" role="alert">
+        <div className="alertLogin alert-danger loginAlertError" role="alert">
           {errorMessage}
         </div>
       )}

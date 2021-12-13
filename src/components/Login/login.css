@@ -21,6 +21,11 @@
   margin: 10px auto;
 }
 
+.alertLogin {
+  margin-bottom: 1px;
+  padding: 0px 15px;
+}
+
 .loginAlertError {
   font-size: 35px;
 }
