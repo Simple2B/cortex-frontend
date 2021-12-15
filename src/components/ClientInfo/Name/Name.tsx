@@ -3,6 +3,7 @@ import "./name.sass";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
+import { Alpha } from "../Alpha/Alpha";
 
 export default function Name(): ReactElement {
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
@@ -155,16 +156,7 @@ export default function Name(): ReactElement {
             </div> */}
           </div>
         </div>
-        <div className="alphaContainer">
-          <div className="alphaContainer_text">Alpha</div>
-          <div className="alphaContainer_letters">
-            <div className="letter">R</div>
-            <div className="letter">L</div>
-          </div>
-          <div className="alphaContainer_dashboard">
-            <IntakeAlpha />
-          </div>
-        </div>
+        <Alpha />
       </div>
     </>
   );
