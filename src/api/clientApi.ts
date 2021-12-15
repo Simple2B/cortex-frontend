@@ -400,6 +400,8 @@ export const clientApi = {
     description: string;
     amount: number;
     api_key: string;
+    name: string;
+    email: string;
   }): Promise<any> => {
     console.log("POST: createStripeSession: data =>", data);
     try {
@@ -421,6 +423,43 @@ export const clientApi = {
       );
       console.log(
         "POST: error data createStripeSession =>",
+        error.message.data
+      );
+      throw new Error(error.message);
+    }
+  },
+
+  createStripeSubscription: async (data: {
+    payment_method: string;
+    email: string;
+    amount: number;
+    interval: string;
+    interval_count: string;
+    name: string;
+  }): Promise<any> => {
+    console.log(
+      "POST: createStrcreateStripeSubscriptionipeSession: data =>",
+      data
+    );
+    try {
+      const response = await instance().post(
+        "api/client/create_stripe_subscription",
+        data
+      );
+
+      console.log("POST: response createStripeSubscription ", response);
+      console.log(
+        "POST: response createStripeSubscription successfully ",
+        response.data
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message createStripeSubscription => ",
+        new Error(error.message)
+      );
+      console.log(
+        "POST: error data createStripeSubscription =>",
         error.message.data
       );
       throw new Error(error.message);
