@@ -5,6 +5,7 @@ import { instance } from "../../../api/axiosInstance";
 import "./intake.css";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import Dashboards from "../Dashboard/Dashboards";
+import { Alpha } from "../Alpha/Alpha";
 
 interface IVisit {
   date: string;
@@ -237,7 +238,6 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
               </svg>
               <div className="text">Add new</div>
             </div>
-            {/* )} */}
 
             <div className={isModalOpen ? "modalOpen" : "modal"}>
               <div className="modal-content modalContentNotes">
@@ -254,9 +254,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
                     onChange={textAreaChange}
                     placeholder="Write Notes"
                     value={value}
-                  >
-                    {/* {value} */}
-                  </textarea>
+                  ></textarea>
                 </div>
                 <div className="btnsModal">
                   <div className="btnModalOk" onClick={addNotes}>
@@ -271,46 +269,9 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
                 </div>
               </div>
             </div>
-            {/* <div className="notesBtnToggle">
-              <div
-                onClick={handleChangeBtn}
-                className={activeBtn === "Preset" ? "btnActive" : "btn"}
-              >
-                Preset
-              </div>
-              <div
-                onClick={handleChangeBtn}
-                className={activeBtn === "Manual" ? "btnActive" : "btn"}
-              >
-                Manual
-              </div>
-            </div> */}
-          </div>
-          {/* `<div className="intakeInfoText_results">
-            <div className="results">
-              <div>63bpm</div>
-              <div>HR</div>
-            </div>
-            <div className="results">
-              <div>10</div>
-              <div>Resp</div>
-            </div>
-            <div className="results">
-              <div>98%</div>
-              <div>SpO2</div>
-            </div>
-          </div>` */}
-        </div>
-        <div className="intakeInfoAlpha">
-          <div className="intakeInfoAlpha_text">Alpha</div>
-          <div className="intakeInfoAlpha_letters">
-            <div className="letter">R</div>
-            <div className="letter">L</div>
-          </div>
-          <div className="intakeInfoAlpha_dashboard">
-            <IntakeAlpha />
           </div>
         </div>
+        <Alpha />
       </div>
     </>
   );
