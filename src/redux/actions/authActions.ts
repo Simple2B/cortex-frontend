@@ -15,8 +15,8 @@ export const login = ({ password, username }: ILoginParams) => {
       const data: ILoginResponse = await authApi.login(username, password);
 
       localStorage.setItem("token", data.access_token);
-      const now = new Date();
-      localStorage['dateNow'] = ''+now.getTime();
+      // const now = new Date();
+      // localStorage['dateNow'] = ''+now.getTime();
 
       dispatch({
         type: AuthActionTypes.LOGIN_SUCCESS,
@@ -24,8 +24,11 @@ export const login = ({ password, username }: ILoginParams) => {
       });
       // return data.access_token;
     } catch (e: any) {
-      console.log("authAction: error from redux -> ", e)
-      dispatch({ type: AuthActionTypes.LOGIN_FAILURE, payload: "Invalid login credentials. Please try again!" });
+      console.log("authAction: error from redux -> ", e);
+      dispatch({
+        type: AuthActionTypes.LOGIN_FAILURE,
+        payload: "Invalid login credentials. Please try again!",
+      });
       // return e.message;
     }
   };
