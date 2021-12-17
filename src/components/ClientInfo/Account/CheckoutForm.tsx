@@ -75,12 +75,14 @@ export const CheckoutForm = ({
           name: name,
         };
         const data = {
+          api_key: api_key,
           payment_method: id,
           email: email,
           amount: Number(amount) * 100,
           interval: interval,
           interval_count: number,
           name: name,
+          description: type_description,
 
           // description: type_description,
         };
@@ -96,9 +98,10 @@ export const CheckoutForm = ({
         if (type_description === "requirements") {
           const createSubscription = async () => {
             const response = await clientApi.createStripeSubscription(data);
-            setRes(response);
             console.log("createSubscription", response);
+            setRes(response);
           };
+
           createSubscription();
         }
 
