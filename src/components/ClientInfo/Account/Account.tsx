@@ -55,7 +55,6 @@ export default function Account(): ReactElement {
 
   const [stripe, setStripe] = useState<Stripe | null>(null);
   const [pkStripeKey, setPKStripeKey] = useState<string>("");
-  const [skStripeKey, setSKStripeKey] = useState<string>("");
   const [billingData, setBillingData] = useState<Array<IBilling>>([
     {
       date: "",
@@ -174,7 +173,6 @@ export default function Account(): ReactElement {
     const res = await loadStripe(stripeKeys.data.pk_test);
     setStripe(res);
     setPKStripeKey(stripeKeys.data.pk_test);
-    setSKStripeKey(stripeKeys.data.sk_test);
   };
 
   useEffect(() => {
