@@ -112,6 +112,7 @@ export const CheckoutForm = ({
             setSuccess(false);
           }, 3000);
           setPayment(PAYMENT_OK);
+          setRes("");
         }
       } catch (error) {
         setPayment(PAYMENT_FAIL);
