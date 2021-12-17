@@ -432,10 +432,12 @@ export const clientApi = {
   createStripeSubscription: async (data: {
     payment_method: string;
     email: string;
+    api_key: string;
     amount: number;
     interval: string;
     interval_count: string;
     name: string;
+    description: string;
   }): Promise<any> => {
     console.log(
       "POST: createStrcreateStripeSubscriptionipeSession: data =>",
