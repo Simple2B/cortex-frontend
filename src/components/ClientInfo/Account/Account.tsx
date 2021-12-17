@@ -22,9 +22,15 @@ interface IVisit {
 interface IBilling {
   date: string;
   description: string;
-  amount: number | null;
+  amount: string | null;
+  subscription_interval: string | null;
+  pay_period: string | null;
+  subscription_quantity: string | null;
   client_name: string;
   doctor_name: string;
+  paid: boolean | null;
+  date_next_payment_attempt: string | null;
+  payment_method: string | null;
 }
 
 export default function Account(): ReactElement {
@@ -56,12 +62,18 @@ export default function Account(): ReactElement {
       date: "",
       description: "",
       amount: null,
+      subscription_interval: null,
+      pay_period: null,
+      subscription_quantity: null,
       client_name: "",
       doctor_name: "",
+      paid: null,
+      date_next_payment_attempt: null,
+      payment_method: null,
     },
   ]);
   const intervalPay = ["2-week", "1-month"];
-  const typesPay = ["one time", "requirements"];
+  const typesPay = ["one time", "requirement"];
 
   const getClient = async () => {
     try {
@@ -160,7 +172,7 @@ export default function Account(): ReactElement {
 
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
-    console.log("stripeKeys", stripeKeys);
+    // console.log("stripeKeys", stripeKeys);
     const res = await loadStripe(stripeKeys.data.pk_test);
     setStripe(res);
     setPKStripeKey(stripeKeys.data.pk_test);
@@ -195,6 +207,8 @@ export default function Account(): ReactElement {
       setType("requirements");
     }
   }, [type, interval]);
+
+  console.log("Account billingData => ", billingData);
 
   return (
     <>
@@ -321,9 +335,18 @@ export default function Account(): ReactElement {
                 billingData.map((billing, index) => {
                   return (
                     <tr key={index}>
-                      <td>{billing.date}</td>
+                      {billing.paid === false ? (
+                        <td>{billing.date_next_payment_attempt}</td>
+                      ) : (
+                        <td>{billing.date}</td>
+                      )}
+
                       <td>${billing.amount}</td>
-                      <td>Paid</td>
+                      {billing.paid === false ? (
+                        <td style={{ color: "red" }}>Failed</td>
+                      ) : (
+                        <td style={{ color: "green" }}>Paid</td>
+                      )}
                     </tr>
                   );
                 })}
