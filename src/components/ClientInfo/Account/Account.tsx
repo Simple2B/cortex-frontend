@@ -30,7 +30,6 @@ interface IBilling {
   doctor_name: string;
   paid: boolean | null;
   date_next_payment_attempt: string | null;
-  payment_method: string | null;
 }
 
 export default function Account(): ReactElement {
@@ -69,7 +68,6 @@ export default function Account(): ReactElement {
       doctor_name: "",
       paid: null,
       date_next_payment_attempt: null,
-      payment_method: null,
     },
   ]);
   const intervalPay = ["2-week", "1-month"];
