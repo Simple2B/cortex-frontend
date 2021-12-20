@@ -99,7 +99,6 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
-
   const getBilling = async () => {
     try {
       const response = await instance().get(
@@ -116,16 +115,13 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
-
   useEffect(() => {
     getClient();
     getHistoryVisits();
   }, [api_key]);
-
   useEffect(() => {
     getBilling();
   }, [api_key, amount]);
-
   useEffect(() => {
     if (startTime && endTime) {
       const dateStart = new Date(
@@ -166,7 +162,6 @@ export default function Account(): ReactElement {
       filterVisits();
     }
   }, [startTime, endTime]);
-
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
     // console.log("stripeKeys", stripeKeys);
@@ -174,7 +169,6 @@ export default function Account(): ReactElement {
     setStripe(res);
     setPKStripeKey(stripeKeys.data.pk_test);
   };
-
   useEffect(() => {
     getStripeKey();
   }, []);
@@ -204,7 +198,13 @@ export default function Account(): ReactElement {
     }
   }, [type, interval]);
 
-  console.log("Account billingData => ", billingData);
+  // stripe.confirmCardPayment(clientSecret).then(function(response) {
+  //   if (response.error) {
+  //     // Handle error here
+  //   } else if (response.paymentIntent && response.paymentIntent.status === 'succeeded') {
+  //     // Handle successful payment here
+  //   }
+  // });
 
   return (
     <>

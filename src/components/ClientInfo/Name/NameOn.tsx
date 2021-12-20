@@ -46,7 +46,7 @@ export default function NameOn(): ReactElement {
           <div className="nameContainer_brainContent">
             <div className="brain_btns">
               <div className="btn">
-                <div className="btn_Title">Atlas/ShortLeg</div>
+                <div className="btn_Title">Atlas</div>
                 <div className="btnContainer btnAtlasShortLeg">
                   <div
                     onClick={handleChangeBtn}
@@ -67,6 +67,8 @@ export default function NameOn(): ReactElement {
                     R
                   </div>
                 </div>
+
+                <div className="btn_Title">ShortLeg</div>
 
                 <div className="btnContainer">
                   <div

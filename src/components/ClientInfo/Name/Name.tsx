@@ -34,7 +34,7 @@ export default function Name(): ReactElement {
         <div className="nameContainer_brainContent">
           <div className="brain_btns">
             <div className="btn">
-              <div className="btn_Title">Atlas/ShortLeg</div>
+              <div className="btn_Title">Atlas</div>
               <div className="btnContainer btnAtlasShortLeg">
                 <div
                   onClick={handleChangeBtn}
@@ -56,6 +56,7 @@ export default function Name(): ReactElement {
                 </div>
               </div>
 
+              <div className="btn_Title">ShortLeg</div>
               <div className="btnContainer">
                 <div
                   onClick={handleChangeBtnShortLeg}
