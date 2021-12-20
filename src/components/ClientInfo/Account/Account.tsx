@@ -198,14 +198,6 @@ export default function Account(): ReactElement {
     }
   }, [type, interval]);
 
-  // stripe.confirmCardPayment(clientSecret).then(function(response) {
-  //   if (response.error) {
-  //     // Handle error here
-  //   } else if (response.paymentIntent && response.paymentIntent.status === 'succeeded') {
-  //     // Handle successful payment here
-  //   }
-  // });
-
   return (
     <>
       <div className="accountContainer">
