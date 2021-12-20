@@ -5,8 +5,13 @@ import { instance } from "../../../api/axiosInstance";
 import DatePicker from "react-datepicker";
 import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
-import { loadStripe, Stripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js";
+import {
+  CardElement,
+  Elements,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
 
 interface IVisit {
@@ -17,9 +22,14 @@ interface IVisit {
 interface IBilling {
   date: string;
   description: string;
-  amount: number | null;
+  amount: string | null;
+  subscription_interval: string | null;
+  pay_period: string | null;
+  subscription_quantity: string | null;
   client_name: string;
   doctor_name: string;
+  paid: boolean | null;
+  date_next_payment_attempt: string | null;
 }
 
 export default function Account(): ReactElement {
@@ -40,19 +50,27 @@ export default function Account(): ReactElement {
 
   const [amount, setAmount] = useState<string>("");
   const [type, setType] = useState<string>("");
+  const [number, setNumber] = useState<string>("");
+  const [interval, setIntervalPay] = useState<string>("");
 
   const [stripe, setStripe] = useState<Stripe | null>(null);
   const [pkStripeKey, setPKStripeKey] = useState<string>("");
-  const [skStripeKey, setSKStripeKey] = useState<string>("");
   const [billingData, setBillingData] = useState<Array<IBilling>>([
     {
       date: "",
       description: "",
       amount: null,
+      subscription_interval: null,
+      pay_period: null,
+      subscription_quantity: null,
       client_name: "",
       doctor_name: "",
+      paid: null,
+      date_next_payment_attempt: null,
     },
   ]);
+  const intervalPay = ["2-week", "1-month"];
+  const typesPay = ["one time", "requirement"];
 
   const getClient = async () => {
     try {
@@ -151,11 +169,10 @@ export default function Account(): ReactElement {
 
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
-    console.log("stripeKeys", stripeKeys);
+    // console.log("stripeKeys", stripeKeys);
     const res = await loadStripe(stripeKeys.data.pk_test);
     setStripe(res);
     setPKStripeKey(stripeKeys.data.pk_test);
-    setSKStripeKey(stripeKeys.data.sk_test);
   };
 
   useEffect(() => {
@@ -173,6 +190,22 @@ export default function Account(): ReactElement {
     setType("");
     setAmount("");
   };
+
+  useEffect(() => {
+    if (type === "one time") {
+      setNumber("1");
+      setIntervalPay("");
+    } else {
+      setNumber("");
+    }
+    if (interval !== "") {
+      setNumber("");
+      setType("requirements");
+    }
+  }, [type, interval]);
+
+  console.log("Account billingData => ", billingData);
+
   return (
     <>
       <div className="accountContainer">
@@ -298,9 +331,18 @@ export default function Account(): ReactElement {
                 billingData.map((billing, index) => {
                   return (
                     <tr key={index}>
-                      <td>{billing.date}</td>
+                      {billing.paid === false ? (
+                        <td>{billing.date_next_payment_attempt}</td>
+                      ) : (
+                        <td>{billing.date}</td>
+                      )}
+
                       <td>${billing.amount}</td>
-                      <td>Paid</td>
+                      {billing.paid === false ? (
+                        <td style={{ color: "red" }}>Failed</td>
+                      ) : (
+                        <td style={{ color: "green" }}>Paid</td>
+                      )}
                     </tr>
                   );
                 })}
@@ -309,20 +351,68 @@ export default function Account(): ReactElement {
 
           <div className="visitHistory_billing">
             <div className="visitHistory_inputContainer">
-              <div className="inputTitle">Type</div>
-              <div>
+              <div className="inputTitle">Number</div>
+              <div className="visitHistory_inputContainer-size">
                 <input
-                  type="text"
+                  type="number"
                   placeholder=""
-                  value={type}
-                  onChange={(e) => setType(e.target.value)}
+                  maxLength={6}
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
                 />
               </div>
             </div>
 
             <div className="visitHistory_inputContainer">
+              <div className="inputTitle">Type</div>
+              <div className="visitHistory_inputContainer-selectContainer">
+                <input
+                  type="text"
+                  placeholder=""
+                  value={type}
+                  // onChange={(e) => setType(e.target.value)}
+                />
+                <div className="selectContainer">
+                  {typesPay.map((type, index) => {
+                    return (
+                      <div key={index} onClick={(e) => setType(type)}>
+                        {type}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="visitHistory_billing">
+            <div className="visitHistory_inputContainer">
+              <div className="inputTitle">Interval</div>
+              <div className="visitHistory_inputContainer-selectContainer">
+                <input
+                  type="text"
+                  placeholder=""
+                  value={interval}
+                  // onChange={(e) => setIntervalPay(e.target.value)}
+                />
+                <div className="selectContainer">
+                  {intervalPay.map((interval, index) => {
+                    return (
+                      <div
+                        key={index}
+                        onClick={(e) => setIntervalPay(interval)}
+                      >
+                        {interval}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <div className="visitHistory_inputContainer">
               <div className="inputTitle">Amount</div>
-              <div>
+              <div className="visitHistory_inputContainer-size">
                 <input
                   type="number"
                   placeholder=""
@@ -341,7 +431,11 @@ export default function Account(): ReactElement {
                   onUpdateCallback={setStatuses}
                   amount={amount}
                   type_description={type}
+                  interval={interval}
+                  number={number}
                   api_key={api_key}
+                  email={client.email}
+                  name={client.firstName + " " + client.lastName}
                 />
               </Elements>
             )}
