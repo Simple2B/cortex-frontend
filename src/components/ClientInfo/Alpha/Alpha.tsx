@@ -1,13 +1,15 @@
 import React, { ReactElement } from "react";
 import "./Alpha.sass";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
+import { useLocation } from "react-router-dom";
 
 export function Alpha(): ReactElement {
-  //   const location = useLocation();
-  //   const splitLocation = location.pathname.split("/");
-  //   const api_key = splitLocation[splitLocation.length - 2];
+  const location = useLocation();
+  const splitLocation = location.pathname.split("/");
+  const api_key = splitLocation[splitLocation.length - 2];
 
-  //   console.log("Care Plane -> api_key", api_key);
+  console.log("Alpha: api_key ", api_key);
+
   //   const [client, setClient] = useState<Client>(ClientDefault);
 
   //   const getClient = async () => {
