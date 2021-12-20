@@ -183,7 +183,7 @@ export default function Reports(): ReactElement {
     setStartDate(startDate);
     setEndDate(endDate);
     setFile(file);
-    if (startDate && endDate) {
+    if (startDate && endDate && type) {
       filterDateForReport();
     }
   }, [type, startDate, endDate, file]);
