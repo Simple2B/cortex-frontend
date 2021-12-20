@@ -5,6 +5,7 @@ import { instance } from "../../../api/axiosInstance";
 import "./intake.css";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import Dashboards from "../Dashboard/Dashboards";
+import { Alpha } from "../Alpha/Alpha";
 
 export default function Intake(props: {
   activeBtnRogueMode: string;
@@ -188,36 +189,10 @@ export default function Intake(props: {
               >
                 Health HX
               </div>
-              {/* <div onClick={handleChangeBtn} className={activeBtn == "Family HX" ? "intake_btnActive" : "intake_btn"}>
-                Family HX
-              </div> */}
             </div>
-          </div>
-          {/* <div className="intakeInfoText_results">
-            <div className="results">
-              <div>63bpm</div>
-              <div>HR</div>
-            </div>
-            <div className="results">
-              <div>10</div>
-              <div>Resp</div>
-            </div>
-            <div className="results">
-              <div>98%</div>
-              <div>SpO2</div>
-            </div>
-          </div> */}
-        </div>
-        <div className="intakeInfoAlpha">
-          <div className="intakeInfoAlpha_text">Alpha</div>
-          <div className="intakeInfoAlpha_letters">
-            <div className="letter">R</div>
-            <div className="letter">L</div>
-          </div>
-          <div className="intakeInfoAlpha_dashboard">
-            <IntakeAlpha />
           </div>
         </div>
+        <Alpha />
       </div>
     </>
   );

@@ -4,6 +4,7 @@ import "./name.sass";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
+import { Alpha } from "../Alpha/Alpha";
 
 export default function NameOn(): ReactElement {
   const location = useLocation();
@@ -151,31 +152,9 @@ export default function NameOn(): ReactElement {
               <Brain />
             </div>
 
-            <div className="intakeInfoText_results ">
-              {/* <div className="results">
-                <div>63bpm</div>
-                <div>HR</div>
-              </div>
-              <div className="results">
-                <div>10</div>
-                <div>Resp</div>
-              </div>
-              <div className="results">
-                <div>98%</div>
-                <div>SpO2</div>
-              </div> */}
-            </div>
+            <div className="intakeInfoText_results "></div>
           </div>
-          <div className="alphaContainer">
-            <div className="alphaContainer_text">Alpha</div>
-            <div className="alphaContainer_letters">
-              <div className="letter">R</div>
-              <div className="letter">L</div>
-            </div>
-            <div className="alphaContainer_dashboard">
-              <IntakeAlpha />
-            </div>
-          </div>
+          <Alpha />
         </div>
       </div>
     </>

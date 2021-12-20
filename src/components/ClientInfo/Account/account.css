@@ -108,6 +108,10 @@
   overflow-y: auto;
 }
 
+.billing_table .table {
+  height: 133px;
+}
+
 .billing_table .table tr td {
   width: 100%;
 }
@@ -210,8 +214,89 @@
   width: 49%;
 }
 
-.visitHistory_billing .visitHistory_inputContainer div input {
+.visitHistory_inputContainer .visitHistory_inputContainer-selectContainer {
+  position: relative;
+  cursor: pointer;
+}
+
+.visitHistory_inputContainer
+  .visitHistory_inputContainer-selectContainer
+  input {
+  cursor: pointer;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.visitHistory_inputContainer .visitHistory_inputContainer-size input {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.visitHistory_inputContainer .visitHistory_inputContainer-size input[value] {
+  font-size: 18px;
+  padding-left: 10px;
+}
+
+.visitHistory_inputContainer
+  .visitHistory_inputContainer-selectContainer
+  input[value] {
+  font-size: 18px;
+  padding-left: 10px;
+}
+
+.visitHistory_inputContainer
+  .visitHistory_inputContainer-selectContainer
+  .selectContainer {
+  width: 98%;
+  font-size: 18px;
+
+  border-left: #707070 1px solid;
+  border-right: #707070 1px solid;
+  border-bottom: #707070 1px solid;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  background-color: #191919;
+  position: absolute;
+  top: 44px;
+  z-index: 1000;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.visitHistory_inputContainer
+  .visitHistory_inputContainer-selectContainer
+  .selectContainer
+  div {
+  padding-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.visitHistory_inputContainer
+  .visitHistory_inputContainer-selectContainer
+  .selectContainer
+  div:hover {
   width: 100%;
+  background-color: #7a7a7a;
+}
+
+.visitHistory_inputContainer
+  .visitHistory_inputContainer-selectContainer
+  .selectContainer
+  div:last-child:hover {
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  padding-bottom: 4px;
+}
+
+.visitHistory_inputContainer
+  .visitHistory_inputContainer-selectContainer:hover
+  .selectContainer {
+  visibility: visible;
+}
+
+.visitHistory_billing .visitHistory_inputContainer div input {
+  width: 98%;
 }
 
 .visitHistory_inputContainer div input::placeholder {
