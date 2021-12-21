@@ -4,6 +4,10 @@ import DatePicker from "react-datepicker";
 import "./ViewReport.sass";
 import { Client, clientApi, ClientDefault } from "../../../../api/clientApi";
 import { instance } from "../../../../api/axiosInstance";
+import DashboardBeta from "./DashboardBeta";
+import DashboardSMR from "./DashboardSMR";
+import DashboardAlpha from "./DashboardAlpha";
+import DashboardTheta from "./DashboardTheta";
 
 interface ITest {
   id: null | number;
@@ -195,19 +199,27 @@ export default function ViewReport(): ReactElement {
         {activeBtn === "Brainwaves" && (
           <div className="containerViewReport_dashboards">
             <div className="containerDashboard">
-              <div className="dashboard">dashboard</div>
+              <div className="dashboard">
+                <DashboardBeta />
+              </div>
               <div className="title">BETA</div>
             </div>
             <div className="containerDashboard">
-              <div className="dashboard">dashboard</div>
+              <div className="dashboard">
+                <DashboardSMR />
+              </div>
               <div className="title">SMR</div>
             </div>
             <div className="containerDashboard">
-              <div className="dashboard">dashboard</div>
+              <div className="dashboard">
+                <DashboardAlpha />
+              </div>
               <div className="title">ALPHA</div>
             </div>
             <div className="containerDashboard">
-              <div className="dashboard">dashboard</div>
+              <div className="dashboard">
+                <DashboardTheta />
+              </div>
               <div className="title">THETA</div>
             </div>
           </div>
