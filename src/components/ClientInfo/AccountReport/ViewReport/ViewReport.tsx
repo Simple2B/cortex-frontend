@@ -4,10 +4,10 @@ import DatePicker from "react-datepicker";
 import "./ViewReport.sass";
 import { Client, clientApi, ClientDefault } from "../../../../api/clientApi";
 import { instance } from "../../../../api/axiosInstance";
-import DashboardBeta from "./DashboardBeta";
-import DashboardSMR from "./DashboardSMR";
-import DashboardAlpha from "./DashboardAlpha";
-import DashboardTheta from "./DashboardTheta";
+import DashboardBeta from "./DashboardsBrainWaves/DashboardBeta";
+import DashboardSMR from "./DashboardsBrainWaves/DashboardSMR";
+import DashboardAlpha from "./DashboardsBrainWaves/DashboardAlpha";
+import DashboardTheta from "./DashboardsBrainWaves/DashboardTheta";
 
 interface ITest {
   id: null | number;
