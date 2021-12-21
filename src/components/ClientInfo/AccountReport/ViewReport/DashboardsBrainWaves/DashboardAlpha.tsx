@@ -40,7 +40,15 @@ export default function DashboardAlpha(): ReactElement {
       data={data}
       width={250}
       height={300}
-      options={{ maintainAspectRatio: false }}
+      options={{
+        scales: {
+          y: {
+            beginAtZero: true,
+            min: 0,
+            max: 18,
+          },
+        },
+      }}
     ></Bar>
   );
 }
