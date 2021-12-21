@@ -20,6 +20,9 @@ ChartJS.register(
 
 const labels = ["", "", "", ""];
 
+// linear-gradient(#FF0DF7, #7B2C79)
+// linear-gradient(#00F6FF, #7B2C79)
+
 const data = {
   labels,
   datasets: [
