@@ -313,12 +313,12 @@ export default function ViewReport(): ReactElement {
                 </div>
                 <div className="reportTypeSelector">
                   <DatePicker
-                    dateFormat="MM/dd/yyyy h:mm aa"
+                    dateFormat="MM/dd/yyyy"
                     className="dataInput"
                     selected={date}
                     onChange={(data) => setDate(data)}
                     selectsEnd
-                    showTimeInput
+                    // showTimeInput
                     startDate={date}
                     isClearable
                     placeholderText="Progress Test"
