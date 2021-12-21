@@ -26,10 +26,12 @@ const data = {
     {
       data: [18, 17.5, 16, 14],
       backgroundColor: "#982594",
+      borderRadius: 100,
     },
     {
       data: [17, 16, 15, 13],
       backgroundColor: "#15819B",
+      borderRadius: 100,
     },
   ],
 };

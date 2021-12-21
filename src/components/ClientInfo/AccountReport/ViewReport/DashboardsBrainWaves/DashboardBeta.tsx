@@ -24,12 +24,14 @@ const data = {
   labels,
   datasets: [
     {
-      data: [12, 19, 11, 8],
+      data: [12, 18, 11, 8],
       backgroundColor: "#982594",
+      borderRadius: 100,
     },
     {
       data: [10, 17, 10, 6],
       backgroundColor: "#15819B",
+      borderRadius: 100,
     },
   ],
 };

@@ -29,6 +29,7 @@ const data = {
       max: 18,
       backgroundColor: "#982594",
       number: { min: 0, max: 18 },
+      borderRadius: 100,
     },
     {
       data: [7, 9.8, 13.9, 17.8],
@@ -36,6 +37,7 @@ const data = {
       max: 18,
       backgroundColor: "#15819B",
       number: { min: 0, max: 18 },
+      borderRadius: 100,
     },
   ],
 };
