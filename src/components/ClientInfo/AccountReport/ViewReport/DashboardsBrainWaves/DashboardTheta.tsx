@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import "./ViewReport.sass";
+import "../ViewReport.sass";
 
 import {
   Chart as ChartJS,
@@ -24,17 +24,17 @@ const data = {
   labels,
   datasets: [
     {
-      data: [18, 17.5, 16, 14],
+      data: [15, 16.5, 8, 10],
       backgroundColor: "#982594",
     },
     {
-      data: [17, 16, 15, 13],
+      data: [14, 15.5, 7, 9],
       backgroundColor: "#15819B",
     },
   ],
 };
 
-export default function DashboardAlpha(): ReactElement {
+export default function DashboardTheta(): ReactElement {
   return (
     <Bar
       data={data}
