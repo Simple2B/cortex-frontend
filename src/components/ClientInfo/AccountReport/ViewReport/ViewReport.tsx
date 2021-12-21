@@ -8,6 +8,9 @@ import DashboardBeta from "./DashboardsBrainWaves/DashboardBeta";
 import DashboardSMR from "./DashboardsBrainWaves/DashboardSMR";
 import DashboardAlpha from "./DashboardsBrainWaves/DashboardAlpha";
 import DashboardTheta from "./DashboardsBrainWaves/DashboardTheta";
+import DashboardVeryLowFrequency from "./DashboardsHRV/DashboardVeryLowFrequency";
+import DashboardLowFrequency from "./DashboardsHRV/DashboardLowFrequency";
+import DashboardHightFrequency from "./DashboardsHRV/DashboardHightFrequency";
 
 interface ITest {
   id: null | number;
@@ -228,15 +231,21 @@ export default function ViewReport(): ReactElement {
         {activeBtn === "HRV" && (
           <div className="containerViewReport_dashboards">
             <div className="containerDashboard">
-              <div className="dashboard">dashboard</div>
+              <div className="dashboard">
+                <DashboardVeryLowFrequency />
+              </div>
               <div className="title">Very Low Frequency</div>
             </div>
             <div className="containerDashboard">
-              <div className="dashboard">dashboard</div>
+              <div className="dashboard">
+                <DashboardLowFrequency />
+              </div>
               <div className="title">Low Frequency</div>
             </div>
             <div className="containerDashboard">
-              <div className="dashboard">dashboard</div>
+              <div className="dashboard">
+                <DashboardHightFrequency />
+              </div>
               <div className="title">High Frequency</div>
             </div>
           </div>
