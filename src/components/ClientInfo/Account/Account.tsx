@@ -121,7 +121,8 @@ export default function Account(): ReactElement {
   }, [api_key]);
   useEffect(() => {
     getBilling();
-  }, [api_key, amount]);
+  }, [api_key]);
+
   useEffect(() => {
     if (startTime && endTime) {
       const dateStart = new Date(
@@ -196,6 +197,7 @@ export default function Account(): ReactElement {
       setNumber("");
       setType("requirements");
     }
+    getBilling();
   }, [type, interval]);
 
   return (
