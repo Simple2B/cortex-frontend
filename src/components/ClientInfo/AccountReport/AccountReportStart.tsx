@@ -101,15 +101,30 @@ export default function AccountReportStart(): ReactElement {
   }, [counter]);
 
   const createTest = () => {
-    console.log("Record START PLAYING");
-    sound.play();
-    startTimer();
-    setIsTestStarted(true);
-    setInterval(() => {
-      sound.pause();
-    }, counter * 1000);
+    const playPromise = sound.play();
+    // sound.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then((_) => {
+          console.log("Record START PLAYING");
+          // Automatic playback started!
+          // Show playing UI.
+          console.log("audio played auto");
+          startTimer();
+          setIsTestStarted(true);
+          setInterval(() => {
+            sound.pause();
+          }, counter * 1000);
 
-    console.log("Record STOPPED!");
+          console.log("Record STOPPED!");
+        })
+        .catch((error) => {
+          // Auto-play was prevented
+          // Show paused UI.
+          console.log("playback prevented");
+        });
+    }
+
     const date = new Date().toISOString().replace(/GMT.*$/, "GMT+0000");
     const fullDate = date.replace("T", " ").replace(".", " ").split(" ");
     const dStart = fullDate[0].split("-");
@@ -137,21 +152,6 @@ export default function AccountReportStart(): ReactElement {
           <div className="brain">
             <Brain />
           </div>
-
-          {/* <div className="intakeInfoText_results">
-            <div className="results">
-              <div>63bpm</div>
-              <div>HR</div>
-            </div>
-            <div className="results">
-              <div>10</div>
-              <div>Resp</div>
-            </div>
-            <div className="results">
-              <div>98%</div>
-              <div>SpO2</div>
-            </div>
-          </div> */}
         </div>
         <div className="alphaContainer">
           <div className="alphaContainer_text">Alpha</div>
