@@ -61,9 +61,7 @@ export default function ViewReport(): ReactElement {
   });
 
   const [progressTestDate, setProgressTestDate] = useState<string | null>(null);
-
   const test_id = splitLocation[splitLocation.length - 1].split("_")[2];
-
   const [carePlanNames, setCarePlanNames] = useState<Array<INameCarePlan>>([
     {
       number: null,
