@@ -16,8 +16,8 @@ import {
 
 export default function Arousal(): ReactElement {
   const data = [
-    { name: "S", value: 75 },
-    { name: "P", value: 35 },
+    { name: "S", value: 75, text: "#982594" },
+    { name: "P", value: 35, text: "#15819B" },
   ];
 
   const pointRender = (args: any) => {
@@ -33,6 +33,8 @@ export default function Arousal(): ReactElement {
     maximum: 100,
     interval: 15,
   };
+
+  const marker = { dataLabel: { visible: true, font: { color: "#ffffff" } } };
 
   return (
     <div className="containerDashboard">
@@ -54,6 +56,7 @@ export default function Arousal(): ReactElement {
             yName="value"
             name="name"
             type="Column"
+            marker={marker}
           ></SeriesDirective>
         </SeriesCollectionDirective>
       </ChartComponent>

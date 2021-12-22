@@ -19,7 +19,6 @@ const data = [
   { name: "LF", value: 4, color: "#3F8DAF" },
   { name: "HF", value: 2, color: "#AEF7FF" },
 ];
-const marker = ["#A4CEC7", "#3F8DAF", "#AEF7FF"];
 
 const pointRender = (args: any) => {
   let seriesColor = ["#A4CEC7", "#3F8DAF", "#AEF7FF"];
@@ -35,16 +34,12 @@ const primaryyAxis = {
   interval: 1,
 };
 
+const marker = { dataLabel: { visible: true, font: { color: "#ffffff" } } };
+
 export default function Coherence(): ReactElement {
   return (
     <div className="containerDashboard">
       <div className="title">Coherence</div>
-      {/* <div className="overAroused">
-        <div className="overAroused_content">
-          <div className="nameDashboard"></div>
-        </div>
-      </div> */}
-
       <ChartComponent
         id="charts"
         primaryXAxis={primaryxAxis}
@@ -63,6 +58,7 @@ export default function Coherence(): ReactElement {
             colorName="color"
             name="name"
             type="Column"
+            marker={marker}
           ></SeriesDirective>
         </SeriesCollectionDirective>
       </ChartComponent>
