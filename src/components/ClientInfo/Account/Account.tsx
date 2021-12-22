@@ -49,9 +49,11 @@ export default function Account(): ReactElement {
   const [endTime, setEndTime] = useState<any>(null);
 
   const [amount, setAmount] = useState<string>("");
-  const [type, setType] = useState<string>("");
+  const [type, setType] = useState<string>("one time");
   const [number, setNumber] = useState<string>("");
   const [interval, setIntervalPay] = useState<string>("");
+
+  const [error, setError] = useState<string>("");
 
   const [stripe, setStripe] = useState<Stripe | null>(null);
   const [pkStripeKey, setPKStripeKey] = useState<string>("");
@@ -190,15 +192,19 @@ export default function Account(): ReactElement {
     if (type === "one time") {
       setNumber("1");
       setIntervalPay("");
+    } else if (type === "requirement" && interval === "") {
+      setError("");
     } else {
       setNumber("");
+      setError("success");
     }
+
     if (interval !== "") {
       setNumber("");
       setType("requirements");
     }
     getBilling();
-  }, [type, interval]);
+  }, [type, interval, error, number]);
 
   return (
     <>
@@ -364,7 +370,7 @@ export default function Account(): ReactElement {
                   type="text"
                   placeholder=""
                   value={type}
-                  // onChange={(e) => setType(e.target.value)}
+                  onChange={(e) => setType(e.target.value)}
                 />
                 <div className="selectContainer">
                   {typesPay.map((type, index) => {
@@ -387,7 +393,8 @@ export default function Account(): ReactElement {
                   type="text"
                   placeholder=""
                   value={interval}
-                  // onChange={(e) => setIntervalPay(e.target.value)}
+                  onChange={(e) => setIntervalPay(e.target.value)}
+                  className={error === "" ? "error" : ""}
                 />
                 <div className="selectContainer">
                   {intervalPay.map((interval, index) => {
@@ -430,6 +437,8 @@ export default function Account(): ReactElement {
                   api_key={api_key}
                   email={client.email}
                   name={client.firstName + " " + client.lastName}
+                  stripe_key={stripe}
+                  error_type={error}
                 />
               </Elements>
             )}

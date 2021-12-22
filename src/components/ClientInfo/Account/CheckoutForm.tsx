@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./account.css";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { clientApi } from "../../../api/clientApi";
+import { Stripe } from "@stripe/stripe-js";
 
 const PAYMENT_OK = "Payment successful!";
 const PAYMENT_FAIL = "Payment FAILED! ";
@@ -34,6 +35,8 @@ interface CheckoutFormProps {
   api_key: string;
   email: string;
   name: string;
+  stripe_key: Stripe | null;
+  error_type: string;
 }
 export const CheckoutForm = ({
   amount,
@@ -44,6 +47,8 @@ export const CheckoutForm = ({
   api_key,
   email,
   name,
+  stripe_key,
+  error_type,
 }: CheckoutFormProps) => {
   const [success, setSuccess] = useState<boolean>(false);
   const stripe: any = useStripe();
@@ -127,12 +132,34 @@ export const CheckoutForm = ({
   };
 
   const checkInputs = (): boolean => {
-    if (!amount) {
+    if (!amount || (!interval && type_description === "requirement")) {
       return false;
     } else {
       return true;
     }
   };
+
+  // stripe
+  //   .confirmCardPayment(stripe_key)
+  //   .then(function (response: {
+  //     error: any;
+  //     paymentIntent: { status: string };
+  //   }) {
+  //     if (response.error) {
+  //       // Handle error here
+  //       console.log("Stripe = > response error", response.error);
+  //     } else if (
+  //       response.paymentIntent &&
+  //       response.paymentIntent.status === "succeeded"
+  //     ) {
+  //       // Handle successful payment here
+
+  //       console.log(
+  //         "Stripe = > response paymentIntent status",
+  //         response.paymentIntent.status
+  //       );
+  //     }
+  //   });
 
   return (
     <>
