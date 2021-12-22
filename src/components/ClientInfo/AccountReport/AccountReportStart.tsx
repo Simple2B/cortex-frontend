@@ -17,7 +17,7 @@ export default function AccountReportStart(): ReactElement {
 
   const sound = new Audio("/cortex_sound.mp3");
 
-  const [counter, setCounter] = useState<number>(5);
+  const [counter, setCounter] = useState<number>(10);
   // 07:47 -> 467 seconds
   const [isTestStarted, setIsTestStarted] = useState<boolean>(false);
   const history = useHistory();
@@ -102,7 +102,17 @@ export default function AccountReportStart(): ReactElement {
 
   const createTest = () => {
     const playPromise = sound.play();
-    // sound.play();
+
+    const date = new Date().toISOString().replace(/GMT.*$/, "GMT+0000");
+    const fullDate = date.replace("T", " ").replace(".", " ").split(" ");
+    const dStart = fullDate[0].split("-");
+    const fullTime = fullDate[1];
+    const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
+    const startTest = {
+      api_key: api_key,
+      date: startDateToBack,
+    };
+
     if (playPromise !== undefined) {
       playPromise
         .then((_) => {
@@ -117,6 +127,7 @@ export default function AccountReportStart(): ReactElement {
           }, counter * 1000);
 
           console.log("Record STOPPED!");
+          setStartTest(startTest);
         })
         .catch((error) => {
           // Auto-play was prevented
@@ -124,17 +135,6 @@ export default function AccountReportStart(): ReactElement {
           console.log("playback prevented");
         });
     }
-
-    const date = new Date().toISOString().replace(/GMT.*$/, "GMT+0000");
-    const fullDate = date.replace("T", " ").replace(".", " ").split(" ");
-    const dStart = fullDate[0].split("-");
-    const fullTime = fullDate[1];
-    const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
-    const startTest = {
-      api_key: api_key,
-      date: startDateToBack,
-    };
-    setStartTest(startTest);
 
     const getCreateTest = async () => {
       const test = await clientApi.createTest(startTest);
@@ -186,7 +186,12 @@ export default function AccountReportStart(): ReactElement {
                 </div>
               </div>
             ) : !isTestStarted ? (
-              <div className="modalWindow_btnStart" onClick={createTest}>
+              <div
+                className="modalWindow_btnStart"
+                onClick={() => {
+                  createTest();
+                }}
+              >
                 Start
               </div>
             ) : null}
