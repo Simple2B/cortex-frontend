@@ -13,6 +13,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
+import { spawn } from "child_process";
 
 interface IVisit {
   date: string;
@@ -29,6 +30,7 @@ interface IBilling {
   client_name: string;
   doctor_name: string;
   paid: boolean | null;
+  status: string | null;
   date_next_payment_attempt: string | null;
 }
 
@@ -53,7 +55,7 @@ export default function Account(): ReactElement {
   const [number, setNumber] = useState<string>("");
   const [interval, setIntervalPay] = useState<string>("");
 
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
 
   const [stripe, setStripe] = useState<Stripe | null>(null);
   const [pkStripeKey, setPKStripeKey] = useState<string>("");
@@ -68,6 +70,7 @@ export default function Account(): ReactElement {
       client_name: "",
       doctor_name: "",
       paid: null,
+      status: null,
       date_next_payment_attempt: null,
     },
   ]);
@@ -117,11 +120,14 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
+
+  useEffect(() => {
+    getStripeKey();
+  }, []);
+
   useEffect(() => {
     getClient();
     getHistoryVisits();
-  }, [api_key]);
-  useEffect(() => {
     getBilling();
   }, [api_key]);
 
@@ -165,26 +171,25 @@ export default function Account(): ReactElement {
       filterVisits();
     }
   }, [startTime, endTime]);
+
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
-    // console.log("stripeKeys", stripeKeys);
     const res = await loadStripe(stripeKeys.data.pk_test);
     setStripe(res);
     setPKStripeKey(stripeKeys.data.pk_test);
   };
-  useEffect(() => {
-    getStripeKey();
-  }, []);
 
   const appearance: any = {
     theme: "night",
   };
+
   const options: any = {
     pkStripeKey,
     appearance,
   };
+
   const setStatuses = () => {
-    setType("");
+    // setType("");
     setAmount("");
   };
 
@@ -192,19 +197,20 @@ export default function Account(): ReactElement {
     if (type === "one time") {
       setNumber("1");
       setIntervalPay("");
-    } else if (type === "requirement" && interval === "") {
-      setError("");
+    } else if (type === "requirement") {
+      setNumber("1");
+      setIntervalPay("2-week");
     } else {
       setNumber("");
-      setError("success");
+      setError(false);
     }
-
     if (interval !== "") {
       setNumber("");
       setType("requirements");
+      setError(false);
     }
-    getBilling();
-  }, [type, interval, error, number]);
+    // getBilling();
+  }, [type, interval]);
 
   return (
     <>
@@ -331,17 +337,44 @@ export default function Account(): ReactElement {
                 billingData.map((billing, index) => {
                   return (
                     <tr key={index}>
-                      {billing.paid === false ? (
-                        <td>{billing.date_next_payment_attempt}</td>
+                      {billing.status === "succeeded" ? (
+                        <td>{billing.date}</td>
+                      ) : billing.status === "active" ? (
+                        <td className="billingReq">
+                          <sup className="req">req</sup> {billing.date}
+                          <br />
+                          next payment: {billing.date_next_payment_attempt}
+                        </td>
                       ) : (
                         <td>{billing.date}</td>
                       )}
 
-                      <td>${billing.amount}</td>
-                      {billing.paid === false ? (
-                        <td style={{ color: "red" }}>Failed</td>
+                      {billing.status === "succeeded" ? (
+                        <td>${billing.amount}</td>
+                      ) : billing.status === "active" ? (
+                        <td>
+                          <br />
+                          <br />${billing.amount}
+                        </td>
                       ) : (
+                        <td>${billing.amount}</td>
+                      )}
+
+                      {billing.status === "succeeded" ? (
                         <td style={{ color: "green" }}>Paid</td>
+                      ) : billing.status === "active" ? (
+                        <td style={{ color: "green" }}>
+                          Active
+                          <br />
+                          <br />
+                          {billing.paid === false ? (
+                            <span style={{ color: "red" }}>Failed</span>
+                          ) : (
+                            <span style={{ color: "green" }}>Paid</span>
+                          )}
+                        </td>
+                      ) : (
+                        <td style={{ color: "red" }}>Failed</td>
                       )}
                     </tr>
                   );
@@ -394,7 +427,7 @@ export default function Account(): ReactElement {
                   placeholder=""
                   value={interval}
                   onChange={(e) => setIntervalPay(e.target.value)}
-                  className={error === "" ? "error" : ""}
+                  className={error ? "error" : ""}
                 />
                 <div className="selectContainer">
                   {intervalPay.map((interval, index) => {

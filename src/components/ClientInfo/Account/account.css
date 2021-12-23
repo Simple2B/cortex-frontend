@@ -328,6 +328,17 @@
   /* border: 1px solid #707070; */
 }
 
+.billing_table table tr .billingReq {
+  position: relative;
+}
+
+.billing_table table tr .billingReq .req {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #aef7ff;
+}
+
 .billing_table table tr th {
   font-size: 30px;
   color: #fff;
