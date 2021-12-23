@@ -36,7 +36,7 @@ interface CheckoutFormProps {
   email: string;
   name: string;
   stripe_key: Stripe | null;
-  error_type: string;
+  error_type: boolean;
 }
 export const CheckoutForm = ({
   amount,
@@ -138,28 +138,6 @@ export const CheckoutForm = ({
       return true;
     }
   };
-
-  // stripe
-  //   .confirmCardPayment(stripe_key)
-  //   .then(function (response: {
-  //     error: any;
-  //     paymentIntent: { status: string };
-  //   }) {
-  //     if (response.error) {
-  //       // Handle error here
-  //       console.log("Stripe = > response error", response.error);
-  //     } else if (
-  //       response.paymentIntent &&
-  //       response.paymentIntent.status === "succeeded"
-  //     ) {
-  //       // Handle successful payment here
-
-  //       console.log(
-  //         "Stripe = > response paymentIntent status",
-  //         response.paymentIntent.status
-  //       );
-  //     }
-  //   });
 
   return (
     <>
