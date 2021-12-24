@@ -112,6 +112,13 @@
   height: 133px;
 }
 
+.billing_table .table .loader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .billing_table .table tr td {
   width: 100%;
 }

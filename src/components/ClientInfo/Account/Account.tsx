@@ -5,15 +5,10 @@ import { instance } from "../../../api/axiosInstance";
 import DatePicker from "react-datepicker";
 import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import "react-datepicker/dist/react-datepicker.css";
-import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js";
-import {
-  CardElement,
-  Elements,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
+import { loadStripe, Stripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
-import { spawn } from "child_process";
+import Preloader from "../../Preloader/Preloader";
 
 interface IVisit {
   date: string;
@@ -54,9 +49,7 @@ export default function Account(): ReactElement {
   const [type, setType] = useState<string>("one time");
   const [number, setNumber] = useState<string>("");
   const [interval, setIntervalPay] = useState<string>("");
-
   const [error, setError] = useState<boolean>(false);
-
   const [stripe, setStripe] = useState<Stripe | null>(null);
   const [pkStripeKey, setPKStripeKey] = useState<string>("");
   const [billingData, setBillingData] = useState<Array<IBilling>>([
@@ -74,6 +67,9 @@ export default function Account(): ReactElement {
       date_next_payment_attempt: null,
     },
   ]);
+
+  const [loadingBilling, setLoadingBilling] = useState<boolean>(false);
+
   const intervalPay = ["2-week", "1-month"];
   const typesPay = ["one time", "requirement"];
 
@@ -111,6 +107,7 @@ export default function Account(): ReactElement {
       );
       console.log("Account: getBilling => ", response.data);
       setBillingData(response.data);
+      setLoadingBilling(true);
     } catch (error: any) {
       console.log("GET: error message billing history =>  ", error.message);
       console.log(
@@ -328,57 +325,65 @@ export default function Account(): ReactElement {
           <div className="clientInfo_tittle">Billing</div>
           <div className="billing_table">
             <table className="table">
-              <tr className="tableHeader">
-                <th>Date</th>
-                <th>Amount</th>
-                <th>Status</th>
-              </tr>
-              {billingData[0].amount &&
-                billingData.map((billing, index) => {
-                  return (
-                    <tr key={index}>
-                      {billing.status === "succeeded" ? (
-                        <td>{billing.date}</td>
-                      ) : billing.status === "active" ? (
-                        <td className="billingReq">
-                          <sup className="req">req</sup> {billing.date}
-                          <br />
-                          next payment: {billing.date_next_payment_attempt}
-                        </td>
-                      ) : (
-                        <td>{billing.date}</td>
-                      )}
-
-                      {billing.status === "succeeded" ? (
-                        <td>${billing.amount}</td>
-                      ) : billing.status === "active" ? (
-                        <td>
-                          <br />
-                          <br />${billing.amount}
-                        </td>
-                      ) : (
-                        <td>${billing.amount}</td>
-                      )}
-
-                      {billing.status === "succeeded" ? (
-                        <td style={{ color: "green" }}>Paid</td>
-                      ) : billing.status === "active" ? (
-                        <td style={{ color: "green" }}>
-                          Active
-                          <br />
-                          <br />
-                          {billing.paid === false ? (
-                            <span style={{ color: "red" }}>Failed</span>
+              {!loadingBilling ? (
+                <tr className="loader">
+                  <Preloader />
+                </tr>
+              ) : (
+                <>
+                  <tr className="tableHeader">
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                  {billingData[0].amount &&
+                    billingData.map((billing, index) => {
+                      return (
+                        <tr key={index}>
+                          {billing.status === "succeeded" ? (
+                            <td>{billing.date}</td>
+                          ) : billing.status === "active" ? (
+                            <td className="billingReq">
+                              <sup className="req">req</sup> {billing.date}
+                              <br />
+                              next payment: {billing.date_next_payment_attempt}
+                            </td>
                           ) : (
-                            <span style={{ color: "green" }}>Paid</span>
+                            <td>{billing.date}</td>
                           )}
-                        </td>
-                      ) : (
-                        <td style={{ color: "red" }}>Failed</td>
-                      )}
-                    </tr>
-                  );
-                })}
+
+                          {billing.status === "succeeded" ? (
+                            <td>${billing.amount}</td>
+                          ) : billing.status === "active" ? (
+                            <td>
+                              <br />
+                              <br />${billing.amount}
+                            </td>
+                          ) : (
+                            <td>${billing.amount}</td>
+                          )}
+
+                          {billing.status === "succeeded" ? (
+                            <td style={{ color: "green" }}>Paid</td>
+                          ) : billing.status === "active" ? (
+                            <td style={{ color: "green" }}>
+                              Active
+                              <br />
+                              <br />
+                              {billing.paid === false ? (
+                                <span style={{ color: "red" }}>Failed</span>
+                              ) : (
+                                <span style={{ color: "green" }}>Paid</span>
+                              )}
+                            </td>
+                          ) : (
+                            <td style={{ color: "red" }}>Failed</td>
+                          )}
+                        </tr>
+                      );
+                    })}
+                </>
+              )}
             </table>
           </div>
 

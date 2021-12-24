@@ -3,6 +3,7 @@ import "./account.css";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { clientApi } from "../../../api/clientApi";
 import { Stripe } from "@stripe/stripe-js";
+import { instance } from "../../../api/axiosInstance";
 
 const PAYMENT_OK = "Payment successful!";
 const PAYMENT_FAIL = "Payment FAILED! ";
@@ -56,6 +57,8 @@ export const CheckoutForm = ({
   const [payment, setPayment] = useState<string>("");
 
   const [res, setRes] = useState("");
+
+  const [status, setStatus] = useState("");
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     onUpdateCallback();
@@ -137,6 +140,14 @@ export const CheckoutForm = ({
     } else {
       return true;
     }
+  };
+
+  const getStatusPay = async () => {
+    const status = await instance().get(`api/client/webhook`);
+
+    console.log("!!!Webhook: status => ", status);
+    // setStatus(res);
+    // setPKStripeKey(stripeKeys.data.pk_test);
   };
 
   return (
