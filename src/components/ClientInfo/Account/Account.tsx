@@ -1,4 +1,10 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, {
+  ReactElement,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from "react";
 import "./account.css";
 import { useLocation } from "react-router-dom";
 import { instance } from "../../../api/axiosInstance";
@@ -9,24 +15,12 @@ import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
 import Preloader from "../../Preloader/Preloader";
+import InfiniteScroll from "react-infinite-scroll-component";
+import useGetBilling from "./useGetBilling";
 
 interface IVisit {
   date: string;
   doctor_name: string;
-}
-
-interface IBilling {
-  date: string;
-  description: string;
-  amount: string | null;
-  subscription_interval: string | null;
-  pay_period: string | null;
-  subscription_quantity: string | null;
-  client_name: string;
-  doctor_name: string;
-  paid: boolean | null;
-  status: string | null;
-  date_next_payment_attempt: string | null;
 }
 
 export default function Account(): ReactElement {
@@ -49,26 +43,32 @@ export default function Account(): ReactElement {
   const [type, setType] = useState<string>("one time");
   const [number, setNumber] = useState<string>("");
   const [interval, setIntervalPay] = useState<string>("");
-  const [error, setError] = useState<boolean>(false);
+
   const [stripe, setStripe] = useState<Stripe | null>(null);
   const [pkStripeKey, setPKStripeKey] = useState<string>("");
-  const [billingData, setBillingData] = useState<Array<IBilling>>([
-    {
-      date: "",
-      description: "",
-      amount: null,
-      subscription_interval: null,
-      pay_period: null,
-      subscription_quantity: null,
-      client_name: "",
-      doctor_name: "",
-      paid: null,
-      status: null,
-      date_next_payment_attempt: null,
-    },
-  ]);
 
-  const [loadingBilling, setLoadingBilling] = useState<boolean>(false);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  const { loadingBilling, error, billingData, hasMore, total, size } =
+    useGetBilling(api_key, "", pageNumber);
+
+  const observer: any = useRef();
+
+  const lastElementRef = useCallback(
+    (node) => {
+      if (loadingBilling) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          console.log("entries ", entries);
+          setPageNumber((prevPageNumber) => prevPageNumber + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+      // console.log(node);
+    },
+    [loadingBilling, hasMore]
+  );
 
   const intervalPay = ["2-week", "1-month"];
   const typesPay = ["one time", "requirement"];
@@ -85,6 +85,7 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
+
   const getHistoryVisits = async () => {
     try {
       const response = await instance().get(
@@ -100,23 +101,6 @@ export default function Account(): ReactElement {
       throw new Error(error.message);
     }
   };
-  const getBilling = async () => {
-    try {
-      const response = await instance().get(
-        `api/client/billing_history/${api_key}`
-      );
-      console.log("Account: getBilling => ", response.data);
-      setBillingData(response.data);
-      setLoadingBilling(true);
-    } catch (error: any) {
-      console.log("GET: error message billing history =>  ", error.message);
-      console.log(
-        "error response data billing history => ",
-        error.response.data
-      );
-      throw new Error(error.message);
-    }
-  };
 
   useEffect(() => {
     getStripeKey();
@@ -125,7 +109,6 @@ export default function Account(): ReactElement {
   useEffect(() => {
     getClient();
     getHistoryVisits();
-    getBilling();
   }, [api_key]);
 
   useEffect(() => {
@@ -186,7 +169,6 @@ export default function Account(): ReactElement {
   };
 
   const setStatuses = () => {
-    // setType("");
     setAmount("");
   };
 
@@ -199,14 +181,11 @@ export default function Account(): ReactElement {
       setIntervalPay("2-week");
     } else {
       setNumber("");
-      setError(false);
     }
     if (interval !== "") {
       setNumber("");
       setType("requirements");
-      setError(false);
     }
-    // getBilling();
   }, [type, interval]);
 
   return (
@@ -325,65 +304,117 @@ export default function Account(): ReactElement {
           <div className="clientInfo_tittle">Billing</div>
           <div className="billing_table">
             <table className="table">
-              {!loadingBilling ? (
-                <tr className="loader">
-                  <Preloader />
+              <>
+                <tr className="tableHeader">
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
                 </tr>
-              ) : (
-                <>
+
+                {billingData.map((billing, index) => {
+                  if (billingData.length === index + 1) {
+                    return (
+                      <tr key={index} ref={lastElementRef}>
+                        {billing.status === "succeeded" ? (
+                          <td>{billing.date}</td>
+                        ) : billing.status === "active" ? (
+                          <td className="billingReq">
+                            <sup className="req">req</sup> {billing.date}
+                            <br />
+                            next payment: {billing.date_next_payment_attempt}
+                          </td>
+                        ) : (
+                          <td>{billing.date}</td>
+                        )}
+
+                        {billing.status === "succeeded" ? (
+                          <td>${billing.amount}</td>
+                        ) : billing.status === "active" ? (
+                          <td>
+                            <br />
+                            <br />${billing.amount}
+                          </td>
+                        ) : (
+                          <td>${billing.amount}</td>
+                        )}
+
+                        {billing.status === "succeeded" ? (
+                          <td style={{ color: "green" }}>Paid</td>
+                        ) : billing.status === "active" ? (
+                          <td style={{ color: "green" }}>
+                            Active
+                            <br />
+                            <br />
+                            {billing.paid === false ? (
+                              <span style={{ color: "red" }}>Failed</span>
+                            ) : (
+                              <span style={{ color: "green" }}>Paid</span>
+                            )}
+                          </td>
+                        ) : (
+                          <td style={{ color: "red" }}>Failed</td>
+                        )}
+                      </tr>
+                    );
+                  } else {
+                    return (
+                      <tr key={index}>
+                        {billing.status === "succeeded" ? (
+                          <td>{billing.date}</td>
+                        ) : billing.status === "active" ? (
+                          <td className="billingReq">
+                            <sup className="req">req</sup> {billing.date}
+                            <br />
+                            next payment: {billing.date_next_payment_attempt}
+                          </td>
+                        ) : (
+                          <td>{billing.date}</td>
+                        )}
+
+                        {billing.status === "succeeded" ? (
+                          <td>${billing.amount}</td>
+                        ) : billing.status === "active" ? (
+                          <td>
+                            <br />
+                            <br />${billing.amount}
+                          </td>
+                        ) : (
+                          <td>${billing.amount}</td>
+                        )}
+
+                        {billing.status === "succeeded" ? (
+                          <td style={{ color: "green" }}>Paid</td>
+                        ) : billing.status === "active" ? (
+                          <td style={{ color: "green" }}>
+                            Active
+                            <br />
+                            <br />
+                            {billing.paid === false ? (
+                              <span style={{ color: "red" }}>Failed</span>
+                            ) : (
+                              <span style={{ color: "green" }}>Paid</span>
+                            )}
+                          </td>
+                        ) : (
+                          <td style={{ color: "red" }}>Failed</td>
+                        )}
+                      </tr>
+                    );
+                  }
+                })}
+
+                {loadingBilling ? (
                   <tr className="tableHeader">
-                    <th>Date</th>
-                    <th>Amount</th>
-                    <th>Status</th>
+                    <td colSpan={3}>Loading...</td>
                   </tr>
-                  {billingData[0].amount &&
-                    billingData.map((billing, index) => {
-                      return (
-                        <tr key={index}>
-                          {billing.status === "succeeded" ? (
-                            <td>{billing.date}</td>
-                          ) : billing.status === "active" ? (
-                            <td className="billingReq">
-                              <sup className="req">req</sup> {billing.date}
-                              <br />
-                              next payment: {billing.date_next_payment_attempt}
-                            </td>
-                          ) : (
-                            <td>{billing.date}</td>
-                          )}
+                ) : null}
 
-                          {billing.status === "succeeded" ? (
-                            <td>${billing.amount}</td>
-                          ) : billing.status === "active" ? (
-                            <td>
-                              <br />
-                              <br />${billing.amount}
-                            </td>
-                          ) : (
-                            <td>${billing.amount}</td>
-                          )}
-
-                          {billing.status === "succeeded" ? (
-                            <td style={{ color: "green" }}>Paid</td>
-                          ) : billing.status === "active" ? (
-                            <td style={{ color: "green" }}>
-                              Active
-                              <br />
-                              <br />
-                              {billing.paid === false ? (
-                                <span style={{ color: "red" }}>Failed</span>
-                              ) : (
-                                <span style={{ color: "green" }}>Paid</span>
-                              )}
-                            </td>
-                          ) : (
-                            <td style={{ color: "red" }}>Failed</td>
-                          )}
-                        </tr>
-                      );
-                    })}
-                </>
-              )}
+                {error ? (
+                  <tr className="tableHeader">
+                    <td colSpan={3}>Error</td>
+                  </tr>
+                ) : null}
+              </>
             </table>
           </div>
 
@@ -413,7 +444,7 @@ export default function Account(): ReactElement {
                 <div className="selectContainer">
                   {typesPay.map((type, index) => {
                     return (
-                      <div key={index} onClick={(e) => setType(type)}>
+                      <div key={index} onClick={(_e) => setType(type)}>
                         {type}
                       </div>
                     );
@@ -439,7 +470,7 @@ export default function Account(): ReactElement {
                     return (
                       <div
                         key={index}
-                        onClick={(e) => setIntervalPay(interval)}
+                        onClick={(_e) => setIntervalPay(interval)}
                       >
                         {interval}
                       </div>
