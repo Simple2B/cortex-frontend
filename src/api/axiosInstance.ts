@@ -1,19 +1,27 @@
 import axios, { AxiosInstance } from "axios";
 import domain from "./domain.json";
 
-
-
-export const instance = (): AxiosInstance => {
+export const instance = (
+  query: string = "",
+  pageNumber: number = 0,
+  cancel?: any
+): AxiosInstance => {
   const token = localStorage.getItem("token") ?? "";
+  // let cancel;
   // console.log("token", token)
   return axios.create({
     baseURL: domain.REACT_DOMAIN,
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json; charset=utf-8",
-      'Access-Control-Allow-Origin' : '*',
-      'Access-Control-Allow-Methods':'GET, PUT, POST, DELETE, PATCH, OPTIONS',
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, PATCH, OPTIONS",
     },
+    params: {
+      q: query,
+      page: pageNumber,
+    },
+    cancelToken: new axios.CancelToken((c) => (cancel = c)),
   });
 };
 
