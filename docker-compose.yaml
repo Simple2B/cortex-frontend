@@ -1,0 +1,7 @@
+version: "3"
+services:
+  frontend:
+    image: istacat/cortex_frontend
+    build: .
+    ports:
+      - 127.0.0.1:7005:80
