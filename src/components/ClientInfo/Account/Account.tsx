@@ -356,7 +356,7 @@ export default function Account(): ReactElement {
                         )}
                       </tr>
                     );
-                  } else {
+                  } else if (index !== 0) {
                     return (
                       <tr key={index}>
                         {billing.status === "succeeded" ? (
