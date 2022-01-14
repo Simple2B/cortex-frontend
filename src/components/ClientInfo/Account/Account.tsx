@@ -15,7 +15,6 @@ import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
 import Preloader from "../../Preloader/Preloader";
-import InfiniteScroll from "react-infinite-scroll-component";
 import useGetBilling from "./useGetBilling";
 
 interface IVisit {
@@ -312,7 +311,7 @@ export default function Account(): ReactElement {
                 </tr>
 
                 {billingData.map((billing, index) => {
-                  if (billingData.length === index + 1) {
+                  if (billingData.length === index + 1 && billing.date) {
                     return (
                       <tr key={index} ref={lastElementRef}>
                         {billing.status === "succeeded" ? (
@@ -356,7 +355,7 @@ export default function Account(): ReactElement {
                         )}
                       </tr>
                     );
-                  } else if (index !== 0) {
+                  } else if (index !== 0 && billing.date) {
                     return (
                       <tr key={index}>
                         {billing.status === "succeeded" ? (

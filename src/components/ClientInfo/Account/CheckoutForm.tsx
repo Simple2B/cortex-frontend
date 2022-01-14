@@ -56,9 +56,7 @@ export const CheckoutForm = ({
   const elements = useElements();
   const [payment, setPayment] = useState<string>("");
 
-  const [res, setRes] = useState("");
-
-  const [status, setStatus] = useState("");
+  const [res, setRes] = useState(null);
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     onUpdateCallback();
@@ -113,14 +111,14 @@ export const CheckoutForm = ({
           createSubscription();
         }
 
-        if (res === "ok") {
+        if (res) {
           console.log("Successful payment");
           setSuccess(true);
           setInterval(() => {
             setSuccess(false);
           }, 3000);
           setPayment(PAYMENT_OK);
-          setRes("");
+          setRes(null);
         }
       } catch (error) {
         setPayment(PAYMENT_FAIL);
@@ -140,14 +138,6 @@ export const CheckoutForm = ({
     } else {
       return true;
     }
-  };
-
-  const getStatusPay = async () => {
-    const status = await instance().get(`api/client/webhook`);
-
-    console.log("!!!Webhook: status => ", status);
-    // setStatus(res);
-    // setPKStripeKey(stripeKeys.data.pk_test);
   };
 
   return (
