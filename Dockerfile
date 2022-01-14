@@ -1,3 +1,3 @@
-FROM istacat/react_build
+FROM simple2b/react_build
 COPY . /src
 RUN build

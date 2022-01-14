@@ -7,6 +7,7 @@ import "./AccountReport.sass";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
+import { Alpha } from "../Alpha/Alpha";
 
 export default function AccountReportStart(): ReactElement {
   const location = useLocation();
@@ -153,16 +154,7 @@ export default function AccountReportStart(): ReactElement {
             <Brain />
           </div>
         </div>
-        <div className="alphaContainer">
-          <div className="alphaContainer_text">Alpha</div>
-          <div className="alphaContainer_letters">
-            <div className="letter">R</div>
-            <div className="letter">L</div>
-          </div>
-          <div className="alphaContainer_dashboard">
-            <IntakeAlpha />
-          </div>
-        </div>
+        <Alpha />
       </div>
 
       <div className="accountReportStart_modalWindow">

@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import "./Alpha.sass";
 import { useLocation } from "react-router-dom";
+import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 // import {
 //   Category,
 //   ChartComponent,
@@ -93,6 +94,7 @@ export function Alpha(): ReactElement {
         <div className="letter">L</div>
       </div>
       <div className="intakeInfoAlpha_dashboard">
+        <IntakeAlpha />
         {/* <ChartComponent
           id="chartsAlpha"
           // width="800"
