@@ -64,7 +64,6 @@ export default function Account(): ReactElement {
         }
       });
       if (node) observer.current.observe(node);
-      // console.log(node);
     },
     [loadingBilling, hasMore]
   );

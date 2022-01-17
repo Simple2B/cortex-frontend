@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./account.css";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { clientApi } from "../../../api/clientApi";
 import { Stripe } from "@stripe/stripe-js";
 import { instance } from "../../../api/axiosInstance";
+import { IStripe } from "../../../types/stripeTypes";
+import { store } from "../../../redux";
 
 const PAYMENT_OK = "Payment successful!";
 const PAYMENT_FAIL = "Payment FAILED! ";
@@ -56,7 +58,7 @@ export const CheckoutForm = ({
   const elements = useElements();
   const [payment, setPayment] = useState<string>("");
 
-  const [res, setRes] = useState(null);
+  const [status, setStatus] = useState<IStripe>(store.getState().stripe);
 
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     onUpdateCallback();
@@ -69,67 +71,55 @@ export const CheckoutForm = ({
       },
     });
 
-    if (!error) {
-      try {
-        const { id } = paymentMethod;
-        const sessionData = {
-          id: id,
-          description: type_description,
-          amount: Number(amount) * 100,
-          api_key: api_key,
-          email: email,
-          name: name,
+    // if (!error) {
+    try {
+      const { id } = paymentMethod;
+      const sessionData = {
+        id: id,
+        description: type_description,
+        amount: Number(amount) * 100,
+        api_key: api_key,
+        email: email,
+        name: name,
+      };
+      const data = {
+        api_key: api_key,
+        payment_method: id,
+        email: email,
+        amount: Number(amount) * 100,
+        interval: interval,
+        interval_count: number,
+        name: name,
+        description: type_description,
+
+        // description: type_description,
+      };
+
+      if (type_description === "one time") {
+        const createSession = async () => {
+          const response = await clientApi.createStripeSession(sessionData);
+          setStatus(response);
         };
-        const data = {
-          api_key: api_key,
-          payment_method: id,
-          email: email,
-          amount: Number(amount) * 100,
-          interval: interval,
-          interval_count: number,
-          name: name,
-          description: type_description,
-
-          // description: type_description,
-        };
-
-        if (type_description === "one time") {
-          const createSession = async () => {
-            const res = await clientApi.createStripeSession(sessionData);
-            setRes(res);
-            console.log("createSession", res);
-          };
-          createSession();
-        }
-        if (type_description === "requirements") {
-          const createSubscription = async () => {
-            const response = await clientApi.createStripeSubscription(data);
-            console.log("createSubscription", response);
-            setRes(response);
-          };
-
-          createSubscription();
-        }
-
-        if (res) {
-          console.log("Successful payment");
-          setSuccess(true);
-          setInterval(() => {
-            setSuccess(false);
-          }, 3000);
-          setPayment(PAYMENT_OK);
-          setRes(null);
-        }
-      } catch (error) {
-        setPayment(PAYMENT_FAIL);
-        setInterval(() => {
-          setPayment("");
-        }, 3000);
-        console.log("Error from Stripe", error);
+        createSession();
       }
-    } else {
-      console.log("Error message => ", error.message);
+      if (type_description === "requirements") {
+        const createSubscription = async () => {
+          const response = await clientApi.createStripeSubscription(data);
+          setStatus(response);
+        };
+
+        createSubscription();
+      }
+    } catch (error) {
+      setPayment(PAYMENT_FAIL);
+      setInterval(() => {
+        setPayment("");
+      }, 3000);
+      console.log("Error from Stripe", error);
     }
+    // } else {
+    //   console.log("Error message => ", error.message);
+    // }
   };
 
   const checkInputs = (): boolean => {
@@ -139,6 +129,17 @@ export const CheckoutForm = ({
       return true;
     }
   };
+
+  useEffect(() => {
+    if (status === "ok") {
+      setSuccess(true);
+      setInterval(() => {
+        setSuccess(false);
+      }, 3000);
+      setPayment(PAYMENT_OK);
+      setStatus("");
+    }
+  }, [status]);
 
   return (
     <>

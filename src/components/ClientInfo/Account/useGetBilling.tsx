@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { instance } from "../../../api/axiosInstance";
+import { store } from "../../../redux";
 
 interface IBilling {
   date: string;
@@ -43,6 +44,7 @@ export default function useGetBilling(
   const [hasMore, setHasMore] = useState<boolean>(false);
   const [total, setTotal] = useState<number>(0);
   const [size, setSize] = useState<number>(4);
+  const status = store.getState().stripe;
 
   const getBilling = async () => {
     let cancel: any;
@@ -72,7 +74,7 @@ export default function useGetBilling(
     setLoadingBilling(true);
     setError(false);
     getBilling();
-  }, [api_key, query, pageNumber]);
+  }, [api_key, query, pageNumber, status]);
 
   return { loadingBilling, error, billingData, hasMore, total, size };
 }
