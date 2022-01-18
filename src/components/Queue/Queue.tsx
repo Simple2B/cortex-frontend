@@ -244,35 +244,38 @@ export default function Queue(): ReactElement {
               />
             </div>
             <div className="client_lists">
-              {clients
-                .filter(
-                  (client) => !queue.map((q) => q.phone).includes(client.phone)
-                )
-                .filter((client) => {
-                  if (querySearch === "") {
-                    return client;
-                  } else if (
-                    (client.first_name + client.last_name)
-                      .toLowerCase()
-                      .includes(querySearch.toLowerCase())
-                  ) {
-                    return client;
-                  }
-                })
-                .map((patient, index) => (
-                  <div
-                    className="queue_list"
-                    key={index}
-                    onClick={() => {
-                      clientApi.addClientToQueue(patient);
-                      addClient(patient);
-                      setSearchQuery("");
-                      setIsOpenClientModal(!isOpenClientModal);
-                    }}
-                  >
-                    {patient.last_name}, {patient.first_name}
-                  </div>
-                ))}
+              <div className="items">
+                {clients
+                  .filter(
+                    (client) =>
+                      !queue.map((q) => q.phone).includes(client.phone)
+                  )
+                  .filter((client) => {
+                    if (querySearch === "") {
+                      return client;
+                    } else if (
+                      (client.first_name + client.last_name)
+                        .toLowerCase()
+                        .includes(querySearch.toLowerCase())
+                    ) {
+                      return client;
+                    }
+                  })
+                  .map((patient, index) => (
+                    <div
+                      className="queue_list"
+                      key={index}
+                      onClick={() => {
+                        clientApi.addClientToQueue(patient);
+                        addClient(patient);
+                        setSearchQuery("");
+                        setIsOpenClientModal(!isOpenClientModal);
+                      }}
+                    >
+                      {patient.last_name}, {patient.first_name}
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
