@@ -42,9 +42,13 @@ export default function Kiosk(): ReactElement {
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     console.log("phoneQuery => ", phoneQuery);
+    console.log(
+      "phoneQuery with replace => ",
+      phoneQuery.replace(/[^0-9]/g, "")
+    );
     e.preventDefault();
     const clientFromDB = clients.filter(
-      (client) => client.phone === phoneQuery
+      (client) => client.phone === phoneQuery.replace(/[^0-9]/g, "")
     );
     const filteredName =
       clientFromDB.length > 0 ? clientFromDB[0].first_name : false;
@@ -52,7 +56,7 @@ export default function Kiosk(): ReactElement {
     if (filteredName) {
       console.log("filteredName => ", filteredName);
 
-      clientApi.identifyClientWithPhone(phoneQuery);
+      clientApi.identifyClientWithPhone(phoneQuery.replace(/[^0-9]/g, ""));
 
       setStyle(true);
       setWelcomeText(
@@ -63,7 +67,7 @@ export default function Kiosk(): ReactElement {
       const interval = setInterval(() => {
         setStyle(false);
         setWelcomeText("Please enter your phone number");
-      }, 4000);
+      }, 5000);
       return () => clearInterval(interval);
     } else {
       setStyle(false);
@@ -73,7 +77,7 @@ export default function Kiosk(): ReactElement {
       const interval = setInterval(() => {
         setStyle(false);
         setWelcomeText("Please enter your phone number");
-      }, 4000);
+      }, 5000);
       return () => clearInterval(interval);
     }
   };
