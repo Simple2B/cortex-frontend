@@ -158,12 +158,12 @@ export const clientApi = {
   identifyClientWithPhone: async (phone: string): Promise<void> => {
     console.log("identifyClientWithPhone: phone =>", phone);
     const data = { phone: phone };
-    console.log("dataReqIdentifyClient =>", data);
+    // console.log("dataReqIdentifyClient =>", data);
     try {
       const response = await instance().post("api/client/kiosk", data);
       console.log("response kiosk ", response);
       console.log("response received successfully ", response.data);
-      // return response.data;
+      return response.data;
     } catch (error: any) {
       console.log(
         "error message addClientToQueue => ",
