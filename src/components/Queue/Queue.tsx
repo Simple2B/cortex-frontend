@@ -8,6 +8,8 @@ import { ReactComponent as SearchIcon } from "../../images/lupa.svg";
 import "./queue.sass";
 import { NavLink, useHistory } from "react-router-dom";
 
+const QUEUE_INTERVAL = 30000;
+
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
   const [clients, setClients] = useState<User[]>([]);
@@ -48,7 +50,10 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     getClients();
-    getClientsForQueue();
+    const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   useEffect(() => {

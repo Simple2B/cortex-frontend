@@ -36,16 +36,11 @@ export default function Kiosk(): ReactElement {
     setPhoneQuery(e.target.value);
   };
 
-  const linkToRegister = () => {
-    <NavLink to="patient-registration">Registration form</NavLink>;
-  };
+  // const linkToRegister = () => {
+  //   <NavLink to="patient-registration">Registration form</NavLink>;
+  // };
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
-    console.log("phoneQuery => ", phoneQuery);
-    console.log(
-      "phoneQuery with replace => ",
-      phoneQuery.replace(/[^0-9]/g, "")
-    );
     e.preventDefault();
     const clientFromDB = clients.filter(
       (client) => client.phone === phoneQuery.replace(/[^0-9]/g, "")
@@ -56,7 +51,15 @@ export default function Kiosk(): ReactElement {
     if (filteredName) {
       console.log("filteredName => ", filteredName);
 
-      clientApi.identifyClientWithPhone(phoneQuery.replace(/[^0-9]/g, ""));
+      const identifyClient = async () => {
+        const client = await clientApi.identifyClientWithPhone(
+          phoneQuery.replace(/[^0-9]/g, "")
+        );
+
+        return client;
+      };
+
+      identifyClient();
 
       setStyle(true);
       setWelcomeText(
