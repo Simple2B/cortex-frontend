@@ -267,7 +267,7 @@ export default function PatientRegistration(): ReactElement {
           <div className="registration_input" data-error={"phone"}>
             <input
               name="phone"
-              value={values.phone}
+              value={values.phone.replace(/[^0-9]/g, "")}
               onChange={onChange}
               className={`registration_input_data ${
                 errors.phone && "is-invalid"

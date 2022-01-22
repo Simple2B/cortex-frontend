@@ -7,6 +7,7 @@ import "./AccountReport.sass";
 import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
+import { Alpha } from "../Alpha/Alpha";
 
 export default function AccountReportStart(): ReactElement {
   const location = useLocation();
@@ -17,7 +18,7 @@ export default function AccountReportStart(): ReactElement {
 
   const sound = new Audio("/cortex_sound.mp3");
 
-  const [counter, setCounter] = useState<number>(5);
+  const [counter, setCounter] = useState<number>(10);
   // 07:47 -> 467 seconds
   const [isTestStarted, setIsTestStarted] = useState<boolean>(false);
   const history = useHistory();
@@ -101,15 +102,8 @@ export default function AccountReportStart(): ReactElement {
   }, [counter]);
 
   const createTest = () => {
-    console.log("Record START PLAYING");
-    sound.play();
-    startTimer();
-    setIsTestStarted(true);
-    setInterval(() => {
-      sound.pause();
-    }, counter * 1000);
+    const playPromise = sound.play();
 
-    console.log("Record STOPPED!");
     const date = new Date().toISOString().replace(/GMT.*$/, "GMT+0000");
     const fullDate = date.replace("T", " ").replace(".", " ").split(" ");
     const dStart = fullDate[0].split("-");
@@ -119,7 +113,29 @@ export default function AccountReportStart(): ReactElement {
       api_key: api_key,
       date: startDateToBack,
     };
-    setStartTest(startTest);
+
+    if (playPromise !== undefined) {
+      playPromise
+        .then((_) => {
+          console.log("Record START PLAYING");
+          // Automatic playback started!
+          // Show playing UI.
+          console.log("audio played auto");
+          startTimer();
+          setIsTestStarted(true);
+          setInterval(() => {
+            sound.pause();
+          }, counter * 1000);
+
+          console.log("Record STOPPED!");
+          setStartTest(startTest);
+        })
+        .catch((error) => {
+          // Auto-play was prevented
+          // Show paused UI.
+          console.log("playback prevented");
+        });
+    }
 
     const getCreateTest = async () => {
       const test = await clientApi.createTest(startTest);
@@ -137,32 +153,8 @@ export default function AccountReportStart(): ReactElement {
           <div className="brain">
             <Brain />
           </div>
-
-          {/* <div className="intakeInfoText_results">
-            <div className="results">
-              <div>63bpm</div>
-              <div>HR</div>
-            </div>
-            <div className="results">
-              <div>10</div>
-              <div>Resp</div>
-            </div>
-            <div className="results">
-              <div>98%</div>
-              <div>SpO2</div>
-            </div>
-          </div> */}
         </div>
-        <div className="alphaContainer">
-          <div className="alphaContainer_text">Alpha</div>
-          <div className="alphaContainer_letters">
-            <div className="letter">R</div>
-            <div className="letter">L</div>
-          </div>
-          <div className="alphaContainer_dashboard">
-            <IntakeAlpha />
-          </div>
-        </div>
+        <Alpha />
       </div>
 
       <div className="accountReportStart_modalWindow">
@@ -186,7 +178,12 @@ export default function AccountReportStart(): ReactElement {
                 </div>
               </div>
             ) : !isTestStarted ? (
-              <div className="modalWindow_btnStart" onClick={createTest}>
+              <div
+                className="modalWindow_btnStart"
+                onClick={() => {
+                  createTest();
+                }}
+              >
                 Start
               </div>
             ) : null}

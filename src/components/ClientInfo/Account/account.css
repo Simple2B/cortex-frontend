@@ -112,6 +112,13 @@
   height: 133px;
 }
 
+.billing_table .table .loader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .billing_table .table tr td {
   width: 100%;
 }
@@ -326,6 +333,17 @@
 .billing_table table tr {
   width: 100%;
   /* border: 1px solid #707070; */
+}
+
+.billing_table table tr .billingReq {
+  position: relative;
+}
+
+.billing_table table tr .billingReq .req {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #aef7ff;
 }
 
 .billing_table table tr th {

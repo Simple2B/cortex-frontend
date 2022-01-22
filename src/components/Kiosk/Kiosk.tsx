@@ -36,15 +36,14 @@ export default function Kiosk(): ReactElement {
     setPhoneQuery(e.target.value);
   };
 
-  const linkToRegister = () => {
-    <NavLink to="patient-registration">Registration form</NavLink>;
-  };
+  // const linkToRegister = () => {
+  //   <NavLink to="patient-registration">Registration form</NavLink>;
+  // };
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
-    console.log("phoneQuery => ", phoneQuery);
     e.preventDefault();
     const clientFromDB = clients.filter(
-      (client) => client.phone === phoneQuery
+      (client) => client.phone === phoneQuery.replace(/[^0-9]/g, "")
     );
     const filteredName =
       clientFromDB.length > 0 ? clientFromDB[0].first_name : false;
@@ -52,7 +51,15 @@ export default function Kiosk(): ReactElement {
     if (filteredName) {
       console.log("filteredName => ", filteredName);
 
-      clientApi.identifyClientWithPhone(phoneQuery);
+      const identifyClient = async () => {
+        const client = await clientApi.identifyClientWithPhone(
+          phoneQuery.replace(/[^0-9]/g, "")
+        );
+
+        return client;
+      };
+
+      identifyClient();
 
       setStyle(true);
       setWelcomeText(
@@ -63,7 +70,7 @@ export default function Kiosk(): ReactElement {
       const interval = setInterval(() => {
         setStyle(false);
         setWelcomeText("Please enter your phone number");
-      }, 4000);
+      }, 5000);
       return () => clearInterval(interval);
     } else {
       setStyle(false);
@@ -73,7 +80,7 @@ export default function Kiosk(): ReactElement {
       const interval = setInterval(() => {
         setStyle(false);
         setWelcomeText("Please enter your phone number");
-      }, 4000);
+      }, 5000);
       return () => clearInterval(interval);
     }
   };
