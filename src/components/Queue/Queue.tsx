@@ -8,6 +8,8 @@ import { ReactComponent as SearchIcon } from "../../images/lupa.svg";
 import "./queue.sass";
 import { NavLink, useHistory } from "react-router-dom";
 
+const QUEUE_INTERVAL = 5000;
+
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
   const [clients, setClients] = useState<User[]>([]);
@@ -48,7 +50,10 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     getClients();
-    getClientsForQueue();
+    const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   useEffect(() => {
@@ -78,7 +83,7 @@ export default function Queue(): ReactElement {
     <div>
       <NavBar />
       <div className="queue">
-        <h1 className="queue_title">The Queue</h1>
+        <h1 className="title_queue">The Queue</h1>
         <div className="queue_input_search">
           <SearchIcon className="queue_search_icon" />
           <input
@@ -118,90 +123,97 @@ export default function Queue(): ReactElement {
 
         <div className="containerListsButton">
           <div className="queue_lists_container">
-            {queue.length > 0 ? (
-              queue
-                .filter((client) => {
-                  if (search === "") {
-                    return client;
-                  } else if (
-                    (client.first_name + client.last_name)
-                      .toLowerCase()
-                      .includes(search.toLowerCase())
-                  ) {
-                    return client;
-                  }
-                })
-                .map((patient, index) => (
-                  <div className="queue_list" key={index}>
-                    <i
-                      className="fas fa-times faTimesItemQueue"
-                      title="Delete from queue"
-                      onClick={(e) => setModalOpen(patient.id)}
-                    />
-                    <div
-                      id="myModal"
-                      className={
-                        isModalOpen === patient.id ? "modalOpen" : "modal"
-                      }
-                    >
-                      <div className="modal-content">
-                        <span className="close" onClick={() => setModalOpen(0)}>
-                          &times;
-                        </span>
-                        <div className="modalText">
-                          Are you sure you want to remove {patient.first_name}{" "}
-                          {patient.last_name} from the queue ?
-                        </div>
-                        <div className="btnsModal">
-                          <div
-                            className="btnModalOk"
-                            onClick={() => {
-                              clientApi.deleteClient({
-                                id: patient.id,
-                                api_key: patient.api_key,
-                                first_name: patient.first_name,
-                                last_name: patient.last_name,
-                                phone: patient.phone,
-                                email: patient.email,
-                                place_in_queue: patient.place_in_queue,
-                                rougue_mode: true,
-                              });
+            <div className="queue_lists">
+              <div className="queue_list_space"></div>
 
-                              removeMemberFromQueue(index);
-                              setModalOpen(0);
-                            }}
+              {queue.length > 0 ? (
+                queue
+                  .filter((client) => {
+                    if (search === "") {
+                      return client;
+                    } else if (
+                      (client.first_name + client.last_name)
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+                    ) {
+                      return client;
+                    }
+                  })
+                  .map((patient, index) => (
+                    <div className="queue_list" key={index}>
+                      <i
+                        className="fas fa-times faTimesItemQueue"
+                        title="Delete from queue"
+                        onClick={(e) => setModalOpen(patient.id)}
+                      />
+                      <div
+                        id="myModal"
+                        className={
+                          isModalOpen === patient.id ? "modalOpen" : "modal"
+                        }
+                      >
+                        <div className="modal-content">
+                          <span
+                            className="close"
+                            onClick={() => setModalOpen(0)}
                           >
-                            Ok
+                            &times;
+                          </span>
+                          <div className="modalText">
+                            Are you sure you want to remove {patient.first_name}{" "}
+                            {patient.last_name} from the queue ?
                           </div>
-                          <div onClick={() => setModalOpen(0)}>Cancel</div>
+                          <div className="btnsModal">
+                            <div
+                              className="btnModalOk"
+                              onClick={() => {
+                                clientApi.deleteClient({
+                                  id: patient.id,
+                                  api_key: patient.api_key,
+                                  first_name: patient.first_name,
+                                  last_name: patient.last_name,
+                                  phone: patient.phone,
+                                  email: patient.email,
+                                  place_in_queue: patient.place_in_queue,
+                                  rougue_mode: true,
+                                });
+
+                                removeMemberFromQueue(index);
+                                setModalOpen(0);
+                              }}
+                            >
+                              Ok
+                            </div>
+                            <div onClick={() => setModalOpen(0)}>Cancel</div>
+                          </div>
                         </div>
                       </div>
+                      <NavLink to={`/${patient.api_key}/${patient.first_name}`}>
+                        <div
+                          className="list"
+                          onClick={() => {
+                            console.log("clientIntake", {
+                              patient_name: patient.first_name,
+                              api_key: patient.api_key,
+                              rougue_mode: activeBtnRogueMode,
+                              place_in_queue: patient.place_in_queue,
+                            });
+                            clientApi.clientIntake({
+                              api_key: patient.api_key,
+                              rougue_mode: true,
+                              place_in_queue: patient.place_in_queue,
+                            });
+                          }}
+                        >
+                          {patient.last_name}, {patient.first_name}
+                        </div>
+                      </NavLink>
                     </div>
-                    <NavLink to={`/${patient.api_key}/${patient.first_name}`}>
-                      <div
-                        className="list"
-                        onClick={() => {
-                          console.log("clientIntake", {
-                            patient_name: patient.first_name,
-                            api_key: patient.api_key,
-                            rougue_mode: activeBtnRogueMode,
-                            place_in_queue: patient.place_in_queue,
-                          });
-                          clientApi.clientIntake({
-                            api_key: patient.api_key,
-                            rougue_mode: true,
-                            place_in_queue: patient.place_in_queue,
-                          });
-                        }}
-                      >
-                        {patient.last_name}, {patient.first_name}
-                      </div>
-                    </NavLink>
-                  </div>
-                ))
-            ) : (
-              <div className="infoMessage">NO PATIENTS IN QUEUE</div>
-            )}
+                  ))
+              ) : (
+                <div className="infoMessage">NO PATIENTS IN QUEUE</div>
+              )}
+            </div>
           </div>
 
           <button
@@ -237,35 +249,38 @@ export default function Queue(): ReactElement {
               />
             </div>
             <div className="client_lists">
-              {clients
-                .filter(
-                  (client) => !queue.map((q) => q.phone).includes(client.phone)
-                )
-                .filter((client) => {
-                  if (querySearch === "") {
-                    return client;
-                  } else if (
-                    (client.first_name + client.last_name)
-                      .toLowerCase()
-                      .includes(querySearch.toLowerCase())
-                  ) {
-                    return client;
-                  }
-                })
-                .map((patient, index) => (
-                  <div
-                    className="queue_list"
-                    key={index}
-                    onClick={() => {
-                      clientApi.addClientToQueue(patient);
-                      addClient(patient);
-                      setSearchQuery("");
-                      setIsOpenClientModal(!isOpenClientModal);
-                    }}
-                  >
-                    {patient.last_name}, {patient.first_name}
-                  </div>
-                ))}
+              <div className="items">
+                {clients
+                  .filter(
+                    (client) =>
+                      !queue.map((q) => q.phone).includes(client.phone)
+                  )
+                  .filter((client) => {
+                    if (querySearch === "") {
+                      return client;
+                    } else if (
+                      (client.first_name + client.last_name)
+                        .toLowerCase()
+                        .includes(querySearch.toLowerCase())
+                    ) {
+                      return client;
+                    }
+                  })
+                  .map((patient, index) => (
+                    <div
+                      className="queue_list"
+                      key={index}
+                      onClick={() => {
+                        clientApi.addClientToQueue(patient);
+                        addClient(patient);
+                        setSearchQuery("");
+                        setIsOpenClientModal(!isOpenClientModal);
+                      }}
+                    >
+                      {patient.last_name}, {patient.first_name}
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         </div>

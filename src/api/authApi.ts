@@ -2,11 +2,10 @@
 import { ILoginResponse } from "../types/authTypes";
 import { authInstance } from "./axiosInstance";
 
-
 const formatRequestBody = (username: string, password: string) => {
   const formData = new FormData();
-  formData.append('username', username);
-  formData.append('password', password);
+  formData.append("username", username);
+  formData.append("password", password);
   return formData;
 };
 
@@ -19,12 +18,16 @@ const formatRequestBodyApiKey = (password: string, api_key: string) => {
 };
 
 export const authApi = {
-
-  login: async (username: string, password: string): Promise<ILoginResponse> => {
+  login: async (
+    username: string,
+    password: string
+  ): Promise<ILoginResponse> => {
     try {
-      const response = await authInstance
-      .post('api/auth/sign_in', formatRequestBody(username, password))
-       console.log("POST [/auth/sign_in] response received successfully");
+      const response = await authInstance.post(
+        "/api/auth/sign_in",
+        formatRequestBody(username, password)
+      );
+      console.log("POST [/auth/sign_in] response received successfully");
       return response.data;
     } catch (error: any) {
       // place to handle errors and rise custom errors
@@ -33,15 +36,21 @@ export const authApi = {
     }
   },
 
-  setPassword: async (password: string, api_key: string ): Promise<void> => {
+  setPassword: async (password: string, api_key: string): Promise<void> => {
     try {
-      const response = await authInstance
-      .post('api/auth/sign_up', formatRequestBodyApiKey(password, api_key))
-        console.log(`POST [api/sing_up/${api_key}] response received successfully`);
+      const response = await authInstance.post(
+        "api/auth/sign_up",
+        formatRequestBodyApiKey(password, api_key)
+      );
+      console.log(
+        `POST [api/sing_up/${api_key}] response received successfully`
+      );
       return response.data;
     } catch (error: any) {
       // place to handle errors and rise custom errors
-      console.log(`POST [api/sing_up/${api_key}] error message: ${error.message}`);
+      console.log(
+        `POST [api/sing_up/${api_key}] error message: ${error.message}`
+      );
       throw new Error(error.message);
     }
   },

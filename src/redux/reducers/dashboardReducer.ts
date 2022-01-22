@@ -1,6 +1,10 @@
-import { DashboardAction, DashboardActionTypes, IDashboard } from "../../types/dashboardTypes";
+import {
+  DashboardAction,
+  DashboardActionTypes,
+  IDashboard,
+} from "../../types/dashboardTypes";
 
-export const initialDashboard: IDashboard = "arousal"
+export const initialDashboard: IDashboard = "arousal";
 
 export const dashboardReducer = (
   state = initialDashboard,
@@ -8,7 +12,7 @@ export const dashboardReducer = (
 ): IDashboard => {
   switch (action.type) {
     case DashboardActionTypes.DASHBOARD_URL:
-      return state = action.payload;
+      return (state = action.payload);
     default:
       return state;
   }

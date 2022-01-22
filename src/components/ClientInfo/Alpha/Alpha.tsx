@@ -1,7 +1,63 @@
 import React, { ReactElement } from "react";
 import "./Alpha.sass";
-import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import { useLocation } from "react-router-dom";
+import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
+// import {
+//   Category,
+//   ChartComponent,
+//   DataLabel,
+//   LineSeries,
+//   Legend,
+//   Tooltip,
+//   Inject,
+//   AxisModel,
+//   SeriesCollectionDirective,
+//   SeriesDirective,
+// } from "@syncfusion/ej2-react-charts";
+
+// import Paper from '@material-ui/core/Paper';
+// import {
+//   Chart,
+//   ArgumentAxis,
+//   ValueAxis,
+//   LineSeries,
+//   Title,
+//   Legend,
+// } from '@devexpress/dx-react-chart-material-ui';
+// import { withStyles } from '@material-ui/core/styles';
+// import { Animation } from '@devexpress/dx-react-chart';
+
+// const data1 = [
+//   { name: "1", value: 15 },
+//   { name: "2", value: 28 },
+//   { name: "3", value: 20 },
+//   { name: "4", value: 32 },
+//   { name: "5", value: 40 },
+//   { name: "6", value: 32 },
+//   { name: "7", value: 35 },
+//   { name: "8", value: 50 },
+//   { name: "9", value: 38 },
+//   { name: "10", value: 30 },
+//   { name: "11", value: 25 },
+//   { name: "12", value: 32 },
+// ];
+
+// const data2 = [
+//   { name: "1", value: 255 },
+//   { name: "2", value: 278 },
+//   { name: "3", value: 250 },
+//   { name: "4", value: 262 },
+//   { name: "5", value: 270 },
+//   { name: "6", value: 282 },
+//   { name: "7", value: 295 },
+//   { name: "8", value: 250 },
+//   { name: "9", value: 288 },
+//   { name: "10", value: 290 },
+//   { name: "11", value: 300 },
+//   { name: "12", value: 255 },
+// ];
+
+// const primaryxAxis: AxisModel | undefined = { valueType: "Category" };
 
 export function Alpha(): ReactElement {
   const location = useLocation();
@@ -39,6 +95,30 @@ export function Alpha(): ReactElement {
       </div>
       <div className="intakeInfoAlpha_dashboard">
         <IntakeAlpha />
+        {/* <ChartComponent
+          id="chartsAlpha"
+          // width="800"
+          height="110"
+          background="none"
+          primaryXAxis={primaryxAxis}
+        >
+          <Inject services={[LineSeries, Tooltip, Category]} />
+          <SeriesCollectionDirective>
+            <SeriesDirective
+              dataSource={data1}
+              xName="name"
+              yName="value"
+              name="Sales"
+            />
+
+            <SeriesDirective
+              dataSource={data2}
+              xName="name"
+              yName="value"
+              name="Sales"
+            />
+          </SeriesCollectionDirective>
+        </ChartComponent> */}
       </div>
     </div>
   );
