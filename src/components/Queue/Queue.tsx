@@ -8,7 +8,7 @@ import { ReactComponent as SearchIcon } from "../../images/lupa.svg";
 import "./queue.sass";
 import { NavLink, useHistory } from "react-router-dom";
 
-const QUEUE_INTERVAL = 3000;
+const QUEUE_INTERVAL = 5000;
 
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
