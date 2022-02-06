@@ -14,7 +14,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { loadStripe, Stripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
-import Preloader from "../../Preloader/Preloader";
 import useGetBilling from "./useGetBilling";
 
 interface IVisit {
@@ -69,7 +68,7 @@ export default function Account(): ReactElement {
   );
 
   const intervalPay = ["2-week", "1-month"];
-  const typesPay = ["one time", "requirement"];
+  const typesPay = ["one time", "recurring"];
 
   const getClient = async () => {
     try {
