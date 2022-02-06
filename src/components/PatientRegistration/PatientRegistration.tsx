@@ -526,7 +526,7 @@ export default function PatientRegistration(): ReactElement {
           </div>
 
           <button type="submit" className="registration_button">
-            Registration
+            Register
           </button>
         </form>
       </div>
