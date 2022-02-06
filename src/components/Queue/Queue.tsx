@@ -1,4 +1,10 @@
-import React, { ReactElement, useState, useEffect } from "react";
+import React, {
+  ReactElement,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import "reactjs-popup/dist/index.css";
 import { clientApi } from "../../api/clientApi";
 import NavBar from "../NavBar/NavBar";
@@ -12,18 +18,15 @@ const QUEUE_INTERVAL = 5000;
 
 export default function Queue(): ReactElement {
   const [queue, setQueue] = useState<User[]>([]);
-  const [clients, setClients] = useState<User[]>([]);
-
   const [isOpenClientModal, setIsOpenClientModal] = useState<boolean>(false);
   const [querySearch, setSearchQuery] = useState<string>("");
-
   const [isModalOpen, setModalOpen] = useState<number>(0);
-
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
-
   const [search, setSearch] = useState<string>("");
-
   const history = useHistory();
+  const [clients, setClients] = useState<User[]>([]);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [loadingClients, setLoadingClients] = useState<boolean>(false);
 
   const getClientsForQueue = async () => {
     try {
@@ -37,19 +40,38 @@ export default function Queue(): ReactElement {
   };
 
   const getClients = async () => {
+    let cancel: any;
+    setLoadingClients(true);
     try {
-      const response = await instance().get("api/client/clients");
-      console.log("clients => ", response.data);
-      setClients(response.data);
+      const response = await instance("", pageNumber, cancel).get(
+        "api/client/clients_for_queue"
+      );
+      console.log("/clients_for_queue => ", response.data);
+      setClients((prev) => [...prev, ...response.data.items]);
+      setLoadingClients(false);
     } catch (error: any) {
-      console.log("GET: error message =>  ", error.message);
-      console.log("error response data clients => ", error.response.data);
+      console.log("GET (clients_for_queue): error message =>  ", error.message);
+      console.log(
+        "error response data /clients_for_queue => ",
+        error.response.data
+      );
       throw new Error(error.message);
+    }
+  };
+
+  const handleScroll = (event: any) => {
+    const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
+    if (scrollHeight - scrollTop === clientHeight) {
+      setPageNumber((prev) => prev + 1);
     }
   };
 
   useEffect(() => {
     getClients();
+  }, [pageNumber]);
+
+  useEffect(() => {
+    getClientsForQueue();
     const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
     return () => {
       clearInterval(intervalId);
@@ -248,7 +270,7 @@ export default function Queue(): ReactElement {
                 placeholder="Search"
               />
             </div>
-            <div className="client_lists">
+            <div className="client_lists" onScroll={handleScroll}>
               <div className="items">
                 {clients
                   .filter(
