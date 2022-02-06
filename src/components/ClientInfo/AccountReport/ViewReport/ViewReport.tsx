@@ -75,10 +75,6 @@ export default function ViewReport(): ReactElement {
     },
   ]);
 
-  useEffect(() => {
-    getTest();
-  }, [test_id]);
-
   const getClient = async () => {
     try {
       const response = await instance().get(
@@ -115,7 +111,7 @@ export default function ViewReport(): ReactElement {
 
   const getCarePlanNames = async () => {
     try {
-      const response = await instance().get(`api/test/care_plan_names`);
+      const response = await instance().get("api/test/care_plan_names");
       setCarePlanNames(response.data);
     } catch (error: any) {
       console.log("GET: error message getCarePlanNames =>  ", error.message);
@@ -142,10 +138,14 @@ export default function ViewReport(): ReactElement {
   };
 
   useEffect(() => {
-    getCarePlanNames();
     getFrequencyNames();
+    getCarePlanNames();
     getClient();
   }, []);
+
+  useEffect(() => {
+    getTest();
+  }, [test_id]);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
