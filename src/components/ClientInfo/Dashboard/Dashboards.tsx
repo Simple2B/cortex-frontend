@@ -22,8 +22,6 @@ export default function Dashboards(props: {
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
 
-  // console.log("Dashboard api_key ->", api_key);
-
   const getClient = async () => {
     try {
       const response = await instance().get(
