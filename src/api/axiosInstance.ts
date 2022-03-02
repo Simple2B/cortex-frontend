@@ -3,11 +3,10 @@ import domain from "./domain.json";
 
 export const instance = (
   query: string = "",
-  pageNumber: number = 0,
-  cancel?: any
+  pageNumber: number = 0
 ): AxiosInstance => {
   const token = localStorage.getItem("token") ?? "";
-  // let cancel;
+  let cancel;
   // console.log("token", token)
   return axios.create({
     baseURL: domain.REACT_DOMAIN,
