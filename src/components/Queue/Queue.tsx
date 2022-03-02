@@ -39,15 +39,16 @@ export default function Queue(): ReactElement {
     }
   };
 
+  console.log(" queue ", queue);
+
   const getClients = async () => {
-    let cancel: any;
     setLoadingClients(true);
     try {
-      const response = await instance("", pageNumber, cancel).get(
-        "api/client/clients_for_queue"
+      const response = await instance(querySearch, pageNumber).get(
+        `api/client/clients`
       );
-      console.log("/clients_for_queue => ", response.data);
-      setClients((prev) => [...prev, ...response.data.items]);
+      console.log("clients_for_queue => ", response.data);
+      setClients([...response.data]);
       setLoadingClients(false);
     } catch (error: any) {
       console.log("GET (clients_for_queue): error message =>  ", error.message);
@@ -66,9 +67,13 @@ export default function Queue(): ReactElement {
     }
   };
 
+  // useEffect(() => {
+  //   setClients([]);
+  // }, [querySearch]);
+
   useEffect(() => {
     getClients();
-  }, [pageNumber]);
+  }, [pageNumber, querySearch]);
 
   useEffect(() => {
     getClientsForQueue();
@@ -198,6 +203,7 @@ export default function Queue(): ReactElement {
                                   email: patient.email,
                                   place_in_queue: patient.place_in_queue,
                                   rougue_mode: true,
+                                  visits: patient.visits,
                                 });
 
                                 removeMemberFromQueue(index);
@@ -212,7 +218,11 @@ export default function Queue(): ReactElement {
                       </div>
                       <NavLink to={`/${patient.api_key}/${patient.first_name}`}>
                         <div
-                          className="list"
+                          className={
+                            patient.visits && patient.visits.length > 0
+                              ? "list"
+                              : "listWithoutVisits"
+                          }
                           onClick={() => {
                             console.log("clientIntake", {
                               patient_name: patient.first_name,
