@@ -1,12 +1,7 @@
 import React, { Suspense } from "react";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, TransformControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Model from "./BrainModel";
-
-// function Model() {
-//   const { scene } = useGLTF("/Final.gltf");
-//   return <primitive object={scene} />;
-// }
 
 export function ShowDonut(props) {
   return (
@@ -15,9 +10,11 @@ export function ShowDonut(props) {
         display: "flex",
         justifyContent: "center",
         elignItem: "center",
-        height: "50vh",
-        width: "30vw",
-        background: "linear-gradient(0.25turn, #2e2d2d, #858585, #373737)",
+        height: "55vh",
+        width: "45vw",
+        background:
+          "linear-gradient(to right top, #3e3e3e, #444444, #4b4b4b, #515151, #585858, #5d5d5d, #626262, #676767, #6c6c6c, #717171, #767676, #7b7b7b)",
+        boxShadow: "-5px -5px -5px #323b49",
       }}
     >
       <Canvas camera={{ position: [10, 18, 23], fov: 0.5 }}>
@@ -25,7 +22,9 @@ export function ShowDonut(props) {
         <Suspense fallback={null}>
           <Model />
         </Suspense>
-        <OrbitControls />
+        <OrbitControls makeDefault />
+        <TransformControls mode="translate" />
+        {/* <OrbitControls  /> */}
       </Canvas>
     </div>
   );
