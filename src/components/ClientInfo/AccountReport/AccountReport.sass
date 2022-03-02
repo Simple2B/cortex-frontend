@@ -18,11 +18,15 @@
         &:hover
             background: linear-gradient(#085E67, #00E5FF)
             transition: background 0.3s ease
-    .reportAccountTestTime
-        margin-top: 10%
-        // height: 55%
+    .reportAccountTestTimeScrollContainer
         width: 100%
-        height: 190px
+        margin-top: 5%
+        min-height: 200px
+    .reportAccountTestTimeScrollContainer .reportAccountTestTime
+        position: relative
+        // height: 55%
+        // width: 100%
+        height: 210px
         display: flex
         justify-content: center
         align-items: center
@@ -30,8 +34,9 @@
         overflow-y: scroll
         scroll-behavior: smooth
         scrollbar-width: 100%
-        padding-bottom: 20px
-        padding-top: 10px
+        // padding-bottom: 20px
+        margin-top: 5%
+        padding-top: 10%
         a
             text-decoration: none
             color: #fff
