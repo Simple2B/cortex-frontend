@@ -78,6 +78,7 @@
     "@types/react-csv": "^1.1.2",
     "@types/react-datepicker": "^4.1.7",
     "@types/react-router-dom": "^5.1.8",
-    "@types/react-select": "^4.0.17"
+    "@types/react-select": "^4.0.17",
+    "@types/three": "^0.137.0"
   }
 }
