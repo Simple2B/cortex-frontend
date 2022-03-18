@@ -50,5 +50,6 @@ export interface User {
   email: string;
   place_in_queue: number | null;
   rougue_mode: boolean | null;
+  req_date: string | null;
   visits: [];
 }
