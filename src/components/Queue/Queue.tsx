@@ -47,7 +47,7 @@ export default function Queue(): ReactElement {
       const response = await instance(querySearch, pageNumber).get(
         `api/client/clients`
       );
-      console.log("clients_for_queue => ", response.data);
+      console.log("clients => ", response);
       setClients([...response.data]);
       setLoadingClients(false);
     } catch (error: any) {
@@ -77,10 +77,10 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     getClientsForQueue();
-    const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
-    return () => {
-      clearInterval(intervalId);
-    };
+    // const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
+    // return () => {
+    //   clearInterval(intervalId);
+    // };
   }, []);
 
   useEffect(() => {
@@ -105,6 +105,18 @@ export default function Queue(): ReactElement {
   const handleChangeBtnRogueMode = (e: any) => {
     setActiveBtnRogueMode(e.currentTarget.innerHTML);
   };
+
+  const isRegToday = (reg_date: string | null): boolean => {
+    const today = new Date()
+    if (reg_date) {
+      const registrationData = new Date(reg_date)
+      const dateInQueue = new Date(registrationData.setHours(registrationData.getHours() + 24));
+      if (dateInQueue > today) {
+        return true
+      }
+    }
+    return false
+  }
 
   return (
     <div>
@@ -167,7 +179,7 @@ export default function Queue(): ReactElement {
                     }
                   })
                   .map((patient, index) => (
-                    <div className="queue_list" key={index}>
+                    <div className={ isRegToday(patient.req_date) ? "queueListWithoutVisits" : "queue_list"} key={index}>
                       <i
                         className="fas fa-times faTimesItemQueue"
                         title="Delete from queue"
@@ -202,6 +214,7 @@ export default function Queue(): ReactElement {
                                   phone: patient.phone,
                                   email: patient.email,
                                   place_in_queue: patient.place_in_queue,
+                                  req_date: patient.req_date,
                                   rougue_mode: true,
                                   visits: patient.visits,
                                 });
@@ -219,9 +232,9 @@ export default function Queue(): ReactElement {
                       <NavLink to={`/${patient.api_key}/${patient.first_name}`}>
                         <div
                           className={
-                            patient.visits && patient.visits.length > 0
-                              ? "list"
-                              : "listWithoutVisits"
+                            isRegToday(patient.req_date)
+                              ?  "listWithoutVisits"
+                              : "list"
                           }
                           onClick={() => {
                             console.log("clientIntake", {
