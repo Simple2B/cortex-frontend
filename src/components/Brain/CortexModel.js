@@ -7,128 +7,107 @@ import { useGLTF } from "@react-three/drei";
 
 export default function Model(props) {
   const group = useRef();
-  const { nodes, materials } = useGLTF("/Final.gltf");
+  const { nodes, materials } = useGLTF("/CortexModel.gltf");
   return (
     <group ref={group} {...props} dispose={null}>
-      <group>
-        <group
-          name="Null"
-          // position={[691.20025635, 18.03242683, 15.735075]}
-          position={[400, 0, 0]}
-          userData={{ name: "Null" }}
-        >
-          <mesh
-            name="Brain1"
-            castShadow
-            receiveShadow
-            geometry={nodes.Brain1.geometry}
-            material={nodes.Brain1.material}
-            position={[164.69052124, -7.85306644, 3.44548607]}
-            userData={{ name: "Brain.1" }}
-          />
-          <mesh
-            name="Brain"
-            castShadow
-            receiveShadow
-            geometry={nodes.Brain.geometry}
-            material={nodes.Brain.material}
-            position={[164.69052124, -7.85306644, 3.44548607]}
-            userData={{ name: "Brain" }}
-          />
-          <mesh
-            name="Left_51"
-            castShadow
-            receiveShadow
-            geometry={nodes.Left_51.geometry}
-            material={nodes.Left_51.material}
-            position={[-48.36100769, -18.03242683, -15.735075]}
-            userData={{ name: "Left 5.1" }}
-          />
-          <mesh
-            name="Left_41"
-            castShadow
-            receiveShadow
-            geometry={nodes.Left_41.geometry}
-            material={nodes.Left_41.material}
-            position={[-48.36100769, -18.03242683, -15.735075]}
-            userData={{ name: "Left 4.1" }}
-          />
-          <mesh
-            name="Left_31"
-            castShadow
-            receiveShadow
-            geometry={nodes.Left_31.geometry}
-            material={nodes.Left_31.material}
-            position={[-48.36100769, -18.03242683, -15.735075]}
-            userData={{ name: "Left 3.1" }}
-          />
-          <mesh
-            name="Left_21"
-            castShadow
-            receiveShadow
-            geometry={nodes.Left_21.geometry}
-            material={nodes.Left_21.material}
-            position={[-49.740345, -18.03242683, -15.735075]}
-            userData={{ name: "Left 2.1" }}
-          />
-          <mesh
-            name="Left_11"
-            castShadow
-            receiveShadow
-            geometry={nodes.Left_11.geometry}
-            material={nodes.Left_11.material}
-            position={[35.96083069, 79.98277283, 59.49481583]}
-            userData={{ name: "Left 1.1" }}
-          />
-          <mesh
-            name="Right_51"
-            castShadow
-            receiveShadow
-            geometry={nodes.Right_51.geometry}
-            material={nodes.Right_51.material}
-            position={[-17.22864151, -18.03242683, -15.735075]}
-            userData={{ name: "Right 5.1" }}
-          />
-          <mesh
-            name="Right_41"
-            castShadow
-            receiveShadow
-            geometry={nodes.Right_41.geometry}
-            material={nodes.Right_41.material}
-            position={[-17.22864151, -18.03242683, -15.735075]}
-            userData={{ name: "Right 4.1" }}
-          />
-          <mesh
-            name="Right_31"
-            castShadow
-            receiveShadow
-            geometry={nodes.Right_31.geometry}
-            material={nodes.Right_31.material}
-            position={[-17.22864151, -18.03242683, -15.735075]}
-            userData={{ name: "Right 3.1" }}
-          />
-          <mesh
-            name="Right_21"
-            castShadow
-            receiveShadow
-            geometry={nodes.Right_21.geometry}
-            material={nodes.Right_21.material}
-            position={[-18.60797691, -18.03242683, -15.735075]}
-            userData={{ name: "Right 2.1" }}
-          />
-          <mesh
-            name="Right_11"
-            castShadow
-            receiveShadow
-            geometry={nodes.Right_11.geometry}
-            material={nodes.Right_11.material}
-            position={[-100.22458649, 79.98277283, 59.49481583]}
-            userData={{ name: "Right 1.1" }}
-          />
-        </group>
+      <group position={[-5.05, 0, 0]}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes["mid-Mat"].geometry}
+          material={nodes["mid-Mat"].material}
+        />
       </group>
+      <group position={[-5.9, 0, 0]}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Occipital_lope.geometry}
+          material={nodes.Occipital_lope.material}
+          position={[-1.24, 0, 0]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Temporal_lope.geometry}
+          material={nodes.Temporal_lope.material}
+          position={[-1.24, 0, 0]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Parietal_lope.geometry}
+          material={nodes.Parietal_lope.material}
+          position={[-1.24, 0, 0]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Frontal_lope.geometry}
+          material={nodes.Frontal_lope.material}
+          position={[-1.24, 0, 0]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.mid_down.geometry}
+          material={nodes.mid_down.material}
+          position={[-1.24, 0, 0]}
+        />
+      </group>
+      <group position={[9.09, 0, 0]}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Occipital_lope_1.geometry}
+          material={nodes.Occipital_lope_1.material}
+          position={[-1.24, 0, 0]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Temporal_lope_1.geometry}
+          material={nodes.Temporal_lope_1.material}
+          position={[-1.24, 0, 0]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Parietal_lope_1.geometry}
+          material={nodes.Parietal_lope_1.material}
+          position={[-1.24, 0, 0]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Frontal_lope_1.geometry}
+          material={nodes.Frontal_lope_1.material}
+          position={[-1.24, 0, 0]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.mid_down_1.geometry}
+          material={nodes.mid_down_1.material}
+          position={[-1.24, 0, 0]}
+        />
+      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Spinal_cord.geometry}
+        material={nodes.Spinal_cord.material}
+        position={[-1.44, 0, 0]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Cerebellum.geometry}
+        material={nodes.Cerebellum.material}
+        position={[-1.44, 0, 0]}
+      />
     </group>
   );
 }
 
-useGLTF.preload("/Final.gltf");
+useGLTF.preload("/CortexModel.gltf");
