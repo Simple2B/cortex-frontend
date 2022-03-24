@@ -21,12 +21,34 @@ interface IVisit {
   doctor_name: string;
 }
 
+interface ICarePlan {
+  date: string,
+  start_time: string,
+  end_time: string | null,
+  progress_date: string | null,
+  care_plan: string,
+  frequency: string,
+  client_id: number,
+  doctor_id: number,
+}
+
 export default function Account(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
 
   const [client, setClient] = useState<Client>(ClientDefault);
+  const [carePlan, setCarePlan] = useState<ICarePlan>({
+    date: '',
+    start_time: '',
+    end_time: '',
+    progress_date: '',
+    care_plan: '',
+    frequency: '',
+    client_id: 1,
+    doctor_id: 1,
+
+  });
 
   const [visits, setVisits] = useState<Array<IVisit>>([
     { date: "", doctor_name: "" },
@@ -34,8 +56,8 @@ export default function Account(): ReactElement {
 
   const [filterVisits, setFilterVisits] = useState<Array<IVisit>>();
 
-  const [startTime, setStartTime] = useState<any>(null);
-  const [endTime, setEndTime] = useState<any>(null);
+  const [startTime, setStartTime] = useState<any>();
+  const [endTime, setEndTime] = useState<any>();
 
   const [amount, setAmount] = useState<string>("");
   const [type, setType] = useState<string>("one time");
@@ -83,6 +105,24 @@ export default function Account(): ReactElement {
     }
   };
 
+  const getCarePlan = async () => {
+    try {
+      const response = await instance().get(
+        `api/test/care_plan_create/${api_key}`
+      );
+      console.log("GET: getCarePlan response.data =>  ", response.data);
+      setCarePlan({...response.data});
+      setStartTime(new Date(response.data.start_time));
+      if (response.data.end_time) {
+        setEndTime(new Date(response.data.end_time));
+      }
+    } catch (error: any) {
+      console.log("GET: getCarePlan message =>  ", error.message);
+      console.log("error getCarePlan data => ", error.response.data);
+      throw new Error(error.message);
+    }
+  };
+
   const getHistoryVisits = async () => {
     try {
       const response = await instance().get(
@@ -106,48 +146,12 @@ export default function Account(): ReactElement {
   useEffect(() => {
     getClient();
     getHistoryVisits();
+    getCarePlan()
   }, [api_key]);
 
-  useEffect(() => {
-    if (startTime && endTime) {
-      const dateStart = new Date(
-        startTime.toString().replace(/GMT.*$/, "GMT+0000")
-      ).toISOString();
-      const fullStartDate = dateStart
-        .replace("T", " ")
-        .replace(".", " ")
-        .split(" ");
-      const dStart = fullStartDate[0].split("-");
-      const fullTime = fullStartDate[1];
-      const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
-
-      const dateEnd = new Date(
-        endTime.toString().replace(/GMT.*$/, "GMT+0000")
-      ).toISOString();
-      const fullEndDate = dateEnd
-        .replace("T", " ")
-        .replace(".", " ")
-        .split(" ");
-      const dEnd = fullEndDate[0].split("-");
-      const fullTimeEnd = fullEndDate[1];
-      const endDateToBack = `${dEnd[1]}/${dEnd[2]}/${dEnd[0]}, ${fullTimeEnd}`;
-
-      const dataToFilterVisit = {
-        api_key: api_key,
-        start_time: startDateToBack,
-        end_time: endDateToBack,
-      };
-
-      const filterVisits = async () => {
-        const filteredVisits = await clientApi.filteredHistoryVisits(
-          dataToFilterVisit
-        );
-        console.log("Account: filteredVisits => ", filteredVisits);
-        setFilterVisits(filteredVisits);
-      };
-      filterVisits();
-    }
-  }, [startTime, endTime]);
+  // useEffect(() => {
+  //   getCarePlan()
+  // }, [startTime, endTime]);
 
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
@@ -184,6 +188,18 @@ export default function Account(): ReactElement {
       setType("requirements");
     }
   }, [type, interval]);
+
+  const createCarePlane = (startDate: any, endDate: any) => {
+    const createCarePlan = async () => {
+      const carePlan = await clientApi.createCarePlan({
+        api_key: api_key,
+        start_time: startDate,
+        end_time: endDate,
+      });
+      console.log("Account: created care plan", carePlan);
+    };
+    createCarePlan();
+  }
 
   return (
     <>
@@ -236,8 +252,7 @@ export default function Account(): ReactElement {
                 <th className="service">Service</th>
                 <th className="practitioner">Practitioner</th>
               </tr>
-              {filterVisits && startTime && endTime
-                ? filterVisits.map((visit, index) => {
+                {visits.map((visit, index) => {
                     return (
                       <tr key={index}>
                         <td>{visit.date}</td>
@@ -246,15 +261,7 @@ export default function Account(): ReactElement {
                       </tr>
                     );
                   })
-                : visits.map((visit, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{visit.date}</td>
-                        <td>Upgrade</td>
-                        <td>{visit.doctor_name}</td>
-                      </tr>
-                    );
-                  })}
+                  }
             </table>
           </div>
           <div className="visitHistory_inputs">
@@ -266,13 +273,16 @@ export default function Account(): ReactElement {
                     dateFormat="MM/dd/yyyy h:mm aa"
                     className="dataInput"
                     selected={startTime}
-                    onChange={(data) => setStartTime(data)}
+                    onChange={(data) => {
+                      setStartTime(data);
+                      createCarePlane(data, endTime);
+                    }}
                     selectsStart
                     showTimeInput
                     startDate={startTime}
                     endDate={endTime}
                     isClearable
-                    placeholderText="Start date"
+                    placeholderText= "Start date"
                   />
                 </div>
               </div>
@@ -283,7 +293,10 @@ export default function Account(): ReactElement {
                     dateFormat="MM/dd/yyyy h:mm aa"
                     className="dataInput"
                     selected={endTime}
-                    onChange={(data) => setEndTime(data)}
+                    onChange={(data) => {
+                      setEndTime(data);
+                      createCarePlane(startTime, data);
+                    }}
                     selectsEnd
                     showTimeInput
                     startDate={startTime}
