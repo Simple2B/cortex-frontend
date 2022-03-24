@@ -60,14 +60,19 @@ export function AccountReport(): ReactElement {
       <div className="reportAccountBtn" onClick={handleCreateCarePlan}>
         New Test
       </div>
-      <div className="reportAccountTestTime">
-        {tests.map((test, index) => {
-          return (
-            <NavLink key={index} to={`/${api_key}/view_report_` + `${test.id}`}>
-              <div>{test.date}</div>
-            </NavLink>
-          );
-        })}
+      <div className="reportAccountTestTimeScrollContainer">
+        <div className="reportAccountTestTime">
+          {tests.map((test, index) => {
+            return (
+              <NavLink
+                key={index}
+                to={`/${api_key}/view_report_` + `${test.id}`}
+              >
+                <div>{test.date}</div>
+              </NavLink>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
