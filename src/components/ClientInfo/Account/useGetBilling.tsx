@@ -49,7 +49,7 @@ export default function useGetBilling(
   const getBilling = async () => {
     let cancel: any;
     try {
-      const response = await instance("", pageNumber, cancel).get(
+      const response = await instance("", pageNumber).get(
         `api/client/billing_history/${api_key}`
       );
       console.log("useGetBilling: getBilling => ", response.data);

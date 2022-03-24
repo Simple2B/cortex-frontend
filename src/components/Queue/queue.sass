@@ -116,7 +116,7 @@
     .infoMessage
       text-align: center
 
-.queue_list
+.queue_list, .queueListWithoutVisits
   position: relative
   display: flex
   align-items: center
@@ -128,6 +128,8 @@
   margin-bottom: 25px
   cursor: pointer
   text-transform: uppercase
+.queueListWithoutVisits
+  border: 4px solid red
 
   .list
     margin: 0 auto
@@ -136,6 +138,9 @@
     justify-content: center
     width: 100%
     height: 57px
+
+  .listWithoutVisits
+    color: red
 
   .faTimesItemQueue
     visibility: hidden
@@ -156,6 +161,9 @@
     right: 5px
     color: #0ff
     transition: all .3s ease-in-out
+
+.queueListWithoutVisits
+  border: 4px solid red
 
 .queue_add_button
   // position: absolute

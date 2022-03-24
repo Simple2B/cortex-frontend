@@ -1,3 +1,6 @@
+
+
+
 import React, {
   ReactElement,
   useState,
@@ -39,15 +42,16 @@ export default function Queue(): ReactElement {
     }
   };
 
+  console.log(" queue ", queue);
+
   const getClients = async () => {
-    let cancel: any;
     setLoadingClients(true);
     try {
-      const response = await instance("", pageNumber, cancel).get(
-        "api/client/clients_for_queue"
+      const response = await instance(querySearch, pageNumber).get(
+        `api/client/clients`
       );
-      console.log("/clients_for_queue => ", response.data);
-      setClients((prev) => [...prev, ...response.data.items]);
+      console.log("clients => ", response);
+      setClients([...response.data]);
       setLoadingClients(false);
     } catch (error: any) {
       console.log("GET (clients_for_queue): error message =>  ", error.message);
@@ -66,16 +70,20 @@ export default function Queue(): ReactElement {
     }
   };
 
+  // useEffect(() => {
+  //   setClients([]);
+  // }, [querySearch]);
+
   useEffect(() => {
     getClients();
-  }, [pageNumber]);
+  }, [pageNumber, querySearch]);
 
   useEffect(() => {
     getClientsForQueue();
-    const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
-    return () => {
-      clearInterval(intervalId);
-    };
+    // const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
+    // return () => {
+    //   clearInterval(intervalId);
+    // };
   }, []);
 
   useEffect(() => {
@@ -100,6 +108,18 @@ export default function Queue(): ReactElement {
   const handleChangeBtnRogueMode = (e: any) => {
     setActiveBtnRogueMode(e.currentTarget.innerHTML);
   };
+
+  const isRegToday = (reg_date: string | null): boolean => {
+    const today = new Date()
+    if (reg_date) {
+      const registrationData = new Date(reg_date)
+      const dateInQueue = new Date(registrationData.setHours(registrationData.getHours() + 24));
+      if (dateInQueue > today) {
+        return true
+      }
+    }
+    return false
+  }
 
   return (
     <div>
@@ -162,7 +182,7 @@ export default function Queue(): ReactElement {
                     }
                   })
                   .map((patient, index) => (
-                    <div className="queue_list" key={index}>
+                    <div className={ isRegToday(patient.req_date) ? "queueListWithoutVisits" : "queue_list"} key={index}>
                       <i
                         className="fas fa-times faTimesItemQueue"
                         title="Delete from queue"
@@ -197,7 +217,9 @@ export default function Queue(): ReactElement {
                                   phone: patient.phone,
                                   email: patient.email,
                                   place_in_queue: patient.place_in_queue,
+                                  req_date: patient.req_date,
                                   rougue_mode: true,
+                                  visits: patient.visits,
                                 });
 
                                 removeMemberFromQueue(index);
@@ -212,7 +234,11 @@ export default function Queue(): ReactElement {
                       </div>
                       <NavLink to={`/${patient.api_key}/${patient.first_name}`}>
                         <div
-                          className="list"
+                          className={
+                            isRegToday(patient.req_date)
+                              ?  "listWithoutVisits"
+                              : "list"
+                          }
                           onClick={() => {
                             console.log("clientIntake", {
                               patient_name: patient.first_name,
