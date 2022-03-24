@@ -326,7 +326,8 @@ export const clientApi = {
     }
   },
 
-  createCarePlan: async (data: { api_key: string }): Promise<any> => {
+  createCarePlan: async (data: { api_key: string, start_time?: any,
+    end_time?: any }): Promise<any> => {
     console.log("createCarePlan: data =>", data);
     try {
       const response = await instance().post("api/test/care_plan_create", data);
