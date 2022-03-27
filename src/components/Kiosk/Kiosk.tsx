@@ -25,9 +25,6 @@ export default function Kiosk(): ReactElement {
     setPhoneQuery(e.target.value);
   };
 
-  // const linkToRegister = () => {
-  //   <NavLink to="patient-registration">Registration form</NavLink>;
-  // };
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
