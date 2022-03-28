@@ -57,10 +57,6 @@ export default function AccountReportStart(): ReactElement {
   // };
 
   useEffect(() => {
-    getClient();
-  }, [api_key]);
-
-  useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
   }, [activeBtnRogueMode]);
 
