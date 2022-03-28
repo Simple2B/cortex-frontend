@@ -24,3 +24,5 @@ yarn-error.log*
 
 node_modules
 /src/domain.json
+
+/public/CortexModel.gltf
