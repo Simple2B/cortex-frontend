@@ -64,8 +64,6 @@ export function Alpha(): ReactElement {
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
 
-  console.log("Alpha: api_key ", api_key);
-
   //   const [client, setClient] = useState<Client>(ClientDefault);
 
   //   const getClient = async () => {
