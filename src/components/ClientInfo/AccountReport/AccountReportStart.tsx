@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
-import { instance } from "../../../api/axiosInstance";
+import {clientApi} from "../../../api/clientApi";
 import "./AccountReport.sass";
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
@@ -14,7 +13,7 @@ export default function AccountReportStart(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
-  const [client, setClient] = useState<Client>(ClientDefault);
+  // const [client, setClient] = useState<Client>(ClientDefault);
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
   // const sound = new Audio("/cortex_sound.mp3");
@@ -36,26 +35,26 @@ export default function AccountReportStart(): ReactElement {
     id: null,
   });
 
-  const getClient = async () => {
-    try {
-      const response = await instance().get(
-        `api/client/client_intake/${api_key}`
-      );
-      // console.log("GET: client_intake name => ", response.data);
-      setClient(response.data);
-      return response.data;
-    } catch (error: any) {
-      console.log(
-        "GET: error message get_client_intake name =>  ",
-        error.message
-      );
-      console.log(
-        "error response data get_client_intake name => ",
-        error.response.data
-      );
-      throw new Error(error.message);
-    }
-  };
+  // const getClient = async () => {
+  //   try {
+  //     const response = await instance().get(
+  //       `api/client/client_intake/${api_key}`
+  //     );
+  //     // console.log("GET: client_intake name => ", response.data);
+  //     setClient(response.data);
+  //     return response.data;
+  //   } catch (error: any) {
+  //     console.log(
+  //       "GET: error message get_client_intake name =>  ",
+  //       error.message
+  //     );
+  //     console.log(
+  //       "error response data get_client_intake name => ",
+  //       error.response.data
+  //     );
+  //     throw new Error(error.message);
+  //   }
+  // };
 
   useEffect(() => {
     getClient();
@@ -154,7 +153,7 @@ export default function AccountReportStart(): ReactElement {
   const stopTest = () => {
     console.log(" stop test ");
     // sound.play();
-sound.pause();
+    sound.pause();
     sound.currentTime = 0;
     resetTimer();
     setCounter(TIMER_COUNT);
