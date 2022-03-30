@@ -16,9 +16,12 @@ import { Elements } from "@stripe/react-stripe-js";
 import { CheckoutForm } from "./CheckoutForm";
 import useGetBilling from "./useGetBilling";
 
-interface IVisit {
+interface ITest {
   date: string;
-  doctor_name: string;
+}
+
+interface INotes {
+  date: string;
 }
 
 interface ICarePlan {
@@ -30,6 +33,23 @@ interface ICarePlan {
   frequency: string,
   client_id: number,
   doctor_id: number,
+  doctor_name: string,
+  tests: ITest[],
+  notes: INotes[],
+}
+
+const initialCarePlan = {
+  date: '',
+  start_time: '',
+  end_time: '',
+  progress_date: '',
+  care_plan: '',
+  frequency: '',
+  client_id: 1,
+  doctor_id: 1,
+  doctor_name: "",
+  tests: [],
+  notes: [],
 }
 
 export default function Account(): ReactElement {
@@ -38,23 +58,15 @@ export default function Account(): ReactElement {
   const api_key = splitLocation[splitLocation.length - 2];
 
   const [client, setClient] = useState<Client>(ClientDefault);
-  const [carePlan, setCarePlan] = useState<ICarePlan>({
-    date: '',
-    start_time: '',
-    end_time: '',
-    progress_date: '',
-    care_plan: '',
-    frequency: '',
-    client_id: 1,
-    doctor_id: 1,
+  const [carePlan, setCarePlan] = useState<ICarePlan>(initialCarePlan);
 
-  });
+  console.log("carePlan ", carePlan)
 
-  const [visits, setVisits] = useState<Array<IVisit>>([
-    { date: "", doctor_name: "" },
-  ]);
+  const [carePlans, setCarePlans] = useState<Array<ICarePlan>>([initialCarePlan]);
 
-  const [filterVisits, setFilterVisits] = useState<Array<IVisit>>();
+  console.log(" => carePlans ", carePlans)
+
+  // const [filterVisits, setFilterVisits] = useState<Array<IVisit>>();
 
   const [startTime, setStartTime] = useState<any>();
   const [endTime, setEndTime] = useState<any>();
@@ -123,16 +135,16 @@ export default function Account(): ReactElement {
     }
   };
 
-  const getHistoryVisits = async () => {
+  const getHistoryCarePlans = async () => {
     try {
       const response = await instance().get(
-        `api/client/visit_history/${api_key}`
+        `api/test/care_plan_history/${api_key}`
       );
-      setVisits(response.data);
+      setCarePlans(response.data);
     } catch (error: any) {
-      console.log("GET: error message account visits =>  ", error.message);
+      console.log("GET: error message account care plans =>  ", error.message);
       console.log(
-        "error response data account visits => ",
+        "error response data account care plans => ",
         error.response.data
       );
       throw new Error(error.message);
@@ -145,13 +157,9 @@ export default function Account(): ReactElement {
 
   useEffect(() => {
     getClient();
-    getHistoryVisits();
+    getHistoryCarePlans();
     getCarePlan()
   }, [api_key]);
-
-  // useEffect(() => {
-  //   getCarePlan()
-  // }, [startTime, endTime]);
 
   const getStripeKey = async () => {
     const stripeKeys = await instance().get(`api/client/get_secret`);
@@ -189,12 +197,23 @@ export default function Account(): ReactElement {
     }
   }, [type, interval]);
 
+  const convertDateToString = (date: Date) => {
+    const dateStr = new Date(date).toISOString().replace(/GMT.*$/, "GMT+0000");
+    const fullDate = dateStr.replace("T", " ").replace(".", " ").split(" ");
+    const dStart = fullDate[0].split("-");
+    const fullTime = fullDate[1];
+    return `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
+  }
+
   const createCarePlane = (startDate: any, endDate: any) => {
     const createCarePlan = async () => {
+      const startDateToBack = convertDateToString(startDate);
+      const endDateToBack = convertDateToString(endDate);
+
       const carePlan = await clientApi.createCarePlan({
         api_key: api_key,
-        start_time: startDate,
-        end_time: endDate,
+        start_time: startDateToBack,
+        end_time: endDateToBack,
       });
       console.log("Account: created care plan", carePlan);
     };
@@ -244,7 +263,7 @@ export default function Account(): ReactElement {
           </div>
         </div>
         <div className="visitHistory">
-          <div className="clientInfo_tittle">Visit History</div>
+          <div className="clientInfo_tittle">Care Plan History</div>
           <div className="visitHistory_table">
             <table className="table">
               <tr className="tableHeader">
@@ -252,12 +271,12 @@ export default function Account(): ReactElement {
                 <th className="service">Service</th>
                 <th className="practitioner">Practitioner</th>
               </tr>
-                {visits.map((visit, index) => {
+                {carePlans.map((carePlan, index) => {
                     return (
                       <tr key={index}>
-                        <td>{visit.date}</td>
+                        <td>{carePlan.date}</td>
                         <td>Upgrade</td>
-                        <td>{visit.doctor_name}</td>
+                        <td>{carePlan.doctor_name}</td>
                       </tr>
                     );
                   })
