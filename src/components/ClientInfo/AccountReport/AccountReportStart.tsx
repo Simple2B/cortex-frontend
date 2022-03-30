@@ -8,10 +8,17 @@ import { Alpha } from "../Alpha/Alpha";
 
 // 07:47 -> 467 seconds
 const TIMER_COUNT = 10
+interface ICreateTest {
+    api_key: string,
+    date: string,
+    current_care_plan_id: number,
+}
 
 export default function AccountReportStart(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
+  const currentCarePlanId: any = location.state;
+  console.log(" => currentCarePlanId ", currentCarePlanId )
   const api_key = splitLocation[splitLocation.length - 2];
   // const [client, setClient] = useState<Client>(ClientDefault);
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
@@ -23,38 +30,18 @@ export default function AccountReportStart(): ReactElement {
 
   const [isTestStarted, setIsTestStarted] = useState<boolean>(false);
   const history = useHistory();
-  const [startTest, setStartTest] = useState({
+  const [startTest, setStartTest] = useState<ICreateTest>({
     api_key: "",
     date: "",
+    current_care_plan_id: currentCarePlanId,
   });
 
   const [test, setTest] = useState({
-    client_id: null,
-    date: "",
-    doctor_id: null,
     id: null,
+    date: "",
+    client_id: null,
+    doctor_id: null,
   });
-
-  // const getClient = async () => {
-  //   try {
-  //     const response = await instance().get(
-  //       `api/client/client_intake/${api_key}`
-  //     );
-  //     // console.log("GET: client_intake name => ", response.data);
-  //     setClient(response.data);
-  //     return response.data;
-  //   } catch (error: any) {
-  //     console.log(
-  //       "GET: error message get_client_intake name =>  ",
-  //       error.message
-  //     );
-  //     console.log(
-  //       "error response data get_client_intake name => ",
-  //       error.response.data
-  //     );
-  //     throw new Error(error.message);
-  //   }
-  // };
 
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
@@ -92,6 +79,7 @@ export default function AccountReportStart(): ReactElement {
   const getCreateTest = async (test: {
     api_key: string,
     date: string,
+    current_care_plan_id: number,
   }) => {
     if (test.api_key.length > 0) {
       const testCarePlan = await clientApi.createTest(test);
@@ -121,6 +109,7 @@ export default function AccountReportStart(): ReactElement {
     const dataTest = {
       api_key: api_key,
       date: startDateToBack,
+      current_care_plan_id: currentCarePlanId,
     };
 
     if (playPromise !== undefined) {
@@ -136,7 +125,7 @@ export default function AccountReportStart(): ReactElement {
             sound.pause();
           }, counter * 1000);
           console.log("Record STOPPED!");
-          setStartTest(dataTest);
+          setStartTest(dataTest)
         })
         .catch((error) => {
           // Auto-play was prevented
