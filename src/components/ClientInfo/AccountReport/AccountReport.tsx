@@ -88,7 +88,7 @@ export function AccountReport(): ReactElement {
       });
       console.log(" =>>> AccountReport: created care plan ===", carePlan);
       setCurrentCarePlan(carePlan);
-      setCurrentCarePlanId(carePlan.id);
+      // setCurrentCarePlanId(carePlan.id);
     };
     createCarePlan();
   };
