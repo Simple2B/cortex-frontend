@@ -45,9 +45,17 @@ export interface User {
   visits: [];
 }
 
+export type ICurrentCarePlanId = number;
+
 export enum ClientActionTypes {
   ADD_CLIENT = "ADD_CLIENT",
-  GET_CLIENTS = "GET_CLIENTS"
+  GET_CLIENTS = "GET_CLIENTS",
+  ADD_CURRENT_CARE_PLAN_ID = "CURRENT_CARE_PLAN_ID",
+}
+
+interface ICurrentCarePlanIdAction {
+  type: ClientActionTypes.ADD_CURRENT_CARE_PLAN_ID;
+  payload: ICurrentCarePlanId;
 }
 
 interface IAddClientAction {
@@ -60,4 +68,4 @@ interface IGetClientAction {
   payload: IPatient[];
 }
 
-export type ClientAction = IAddClientAction | IGetClientAction;
+export type ClientAction = IAddClientAction | IGetClientAction | ICurrentCarePlanIdAction;

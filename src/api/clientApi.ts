@@ -345,7 +345,7 @@ export const clientApi = {
     }
   },
 
-  createTest: async (data: { api_key: string; date: string }): Promise<any> => {
+  createTest: async (data: { api_key: string; date: string, current_care_plan_id: number }): Promise<any> => {
     console.log("filteredHistoryVisits: data =>", data);
     try {
       const response = await instance().post("api/test/test_create", data);
