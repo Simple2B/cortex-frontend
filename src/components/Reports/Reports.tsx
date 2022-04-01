@@ -107,7 +107,7 @@ export default function Reports(): ReactElement {
 
   const getFileWithVisits = async () => {
     try {
-      const response = await instance().get("api/client/report_visit");
+      const response = await instance().get("api/visits/report_visit");
       console.log("GET: csv file with visits => ", response);
       const data = await response.data;
       setFile(data);
@@ -122,7 +122,7 @@ export default function Reports(): ReactElement {
 
   const getFileWithNewClients = async () => {
     try {
-      const response = await instance().get("api/client/report_new_clients");
+      const response = await instance().get("api/visits/report_new_clients");
       console.log("GET: csv file with new_clients => ", response);
       const data = await response.data;
       setFile(data);

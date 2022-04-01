@@ -138,7 +138,7 @@ export const clientApi = {
 
     try {
       const response = await instance().post(
-        "api/client/add_clients_queue",
+        "api/clients_queue/add_clients_queue",
         data
       );
       console.log("response received successfully ", response.data);
@@ -182,7 +182,7 @@ export const clientApi = {
     console.log("clientIntake: data_client =>", data_client);
     try {
       const response = await instance().post(
-        "api/client/client_intake",
+        "api/clients_queue/client_intake",
         data_client
       );
       console.log("POST: response Intake ", response);
@@ -205,7 +205,7 @@ export const clientApi = {
     console.log("deleteClient: data_client =>", client);
     try {
       const response = await instance().post(
-        "api/client/delete_clients_queue",
+        "api/clients_queue/delete_clients_queue",
         client
       );
       console.log("POST: response deleteClient ", response);
@@ -232,7 +232,7 @@ export const clientApi = {
     console.log("completeClient: data_client =>", data_client);
     try {
       const response = await instance().post(
-        "api/client/complete_client_visit",
+        "api/clients_queue/complete_client_visit",
         data_client
       );
       console.log("POST: response completeClient ", response);
@@ -259,7 +259,7 @@ export const clientApi = {
     visit_id: number;
   }): Promise<void> => {
     try {
-      const response = await instance().post("api/client/note", data_note);
+      const response = await instance().post("api/notes/note", data_note);
       console.log("POST: response writeNote ", response);
       console.log("POST: response write note successfully ", response.data);
       // return response.data;
@@ -283,7 +283,7 @@ export const clientApi = {
 
     try {
       const response = await instance().post(
-        "api/client/note_delete",
+        "api/notes/note_delete",
         data_delete_note
       );
       console.log("POST: response deleteNote ", response);
@@ -306,7 +306,7 @@ export const clientApi = {
   }): Promise<any> => {
     console.log("filteredHistoryVisits: data =>", data);
     try {
-      const response = await instance().post("api/client/visit_history", data);
+      const response = await instance().post("api/visits/visit_history", data);
       console.log("POST: response filteredHistoryVisits ", response);
       console.log(
         "POST: response filteredHistoryVisits successfully ",
@@ -407,7 +407,7 @@ export const clientApi = {
     console.log("POST: createStripeSession: data =>", data);
     try {
       const response = await instance().post(
-        "api/client/create_stripe_session",
+        "api/stripe/create_stripe_session",
         data
       );
 
@@ -446,7 +446,7 @@ export const clientApi = {
     );
     try {
       const response = await instance().post(
-        "api/client/create_stripe_subscription",
+        "api/stripe/create_stripe_subscription",
         data
       );
 

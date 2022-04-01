@@ -87,7 +87,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
   const getClient = async () => {
     try {
       const response = await instance().get(
-        `api/client/client_intake/${api_key}`
+        `api/clients_intake/client_intake/${api_key}`
       );
       // console.log("GET: client_intake => ", response.data);
       setClient(response.data);
@@ -104,7 +104,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
 
   const getNotes = async () => {
     try {
-      const response = await instance().get(`api/client/note/${api_key}`);
+      const response = await instance().get(`api/notes/note/${api_key}`);
       console.log("GET: get notes => ", response.data);
       setNotes(response.data);
       return response.data;

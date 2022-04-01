@@ -80,7 +80,7 @@ export default function ViewReport(): ReactElement {
   const getClient = async () => {
     try {
       const response = await instance().get(
-        `api/client/client_intake/${api_key}`
+        `api/clients_intake/client_intake/${api_key}`
       );
       setClient(response.data);
     } catch (error: any) {

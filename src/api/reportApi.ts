@@ -21,7 +21,7 @@ export const reportApi = {
 
     try {
       const response = await instance()
-      .post('api/client/report_visit', dataForBack)
+      .post('api/visits/report_visit', dataForBack)
       console.log('response report visit ', response);
 
       const res = response.data
@@ -45,7 +45,7 @@ export const reportApi = {
 
     try {
       const response = await instance()
-      .post('api/client/report_new_clients', dataForBack)
+      .post('api/visits/report_new_clients', dataForBack)
       console.log('response report new clients ', response);
 
       // console.log('response report new clients received successfully ', response.headers["content-length"]);

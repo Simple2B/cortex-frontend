@@ -107,7 +107,7 @@ export default function Account(): ReactElement {
   const getClient = async () => {
     try {
       const response = await instance().get(
-        `api/client/client_intake/${api_key}`
+        `api/clients_intake/client_intake/${api_key}`
       );
       setClient(response.data);
     } catch (error: any) {
@@ -162,7 +162,7 @@ export default function Account(): ReactElement {
   }, [api_key]);
 
   const getStripeKey = async () => {
-    const stripeKeys = await instance().get(`api/client/get_secret`);
+    const stripeKeys = await instance().get(`api/stripe/get_secret`);
     const res = await loadStripe(stripeKeys.data.pk_test);
     setStripe(res);
     setPKStripeKey(stripeKeys.data.pk_test);

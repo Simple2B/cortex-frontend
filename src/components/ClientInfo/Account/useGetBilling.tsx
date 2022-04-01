@@ -50,7 +50,7 @@ export default function useGetBilling(
     let cancel: any;
     try {
       const response = await instance("", pageNumber).get(
-        `api/client/billing_history/${api_key}`
+        `api/stripe/billing_history/${api_key}`
       );
       console.log("useGetBilling: getBilling => ", response.data);
       setBillingData((prevBilling) => {

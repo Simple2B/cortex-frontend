@@ -8,7 +8,7 @@ export default function InfoDevice(): ReactElement {
 
   const getClientsForQueue = async () => {
     try {
-      const response = await instance().get("api/client/queue");
+      const response = await instance().get("api/clients_queue/queue");
       console.log("clients in queue => ", response.data);
       setQueue(response.data);
     } catch (error: any) {
