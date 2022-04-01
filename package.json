@@ -9,6 +9,8 @@
     "@progress/kendo-react-charts": "^4.13.0",
     "@progress/kendo-react-intl": "^4.13.0",
     "@progress/kendo-theme-default": "^4.43.0",
+    "@react-three/drei": "^8.20.2",
+    "@react-three/fiber": "^8.0.0-beta.9",
     "@stripe/react-stripe-js": "^1.6.0",
     "@stripe/stripe-js": "^1.21.1",
     "@syncfusion/ej2-react-charts": "^19.4.38",
@@ -42,6 +44,7 @@
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "sass": "^1.43.4",
+    "three": "^0.139.0",
     "typescript": "^4.4.2",
     "use-sound": "^4.0.1",
     "web-vitals": "^1.1.2"

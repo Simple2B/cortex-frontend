@@ -182,7 +182,7 @@ export const clientApi = {
     console.log("clientIntake: data_client =>", data_client);
     try {
       const response = await instance().post(
-        "api/clients_queue/client_intake",
+        "api/clients_intake/client_intake",
         data_client
       );
       console.log("POST: response Intake ", response);
