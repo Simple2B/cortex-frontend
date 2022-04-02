@@ -151,16 +151,15 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
 
   const addNotes = () => {
     setModalOpen(!isModalOpen);
-
     const today = new Date().toISOString().split("T")[0];
-    console.log("today for notes => ", today);
 
-    const today_visits = client.visits.filter((visit) => visit.date === today);
-    console.log("today_visits for notes => ", today_visits);
+    // const today_visits = client.visits.filter((visit) => visit.date === today);
+    // console.log("today_visits for notes => ", today_visits);
 
-    const visit = today_visits.find(
-      (visit) => visit.end_time === null && visit
-    );
+    // const visit = today_visits.find(
+    //   (visit) => visit.end_time === null && visit
+    // );
+    const visit = client.visits[client.visits.length - 1];
 
     if (visit && client.id && visit.doctor_id && visit.id && value) {
       clientApi.writeNote({
