@@ -139,6 +139,69 @@
   padding: 7px 10px;
 }
 
+.visitHistory_table table .tableRow td{
+  cursor: pointer;
+}
+
+.visitHistory_table table .tableRow:hover td{
+  color: #00e5ff;
+  border: 1px solid #00e5ff;
+}
+
+/* start: style information of care plan  */
+.infoCarePlanContainer {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoCarePlanContainer .infoCarePlanContainer_header{
+  color:#00e5ff;
+  margin-bottom: 5%;
+}
+
+.infoCarePlanContainer .data {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-size: 18px;
+  margin-bottom: 3%;
+}
+
+.infoCarePlanContainer .data .inputDate {
+  padding-left: 10px;
+  padding-right: 5px;
+  border-bottom: 1px solid #00e5ff;
+}
+
+.infoCarePlanContainer .data .inputDate .text {
+  color: #00e5ff;
+  font-size: 13px;
+}
+
+.infoCarePlanContainer .data .inputDate .date {
+  color: #fff;
+  background-color: transparent;
+  outline: none;
+  border: none;
+}
+
+.infoCarePlanContainer .data .inputDate .date .dateContainer {
+  position: relative;
+}
+
+.infoCarePlanContainer .data .inputDate .date .dateContainer .deleteCross {
+  position: absolute;
+  right: -5px;
+  top: -1.5px;
+  cursor: pointer;
+}
+
+/* end: style information of care plan  */
+
 .billing_table table tfoot tr td {
   border: 1px solid transparent;
   text-align: left;
