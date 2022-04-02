@@ -17,14 +17,23 @@ import { CheckoutForm } from "./CheckoutForm";
 import useGetBilling from "./useGetBilling";
 
 interface ITest {
-  date: string;
+  id: number,
+  client_id: number,
+  doctor_id: number,
+  care_plan_id: number,
+  date: string,
 }
 
 interface INotes {
-  date: string;
+  id: number,
+  client_id: number,
+  doctor_id: number,
+  note: string,
+  date: string,
 }
 
 interface ICarePlan {
+  id: number,
   date: string,
   start_time: string,
   end_time: string | null,
@@ -39,6 +48,7 @@ interface ICarePlan {
 }
 
 const initialCarePlan = {
+  id: 0,
   date: '',
   start_time: '',
   end_time: '',
@@ -58,15 +68,10 @@ export default function Account(): ReactElement {
   const api_key = splitLocation[splitLocation.length - 2];
 
   const [client, setClient] = useState<Client>(ClientDefault);
-  const [carePlan, setCarePlan] = useState<ICarePlan>(initialCarePlan);
-
-  console.log("carePlan ", carePlan)
 
   const [carePlans, setCarePlans] = useState<Array<ICarePlan>>([initialCarePlan]);
 
-  console.log(" => carePlans ", carePlans)
-
-  // const [filterVisits, setFilterVisits] = useState<Array<IVisit>>();
+  console.log(" =>>>>> carePlans ", carePlans)
 
   const [startTime, setStartTime] = useState<any>();
   const [endTime, setEndTime] = useState<any>();
@@ -80,6 +85,8 @@ export default function Account(): ReactElement {
   const [pkStripeKey, setPKStripeKey] = useState<string>("");
 
   const [pageNumber, setPageNumber] = useState(1);
+  const [isModalOpen, setModalOpen] = useState<number>(0);
+  const [isModalBtnsOpen, setModelBtnsOpen] = useState<number>(0);
 
   const { loadingBilling, error, billingData, hasMore, total, size } =
     useGetBilling(api_key, "", pageNumber);
@@ -117,20 +124,21 @@ export default function Account(): ReactElement {
     }
   };
 
-  const getCarePlan = async () => {
+  const getCarePlanDate = async () => {
     try {
       const response = await instance().get(
         `api/test/care_plan_create/${api_key}`
       );
-      console.log("GET: getCarePlan response.data =>  ", response.data);
-      setCarePlan({...response.data});
-      setStartTime(new Date(response.data.start_time));
-      if (response.data.end_time) {
+      console.log("GET: getCarePlan response.data =>  ", response);
+      // setCarePlan({...response.data});
+      if (response.data) {
+        setStartTime(new Date(response.data.start_time));
+      }
+      if (response.data && response.data.end_time) {
         setEndTime(new Date(response.data.end_time));
       }
     } catch (error: any) {
       console.log("GET: getCarePlan message =>  ", error.message);
-      console.log("error getCarePlan data => ", error.response.data);
       throw new Error(error.message);
     }
   };
@@ -158,7 +166,7 @@ export default function Account(): ReactElement {
   useEffect(() => {
     getClient();
     getHistoryCarePlans();
-    getCarePlan()
+    getCarePlanDate()
   }, [api_key]);
 
   const getStripeKey = async () => {
@@ -198,11 +206,14 @@ export default function Account(): ReactElement {
   }, [type, interval]);
 
   const convertDateToString = (date: Date) => {
-    const dateStr = new Date(date).toISOString().replace(/GMT.*$/, "GMT+0000");
-    const fullDate = dateStr.replace("T", " ").replace(".", " ").split(" ");
-    const dStart = fullDate[0].split("-");
-    const fullTime = fullDate[1];
-    return `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
+    if (date) {
+      const dateStr = new Date(date).toISOString().replace(/GMT.*$/, "GMT+0000");
+      const fullDate = dateStr.replace("T", " ").replace(".", " ").split(" ");
+      const dStart = fullDate[0].split("-");
+      const fullTime = fullDate[1];
+      return `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
+    }
+
   }
 
   const createCarePlane = (startDate: any, endDate: any) => {
@@ -219,6 +230,23 @@ export default function Account(): ReactElement {
     };
     createCarePlan();
   }
+
+  const removeCarePlan = (index: number) => {
+    const updateCarePlans = [...carePlans];
+    console.log("updateCarePlans before deleted => ", updateCarePlans);
+    updateCarePlans.splice(index, 1);
+    console.log("updateCarePlans after deleted => ", updateCarePlans);
+    setCarePlans(updateCarePlans);
+  };
+
+  {/* state of care plan in modal */}
+  const [startDate, setStartDate] = useState<any>(null);
+  const [endDate, setEndDate] = useState<any>(null);
+  const [progressDate, setProgressDate] = useState<any>(null);
+  const [carePlanLength, setCarePlanLength] = useState<string>("");
+  const [frequency, setFrequency] = useState<string>("");
+
+  const [newNote, setNewNote] = useState<string>("");
 
   return (
     <>
@@ -263,24 +291,227 @@ export default function Account(): ReactElement {
           </div>
         </div>
         <div className="visitHistory">
-          <div className="clientInfo_tittle">Care Plan History</div>
+          <div className="clientInfo_tittle">Care Plan</div>
           <div className="visitHistory_table">
             <table className="table">
               <tr className="tableHeader">
-                <th className="date">Date</th>
-                <th className="service">Service</th>
+                <th className="date">Start Date</th>
+                <th className="service">End Date</th>
                 <th className="practitioner">Practitioner</th>
               </tr>
                 {carePlans.map((carePlan, index) => {
                     return (
-                      <tr key={index}>
-                        <td>{carePlan.date}</td>
-                        <td>Upgrade</td>
-                        <td>{carePlan.doctor_name}</td>
-                      </tr>
+                      <>
+                        <tr key={index} className="tableRow" onClick={(e) => {
+                            if (carePlan.progress_date) setProgressDate(Date.parse(carePlan.progress_date.split(",")[0]));
+                            setStartDate(Date.parse(carePlan.start_time));
+                            if (carePlan.end_time) setEndDate(Date.parse(carePlan.end_time));
+                            setCarePlanLength(carePlan.care_plan);
+                            setFrequency(carePlan.frequency)
+                            setModalOpen(carePlan.id);
+                          }}>
+                          <td>{carePlan.start_time.split(",")[0]}</td>
+                          {carePlan.end_time && <td>{carePlan.end_time.split(",")[0]}</td>}
+                          <td>{carePlan.doctor_name}</td>
+                        </tr>
+
+                        <div
+                          id="myModal"
+                          className={
+                            isModalOpen === carePlan.id && isModalOpen !== 0 ? "modalOpen" : "modal"
+                          }>
+                          <div className="modal-content">
+                            <span
+                              className="close"
+                              onClick={() => setModalOpen(0)}
+                            >
+                              &times;
+                            </span>
+
+                            {
+                              isModalBtnsOpen
+                              ?
+                              <div className="btns-content">
+                                <div className="modalText">
+                                  Are you sure you want to remove this care plan?
+                                </div>
+                                <div className="btnsModal">
+                                  <div
+                                    className="btnModalOk"
+                                    onClick={() => {
+                                      // clientApi.deleteClient({
+                                      //   id: patient.id,
+                                      //   api_key: patient.api_key,
+                                      //   first_name: patient.first_name,
+                                      //   last_name: patient.last_name,
+                                      //   phone: patient.phone,
+                                      //   email: patient.email,
+                                      //   place_in_queue: patient.place_in_queue,
+                                      //   req_date: patient.req_date,
+                                      //   rougue_mode: true,
+                                      //   visits: patient.visits,
+                                      // });
+
+                                      removeCarePlan(index);
+                                      setModalOpen(0);
+                                    }}
+                                  >
+                                    Ok
+                                  </div>
+                                  <div onClick={() => setModelBtnsOpen(0)}>Cancel</div>
+                                </div>
+                              </div>
+                              :
+                              null
+                            }
+                            {/* start: information of care plan in modal */}
+
+                            <div className="infoCarePlanContainer">
+                              <div className="infoCarePlanContainer_header">Care Plan # {carePlan.id}</div>
+
+                              <div className="data">
+                                <div className="inputDate">
+                                  <div className="text">Start date</div>
+                                  <DatePicker
+                                    dateFormat="MM/dd/yyyy h:mm aa"
+                                    className="date"
+                                    selected={startDate}
+                                    onChange={(data) => {setStartDate(data)}}
+                                    selectsStart
+                                    showTimeInput
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    // isClearable
+                                    placeholderText= "Start date"
+                                  />
+                                </div>
+                                <div className="inputDate">
+                                <div className="text">End date</div>
+                                  <DatePicker
+                                    dateFormat="MM/dd/yyyy h:mm aa"
+                                    className="date"
+                                    selected={endDate}
+                                    onChange={(data) => {setEndDate(data)}}
+                                    selectsEnd
+                                    showTimeInput
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    minDate={startDate}
+                                    // isClearable
+                                    placeholderText="End date"
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="data">
+                                <div className="inputDate">
+                                  <div className="text">Care plan length</div>
+                                  <input type="text" className="date" value={carePlanLength} onChange={() => {setCarePlanLength(carePlanLength)}}/>
+                                </div>
+
+                                <div className="inputDate">
+                                  <div className="text">Frequency</div>
+                                  <input type="text" className="date" value={frequency} onChange={() => setFrequency(frequency)}/>
+                                </div>
+                              </div>
+
+                              <div className="data">
+                                <div className="inputDate">
+                                  <div className="text">Progress date</div>
+                                    <DatePicker
+                                      dateFormat="MM/dd/yyyy"
+                                      className="date"
+                                      selected={progressDate}
+                                      onChange={(progressDate) => {setProgressDate(progressDate)}}
+                                      selectsEnd
+                                      startDate={progressDate}
+                                    />
+                                </div>
+                              </div>
+
+                              <div className="data">
+                                <div className="inputDate">
+                                  <div className="text">Tests</div>
+                                  <div className="date">
+                                      {
+                                        carePlan.tests.length > 0 && carePlan.tests.map((test, i) => {
+                                          const dateTest = test.date.split("T");
+                                          return (
+                                            <div key={test.id} className="dateContainer">
+                                              <sup
+                                                className="deleteCross"
+                                                // title="delete note"
+                                                // onClick={() => {
+                                                //   deleteNote({
+                                                //     id: note.id,
+                                                //     client_id: note.client_id,
+                                                //     doctor_id: note.doctor_id,
+                                                //     visit_id: note.visit_id,
+                                                //   });
+                                                //   getNotes();
+                                                // }}
+                                              >
+                                                x
+                                              </sup>
+                                              <div>{i+1}). {dateTest[0]}, {dateTest[1]}</div>
+                                            </div>
+                                            )
+                                          })
+                                      }
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="data">
+                                <div className="inputDate">
+                                  <div className="text">Notes</div>
+                                  <div className="date">
+                                      {
+                                        carePlan.notes.length > 0 && carePlan.notes.map((note, i) => {
+                                          return (
+                                            <div key={note.id} className="dateContainer">
+                                              <sup
+                                                className="deleteCross"
+                                                title="delete note"
+                                                // onClick={() => {
+                                                //   deleteNote({
+                                                //     id: note.id,
+                                                //     client_id: note.client_id,
+                                                //     doctor_id: note.doctor_id,
+                                                //     visit_id: note.visit_id,
+                                                //   });
+                                                //   getNotes();
+                                                // }}
+                                              >
+                                                x
+                                              </sup>
+                                              <div>{note.note}</div>
+                                            </div>
+                                            )
+                                          })
+                                      }
+                                  </div>
+
+                                </div>
+
+                                <div className="inputDate">
+                                  <div className="text">Write note</div>
+                                  <input type="text" value={newNote} onChange={() => setNewNote(newNote)}/>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* end: information of care plan in modal */}
+                            <div className="btnsModal">
+                            <div className="saveChanges" onClick={() => setModalOpen(0)}>save changes</div>
+                              <div className="delete" onClick={() => setModelBtnsOpen(carePlan.id)}>delete</div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+
                     );
                   })
-                  }
+                }
             </table>
           </div>
           <div className="visitHistory_inputs">
