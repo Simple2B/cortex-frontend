@@ -205,8 +205,8 @@ export default function ViewReport(): ReactElement {
       <div className="containerViewReport_report">
         {activeBtn === "Brain" && (
           <div className="containerViewReport_dashboards">
-            <div className="exampleBrain"><CortexShowDonut/></div>
-            <div className="patientBrain"><ShowDonut/></div>
+            {/* <div className="exampleBrain"><CortexShowDonut/></div>
+            <div className="patientBrain"><ShowDonut/></div> */}
           </div>
         )}
 
