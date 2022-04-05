@@ -6,10 +6,10 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function Model(props) {
-  const group = useRef();
+  const groupBrainModel = useRef();
   const { nodes, materials } = useGLTF("/BrainModel.gltf");
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={groupBrainModel} {...props} dispose={null}>
       <group>
         <mesh
           name="Node_#0"
