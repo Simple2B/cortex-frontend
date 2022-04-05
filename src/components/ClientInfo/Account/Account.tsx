@@ -566,7 +566,7 @@ export default function Account(): ReactElement {
                             {/* start: information of care plan in modal */}
 
                             <div className="infoCarePlanContainer">
-                              <div className="infoCarePlanContainer_header">Care Plan # {carePlan.id}</div>
+                              <div className="infoCarePlanContainer_header">Care Plan # {index + 1}</div>
                               <div className="data">
                                 <div className="inputDate">
                                   <div className="text">Start date</div>
