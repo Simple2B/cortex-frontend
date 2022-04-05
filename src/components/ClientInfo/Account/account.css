@@ -148,6 +148,10 @@
   border: 1px solid #00e5ff;
 }
 
+.visitHistory_table table .modalContent {
+  width: 60%;
+}
+
 /* start: style information of care plan  */
 .infoCarePlanContainer {
   width: 75%;
@@ -177,6 +181,32 @@
   border-bottom: 1px solid #00e5ff;
 }
 
+.inputDateContainer {
+  width: 100%;
+  position: relative;
+}
+
+.inputDateContainer .sendArrow {
+  width: 30px;
+  position: absolute;
+  right: -5px;
+  bottom: 3px;
+}
+
+.inputDateContainer .sendArrow img {
+  width: 25px;
+}
+
+.inputDateContainer .date {
+  width: 100%;
+}
+
+.infoCarePlanContainer .data .inputDateString {
+  width: 100%;
+  margin-bottom: 7px;
+  margin-top: 15px;
+}
+
 .infoCarePlanContainer .data .inputDate .text {
   color: #00e5ff;
   font-size: 13px;
@@ -189,8 +219,26 @@
   border: none;
 }
 
+.infoCarePlanContainer .data .inputDate .dateString {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-shrink: initial;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoCarePlanContainer .data .inputDate .dateString .dateContainer {
+  width: 100%;
+}
+
 .infoCarePlanContainer .data .inputDate .date .dateContainer {
+
+}
+
+.infoCarePlanContainer .data .inputDate .date .dateContainer .dateNote {
   position: relative;
+  padding-right: 13px;
 }
 
 .infoCarePlanContainer .data .inputDate .date .dateContainer .deleteCross {
@@ -198,6 +246,10 @@
   right: -5px;
   top: -1.5px;
   cursor: pointer;
+}
+
+.infoCarePlanContainer .data .inputDate .date .dateContainer .deleteCrossNote {
+  right: 5px;
 }
 
 /* end: style information of care plan  */
