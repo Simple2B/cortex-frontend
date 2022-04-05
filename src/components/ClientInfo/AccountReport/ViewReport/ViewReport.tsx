@@ -100,8 +100,10 @@ export default function ViewReport(): ReactElement {
     try {
       const response = await instance().get(`api/test/test/${test_id}`);
       setTest(response.data);
-      if (response.data.care_plan && response.data.frequency) {
+      if (response.data.care_plan) {
         setTypeCaraPlan(response.data.care_plan);
+      }
+      if (response.data.frequency) {
         setTypeFrequency(response.data.frequency);
       }
     } catch (error: any) {
