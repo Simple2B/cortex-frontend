@@ -48,10 +48,10 @@ export default function Intake(props: {
   console.log("client intake", client.consentMinorChild);
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [consultsData, setConsults] = useState<Array<IConsult> | null>(null);
   // The value of the textarea
   const [valueConsult, setValueConsult] = useState<string>("");
 
-  const [consultsData, setConsults] = useState<Array<IConsult> | null>(null);
 
   // This function is triggered when textarea changes
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -77,26 +77,34 @@ export default function Intake(props: {
       const scrollHeight = textareaRef.current.scrollHeight;
       textareaRef.current.style.height = scrollHeight + "px";
     }
-
-    getConsults()
+    getConsults();
   }, [valueConsult]);
 
-  const addConsults = () => {
+  const addConsults = async () => {
     const visit = client.visits[client.visits.length - 1];
-
+    setValueConsult("");
     if (visit && client.id && visit.doctor_id && visit.id && valueConsult) {
-      clientApi.writeConsult({
+      await clientApi.writeConsult({
         consult: valueConsult,
         client_id: client.id,
         doctor_id: visit.doctor_id,
         visit_id: visit.id,
       });
-      setValueConsult("");
     } else {
-      console.log("Error write note");
+      console.log("Error write consult");
     }
-    setValueConsult("");
     getConsults();
+  };
+
+  const removeConsult = (index: number) => {
+    if (consultsData) {
+      const updateConsults = [...consultsData]
+      console.log("updateConsults before deleted => ", updateConsults);
+      updateConsults.splice(index, 1);
+      console.log("updateConsults after deleted => ", updateConsults);
+      setConsults(updateConsults);
+    }
+
   };
 
   return (
@@ -200,7 +208,33 @@ export default function Intake(props: {
               }
             >
               <div className="containerResult">
-                <div style={{display: "none"}}>{valueConsult}</div>
+                <div className="containerResult_historyResult">
+                  {consultsData && consultsData.map((consult, i) => {
+                    return (
+                      <span className="historyResult" >
+                        {consult.consult} ,  <span>{" "}</span>
+                        <sup
+                          key={i}
+                          className="deleteCross"
+                          title="delete consult"
+                          onClick={() => {
+                            removeConsult(i)
+                            clientApi.deleteConsult({
+                              id: consult.id,
+                              client_id: consult.client_id,
+                              doctor_id: consult.doctor_id,
+                              visit_id: consult.visit_id,
+                            });
+                          }}
+                        >
+                          x
+                        </sup>
+                      </span>
+                    )
+
+                  })}
+
+                </div>
                 <textarea
                   ref={textareaRef}
                   className="intakeTextAreaResult"
