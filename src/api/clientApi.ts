@@ -252,11 +252,12 @@ export const clientApi = {
   },
 
   writeNote: async (data_note: {
-    // date: string;
     notes: string;
     client_id: number;
     doctor_id: number;
-    visit_id: number;
+    visit_id?: number;
+    start_time?: string,
+    end_time?: string,
   }): Promise<void> => {
     try {
       const response = await instance().post("api/client/note", data_note);
@@ -269,6 +270,29 @@ export const clientApi = {
         new Error(error.message)
       );
       console.log("POST: error data writeNote =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
+  writeConsult: async (data_consult: {
+    consult: string;
+    client_id: number;
+    doctor_id: number;
+    visit_id?: number;
+    start_time?: string;
+    end_time?: string;
+  }): Promise<void> => {
+    try {
+      const response = await instance().post("api/consult/write_consult", data_consult);
+      console.log("POST: response writeConsult ", response);
+      console.log("POST: response write consult successfully ", response.data);
+      // return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message writeConsult => ",
+        new Error(error.message)
+      );
+      console.log("POST: error data writeConsult =>", error.message.data);
       throw new Error(error.message);
     }
   },
@@ -295,6 +319,57 @@ export const clientApi = {
         new Error(error.message)
       );
       console.log("POST: error data deleteNote =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
+  deleteConsult: async (data_delete_consult: {
+    id: number;
+    client_id: number;
+    doctor_id: number;
+    visit_id: number;
+  }): Promise<void> => {
+    console.log("deleteConsult: data_delete_note =>", data_delete_consult);
+
+    try {
+      const response = await instance().post(
+        "api/consult/consult_delete",
+        data_delete_consult
+      );
+      console.log("POST: response deleteConsult ", response);
+      console.log("POST: response deleteConsult successfully ", response.data);
+      // return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message deleteConsult => ",
+        new Error(error.message)
+      );
+      console.log("POST: error data deleteConsult =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
+  deleteTest: async (data_delete_test: {
+    id: number;
+    api_key: string;
+    current_care_plan_id: number;
+  }): Promise<void> => {
+    console.log("deleteTest: data_delete_test =>", data_delete_test);
+
+    try {
+      const response = await instance().post(
+        "api/test/test_delete",
+        data_delete_test
+      );
+      console.log("POST: response deleteTest ", response);
+      console.log("POST: response deleteTest successfully ", response.data);
+      // return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message deleteTest => ",
+        new Error(error.message)
+      );
+      console.log("POST: error data deleteTest =>", error.message.data);
       throw new Error(error.message);
     }
   },
@@ -345,6 +420,24 @@ export const clientApi = {
     }
   },
 
+  deleteCarePlan: async (data: { id: number, api_key: string }): Promise<any> => {
+    console.log("deleteCarePlan: data =>", data);
+    try {
+      const response = await instance().post("api/test/care_plan_delete", data);
+
+      // console.log("POST: response createCarePlan ", response);
+      console.log("POST: response deleteCarePlan successfully ", response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message deleteCarePlan => ",
+        new Error(error.message)
+      );
+      console.log("POST: error data deleteCarePlan =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
   createTest: async (data: { api_key: string; date: string, current_care_plan_id: number }): Promise<any> => {
     console.log("filteredHistoryVisits: data =>", data);
     try {
@@ -366,7 +459,7 @@ export const clientApi = {
   putInfoToCarePlan: async (data: {
     test_id: number;
     api_key: string;
-    progress_date: null | string;
+    progress_date?: null | string;
     care_plan: string;
     frequency: string;
   }): Promise<any> => {
