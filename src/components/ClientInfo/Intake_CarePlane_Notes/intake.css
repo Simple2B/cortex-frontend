@@ -357,6 +357,23 @@
   visibility: hidden;
 }
 
+.clientIntakeInfo .containerResult {
+  position: relative;
+}
+
+.clientIntakeInfo .containerResult .containerResult_img {
+  width: 40px;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+  z-index: 1005;
+  cursor: pointer;
+}
+
+.clientIntakeInfo .containerResult .containerResult_img img {
+  width: 100%;
+}
+
 .clientIntakeInfo .containerResult,
 .modalContentNotes .modalOpen {
   width: 95%;
