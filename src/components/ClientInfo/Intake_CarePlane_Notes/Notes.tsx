@@ -1,75 +1,20 @@
 import React, { ReactElement, useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { Client, clientApi } from "../../../api/clientApi";
+import { clientApi } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
 import "./intake.css";
-import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import Dashboards from "../Dashboard/Dashboards";
 import { Alpha } from "../Alpha/Alpha";
+import { ClientInfo, IClientInfo, INote } from "../../../types/visitTypes";
 
-interface IVisit {
-  date: string;
-  client_id: number | null;
-  doctor_id: number | null;
-  id: number | null;
-  start_time: string | null;
-  end_time: string | null;
-}
-
-interface IClientForNotesPage extends Client {
-  visits: Array<IVisit>;
-}
-
-export const ClientNotes = {
-  id: null,
-  firstName: "",
-  lastName: "",
-  birthday: "",
-  address: "",
-  city: "",
-  state: "",
-  zip: "",
-  phone: "",
-  email: "",
-  referring: "",
-  conditions: [],
-  otherCondition: "",
-  diseases: [],
-  medications: "",
-  covidTestedPositive: "",
-  covidVaccine: "",
-  stressfulLevel: 1,
-  consentMinorChild: false,
-  diagnosticProcedures: false,
-  // relationshipChild: "",
-  place_in_queue: null,
-  visits: [
-    {
-      date: "",
-      client_id: null,
-      doctor_id: null,
-      id: null,
-      start_time: null,
-      end_time: null,
-    },
-  ],
-};
-
-interface INote {
-  client_id: number;
-  date: string;
-  doctor_id: number;
-  id: number;
-  notes: string;
-  visit_id: number;
-}
 
 export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
 
-  const [client, setClient] = useState<IClientForNotesPage>(ClientNotes);
+  const [client, setClient] = useState<IClientInfo>(ClientInfo);
+
   const [activeBtn, setActiveBtn] = useState("Preset");
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
@@ -120,9 +65,6 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
     getNotes();
   }, [api_key]);
 
-  useEffect(() => {
-    getNotes();
-  }, [api_key]);
 
   const handleChangeBtn = (e: any) => {
     setActiveBtn(e.currentTarget.innerHTML);
@@ -151,19 +93,10 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
 
   const addNotes = () => {
     setModalOpen(!isModalOpen);
-    const today = new Date().toISOString().split("T")[0];
-
-    // const today_visits = client.visits.filter((visit) => visit.date === today);
-    // console.log("today_visits for notes => ", today_visits);
-
-    // const visit = today_visits.find(
-    //   (visit) => visit.end_time === null && visit
-    // );
+    // const today = new Date().toISOString().split("T")[0];
     const visit = client.visits[client.visits.length - 1];
-
     if (visit && client.id && visit.doctor_id && visit.id && value) {
       clientApi.writeNote({
-        // date: visit.date,
         notes: value,
         client_id: client.id,
         doctor_id: visit.doctor_id,
