@@ -85,6 +85,10 @@
   padding-left: 10px;
 }
 
+.clientInfoAccount .colorText {
+  color: #00e5ff;
+}
+
 .visitHistory {
   align-self: baseline;
   display: flex;

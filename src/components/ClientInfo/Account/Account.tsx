@@ -79,6 +79,8 @@ const initialCarePlan = {
   consults: [],
 }
 
+const TODAY = new Date();
+
 export default function Account(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
@@ -90,6 +92,7 @@ export default function Account(): ReactElement {
 
   const [startTime, setStartTime] = useState<any>();
   const [endTime, setEndTime] = useState<any>();
+  const [nextTestDate, setNextTestDate] = useState<Date | null>(null);
 
   const [amount, setAmount] = useState<string>("");
   const [type, setType] = useState<string>("one time");
@@ -146,11 +149,14 @@ export default function Account(): ReactElement {
       );
       console.log("GET: getCarePlan response.data =>  ", response);
       // setCarePlan({...response.data});
-      if (response.data) {
+      if (response.data && response.data.start_time) {
         setStartTime(new Date(response.data.start_time));
       }
       if (response.data && response.data.end_time) {
         setEndTime(new Date(response.data.end_time));
+      }
+      if (response.data && response.data.progress_date) {
+        setNextTestDate(new Date(response.data.progress_date));
       }
     } catch (error: any) {
       console.log("GET: getCarePlan message =>  ", error.message);
@@ -261,6 +267,7 @@ export default function Account(): ReactElement {
   const [endDate, setEndDate] = useState<any>(null);
 
   const [progressDate, setProgressDate] = useState<any>(null);
+  console.log("=> progressDate ", progressDate)
   const [typeInput, setTypeInput] = useState<string>("text");
 
   const progressDateChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -451,7 +458,7 @@ export default function Account(): ReactElement {
           <div className="clientInfoAccount">
             <div className="infoContainer">
               <div className="info_title">Name </div>
-              <div className="clientInfo_text">
+              <div className={nextTestDate && TODAY < nextTestDate ? "clientInfo_text colorText"  : "clientInfo_text"}>
                 {client.firstName} {client.lastName}
               </div>
             </div>
@@ -743,7 +750,9 @@ export default function Account(): ReactElement {
                             <div className="saveChanges" onClick={() => {
                                 saveChangesCarePlan(carePlan.id, startDate, endDate, progressDate);
                                 setModalOpen(0);
-                              }}>save changes</div>
+                              }}>
+                                save changes
+                            </div>
                               <div className="delete" onClick={() => setModelBtnsOpen(carePlan.id)}>delete</div>
                             </div>
                           </div>
