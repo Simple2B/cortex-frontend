@@ -1,11 +1,14 @@
 import React, { ReactElement, useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { Client, ClientDefault } from "../../../api/clientApi";
+import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
 import { instance } from "../../../api/axiosInstance";
 import "./intake.css";
-import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import Dashboards from "../Dashboard/Dashboards";
 import { Alpha } from "../Alpha/Alpha";
+import { ClientInfo, IClientInfo, IConsult } from "../../../types/visitTypes";
+import sendArrow from "../../../images/icons8-arrow.png";
+// import sendArrow2 from "../../../image/icons7-arrow.png";
+
 
 export default function Intake(props: {
   activeBtnRogueMode: string;
@@ -13,7 +16,7 @@ export default function Intake(props: {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
-  const [client, setClient] = useState<Client>(ClientDefault);
+  const [client, setClient] = useState<IClientInfo>(ClientInfo);
   const [activeBtn, setActiveBtn] = useState("Health HX");
 
   const getClient = async () => {
@@ -46,10 +49,26 @@ export default function Intake(props: {
 
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   // The value of the textarea
-  const [value, setValue] = useState<String>();
+  const [valueConsult, setValueConsult] = useState<string>("");
+
+  const [consultsData, setConsults] = useState<Array<IConsult> | null>(null);
+
   // This function is triggered when textarea changes
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(event.target.value);
+    setValueConsult(event.target.value);
+  };
+
+  const getConsults = async () => {
+    try {
+      const response = await instance().get(`api/consult/get_consult/${api_key}`);
+      console.log("GET: get consults => ", response.data);
+      setConsults(response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log("GET: error message get consults => ", error.message);
+      console.log("error response data get consults => ", error.response.data);
+      throw new Error(error.message);
+    }
   };
 
   useEffect(() => {
@@ -58,7 +77,27 @@ export default function Intake(props: {
       const scrollHeight = textareaRef.current.scrollHeight;
       textareaRef.current.style.height = scrollHeight + "px";
     }
-  }, [value]);
+
+    getConsults()
+  }, [valueConsult]);
+
+  const addConsults = () => {
+    const visit = client.visits[client.visits.length - 1];
+
+    if (visit && client.id && visit.doctor_id && visit.id && valueConsult) {
+      clientApi.writeConsult({
+        consult: valueConsult,
+        client_id: client.id,
+        doctor_id: visit.doctor_id,
+        visit_id: visit.id,
+      });
+      setValueConsult("");
+    } else {
+      console.log("Error write note");
+    }
+    setValueConsult("");
+    getConsults();
+  };
 
   return (
     <>
@@ -161,14 +200,18 @@ export default function Intake(props: {
               }
             >
               <div className="containerResult">
+                <div style={{display: "none"}}>{valueConsult}</div>
                 <textarea
                   ref={textareaRef}
                   className="intakeTextAreaResult"
                   onChange={textAreaChange}
                   placeholder="Write Result"
                 >
-                  {value}
+                  {valueConsult}
                 </textarea>
+                <div className="containerResult_img" onClick={addConsults}>
+                  <img src={sendArrow} alt="sendArrow" />
+                </div>
               </div>
             </div>
 
