@@ -25,7 +25,7 @@ export default function Queue(): ReactElement {
   const [search, setSearch] = useState<string>("");
   const history = useHistory();
   const [clients, setClients] = useState<User[]>([]);
-  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [pageNumber, setPageNumber] = useState<number>(10);
   const [loadingClients, setLoadingClients] = useState<boolean>(false);
 
   const getClientsForQueue = async () => {
@@ -48,8 +48,15 @@ export default function Queue(): ReactElement {
         `api/client/clients`
       );
       console.log("clients => ", response);
-      setClients([...response.data]);
+      // console.log("clientsclientsclients => ", clients);
+      // const copyFullListClients = [...response.data]
+      // setFullClients(copyFullListClients)
+
+      console.log("part clients => ", response.data);
+
+      setClients(response.data);
       setLoadingClients(false);
+
     } catch (error: any) {
       console.log("GET (clients_for_queue): error message =>  ", error.message);
       console.log(
@@ -63,7 +70,7 @@ export default function Queue(): ReactElement {
   const handleScroll = (event: any) => {
     const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
     if (scrollHeight - scrollTop === clientHeight) {
-      setPageNumber((prev) => prev + 1);
+      setPageNumber((prev) => prev + 10);
     }
   };
 
@@ -295,23 +302,7 @@ export default function Queue(): ReactElement {
             </div>
             <div className="client_lists" onScroll={handleScroll}>
               <div className="items">
-                {clients
-                  .filter(
-                    (client) =>
-                      !queue.map((q) => q.phone).includes(client.phone)
-                  )
-                  .filter((client) => {
-                    if (querySearch === "") {
-                      return client;
-                    } else if (
-                      (client.first_name + " " + client.last_name)
-                        .toLowerCase()
-                        .includes(querySearch.toLowerCase())
-                    ) {
-                      return client;
-                    }
-                  })
-                  .map((patient, index) => (
+                {clients.map((patient, index) => (
                     <div
                       className="queue_list"
                       key={index}
