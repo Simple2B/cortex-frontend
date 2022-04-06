@@ -30,7 +30,7 @@ export default function Queue(): ReactElement {
 
   const getClientsForQueue = async () => {
     try {
-      const response = await instance().get("api/client/queue");
+      const response = await instance().get("api/clients_queue/queue");
       console.log("!!! getClientsForQueue: clients in queue => ", response);
       setQueue(response.data);
     } catch (error: any) {

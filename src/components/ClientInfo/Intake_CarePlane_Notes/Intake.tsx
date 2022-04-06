@@ -22,7 +22,7 @@ export default function Intake(props: {
   const getClient = async () => {
     try {
       const response = await instance().get(
-        `api/client/client_intake/${api_key}`
+        `api/clients_intake/client_intake/${api_key}`
       );
       console.log("GET: client_intake => ", response.data);
       setClient(response.data);
