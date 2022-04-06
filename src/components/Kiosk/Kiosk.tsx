@@ -1,11 +1,12 @@
-import React, { ReactElement, useState, useEffect } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import "./kiosk.css";
 import { clientApi } from "../../api/clientApi";
 import { ReactComponent as Brain } from "../../images/brain.svg";
 import { ReactComponent as Logo } from "../../images/cortex_logo.svg";
-import { IPatient } from "../../types/patientsTypes";
 import { NavLink } from "react-router-dom";
-import { instance } from "../../api/axiosInstance";
+import { IPatient } from "../../types/patientsTypes";
+import { useActions } from "../../redux/useActions";
+import { store } from "../../redux";
 
 export default function Kiosk(): ReactElement {
   const [phoneQuery, setPhoneQuery] = useState("");
@@ -13,32 +14,17 @@ export default function Kiosk(): ReactElement {
     "Please enter your phone number"
   );
   const [style, setStyle] = useState(false);
-  const [clients, setClients] = useState<IPatient[]>([]);
-
-  const getClients = async () => {
-    try {
-      const response = await instance().get("api/client/clients");
-      console.log("clients kiosk => ", response.data);
-      setClients(response.data);
-    } catch (error: any) {
-      // place to handle errors and rise custom errors
-      console.log("GET: error message =>  ", error.message);
-      console.log("error response clients kiosk => ", error.response.data);
-      throw new Error(error.message);
-    }
-  };
+  const clients:IPatient[] = store.getState().patients;
+  const {patientsData} = useActions();
 
   useEffect(() => {
-    getClients();
+    patientsData();
   }, [phoneQuery]);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPhoneQuery(e.target.value);
   };
 
-  // const linkToRegister = () => {
-  //   <NavLink to="patient-registration">Registration form</NavLink>;
-  // };
 
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();

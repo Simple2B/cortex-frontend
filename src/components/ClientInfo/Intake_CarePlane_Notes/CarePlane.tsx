@@ -49,9 +49,9 @@ export function CarePlane(props: { activeBtnRogueMode: string }): ReactElement {
         `api/test/info_for_care_plan_page/${api_key}`
       );
       console.log("GET: getCarePlanInfo => ", response);
-      if (response.data) setCarePlanInfo(response.data);
-
-      return response.data;
+      if (response.data) {
+        setCarePlanInfo(response.data);
+      }
     } catch (error: any) {
       console.log("GET: error message getCarePlanInfo =>  ", error.message);
       console.log(

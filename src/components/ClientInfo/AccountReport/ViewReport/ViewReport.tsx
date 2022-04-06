@@ -35,11 +35,12 @@ interface INameFrequency {
 }
 
 export default function ViewReport(): ReactElement {
+  const mountedRef = useRef(true);
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
-  const [activeBtn, setActiveBtn] = useState<string>("Brain");
+  const [activeBtn, setActiveBtn] = useState<string>("Care plan");
   const [test, setTest] = useState<ITest>({
     id: null,
     date: "",
@@ -100,8 +101,10 @@ export default function ViewReport(): ReactElement {
     try {
       const response = await instance().get(`api/test/test/${test_id}`);
       setTest(response.data);
-      if (response.data.care_plan && response.data.frequency) {
+      if (response.data.care_plan) {
         setTypeCaraPlan(response.data.care_plan);
+      }
+      if (response.data.frequency) {
         setTypeFrequency(response.data.frequency);
       }
     } catch (error: any) {
@@ -143,10 +146,16 @@ export default function ViewReport(): ReactElement {
     getFrequencyNames();
     getCarePlanNames();
     getClient();
+    return () => {
+      mountedRef.current = false
+    }
   }, []);
 
   useEffect(() => {
     getTest();
+    return () => {
+      mountedRef.current = false
+    }
   }, [test_id]);
 
   const handleChangeBtn = (e: any) => {
@@ -155,7 +164,6 @@ export default function ViewReport(): ReactElement {
 
   useEffect(() => {
     if (date) {
-      // console.log("!!!!!!!date => ", date);
       const testDate = new Date(
         date.toString().replace(/GMT.*$/, "GMT+0000")
       ).toISOString();
@@ -168,6 +176,9 @@ export default function ViewReport(): ReactElement {
       const progressTestDate = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
 
       setProgressTestDate(progressTestDate);
+    }
+    return () => {
+      mountedRef.current = false
     }
   }, [date]);
 
@@ -194,8 +205,8 @@ export default function ViewReport(): ReactElement {
       <div className="containerViewReport_report">
         {activeBtn === "Brain" && (
           <div className="containerViewReport_dashboards">
-            <div className="exampleBrain"><CortexShowDonut/></div>
-            <div className="patientBrain"><ShowDonut/></div>
+            {/* <div className="exampleBrain"><CortexShowDonut/></div>
+            <div className="patientBrain"><ShowDonut/></div> */}
           </div>
         )}
 

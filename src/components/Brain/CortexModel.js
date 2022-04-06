@@ -6,10 +6,10 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function Model(props) {
-  const group = useRef();
+  const groupCortexModel = useRef();
   const { nodes, materials } = useGLTF("/CortexModel.gltf");
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={groupCortexModel} {...props} dispose={null}>
       <group position={[-5.05, 0, 0]}>
         <mesh
           castShadow

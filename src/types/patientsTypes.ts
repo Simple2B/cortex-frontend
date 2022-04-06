@@ -32,15 +32,6 @@ export interface IPatientForm {
   // relationshipChild: string,
 }
 
-export enum ClientActionTypes {
-  ADD_CLIENT = "ADD_CLIENT",
-}
-
-export interface IClientAction {
-  type: ClientActionTypes.ADD_CLIENT;
-  payload: IPatientForm;
-}
-
 export interface User {
   id: number;
   api_key: string;
@@ -53,3 +44,28 @@ export interface User {
   req_date: string | null;
   visits: [];
 }
+
+export type ICurrentCarePlanId = number;
+
+export enum ClientActionTypes {
+  ADD_CLIENT = "ADD_CLIENT",
+  GET_CLIENTS = "GET_CLIENTS",
+  ADD_CURRENT_CARE_PLAN_ID = "CURRENT_CARE_PLAN_ID",
+}
+
+interface ICurrentCarePlanIdAction {
+  type: ClientActionTypes.ADD_CURRENT_CARE_PLAN_ID;
+  payload: ICurrentCarePlanId;
+}
+
+interface IAddClientAction {
+  type: ClientActionTypes.ADD_CLIENT;
+  payload: IPatientForm;
+}
+
+interface IGetClientAction {
+  type: ClientActionTypes.GET_CLIENTS;
+  payload: IPatient[];
+}
+
+export type ClientAction = IAddClientAction | IGetClientAction | ICurrentCarePlanIdAction;

@@ -1,63 +1,47 @@
 import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Client, clientApi, ClientDefault } from "../../../api/clientApi";
-import { instance } from "../../../api/axiosInstance";
-// import "../Name/name.sass";
+import {clientApi} from "../../../api/clientApi";
 import "./AccountReport.sass";
-import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg";
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
 import { Alpha } from "../Alpha/Alpha";
 
+// 07:47 -> 467 seconds
+const TIMER_COUNT = 10
+interface ICreateTest {
+    api_key: string,
+    date: string,
+    current_care_plan_id: number,
+}
+
 export default function AccountReportStart(): ReactElement {
   const location = useLocation();
   const splitLocation = location.pathname.split("/");
+  const currentCarePlanId: any = location.state;
+  console.log(" => currentCarePlanId ", currentCarePlanId )
   const api_key = splitLocation[splitLocation.length - 2];
-  const [client, setClient] = useState<Client>(ClientDefault);
+  // const [client, setClient] = useState<Client>(ClientDefault);
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
 
-  const sound = new Audio("/cortex_sound.mp3");
+  // const sound = new Audio("/cortex_sound.mp3");
+  const [sound] = useState(new Audio("/cortex_sound.mp3"));
 
-  const [counter, setCounter] = useState<number>(10);
-  // 07:47 -> 467 seconds
+  const [counter, setCounter] = useState<number>(TIMER_COUNT);
+
   const [isTestStarted, setIsTestStarted] = useState<boolean>(false);
   const history = useHistory();
-  const [startTest, setStartTest] = useState({
+  const [startTest, setStartTest] = useState<ICreateTest>({
     api_key: "",
     date: "",
+    current_care_plan_id: currentCarePlanId,
   });
 
   const [test, setTest] = useState({
-    client_id: null,
-    date: "",
-    doctor_id: null,
     id: null,
+    date: "",
+    client_id: null,
+    doctor_id: null,
   });
-
-  const getClient = async () => {
-    try {
-      const response = await instance().get(
-        `api/client/client_intake/${api_key}`
-      );
-      // console.log("GET: client_intake name => ", response.data);
-      setClient(response.data);
-      return response.data;
-    } catch (error: any) {
-      console.log(
-        "GET: error message get_client_intake name =>  ",
-        error.message
-      );
-      console.log(
-        "error response data get_client_intake name => ",
-        error.response.data
-      );
-      throw new Error(error.message);
-    }
-  };
-
-  useEffect(() => {
-    getClient();
-  }, [api_key]);
 
   useEffect(() => {
     setActiveBtnRogueMode(activeBtnRogueMode);
@@ -92,26 +76,40 @@ export default function AccountReportStart(): ReactElement {
     timerId.current = undefined;
   };
 
+  const getCreateTest = async (test: {
+    api_key: string,
+    date: string,
+    current_care_plan_id: number,
+  }) => {
+    if (test.api_key.length > 0) {
+      const testCarePlan = await clientApi.createTest(test);
+      setTest(testCarePlan);
+      console.log("=> getCreateTest: testCarePlan ", testCarePlan)
+    }
+  };
+
   useEffect(() => {
     if (counter < 1) {
       console.log("timerOver");
       resetTimer();
       setCounter(0);
+      getCreateTest(startTest);
       return resetTimer();
     }
   }, [counter]);
 
-  const createTest = () => {
+  const createTest = async () => {
+    // setSound(new Audio("/cortex_sound.mp3"))
     const playPromise = sound.play();
-
     const date = new Date().toISOString().replace(/GMT.*$/, "GMT+0000");
     const fullDate = date.replace("T", " ").replace(".", " ").split(" ");
     const dStart = fullDate[0].split("-");
     const fullTime = fullDate[1];
     const startDateToBack = `${dStart[1]}/${dStart[2]}/${dStart[0]}, ${fullTime}`;
-    const startTest = {
+    const dataTest = {
       api_key: api_key,
       date: startDateToBack,
+      current_care_plan_id: currentCarePlanId,
     };
 
     if (playPromise !== undefined) {
@@ -126,9 +124,8 @@ export default function AccountReportStart(): ReactElement {
           setInterval(() => {
             sound.pause();
           }, counter * 1000);
-
           console.log("Record STOPPED!");
-          setStartTest(startTest);
+          setStartTest(dataTest)
         })
         .catch((error) => {
           // Auto-play was prevented
@@ -136,13 +133,17 @@ export default function AccountReportStart(): ReactElement {
           console.log("playback prevented");
         });
     }
-
-    const getCreateTest = async () => {
-      const test = await clientApi.createTest(startTest);
-      setTest(test);
-    };
-    getCreateTest();
   };
+
+  const stopTest = () => {
+    console.log(" stop test ");
+    // sound.play();
+    sound.pause();
+    sound.currentTime = 0;
+    resetTimer();
+    setCounter(TIMER_COUNT);
+    setIsTestStarted(false);
+  }
 
   return (
     <>
@@ -186,7 +187,16 @@ export default function AccountReportStart(): ReactElement {
               >
                 Start
               </div>
-            ) : null}
+            ) :
+            <div
+              className="modalWindow_btnStart"
+              onClick={() => {
+                stopTest();
+              }}
+            >
+              Stop
+            </div>
+          }
           </div>
         </div>
       </div>

@@ -1,6 +1,3 @@
-
-
-
 import React, {
   ReactElement,
   useState,
@@ -34,7 +31,7 @@ export default function Queue(): ReactElement {
   const getClientsForQueue = async () => {
     try {
       const response = await instance().get("api/client/queue");
-      console.log("clients in queue => ", response.data);
+      console.log("!!! getClientsForQueue: clients in queue => ", response);
       setQueue(response.data);
     } catch (error: any) {
       console.log("GET: error message =>  ", new Error(error.message));
@@ -42,7 +39,7 @@ export default function Queue(): ReactElement {
     }
   };
 
-  console.log(" queue ", queue);
+  console.log("! Queue: queue => ", queue);
 
   const getClients = async () => {
     setLoadingClients(true);
@@ -181,7 +178,7 @@ export default function Queue(): ReactElement {
                     if (search === "") {
                       return client;
                     } else if (
-                      (client.first_name + client.last_name)
+                      (client.first_name + ' ' + client.last_name)
                         .toLowerCase()
                         .includes(search.toLowerCase())
                     ) {
@@ -189,7 +186,7 @@ export default function Queue(): ReactElement {
                     }
                   })
                   .map((patient, index) => (
-                    <div className={ isRegToday(patient.req_date) ? "queueListWithoutVisits" : "queue_list"} key={index}>
+                    <div className={ isRegToday(patient.req_date) && patient.visits.length === 0 ? "queueListWithoutVisits" : "queue_list"} key={index}>
                       <i
                         className="fas fa-times faTimesItemQueue"
                         title="Delete from queue"
@@ -316,7 +313,7 @@ export default function Queue(): ReactElement {
                         setIsOpenClientModal(!isOpenClientModal);
                       }}
                     >
-                      {patient.last_name}, {patient.first_name}
+                      {patient.last_name + " " + patient.first_name}
                     </div>
                   ))}
               </div>
