@@ -29,7 +29,8 @@ export default function AccountReportStart(): ReactElement {
 
   const [counter, setCounter] = useState<number>(TIMER_COUNT);
 
-  const [isTestStarted, setIsTestStarted] = useState<boolean>(false);
+  // const [isTestStarted, setIsTestStarted] = useState<boolean>(false);
+
   const history = useHistory();
   const [startTest, setStartTest] = useState<ICreateTest>({
     api_key: "",
@@ -121,7 +122,7 @@ export default function AccountReportStart(): ReactElement {
           // Show playing UI.
           console.log("audio played auto");
           startTimer();
-          setIsTestStarted(true);
+          // setIsTestStarted(true);
           setInterval(() => {
             sound.pause();
           }, counter * 1000);
@@ -143,7 +144,7 @@ export default function AccountReportStart(): ReactElement {
     sound.currentTime = 0;
     resetTimer();
     setCounter(TIMER_COUNT);
-    setIsTestStarted(false);
+    // setIsTestStarted(false);
     history.push(`/${api_key}/report`)
   };
 

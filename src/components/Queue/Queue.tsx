@@ -27,6 +27,22 @@ export default function Queue(): ReactElement {
   const [clients, setClients] = useState<User[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [loadingClients, setLoadingClients] = useState<boolean>(false);
+  const [nextTestDate, setNextTestDate] = useState<Date | null>(null);
+
+  const getCarePlanDate = async (api_key: string) => {
+    try {
+      const response = await instance().get(
+        `api/test/care_plan_create/${api_key}`
+      );
+      console.log("GET: getCarePlan response.data =>  ", response);
+      if (response.data && response.data.progress_date) {
+        setNextTestDate(new Date(response.data.progress_date));
+      }
+    } catch (error: any) {
+      console.log("GET: getCarePlan message =>  ", error.message);
+      throw new Error(error.message);
+    }
+  };
 
   const getClientsForQueue = async () => {
     try {
@@ -106,8 +122,16 @@ export default function Queue(): ReactElement {
     setActiveBtnRogueMode(e.currentTarget.innerHTML);
   };
 
-  const isRegToday = (reg_date: string | null): boolean => {
+  const isRegToday = (reg_date: string | null, visits: Array<any>): boolean => {
     const today = new Date()
+    if (visits.length === 0) {
+      return true
+    }
+    if (visits.length > 0) {
+      const visitWithEndTime = visits.filter(visit => {if (visit.end_time) return visit});
+      // console.log("Queue: visitWithEndTime ", visitWithEndTime)
+      if(visitWithEndTime.length > 0) return false
+    }
     if (reg_date) {
       const registrationData = new Date(reg_date)
       const dateInQueue = new Date(registrationData.setHours(registrationData.getHours() + 24));
@@ -117,6 +141,8 @@ export default function Queue(): ReactElement {
     }
     return false
   }
+
+
 
   return (
     <div>
@@ -179,7 +205,7 @@ export default function Queue(): ReactElement {
                     }
                   })
                   .map((patient, index) => (
-                    <div className={ isRegToday(patient.req_date) && patient.visits.length === 0 ? "queueListWithoutVisits" : "queue_list"} key={index}>
+                    <div className={ isRegToday(patient.req_date, patient.visits) && patient.visits.length === 0 ? "queueListWithoutVisits" : "queue_list"} key={index}>
                       <i
                         className="fas fa-times faTimesItemQueue"
                         title="Delete from queue"
@@ -232,8 +258,8 @@ export default function Queue(): ReactElement {
                       <NavLink to={`/${patient.api_key}/${patient.first_name}`}>
                         <div
                           className={
-                            isRegToday(patient.req_date)
-                              ?  "listWithoutVisits"
+                            isRegToday(patient.req_date, patient.visits)
+                              ?  "list listWithoutVisits"
                               : "list"
                           }
                           onClick={() => {
