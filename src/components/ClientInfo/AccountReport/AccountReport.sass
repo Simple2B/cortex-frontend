@@ -110,6 +110,8 @@
 
 .accountReportStart_modalWindow
     display: flex
+    justify-content: center
+    align-items: center
     position: fixed
     z-index: 1000
     left: 0
@@ -127,72 +129,79 @@
         display: flex
         justify-content: center
         align-items: center
+        width: 100%
+        height: 100%
+    .content
+        align-self: flex-end
+        position: absolute
+        right: 0
+        z-index: 1001
+        display: flex
+        justify-content: center
+        align-items: center
         width: 70%
         height: 74vh
-        .content
-            width: 100%
-            height: 100%
+        .modalWindow_time
+            position: absolute
+            top: 0
+            left: 0
+    .viewReport
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        .viewReport_content
             display: flex
             justify-content: center
             align-items: center
-            position: relative
-            .modalWindow_time
-                position: absolute
-                top: 0
-                left: 0
-            .viewReport
+            width: 416px
+            height: 271px
+            font-size: 31px
+            background: linear-gradient(0.25turn, #2e2d2d, #858585, #373737)
+            color: #fff
+            margin-bottom: 38px
+            div
                 display: flex
                 justify-content: center
                 align-items: center
-                flex-direction: column
-                .viewReport_content
-                    display: flex
-                    justify-content: center
-                    align-items: center
-                    width: 416px
-                    height: 271px
-                    font-size: 31px
-                    background: linear-gradient(0.25turn, #2e2d2d, #858585, #373737)
-                    color: #fff
-                    margin-bottom: 38px
-                    div
-                        display: flex
-                        justify-content: center
-                        align-items: center
-                        width: 50%
-                        text-align: center
-                .viewReport_btn
-                    display: flex
-                    justify-content: center
-                    align-items: center
-                    width: 416px
-                    height: 96px
-                    color: #fff
-                    border-radius: 48px
-                    background: linear-gradient(#00E5FF, #085E67)
-                    transition: background 0.3s ease
-                    font-size: 40px
-                    cursor: pointer
-                    &:hover
-                        background: linear-gradient(#04bace, #032d31)
-                        color: #ccc8c8
-                        transition: .2s all ease
-            .modalWindow_btnStart
-                display: flex
-                justify-content: center
-                align-items: center
-                width: 343px
-                height: 96px
-                border-radius: 48px
-                background: linear-gradient(#00E5FF, #085E67)
-                transition: background 0.3s ease
-                font-size: 40px
-                cursor: pointer
+                width: 50%
+                text-align: center
+        .viewReport_btn
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 416px
+            height: 96px
+            color: #fff
+            border-radius: 48px
+            background: linear-gradient(#00E5FF, #085E67)
+            transition: background 0.3s ease
+            font-size: 40px
+            cursor: pointer
+            &:hover
+                background: linear-gradient(#04bace, #032d31)
+                color: #ccc8c8
                 transition: .2s all ease
-                &:hover
-                    background: linear-gradient(#04bace, #032d31)
-                    color: #ccc8c8
-                    transition: .2s all ease
+    .modalWindow_btnStart
+        display: flex
+        justify-content: center
+        align-items: center
+        width: 343px
+        height: 96px
+        border-radius: 48px
+        background: linear-gradient(#00E5FF, #085E67)
+        transition: background 0.3s ease
+        font-size: 40px
+        cursor: pointer
+        transition: .2s all ease
+        position: absolute
+        right: 20%
+        bottom: 35%
+        z-index: 3000
+        &:hover
+            background: linear-gradient(#04bace, #032d31)
+            color: #ccc8c8
+            transition: .2s all ease
 
 
 @media (max-width: 1024px)

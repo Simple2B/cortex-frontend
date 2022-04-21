@@ -16,6 +16,7 @@ interface ICreateTest {
 
 export default function AccountReportStart(): ReactElement {
   const location = useLocation();
+  // const history = useHistory();
   const splitLocation = location.pathname.split("/");
   const currentCarePlanId: any = location.state;
   console.log(" => currentCarePlanId ", currentCarePlanId )
@@ -143,7 +144,8 @@ export default function AccountReportStart(): ReactElement {
     resetTimer();
     setCounter(TIMER_COUNT);
     setIsTestStarted(false);
-  }
+    history.push(`/${api_key}/report`)
+  };
 
   return (
     <>
@@ -158,47 +160,39 @@ export default function AccountReportStart(): ReactElement {
         <Alpha />
       </div>
 
-      <div className="accountReportStart_modalWindow">
-        <div className="modalWindow_content">
+      <div className="accountReportStart_modalWindow" >
+        <div className="modalWindow_content" onClick={stopTest}>
           <div className="content">
             <div className="modalWindow_time">
               {counter === 0 ? "Time over" : <>{format(counter)}</>}
             </div>
-            {counter === 0 ? (
-              <div className="viewReport">
-                <div className="viewReport_content">
-                  <div>Assessment Complete</div>
-                </div>
-                <div
-                  className="viewReport_btn"
-                  onClick={() =>
-                    history.push(`/${api_key}/view_report_` + `${test.id}`)
-                  }
-                >
-                  View Report
-                </div>
-              </div>
-            ) : !isTestStarted ? (
-              <div
-                className="modalWindow_btnStart"
-                onClick={() => {
-                  createTest();
-                }}
-              >
-                Start
-              </div>
-            ) :
-            <div
-              className="modalWindow_btnStart"
-              onClick={() => {
-                stopTest();
-              }}
-            >
-              Stop
-            </div>
-          }
+
           </div>
         </div>
+
+        {counter === 0 ? (
+                <div className="viewReport">
+                  <div className="viewReport_content">
+                    <div>Assessment Complete</div>
+                  </div>
+                  <div
+                    className="viewReport_btn"
+                    onClick={() =>
+                      history.push(`/${api_key}/view_report_` + `${test.id}`)
+                    }
+                  >
+                    View Report
+                  </div>
+                </div>
+              ) : (
+                <div
+                  className="modalWindow_btnStart"
+                  onClick={createTest}
+                >
+                  Start
+                </div>
+              )
+        }
       </div>
     </>
   );
