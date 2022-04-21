@@ -64,8 +64,7 @@ export default function useGetBilling(
       if (axios.isCancel(error)) return;
       setError(true);
       console.log("GET: error message billing history =>  ", error.message);
-
-      // throw new Error(error.message);
+      throw new Error(error.message);
     }
     return () => cancel();
   };
