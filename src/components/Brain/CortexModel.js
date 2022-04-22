@@ -6,10 +6,10 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function Model(props) {
-  const group = useRef();
+  const groupModel = useRef();
   const { nodes, materials } = useGLTF("/FinalCortexModel_size_14.gltf");
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={groupModel} {...props} dispose={null}>
       <group position={[-0.01, 0.2, 0]} scale={0}>
         <mesh
           castShadow
