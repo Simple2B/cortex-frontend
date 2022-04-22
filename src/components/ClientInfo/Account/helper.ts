@@ -19,8 +19,9 @@ export const modifyProgressDate = (stringDate: string) => {
         return date[1] + "/" + date[2] + "/" + date[0];
       }
       const date = stringDate.split(',')[0].split("/");
+      const dateMonth = String(Number(date[1]) + 1).length === 2 ? "/" + String(Number(date[1]) + 1) : "/0" + String(Number(date[1]) + 1)
 
-      return date[0] + "/0" + String(Number(date[1]) + 1) + "/" + date[2];
+      return date[0] + dateMonth + "/" + date[2];
     }
     return stringDate
 }
