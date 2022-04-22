@@ -19,7 +19,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const [notesData, setNotes] = useState<Array<INote>>();
+  const [notesData, setNotes] = useState<Array<INote>>([]);
 
   // The value of the textarea
   const defaultValue = "Increase H2O";
@@ -118,7 +118,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
             <div className="intakeInfoText_healthTitle">Notes</div>
 
             <div className="notesInfo">
-              {notesData &&
+              {notesData.length > 0 &&
                 notesData.map((note, index) => {
                   return (
                     <div key={index} className="notesInfo_item">
