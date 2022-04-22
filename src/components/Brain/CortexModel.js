@@ -6,11 +6,11 @@ import React, { useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 
 export default function Model(props) {
-  const groupCortexModel = useRef();
-  const { nodes, materials } = useGLTF("/CortexModel.gltf");
+  const group = useRef();
+  const { nodes, materials } = useGLTF("/FinalCortexModel_size_14.gltf");
   return (
-    <group ref={groupCortexModel} {...props} dispose={null}>
-      <group position={[-5.05, 0, 0]}>
+    <group ref={group} {...props} dispose={null}>
+      <group position={[-0.01, 0.2, 0]} scale={0}>
         <mesh
           castShadow
           receiveShadow
@@ -18,78 +18,68 @@ export default function Model(props) {
           material={nodes["mid-Mat"].material}
         />
       </group>
-      <group position={[-5.9, 0, 0]}>
+      <group position={[-0.01, 0.2, 0]} scale={0}>
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Occipital_lope.geometry}
           material={nodes.Occipital_lope.material}
-          position={[-1.24, 0, 0]}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Temporal_lope.geometry}
           material={nodes.Temporal_lope.material}
-          position={[-1.24, 0, 0]}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Parietal_lope.geometry}
           material={nodes.Parietal_lope.material}
-          position={[-1.24, 0, 0]}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Frontal_lope.geometry}
           material={nodes.Frontal_lope.material}
-          position={[-1.24, 0, 0]}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.mid_down.geometry}
           material={nodes.mid_down.material}
-          position={[-1.24, 0, 0]}
         />
       </group>
-      <group position={[9.09, 0, 0]}>
+      <group position={[0.01, 0.2, 0]} scale={0}>
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Occipital_lope_1.geometry}
           material={nodes.Occipital_lope_1.material}
-          position={[-1.24, 0, 0]}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Temporal_lope_1.geometry}
           material={nodes.Temporal_lope_1.material}
-          position={[-1.24, 0, 0]}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Parietal_lope_1.geometry}
           material={nodes.Parietal_lope_1.material}
-          position={[-1.24, 0, 0]}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.Frontal_lope_1.geometry}
           material={nodes.Frontal_lope_1.material}
-          position={[-1.24, 0, 0]}
         />
         <mesh
           castShadow
           receiveShadow
           geometry={nodes.mid_down_1.geometry}
           material={nodes.mid_down_1.material}
-          position={[-1.24, 0, 0]}
         />
       </group>
       <mesh
@@ -97,17 +87,19 @@ export default function Model(props) {
         receiveShadow
         geometry={nodes.Spinal_cord.geometry}
         material={nodes.Spinal_cord.material}
-        position={[-1.44, 0, 0]}
+        position={[0, 0.2, 0]}
+        scale={0}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Cerebellum.geometry}
         material={nodes.Cerebellum.material}
-        position={[-1.44, 0, 0]}
+        position={[0, 0.2, 0]}
+        scale={0}
       />
     </group>
   );
 }
 
-useGLTF.preload("/CortexModel.gltf");
+useGLTF.preload("/FinalCortexModel_size_14.gltf");
