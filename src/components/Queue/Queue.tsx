@@ -2,8 +2,6 @@ import React, {
   ReactElement,
   useState,
   useEffect,
-  useRef,
-  useCallback,
 } from "react";
 import "reactjs-popup/dist/index.css";
 import { clientApi } from "../../api/clientApi";
@@ -27,7 +25,7 @@ export default function Queue(): ReactElement {
   const [clients, setClients] = useState<User[]>([]);
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [loadingClients, setLoadingClients] = useState<boolean>(false);
-  const [nextTestDate, setNextTestDate] = useState<Date | null>(null);
+  const [nextTestDate, setNextTestDate] = useState<Date[]>([]);
 
   const getCarePlanDate = async (api_key: string) => {
     try {
@@ -36,7 +34,7 @@ export default function Queue(): ReactElement {
       );
       console.log("GET: getCarePlan response.data =>  ", response);
       if (response.data && response.data.progress_date) {
-        setNextTestDate(new Date(response.data.progress_date));
+        setNextTestDate(prev => [...prev, new Date(response.data.progress_date)]);
       }
     } catch (error: any) {
       console.log("GET: getCarePlan message =>  ", error.message);
@@ -49,6 +47,11 @@ export default function Queue(): ReactElement {
       const response = await instance().get("api/client/queue");
       console.log("!!! getClientsForQueue: clients in queue => ", response);
       setQueue(response.data);
+      // if (response.data.length > 0) {
+      //   response.data.map((client_queue: { api_key: string; })=> {
+      //      getCarePlanDate(client_queue.api_key)
+      //   })
+      // }
     } catch (error: any) {
       console.log("GET: error message =>  ", new Error(error.message));
       throw new Error(error.message);
@@ -93,10 +96,6 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     getClientsForQueue();
-    // const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
-    // return () => {
-    //   clearInterval(intervalId);
-    // };
   }, []);
 
   useEffect(() => {
@@ -123,7 +122,7 @@ export default function Queue(): ReactElement {
   };
 
   const isRegToday = (reg_date: string | null, visits: Array<any>): boolean => {
-    const today = new Date()
+    const today = new Date();
     if (visits.length === 0) {
       return true
     }
@@ -138,6 +137,18 @@ export default function Queue(): ReactElement {
       if (dateInQueue > today) {
         return true
       }
+    }
+    return false
+  }
+
+  const isProgressDateMoreToday = (progress_date: string | null): boolean => {
+    const today = new Date();
+    if (!progress_date) {
+      return false
+    }
+    const progressDate = new Date(progress_date)
+    if (progressDate > today) {
+      return true
     }
     return false
   }
@@ -241,6 +252,7 @@ export default function Queue(): ReactElement {
                                   email: patient.email,
                                   place_in_queue: patient.place_in_queue,
                                   req_date: patient.req_date,
+                                  progress_date: patient.progress_date,
                                   rougue_mode: true,
                                   visits: patient.visits,
                                 });
@@ -260,7 +272,7 @@ export default function Queue(): ReactElement {
                           className={
                             isRegToday(patient.req_date, patient.visits)
                               ?  "list listWithoutVisits"
-                              : "list"
+                              : isProgressDateMoreToday(patient.progress_date) ? "listWithProgressDate" : "list"
                           }
                           onClick={() => {
                             console.log("clientIntake", {
