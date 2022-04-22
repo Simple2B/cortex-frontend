@@ -44,6 +44,7 @@ import { instance } from "../../../api/axiosInstance";
         const response = await instance().get(
           `api/test/care_plan_history/${api_key}`
         );
+        console.log("GET: response history care plans =>  ", response);
         setCarePlans(response.data);
       } catch (error: any) {
         console.log("GET: error message account care plans =>  ", error.message);
