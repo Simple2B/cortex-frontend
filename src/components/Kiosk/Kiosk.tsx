@@ -14,7 +14,11 @@ export default function Kiosk(): ReactElement {
     "Please enter your phone number"
   );
   const [style, setStyle] = useState(false);
+
   const clients:IPatient[] = store.getState().patients;
+
+  console.log("Kiosk: clients ", clients)
+
   const {patientsData} = useActions();
 
   useEffect(() => {
@@ -26,26 +30,22 @@ export default function Kiosk(): ReactElement {
   };
 
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    const clientFromDB = clients.filter(
-      (client) => client.phone === phoneQuery.replace(/[^0-9]/g, "")
-    );
-    const filteredName =
-      clientFromDB.length > 0 ? clientFromDB[0].first_name : false;
 
-    if (filteredName) {
+    // const clientFromDB = clients.filter(
+    //   (client) => client.phone === phoneQuery.replace(/[^0-9]/g, "")
+    // );
+    // const filteredName =
+    //   clientFromDB.length > 0 ? clientFromDB[0].first_name : false;
+
+    const client = await clientApi.identifyClientWithPhone(phoneQuery.replace(/[^0-9]/g, ""));
+    console.log("Kiosk: client ", client)
+
+
+    if (client) {
+      const filteredName = client.first_name;
       console.log("filteredName => ", filteredName);
-
-      const identifyClient = async () => {
-        const client = await clientApi.identifyClientWithPhone(
-          phoneQuery.replace(/[^0-9]/g, "")
-        );
-
-        return client;
-      };
-
-      identifyClient();
 
       setStyle(true);
       setWelcomeText(
