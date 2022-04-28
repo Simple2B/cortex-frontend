@@ -29,7 +29,7 @@ export function CortexShowDonut(props) {
       <Canvas dpr={[1, 2]} shadows>
         <pointLight position={[10, 10, 10]} intensity={1.3} />
         <Suspense fallback={null}>
-          <Model />
+          <Model position={[0, 0, 0]}/>
           <Environment preset="city" />
         </Suspense>
         <DeviceOrientationControls />
