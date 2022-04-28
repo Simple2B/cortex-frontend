@@ -27,7 +27,7 @@
     "devextreme-react": "^21.2.4",
     "faker": "^5.5.3",
     "hammerjs": "^2.0.8",
-    "npm": "^8.3.2",
+    "npm": "^8.7.0",
     "react": "^18.0.0-rc.2",
     "react-chartjs-2": "^4.0.0",
     "react-csv": "^2.0.3",
