@@ -95,6 +95,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
     setModalOpen(!isModalOpen);
     // const today = new Date().toISOString().split("T")[0];
     const visit = client.visits[client.visits.length - 1];
+
     if (visit && client.id && visit.doctor_id && visit.id && value) {
       clientApi.writeNote({
         notes: value,
