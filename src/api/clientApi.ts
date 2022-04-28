@@ -155,7 +155,7 @@ export const clientApi = {
     }
   },
 
-  identifyClientWithPhone: async (phone: string): Promise<void> => {
+  identifyClientWithPhone: async (phone: string): Promise<any> => {
     console.log("identifyClientWithPhone: phone =>", phone);
     const data = { phone: phone };
     // console.log("dataReqIdentifyClient =>", data);
