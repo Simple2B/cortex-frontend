@@ -153,8 +153,6 @@ export default function Queue(): ReactElement {
     return false
   }
 
-
-
   return (
     <div>
       <NavBar />
