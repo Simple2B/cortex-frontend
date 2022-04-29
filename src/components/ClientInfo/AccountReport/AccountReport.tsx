@@ -81,18 +81,18 @@ export function AccountReport(): ReactElement {
     }
   }, [api_key, currentCarePlan.id, currentCarePlanId]);
 
-  const handleCreateCarePlan = () => {
-    const createCarePlan = async () => {
-      const carePlan = await clientApi.createCarePlan({
-        api_key: api_key,
-      });
-      console.log(" =>>> AccountReport: created care plan ===", carePlan);
-      if (carePlan) {
-        setCurrentCarePlan(carePlan);
-      }
+  const handleCreateCarePlan = async() => {
+    // const createCarePlan = async () => {
+    const data = {
+      api_key: api_key
+    }
+    const carePlan = await clientApi.createCarePlan(data);
+    console.log(" =>>> AccountReport: created care plan ===", carePlan);
+    if(carePlan) setCurrentCarePlan(carePlan);
+
       // setCurrentCarePlanId(carePlan.id);
-    };
-    createCarePlan();
+    // };
+    // createCarePlan();
   };
 
   return (

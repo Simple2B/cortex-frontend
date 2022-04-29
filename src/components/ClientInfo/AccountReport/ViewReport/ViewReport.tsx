@@ -25,11 +25,13 @@ interface ITest {
 }
 
 interface INameCarePlan {
+  id: null | number;
   number: null | number;
   care_plan: string;
 }
 
 interface INameFrequency {
+  id: null | number;
   number: null | number;
   frequency: string;
 }
@@ -67,16 +69,22 @@ export default function ViewReport(): ReactElement {
   const test_id = splitLocation[splitLocation.length - 1].split("_")[2];
   const [carePlanNames, setCarePlanNames] = useState<Array<INameCarePlan>>([
     {
+      id: null,
       number: null,
       care_plan: "",
     },
   ]);
+
   const [frequencyNames, setFrequencyNames] = useState<Array<INameFrequency>>([
     {
+      id: null,
       number: null,
       frequency: "",
     },
   ]);
+
+  const [isModalOpen, setModalOpen] = useState<number>(0);
+
 
   const getClient = async () => {
     try {
@@ -116,7 +124,7 @@ export default function ViewReport(): ReactElement {
 
   const getCarePlanNames = async () => {
     try {
-      const response = await instance().get("api/test/care_plan_names");
+      const response = await instance().get(`api/test/care_plan_names/${api_key}`);
       setCarePlanNames(response.data);
     } catch (error: any) {
       console.log("GET: error message getCarePlanNames =>  ", error.message);
@@ -130,7 +138,7 @@ export default function ViewReport(): ReactElement {
 
   const getFrequencyNames = async () => {
     try {
-      const response = await instance().get(`api/test/frequency_names`);
+      const response = await instance().get(`api/test/frequency_names/${api_key}`);
       setFrequencyNames(response.data);
     } catch (error: any) {
       console.log("GET: error message getFrequencyNames =>  ", error.message);
@@ -200,13 +208,47 @@ export default function ViewReport(): ReactElement {
     setDate(null);
   };
 
+  const removeFrequencyName = (index: number) => {
+    const updateFrequencyName = [...frequencyNames];
+    console.log("updateFrequencyName before deleted => ", updateFrequencyName);
+    updateFrequencyName.splice(index, 1);
+    console.log("updateFrequencyName after deleted => ", updateFrequencyName);
+    setFrequencyNames(updateFrequencyName);
+  };
+
+  const removeCarePlanName = (index: number) => {
+    const updateCarePlanName = [...carePlanNames];
+    console.log("updateFrequencyName before deleted => ", updateCarePlanName);
+    updateCarePlanName.splice(index, 1);
+    console.log("updateFrequencyName after deleted => ", updateCarePlanName);
+    setCarePlanNames(updateCarePlanName);
+  };
+
+  const deleteFrequencyName = (id: number) => {
+    const dataToDelete = {
+      id: id,
+      api_key: api_key
+    }
+    const deleteName = async() => await clientApi.deleteFrequencyName(dataToDelete);
+    deleteName();
+  }
+
+  const deleteCarePlanName = (id: number) => {
+    const dataToDelete = {
+      id: id,
+      api_key: api_key
+    }
+    const deleteName = async() => await clientApi.deleteCareName(dataToDelete);
+    deleteName();
+  }
+
   return (
     <div className="containerViewReport">
       <div className="containerViewReport_report">
         {activeBtn === "Brain" && (
           <div className="containerViewReport_dashboards">
-            {/* <div className="exampleBrain"><CortexShowDonut/></div>
-            <div className="patientBrain"><ShowDonut/></div> */}
+            <div className="exampleBrain"><CortexShowDonut/></div>
+            <div className="patientBrain"><ShowDonut/></div>
           </div>
         )}
 
@@ -286,6 +328,54 @@ export default function ViewReport(): ReactElement {
                               }}
                               className="name"
                             >
+
+                              <i
+                                className={isModalOpen? "fas " : ""}
+                                title="delete"
+                                onClick={(e) => {
+                                  if(name.id) {
+                                    setModalOpen(name.id);
+                                  }
+                                }}
+                              />
+                              <div
+                                id="myModal"
+                                className={
+                                  isModalOpen === name.id ? "modalOpen" : "modal"
+                                }
+                              >
+                                <div className="modal-content">
+                                  <span
+                                    className="close"
+                                    onClick={() => setModalOpen(0)}
+                                  >
+                                    &times;
+                                  </span>
+                                  <div className="modalText">
+                                    Are you sure you want to remove {name.care_plan}{" "}?
+                                  </div>
+                                  <div className="btnsModal">
+                                    <div
+                                      className="btnModalOk"
+                                      onClick={() => {
+                                        if (name.id) {
+                                          removeCarePlanName(index)
+                                          deleteCarePlanName(name.id)
+                                        }
+                                        setModalOpen(0);
+                                      }}
+                                    >
+                                      Ok
+                                    </div>
+                                    <div onClick={() => setModalOpen(0)}>Cancel</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="name__arrow" onClick={() => {
+                                if (name.id) {
+                                  setModalOpen(name.id);
+                                }
+                              } }>x</div>
                               {name.care_plan}
                             </div>
                           );
@@ -314,6 +404,54 @@ export default function ViewReport(): ReactElement {
                               }}
                               className="name"
                             >
+                              <i
+                                className={isModalOpen? "fas " : ""}
+                                title="delete"
+                                onClick={(e) => {
+                                  if(name.id) {
+                                    setModalOpen(name.id);
+                                  }
+                                }}
+                              />
+                              <div
+                                id="myModal"
+                                className={
+                                  isModalOpen === name.id ? "modalOpen" : "modal"
+                                }
+                              >
+                                <div className="modal-content">
+                                  <span
+                                    className="close"
+                                    onClick={() => setModalOpen(0)}
+                                  >
+                                    &times;
+                                  </span>
+                                  <div className="modalText">
+                                    Are you sure you want to remove {name.frequency}{" "}?
+                                  </div>
+                                  <div className="btnsModal">
+                                    <div
+                                      className="btnModalOk"
+                                      onClick={() => {
+                                        if (name.id) {
+                                          removeFrequencyName(index);
+                                          deleteFrequencyName(name.id);
+                                        }
+                                        setModalOpen(0);
+                                      }}
+                                    >
+                                      Ok
+                                    </div>
+                                    <div onClick={() => setModalOpen(0)}>Cancel</div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="name__arrow" onClick={() => {
+                                if (name.id) {
+                                  setModalOpen(name.id);
+                                }
+                              }}>x</div>
                               {name.frequency}
                             </div>
                           );

@@ -73,8 +73,19 @@
                                 padding-left: 20px
                                 font-size: 25px
                                 cursor: pointer
+                                position: relative
                                 &:hover
                                     background-color: #A2A2A2
+                                .name__arrow
+                                    display: none
+                                    font-size: 16px
+                                    position: absolute
+                                    right: 20px
+                                    top: 5px
+                                &:hover .name__arrow
+                                    display: block
+                                &:hover .name__arrow:hover
+                                    color: #aef7ff
                         .reportTypeSelector_names:last-child
                             border-bottom: 1px solid #aef7ff
                             border-bottom-left-radius: 10px

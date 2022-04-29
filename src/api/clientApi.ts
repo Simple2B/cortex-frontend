@@ -155,7 +155,7 @@ export const clientApi = {
     }
   },
 
-  identifyClientWithPhone: async (phone: string): Promise<void> => {
+  identifyClientWithPhone: async (phone: string): Promise<any> => {
     console.log("identifyClientWithPhone: phone =>", phone);
     const data = { phone: phone };
     // console.log("dataReqIdentifyClient =>", data);
@@ -434,6 +434,42 @@ export const clientApi = {
         new Error(error.message)
       );
       console.log("POST: error data deleteCarePlan =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
+  deleteFrequencyName: async (data: { id: number, api_key: string }): Promise<any> => {
+    console.log("deleteFrequencyName: data =>", data);
+    try {
+      const response = await instance().post("api/test/frequency_name_delete", data);
+
+      // console.log("POST: response createCarePlan ", response);
+      console.log("POST: response deleteFrequencyName successfully ", response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message deleteFrequencyName => ",
+        new Error(error.message)
+      );
+      console.log("POST: error data deleteFrequencyName =>", error.message.data);
+      throw new Error(error.message);
+    }
+  },
+
+  deleteCareName: async (data: { id: number, api_key: string }): Promise<any> => {
+    console.log("deleteCareName: data =>", data);
+    try {
+      const response = await instance().post("api/test/care_plan_name_delete", data);
+
+      // console.log("POST: response createCarePlan ", response);
+      console.log("POST: response deleteCareName successfully ", response.data);
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message deleteCareName => ",
+        new Error(error.message)
+      );
+      console.log("POST: error data deleteCareName =>", error.message.data);
       throw new Error(error.message);
     }
   },
