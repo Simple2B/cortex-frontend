@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useRef, useState } from "react";
 import { Redirect } from "react-router";
 import "./patientRegistration.css";
 import Checkbox from "./Checkbox";
@@ -85,6 +85,8 @@ const initialState: IPatientForm = {
   // relationshipChild: "",
   diagnosticProcedures: false,
 };
+
+const TIMER = 3
 
 export default function PatientRegistration(): ReactElement {
   const validateForm = (values: IPatientForm) => {
@@ -173,22 +175,49 @@ export default function PatientRegistration(): ReactElement {
     itemsFollowing.map(createCheckboxFollowing);
 
   const stressLevel = Array.from({ length: 10 }, (_, i) => i + 1);
+  const [counter, setCounter] = useState<number>(TIMER);
+
+  console.log("PatientRegistration: counter", counter);
+
+  const timerId = useRef<NodeJS.Timeout>();
+
+  const startTimer = () => {
+    const timer = setInterval(() => {
+      setCounter((counter) => counter - 1);
+    }, 1000);
+    timerId.current = timer;
+  };
+  const resetTimer = () => {
+    timerId.current && clearInterval(timerId.current);
+    timerId.current = undefined;
+  };
+
+  useEffect(() => {
+    return () => {
+      resetTimer();
+      setCounter(0);
+    };
+  }, [counter])
 
   if (submitted) {
-    return (
-      <Redirect
-        push
-        to={{
-          pathname: "/kiosk",
-        }}
-      />
-    );
+    startTimer()
+    if (counter < 1) {
+      return (
+        <Redirect
+          push
+          to={{
+            pathname: "/kiosk",
+          }}
+        />
+      );
+    }
   }
 
   return (
     <>
       <div className="registration">
         <h1 className="registration_title">Registration Form</h1>
+
         <form onSubmit={onSubmit} noValidate className="registration_form">
           <div className="registration_input" data-error={"firstName"}>
             <input
@@ -528,7 +557,17 @@ export default function PatientRegistration(): ReactElement {
           <button type="submit" className="registration_button">
             Register
           </button>
+
+          { submitted ? (
+            <div
+                className="alert_text welcome_text"
+              >
+                {`Thanks ${values.firstName}, have a seat and we’ll call your name shortly.`}
+            </div>
+          ) : null }
         </form>
+
+
       </div>
     </>
   );
