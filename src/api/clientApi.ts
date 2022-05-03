@@ -525,6 +525,45 @@ export const clientApi = {
     }
   },
 
+  saveEditedInfoClient: async (data: {
+    api_key: string,
+    first_name: string,
+    last_name: string,
+    birthday: string,
+    address: string,
+    city: string,
+    state: string,
+    zip: string,
+    phone: string,
+    email: string,
+  }): Promise<any> => {
+    console.log("saveEditedInfoClient: data =>", data);
+    try {
+      const response = await instance().post(
+        "api/client/save_edited_info_client",
+        data
+      );
+
+      // console.log("POST: response putToTestInfoCarePlan ", response);
+      console.log(
+        "POST: response saveEditedInfoClient successfully ",
+        response.data
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(
+        "POST: error message saveEditedInfoClient => ",
+        new Error(error.message)
+      );
+      console.log(
+        "POST: error data saveEditedInfoClient =>",
+        error.message.data
+      );
+      throw new Error(error.message);
+    }
+  },
+
+
   createStripeSession: async (data: {
     id: string;
     description: string;

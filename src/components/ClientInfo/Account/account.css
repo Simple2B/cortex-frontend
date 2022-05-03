@@ -26,7 +26,17 @@
   color: #aef7ff;
   margin-top: 35px;
   margin-bottom: 40px;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
 }
+
+.clientInfo_tittle .clientInfo_tittle_icon {
+  margin-left: 15px;
+  width: 33px;
+  height: 33px;
+}
+
 
 .clientInfoAccount {
   display: flex;
@@ -41,13 +51,14 @@
   align-items: center;
 }
 
-.clientInfoAccount div {
+.clientInfoAccount .info {
   display: flex;
   align-items: center;
   text-align: center;
   font-size: 30px;
   color: #fff;
 }
+
 
 /* needed for alert on CheckoutForm */
 .alert {
@@ -58,7 +69,7 @@
   position: absolute;
 }
 
-.clientInfoAccount .info {
+.clientInfoAccount .info, .clientEditInfoAccount .info {
   display: flex;
   justify-content: left;
   align-items: center;
@@ -83,6 +94,61 @@
   font-size: 30px;
   color: #707070;
   padding-left: 10px;
+}
+
+.clientEditInfoAccount .clientInfo_editText {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 22px;
+  color: #707070;
+  margin-bottom: 10px;
+}
+
+.clientEditInfoAccount .editTextBirthday  .react-datepicker-wrapper {
+  width: unset;
+}
+
+.clientEditInfoAccount .editTextBirthday  .react-datepicker-wrapper input {
+  color: #b1b1b1;
+}
+
+.clientInfoAccount .clientInfo_editText {
+  justify-content: space-between;
+}
+
+.clientEditInfoAccount .clientInfo_editText input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  border-bottom: #00e5ff solid 1px;
+  color: #b1b1b1;
+  padding-left: 15px;
+  /* font-size: 16px; */
+}
+.editTextBirthday {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.saveBtn {
+  margin-top: 18px;
+  margin: 0 auto;
+  /* align-self: center; */
+  cursor: pointer;
+  background: linear-gradient(#00E5FF, #085E67);
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  width: 165px;
+  height: 45px;
+  margin-top: 25px;
+  background: radial-gradient(#00e5ff, #085e67);
+  border-radius: 34px;
 }
 
 .clientInfoAccount .colorText {

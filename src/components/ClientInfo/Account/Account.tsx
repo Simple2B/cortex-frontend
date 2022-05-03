@@ -58,7 +58,7 @@ export default function Account(): ReactElement {
   return (
     <>
       <div className="accountContainer">
-        <AccountClientInfo client={client} nextTestDate={nextTestDate}/>
+        <AccountClientInfo client={client} nextTestDate={nextTestDate} api_key={api_key}/>
         <div className="visitHistory">
           <div className="clientInfo_tittle">Care Plan</div>
           <AccountClientCarePlan api_key={api_key}/>
