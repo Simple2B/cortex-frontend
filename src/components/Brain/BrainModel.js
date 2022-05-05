@@ -8,7 +8,7 @@ import { useGLTF } from "@react-three/drei";
 export default function BrainModel(props) {
   const groupBrainModel = useRef();
   const { nodes, materials } = useGLTF("/BrainModel.gltf");
-  useGLTF.preload("/BrainModel.gltf");
+
   return (
     <group ref={groupBrainModel} {...props} dispose={null}>
       <group>
@@ -26,3 +26,5 @@ export default function BrainModel(props) {
     </group>
   );
 }
+
+useGLTF.preload("/BrainModel.gltf");

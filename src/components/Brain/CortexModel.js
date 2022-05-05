@@ -8,7 +8,7 @@ import { useGLTF } from "@react-three/drei";
 export default function CortexModel(props) {
   const group = useRef();
   const { nodes, materials } = useGLTF("/Brain_Final_03_05_2022.gltf");
-  useGLTF.preload("/Brain_Final_03_05_2022.gltf");
+
   return (
     <group ref={group} {...props} dispose={null}>
       <group position={[-0.0028409, 0.0979605, 0]} scale={0.0011617}>
@@ -102,3 +102,5 @@ export default function CortexModel(props) {
     </group>
   );
 }
+
+useGLTF.preload("/Brain_Final_03_05_2022.gltf");
