@@ -157,6 +157,8 @@ export default function AccountClientInfo(props: {client: Client, nextTestDate: 
                     onChange={(data) => setBirthday(data)}
                     selectsEnd
 
+
+
                     startDate={birthday}
                     isClearable
                     placeholderText={`${client.birthday}`}

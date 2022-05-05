@@ -374,6 +374,31 @@
   /* width: 100%; */
 }
 
+.btnSave, .btnSaveDisable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 18px;
+  width: 165px;
+  height: 45px;
+  margin-top: 25px;
+  background: radial-gradient(#00e5ff, #085e67);
+  border: none;
+  border-radius: 34px;
+  cursor: pointer;
+}
+
+.btnSave:hover {
+  background: radial-gradient(#6faab1, #087682);
+}
+
+.btnSaveDisable {
+  background: radial-gradient(#b1b1b1, #7a7a7a);
+  font-weight: bold;
+}
+
 .datetimeContainer,
 .datetimeContainer input {
   width: 100%;
