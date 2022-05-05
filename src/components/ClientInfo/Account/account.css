@@ -201,12 +201,20 @@
   padding: 7px;
 }
 
+.visitHistory_table table, .visitHistory_table table tr {
+  border: none;
+}
+
 .visitHistory_table table tr td {
   font-size: 30px;
   color: #707070;
   border: 1px solid #707070;
   text-align: center;
   padding: 7px 10px;
+}
+
+.visitHistory_table table tr td:nth-child(1), .visitHistory_table table tr td:nth-child(2) {
+  width: 20%;
 }
 
 .visitHistory_table table .tableRow td{
