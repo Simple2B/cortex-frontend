@@ -96,6 +96,10 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     getClientsForQueue();
+    const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   useEffect(() => {
