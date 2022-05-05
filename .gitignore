@@ -25,4 +25,5 @@ yarn-error.log*
 node_modules
 /src/domain.json
 /public/CortexModel.gltf
-/public/FinalCortexModel_size_14.gltf
+/public/Brain_Final_03_05_2022.gltf
+build
