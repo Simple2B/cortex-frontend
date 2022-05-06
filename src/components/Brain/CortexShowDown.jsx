@@ -8,7 +8,7 @@ import {
 import { Canvas } from "@react-three/fiber";
 // import { Html, useProgress } from "@react-three/drei";
 // import { MeshReflectorMaterial } from "./drei/MeshReflectorMaterial";
-import Model from "./CortexModel";
+import CortexModel from "./CortexModel";
 
 // function Loader() {
 //   const { progress } = useProgress();
@@ -26,14 +26,23 @@ export function CortexShowDonut(props) {
         width: "45vw",
       }}
     >
-      <Canvas dpr={[1, 2]} shadows>
+      {/* <Canvas dpr={[1, 2]} shadows>
         <pointLight position={[10, 10, 10]} intensity={1.3} />
         <Suspense fallback={null}>
-          <Model position={[0, 0, 0]}/>
+          <CortexModel/>
           <Environment preset="city" />
         </Suspense>
         <DeviceOrientationControls />
         <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
+        <TransformControls mode="translate" />
+      </Canvas> */}
+
+      <Canvas camera={{ position: [10, 18, 23], fov: 0.5 }}>
+        <pointLight position={[10, 10, 10]} intensity={1.3} />
+        <Suspense fallback={null}>
+          <CortexModel/>
+        </Suspense>
+        <OrbitControls makeDefault />
         <TransformControls mode="translate" />
       </Canvas>
     </div>
