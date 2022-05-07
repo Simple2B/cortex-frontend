@@ -32,6 +32,14 @@ export interface IPatientForm {
   // relationshipChild: string,
 }
 
+export interface Test {
+  id: number,
+  care_plan_id: number,
+  client_id: number,
+  date: string,
+  doctor_id: number,
+}
+
 export interface User {
   id: number;
   api_key: string;
@@ -43,6 +51,7 @@ export interface User {
   rougue_mode: boolean | null;
   progress_date: string | null,
   req_date: string | null;
+  tests: Test[];
   visits: [];
 }
 
