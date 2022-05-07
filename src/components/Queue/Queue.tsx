@@ -7,10 +7,11 @@ import "reactjs-popup/dist/index.css";
 import { clientApi } from "../../api/clientApi";
 import NavBar from "../NavBar/NavBar";
 import { instance } from "../../api/axiosInstance";
-import { User } from "../../types/patientsTypes";
+import { Test, User } from "../../types/patientsTypes";
 import { ReactComponent as SearchIcon } from "../../images/lupa.svg";
 import "./queue.sass";
 import { NavLink, useHistory } from "react-router-dom";
+import { isProgressDateMoreToday, isRegToday } from "./helper";
 
 const QUEUE_INTERVAL = 5000;
 
@@ -58,7 +59,7 @@ export default function Queue(): ReactElement {
     }
   };
 
-  console.log("! Queue: queue => ", queue);
+  console.log("!!! Queue: queue => ", queue);
 
   const getClients = async () => {
     setLoadingClients(true);
@@ -86,10 +87,6 @@ export default function Queue(): ReactElement {
     }
   };
 
-  // useEffect(() => {
-  //   setClients([]);
-  // }, [querySearch]);
-
   useEffect(() => {
     getClients();
   }, [pageNumber, querySearch]);
@@ -115,47 +112,13 @@ export default function Queue(): ReactElement {
 
   const removeMemberFromQueue = (index: number) => {
     const newClients = [...queue];
-    console.log("newClients before deleted => ", newClients);
     newClients.splice(index, 1);
-    console.log("newClients after deleted => ", newClients);
     setQueue(newClients);
   };
 
   const handleChangeBtnRogueMode = (e: any) => {
     setActiveBtnRogueMode(e.currentTarget.innerHTML);
   };
-
-  const isRegToday = (reg_date: string | null, visits: Array<any>): boolean => {
-    const today = new Date();
-    if (visits.length === 0) {
-      return true
-    }
-    if (visits.length > 0) {
-      const visitWithEndTime = visits.filter(visit => {if (visit.end_time) return visit});
-      // console.log("Queue: visitWithEndTime ", visitWithEndTime)
-      if(visitWithEndTime.length > 0) return false
-    }
-    if (reg_date) {
-      const registrationData = new Date(reg_date)
-      const dateInQueue = new Date(registrationData.setHours(registrationData.getHours() + 24));
-      if (dateInQueue > today) {
-        return true
-      }
-    }
-    return false
-  }
-
-  const isProgressDateMoreToday = (progress_date: string | null): boolean => {
-    const today = new Date();
-    if (!progress_date) {
-      return false
-    }
-    const progressDate = new Date(progress_date)
-    if (progressDate > today) {
-      return true
-    }
-    return false
-  }
 
   return (
     <div>
@@ -256,6 +219,7 @@ export default function Queue(): ReactElement {
                                   req_date: patient.req_date,
                                   progress_date: patient.progress_date,
                                   rougue_mode: true,
+                                  tests: patient.tests,
                                   visits: patient.visits,
                                 });
 
@@ -274,7 +238,7 @@ export default function Queue(): ReactElement {
                           className={
                             isRegToday(patient.req_date, patient.visits)
                               ?  "list listWithoutVisits"
-                              : isProgressDateMoreToday(patient.progress_date) ? "listWithProgressDate" : "list"
+                              : isProgressDateMoreToday(patient.progress_date, patient.tests) ? "listWithProgressDate" : "list"
                           }
                           onClick={() => {
                             console.log("clientIntake", {
