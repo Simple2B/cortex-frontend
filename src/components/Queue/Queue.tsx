@@ -21,6 +21,7 @@ export default function Queue(): ReactElement {
   const [querySearch, setSearchQuery] = useState<string>("");
   const [isModalOpen, setModalOpen] = useState<number>(0);
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
+  const [activeBtnWarpSpeed, setActiveBtnWarpSpeed] = useState("off");
   const [search, setSearch] = useState<string>("");
   const history = useHistory();
   const [clients, setClients] = useState<User[]>([]);
@@ -93,10 +94,10 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     getClientsForQueue();
-    const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
-    return () => {
-      clearInterval(intervalId);
-    };
+    // const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
+    // return () => {
+    //   clearInterval(intervalId);
+    // };
   }, []);
 
   useEffect(() => {
@@ -120,12 +121,16 @@ export default function Queue(): ReactElement {
     setActiveBtnRogueMode(e.currentTarget.innerHTML);
   };
 
+  const handleChangeBtnWarpSpeed = (e: any) => {
+    setActiveBtnWarpSpeed(e.currentTarget.innerHTML);
+  };
+
   return (
     <div>
       <NavBar />
       <div className="queue">
         <h1 className="title_queue">The Queue</h1>
-        <div className="queue_input_search">
+        <div className="queue_container_search">
           <SearchIcon className="queue_search_icon" />
           <input
             className="queue_patients_search"
@@ -153,6 +158,32 @@ export default function Queue(): ReactElement {
               onClick={handleChangeBtnRogueMode}
               className={
                 activeBtnRogueMode == "off"
+                  ? "queue_btnActive"
+                  : "queue_name_btn"
+              }
+            >
+              off
+            </div>
+          </div>
+        </div>
+
+        <div className="queue_btn queue_btnWarpSpeed">
+          <div className="queue_titleRogueMode">Warp Speed</div>
+          <div className="queue_btnRogueMode">
+            <div
+              onClick={handleChangeBtnWarpSpeed}
+              className={
+                activeBtnWarpSpeed == "on"
+                  ? "queue_btnActive"
+                  : "queue_name_btn"
+              }
+            >
+              on
+            </div>
+            <div
+              onClick={handleChangeBtnWarpSpeed}
+              className={
+                activeBtnWarpSpeed == "off"
                   ? "queue_btnActive"
                   : "queue_name_btn"
               }
