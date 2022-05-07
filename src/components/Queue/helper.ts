@@ -28,6 +28,10 @@ export const getFormattedDate = (date: Date) => {
     return month + '/' + day + '/' + year;
 };
 
+const plusDayToDate = (progressDate: string, day: number) => {
+    return Math.floor(new Date(new Date(progressDate).setDate(new Date().getDate() + day)).getTime()/1000);
+}
+
 export const isProgressDateMoreToday = (progress_date: string | null, tests: Test[]): boolean => {
     if (!progress_date || tests.length === 0) {
         return false;
@@ -38,15 +42,24 @@ export const isProgressDateMoreToday = (progress_date: string | null, tests: Tes
     let testsDate = []
     for (let i = 0; i < tests.length; i++) {
         const testDate = Date.parse(tests[i].date)/1000;
-        if (today <= progressDate && progressDate <= todayPlusTreeDays) {
-            if (today <= testDate && testDate <= todayPlusTreeDays) {
-                testsDate.push(tests[i].date);
-            };
+        if (progressDate === testDate) {
+            testsDate.push(tests[i].date);
         };
+        if (plusDayToDate(progress_date, 1) === testDate || plusDayToDate(progress_date, 2) === testDate) {
+            testsDate.push(tests[i].date);
+        };
+
+        // if (today <= progressDate && progressDate <= todayPlusTreeDays) {
+        //     if (today <= testDate && testDate <= todayPlusTreeDays) {
+        //         testsDate.push(tests[i].date);
+        //     };
+        // };
     };
     if (testsDate.length > 0) {
         return false;
-    } else {
+    }
+    if (testsDate.length === 0) {
         return true;
     };
+    return false;
 };
