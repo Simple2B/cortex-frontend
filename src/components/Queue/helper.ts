@@ -37,8 +37,8 @@ export const isProgressDateMoreToday = (progress_date: string | null, tests: Tes
         return false;
     }
     const progressDate = new Date(progress_date).getTime()/1000;
-    const today = new Date(getFormattedDate(new Date())).getTime()/1000;
-    const todayPlusTreeDays = Math.floor(new Date(new Date().setDate(new Date().getDate() + 3)).getTime()/1000);
+    // const today = new Date(getFormattedDate(new Date())).getTime()/1000;
+    // const todayPlusTreeDays = Math.floor(new Date(new Date().setDate(new Date().getDate() + 3)).getTime()/1000);
     let testsDate = []
     for (let i = 0; i < tests.length; i++) {
         const testDate = Date.parse(tests[i].date)/1000;
