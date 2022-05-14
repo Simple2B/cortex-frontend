@@ -167,15 +167,19 @@ export default function Dashboards(props: {
                 });
                 console.log("Dashboards: completeVisit", completeVisit);
                 if (activeBtnWarpSpeed === "on") {
-                  console.log("Dashboards: nextPatient takes from queue !")
-                  const getNextPatient = await clientApi.clientIntake({
-                    api_key: nextPatientInQueue.api_key,
-                    rougue_mode: true,
-                    place_in_queue: nextPatientInQueue.place_in_queue,
-                  });
-                  console.log("Dashboards: getNextPatient", getNextPatient);
-                  history.push(`/${nextPatientInQueue.api_key}/${nextPatientInQueue.first_name}`);
-                }
+                  console.log("Dashboards: nextPatient takes from queue !");
+                    if (nextPatientInQueue.place_in_queue !== null) {
+                        const getNextPatient = await clientApi.clientIntake({
+                        api_key: nextPatientInQueue.api_key,
+                        rougue_mode: true,
+                        place_in_queue: nextPatientInQueue.place_in_queue,
+                      });
+                      console.log("Dashboards: getNextPatient", getNextPatient);
+                      history.push(`/${nextPatientInQueue.api_key}/${nextPatientInQueue.first_name}`);
+                    } else {
+                      history.push("/queue");
+                    }
+                  };
                 if (activeBtnWarpSpeed === "off") {
                     history.push("/queue");
                 }
