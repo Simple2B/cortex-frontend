@@ -12,6 +12,8 @@ import { ReactComponent as SearchIcon } from "../../images/lupa.svg";
 import "./queue.sass";
 import { NavLink, useHistory } from "react-router-dom";
 import { isProgressDateMoreToday, isRegToday } from "./helper";
+import { store } from "../../redux";
+import { useActions } from "../../redux/useActions";
 
 const QUEUE_INTERVAL = 5000;
 
@@ -21,7 +23,7 @@ export default function Queue(): ReactElement {
   const [querySearch, setSearchQuery] = useState<string>("");
   const [isModalOpen, setModalOpen] = useState<number>(0);
   const [activeBtnRogueMode, setActiveBtnRogueMode] = useState("off");
-  const [activeBtnWarpSpeed, setActiveBtnWarpSpeed] = useState("off");
+  const [activeBtnWarpSpeed, setActiveBtnWarpSpeed] = useState(store.getState().queueWarpSpeed);
   const [search, setSearch] = useState<string>("");
   const history = useHistory();
   const [clients, setClients] = useState<User[]>([]);
@@ -94,10 +96,10 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     getClientsForQueue();
-    // const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
-    // return () => {
-    //   clearInterval(intervalId);
-    // };
+    const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   useEffect(() => {
@@ -121,10 +123,14 @@ export default function Queue(): ReactElement {
     setActiveBtnRogueMode(e.currentTarget.innerHTML);
   };
 
+  const { queueWarpSpeed, nextPatientInQueue } = useActions();
+
   const handleChangeBtnWarpSpeed = (e: any) => {
     setActiveBtnWarpSpeed(e.currentTarget.innerHTML);
+    queueWarpSpeed(e.currentTarget.innerHTML);
   };
 
+  console.log("Queue: activeBtnWarpSpeed ", activeBtnWarpSpeed);
   return (
     <div>
       <NavBar />
@@ -166,7 +172,6 @@ export default function Queue(): ReactElement {
             </div>
           </div>
         </div>
-
         <div className="queue_btn queue_btnWarpSpeed">
           <div className="queue_titleRogueMode">Warp Speed</div>
           <div className="queue_btnRogueMode">
@@ -192,7 +197,6 @@ export default function Queue(): ReactElement {
             </div>
           </div>
         </div>
-
         <div className="containerListsButton">
           <div className="queue_lists_container">
             <div className="queue_lists">
@@ -283,6 +287,15 @@ export default function Queue(): ReactElement {
                               rougue_mode: true,
                               place_in_queue: patient.place_in_queue,
                             });
+                            if (queue[index+1] !== undefined) {
+                              const nextPatientFromQueue = {
+                                api_key: queue[index+1].api_key,
+                                first_name: queue[index+1].first_name,
+                                place_in_queue: queue[index+1].place_in_queue,
+                              };
+                              console.log("Queue: next patient => ", nextPatientFromQueue);
+                              nextPatientInQueue(nextPatientFromQueue);
+                            }
                           }}
                         >
                           {patient.last_name}, {patient.first_name}
