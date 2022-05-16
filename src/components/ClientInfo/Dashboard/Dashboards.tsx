@@ -13,6 +13,7 @@ import { IDashboard } from "../../../types/dashboardTypes";
 import { initialDashboard } from "../../../redux/reducers/dashboardReducer";
 import { store } from "../../../redux";
 import { instance } from "../../../api/axiosInstance";
+import { INextPatient } from "../../../types/queueWarpSpeedType";
 
 export default function Dashboards(props: {
   activeBtnRogueMode: string;
@@ -21,8 +22,12 @@ export default function Dashboards(props: {
   const splitLocation = location.pathname.split("/");
   const api_key = splitLocation[splitLocation.length - 2];
   const [client, setClient] = useState<Client>(ClientDefault);
-
-  // console.log("Dashboard api_key ->", api_key);
+  const [activeBtnWarpSpeed, setActiveBtnWarpSpeed] = useState("");
+  const [nextPatientInQueue, setNextPatientInQueue] = useState<INextPatient>({
+    api_key: '',
+    first_name: '',
+    place_in_queue: null,
+  });
 
   const getClient = async () => {
     try {
@@ -48,6 +53,8 @@ export default function Dashboards(props: {
     if (api_key !== "nameOn") {
       getClient();
     }
+    setActiveBtnWarpSpeed(store.getState().queueWarpSpeed);
+    setNextPatientInQueue(store.getState().setNextPatient);
   }, [api_key]);
 
   const componentUrl = splitLocation[splitLocation.length - 1];
@@ -78,6 +85,9 @@ export default function Dashboards(props: {
       history.push(`/nameOn/${initialDashboard}`);
     }
   }, [props.activeBtnRogueMode, dashboard]);
+
+  console.log("Dashboards: activeBtnWarpSpeed ", activeBtnWarpSpeed);
+  console.log("Dashboards: nextPatientInQueue ", nextPatientInQueue);
 
   return (
     <>
@@ -155,8 +165,25 @@ export default function Dashboards(props: {
                   rougue_mode: false,
                   place_in_queue: client.place_in_queue,
                 });
-                console.log("completeVisit", completeVisit);
-                history.push("/queue");
+                console.log("Dashboards: completeVisit", completeVisit);
+                if (activeBtnWarpSpeed === "on") {
+                  console.log("Dashboards: nextPatient takes from queue !");
+                    if (nextPatientInQueue.place_in_queue !== null) {
+                        const getNextPatient = await clientApi.clientIntake({
+                        api_key: nextPatientInQueue.api_key,
+                        rougue_mode: true,
+                        place_in_queue: nextPatientInQueue.place_in_queue,
+                      });
+                      console.log("Dashboards: getNextPatient", getNextPatient);
+                      history.push(`/${nextPatientInQueue.api_key}/${nextPatientInQueue.first_name}`);
+                    } else {
+                      history.push("/queue");
+                    }
+                  };
+                if (activeBtnWarpSpeed === "off") {
+                    history.push("/queue");
+                }
+
               };
               completeVisitClient();
             }}

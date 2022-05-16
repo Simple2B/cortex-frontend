@@ -3,6 +3,7 @@ import * as DashboardActionCreator from "./dashboardActions";
 import * as StripeActionCreator from "./stripeActions";
 import * as KioskActionCreator from "./kioskActions";
 import * as PatientsActionCreator from "./patientsAction";
+import * as QueueWarpSpeedActionCreator from './queueWarpSpeedAction';
 
 export const actionsCreator = {
   ...AuthActionCreators,
@@ -10,4 +11,5 @@ export const actionsCreator = {
   ...StripeActionCreator,
   ...KioskActionCreator,
   ...PatientsActionCreator,
+  ...QueueWarpSpeedActionCreator,
 };
