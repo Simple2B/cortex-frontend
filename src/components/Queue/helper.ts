@@ -1,21 +1,24 @@
 import { Test } from "../../types/patientsTypes";
 
 export const isRegToday = (reg_date: string | null, visits: Array<any>): boolean => {
-    const today = new Date();
-    if (visits.length === 0) {
-        return true
-    }
-    if (visits.length > 0) {
-        const visitWithEndTime = visits.filter(visit => {if (visit.end_time) return visit});
-        if(visitWithEndTime.length > 0) return false
-    }
     if (reg_date) {
+        const today = new Date();
         const registrationData = new Date(reg_date)
         const dateInQueue = new Date(registrationData.setHours(registrationData.getHours() + 24));
         if (dateInQueue > today) {
-        return true
-        }
-    }
+            return true;
+        };
+    };
+
+    if (visits.length === 0) {
+        return true;
+    };
+
+    if (visits.length > 0) {
+        const visitWithEndTime = visits.filter(visit => {if (visit.end_time) return visit});
+        if(visitWithEndTime.length > 0) return false
+    };
+
     return false;
 };
 

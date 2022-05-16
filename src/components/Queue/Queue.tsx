@@ -216,7 +216,7 @@ export default function Queue(): ReactElement {
                     }
                   })
                   .map((patient, index) => (
-                    <div className={ isRegToday(patient.req_date, patient.visits) && patient.visits.length === 0 ? "queueListWithoutVisits" : "queue_list"} key={index}>
+                    <div className={ isRegToday(patient.req_date, patient.visits) ? "queueListWithoutVisits" : "queue_list"} key={index}>
                       <i
                         className="fas fa-times faTimesItemQueue"
                         title="Delete from queue"
