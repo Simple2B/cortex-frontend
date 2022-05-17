@@ -7,11 +7,14 @@ import { useGLTF } from "@react-three/drei";
 
 export default function CortexModel(props) {
   const group = useRef();
-  const { nodes, materials } = useGLTF("/Brain_Final_03_05_2022.gltf");
-
+  const { nodes, materials } = useGLTF("/medium_size_3d_model.gltf");
   return (
     <group ref={group} {...props} dispose={null}>
-      <group position={[-0.0028409, 0.0979605, 0]} scale={0.0011617}>
+      <group
+        position={[-0.0098129, -0.00550178, 0]}
+        rotation={[0, 0, -2e-8]}
+        scale={0.00326035}
+      >
         <mesh
           castShadow
           receiveShadow
@@ -19,7 +22,11 @@ export default function CortexModel(props) {
           material={nodes["mid-Mat"].material}
         />
       </group>
-      <group position={[-0.0033339, 0.0979605, 0]} scale={0.0011617}>
+      <group
+        position={[-0.01119663, -0.00550178, 0]}
+        rotation={[0, 0, -2e-8]}
+        scale={0.00326035}
+      >
         <mesh
           castShadow
           receiveShadow
@@ -51,7 +58,11 @@ export default function CortexModel(props) {
           material={nodes.mid_down.material}
         />
       </group>
-      <group position={[0.005371, 0.0979605, 0]} scale={0.0011617}>
+      <group
+        position={[0.01323369, -0.00550178, 0]}
+        rotation={[0, 0, -2e-8]}
+        scale={0.00326035}
+      >
         <mesh
           castShadow
           receiveShadow
@@ -88,19 +99,21 @@ export default function CortexModel(props) {
         receiveShadow
         geometry={nodes.Spinal_cord.geometry}
         material={nodes.Spinal_cord.material}
-        position={[-0.0007454, 0.0979605, 0]}
-        scale={0.0011617}
+        position={[-0.0039318, -0.00550178, 0]}
+        rotation={[0, 0, -1e-8]}
+        scale={0.00326035}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Cerebellum.geometry}
         material={nodes.Cerebellum.material}
-        position={[-0.0007454, 0.0979605, 0]}
-        scale={0.0011617}
+        position={[-0.0039318, -0.00550178, 0]}
+        rotation={[0, 0, -2e-8]}
+        scale={0.00326035}
       />
     </group>
   );
 }
 
-useGLTF.preload("/Brain_Final_03_05_2022.gltf");
+useGLTF.preload("/medium_size_3d_model.gltf");
