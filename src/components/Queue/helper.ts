@@ -10,10 +10,6 @@ export const isRegToday = (reg_date: string | null, visits: Array<any>): boolean
         };
     };
 
-    if (visits.length === 0) {
-        return true;
-    };
-
     if (visits.length > 0) {
         const visitWithEndTime = visits.filter(visit => {if (visit.end_time) return visit});
         if(visitWithEndTime.length > 0) return false
