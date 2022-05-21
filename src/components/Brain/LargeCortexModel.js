@@ -7,10 +7,14 @@ import { useGLTF } from "@react-three/drei";
 
 export default function LargeCortexModel(props) {
   const group = useRef();
-  const { nodes, materials } = useGLTF("/large_size_3d_model.gltf");
+  const { nodes, materials } = useGLTF("/medium_size_3d_model.gltf");
   return (
     <group ref={group} {...props} dispose={null}>
-      <group position={[-0.0087343, -0.0022007, 0]} scale={0.0068793}>
+      <group
+        position={[-0.0098129, -0.00550178, 0]}
+        rotation={[0, 0, -2e-8]}
+        scale={0.00326035}
+      >
         <mesh
           castShadow
           receiveShadow
@@ -18,7 +22,11 @@ export default function LargeCortexModel(props) {
           material={nodes["mid-Mat"].material}
         />
       </group>
-      <group position={[-0.0099022, -0.0022007, 0]} scale={0.0068793}>
+      <group
+        position={[-0.01119663, -0.00550178, 0]}
+        rotation={[0, 0, -2e-8]}
+        scale={0.00326035}
+      >
         <mesh
           castShadow
           receiveShadow
@@ -50,7 +58,11 @@ export default function LargeCortexModel(props) {
           material={nodes.mid_down.material}
         />
       </group>
-      <group position={[0.010717, -0.0022007, 0]} scale={0.0068793}>
+      <group
+        position={[0.01323369, -0.00550178, 0]}
+        rotation={[0, 0, -2e-8]}
+        scale={0.00326035}
+      >
         <mesh
           castShadow
           receiveShadow
@@ -87,19 +99,22 @@ export default function LargeCortexModel(props) {
         receiveShadow
         geometry={nodes.Spinal_cord.geometry}
         material={nodes.Spinal_cord.material}
-        position={[-0.0037707, -0.0022007, 0]}
-        scale={0.0068793}
+        position={[-0.0039318, -0.00550178, 0]}
+        rotation={[0, 0, -1e-8]}
+        scale={0.00326035}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Cerebellum.geometry}
         material={nodes.Cerebellum.material}
-        position={[-0.0037707, -0.0022007, 0]}
-        scale={0.0068793}
+        position={[-0.0039318, -0.00550178, 0]}
+        rotation={[0, 0, -2e-8]}
+        scale={0.00326035}
       />
     </group>
   );
 }
 
-useGLTF.preload("/large_size_3d_model.gltf");
+useGLTF.preload("/medium_size_3d_model.gltf");
+

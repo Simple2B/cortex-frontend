@@ -39,11 +39,16 @@ export function LargeCortexShowDonut(props) {
 
       <Canvas camera={{ position: [10, 18, 23], fov: 0.5 }}>
         <pointLight position={[10, 10, 10]} intensity={1.3} />
+
+        <ambientLight intensity={0.2} />
+        <ambientLight intensity={0.1} />
+        <directionalLight intensity={0.4} />
+
         <Suspense fallback={null}>
           <LargeCortexModel/>
         </Suspense>
         <OrbitControls makeDefault />
-        <TransformControls mode="translate" />
+        {/* <TransformControls mode="translate" /> */}
       </Canvas>
     </div>
   );
