@@ -14,9 +14,8 @@ export interface IClientInfo extends Client {
     visits: Array<IVisit>;
   }
 
-
 export interface INote {
-    client_id: number;
+    api_key: string;
     date: string;
     doctor_id: number;
     id: number;
@@ -34,36 +33,36 @@ export interface IConsult {
 }
 
 export const ClientInfo = {
-id: null,
-firstName: "",
-lastName: "",
-birthday: "",
-address: "",
-city: "",
-state: "",
-zip: "",
-phone: "",
-email: "",
-referring: "",
-conditions: [],
-otherCondition: "",
-diseases: [],
-medications: "",
-covidTestedPositive: "",
-covidVaccine: "",
-stressfulLevel: 1,
-consentMinorChild: false,
-diagnosticProcedures: false,
-// relationshipChild: "",
-place_in_queue: null,
-visits: [
-    {
-    date: "",
-    client_id: null,
-    doctor_id: null,
     id: null,
-    start_time: null,
-    end_time: null,
-    },
-],
+    firstName: "",
+    lastName: "",
+    birthday: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    phone: "",
+    email: "",
+    referring: "",
+    conditions: [],
+    otherCondition: "",
+    diseases: [],
+    medications: "",
+    covidTestedPositive: "",
+    covidVaccine: "",
+    stressfulLevel: 1,
+    consentMinorChild: false,
+    diagnosticProcedures: false,
+    // relationshipChild: "",
+    place_in_queue: null,
+    visits: [
+        {
+        date: "",
+        client_id: null,
+        doctor_id: null,
+        id: null,
+        start_time: null,
+        end_time: null,
+        },
+    ],
 };
