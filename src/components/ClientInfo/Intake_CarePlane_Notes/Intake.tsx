@@ -82,14 +82,15 @@ export default function Intake(props: {
 
   const addConsults = async () => {
     const visit = client.visits[client.visits.length - 1];
-    setValueConsult("");
     if (visit && client.id && visit.doctor_id && visit.id && valueConsult) {
       await clientApi.writeConsult({
         consult: valueConsult,
-        client_id: client.id,
+        api_key: api_key,
+        // client_id: client.id,
         doctor_id: visit.doctor_id,
         visit_id: visit.id,
       });
+      setValueConsult("");
     } else {
       console.log("Error write consult");
     }
@@ -221,7 +222,8 @@ export default function Intake(props: {
                             removeConsult(i)
                             clientApi.deleteConsult({
                               id: consult.id,
-                              client_id: consult.client_id,
+                              api_key: api_key,
+                              // client_id: consult.client_id,
                               doctor_id: consult.doctor_id,
                               visit_id: consult.visit_id,
                             });
@@ -240,8 +242,8 @@ export default function Intake(props: {
                   className="intakeTextAreaResult"
                   onChange={textAreaChange}
                   placeholder="Write Result"
+                  value={valueConsult}
                 >
-                  {valueConsult}
                 </textarea>
                 <div className="containerResult_img" onClick={addConsults}>
                   <img src={sendArrow} alt="sendArrow" />
