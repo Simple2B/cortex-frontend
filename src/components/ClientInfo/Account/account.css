@@ -178,6 +178,10 @@
   overflow-y: auto;
 }
 
+.visitHistory_table .table {
+  width: 70%;
+}
+
 .billing_table .table {
   height: 133px;
 }
@@ -259,6 +263,13 @@
   border-bottom: 1px solid #00e5ff;
 }
 
+.infoCarePlanContainer .visitData, .infoCarePlanContainer .data .visitInputDate {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .inputDateContainer {
   width: 100%;
   position: relative;
@@ -290,11 +301,24 @@
   font-size: 13px;
 }
 
+.infoCarePlanContainer .data .inputDate .textVisits {
+  padding-right: 15px;
+}
+
 .infoCarePlanContainer .data .inputDate .date {
   color: #fff;
   background-color: transparent;
   outline: none;
   border: none;
+}
+
+.infoCarePlanContainer .data .inputDate .visitData  {
+  cursor: pointer;
+}
+
+.infoCarePlanContainer .data .inputDate .visitData:hover  {
+  color: #00e5ff;
+
 }
 
 .infoCarePlanContainer .data .inputDate .dateString {
@@ -725,10 +749,14 @@ h3 {
     margin-top: 1em;
     width: 97%;
   }
+
 }
 
 @media (max-width: 684px) {
   .accountContainer {
     height: 165%;
+  }
+  .visitHistory_table .table {
+    width: 90%;
   }
 }
