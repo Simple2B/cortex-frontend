@@ -1,6 +1,7 @@
 import React, {
     ReactElement,
     useEffect,
+    useRef,
     useState,
   } from "react";
 import "./account.css";
@@ -9,7 +10,7 @@ import DatePicker from "react-datepicker";
 import { clientApi} from "../../../api/clientApi";
 import sendArrow from "../../../images/icons8-arrow.png";
 import { convertDateToString, modifyProgressDate } from "./helper";
-import { ICarePlan, IConsult, INote, ITest } from "../../../types/accountTypes";
+import { ICarePlan, IConsult, INote, ITest, IVisit } from "../../../types/accountTypes";
 import { instance } from "../../../api/axiosInstance";
 
 const initialCarePlan = {
@@ -26,15 +27,15 @@ const initialCarePlan = {
   tests: [],
   notes: [],
   consults: [],
+  visits_with_end_date: [],
+  visits_without_end_date: [],
 }
 
 export default function AccountClientCarePlan(props: {api_key: string}): ReactElement {
-
   const {api_key} = props;
-
   const [carePlans, setCarePlans] = useState<Array<ICarePlan>>([initialCarePlan]);
   const [isModalOpen, setModalOpen] = useState<number>(0);
-  const [isModalBtnsOpen, setModelBtnsOpen] = useState<number>(0);
+  const [isModalBtnsOpen, setModelBtnsOpen] = useState<number | null>(null);
   const [startTime, setStartTime] = useState<any>();
   const [endTime, setEndTime] = useState<any>();
 
@@ -72,7 +73,7 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
         console.log("GET: getCarePlan message =>  ", error.message);
         throw new Error(error.message);
       }
-    };
+  };
 
   const createCarePlane = (startDate: any, endDate: any) => {
     const createPlan = async () => {
@@ -83,10 +84,10 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
         start_time: startDateToBack,
         end_time: endDateToBack,
       });
+      getHistoryCarePlans();
       console.log("Account: created care plan", carePlan);
     };
     createPlan();
-    getHistoryCarePlans();
   }
 
   useEffect(() => {
@@ -103,7 +104,6 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
   };
 
   const [typeInput, setTypeInput] = useState<string>("text");
-
   const [carePlanId, setCarePlanId] = useState<number | null>(null);
   const [startDate, setStartDate] = useState<any>(null);
   const [endDate, setEndDate] = useState<any>(null);
@@ -127,6 +127,22 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
   const [lastTestId, setTestId] = useState<number | null>(null);
   const [tests, setTests] = useState<ITest[]>([]);
   const [deletedTests, setDeletedTests] = useState<ITest[]>([]);
+
+  // visits with end_date
+  // const [visitsWithEndDate, setVisitsWithEndDate] = useState<IVisit[]>([]);
+  // const [deletedVisitWithEndDate, setDeletedVisitWithEndDate] = useState<IVisit[]>([]);
+
+  // visits without end_date
+  // const [visitsWithoutEndDate, setVisitsWithoutEndDate] = useState<IVisit[]>([]);
+  // const [deletedVisitsWithoutEndDate, setDeletedVisitsWithoutEndDate] = useState<IVisit[]>([]);
+
+  const [visits, setVisits] = useState<IVisit[]>([]);
+  const [deletedVisits, setDeletedVisits] = useState<IVisit[]>([]);
+
+  const [visit, setVisit] = useState<string>("");
+  const refVisit = useRef();
+  console.log("AccountClientCarePlan: visit ====>>>> ", visit);
+  // const [deletedVisit, setDeletedVisit] = useState<IVisit[]>([]);
 
   const [notes, setNotes] = useState<INote[]>([]);
   const [deletedNotes, setDeletedNotes] = useState<INote[]>([]);
@@ -177,8 +193,7 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
   };
 
   const saveChangesCarePlan = async (id: number, startDate: Date, endDate: Date, progressDate: Date) => {
-    if(carePlanId && carePlanId === id) {
-
+    if(carePlanId === id) {
       if (progressDate) {
         const progressDateToBack = convertDateToString(progressDate);
         console.log("saveChangesCarePlan: =>>>>> progressDateToBack ==>>>", progressDateToBack);
@@ -190,24 +205,23 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
           frequency: frequency,
         });
         console.log("saveChangesCarePlan: carePlan ", carePlan);
-      }
+      };
 
       if (deletedNotes.length > 0) {
         console.log(" count of deleted notes ", deletedNotes.length)
         deletedNotes.map(async(note) => {
             console.log(" start delete note ")
-            // const deleteNotes = async() => {
-              if (note.id && note.visit_id) {
-                await clientApi.deleteNote({
-                  id: note.id,
-                  client_id: note.client_id,
-                  doctor_id: note.doctor_id,
-                  visit_id: note.visit_id,
-                });
+            if (note.id && note.visit_id) {
+              await clientApi.deleteNote({
+                id: note.id,
+                api_key: note.api_key,
+                doctor_id: note.doctor_id,
+                visit_id: note.visit_id,
+              });
             }
         })
         console.log(" end delete note ")
-      }
+      };
 
       if (deletedConsults.length > 0) {
         console.log(" count of deleted consults ", deletedConsults.length)
@@ -216,14 +230,14 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
             console.log(" start delete consult ")
             await clientApi.deleteConsult({
               id: consult.id,
-              client_id: consult.client_id,
+              api_key: api_key,
               doctor_id: consult.doctor_id,
               visit_id: consult.visit_id,
             });
           }
         })
         console.log(" end delete consult ")
-      }
+      };
 
       if (deletedTests.length > 0) {
         console.log(" count of deleted tests ", deletedTests.length)
@@ -236,8 +250,7 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
           });
         })
         console.log(" end delete tests ")
-
-      }
+      };
 
       const startDateToBack = convertDateToString(startDate);
       const endDateToBack = convertDateToString(endDate);
@@ -245,18 +258,16 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
       if (notes.length > 0) {
         const notesWithoutId = notes.filter(note => note.id === undefined);
         notesWithoutId.map(async(note) => {
-          if (startDate && endDate) {
-            await clientApi.writeNote({
-              notes: note.note,
-              client_id: note.client_id,
-              doctor_id: note.doctor_id,
-              start_time: startDateToBack,
-              end_time: endDateToBack,
-            });
-          }
+          await clientApi.writeNote({
+            notes: note.notes,
+            api_key: api_key,
+            doctor_id: note.doctor_id,
+            start_time: startDateToBack,
+            end_time: endDateToBack,
+          });
+          getHistoryCarePlans();
         })
-        getHistoryCarePlans();
-      }
+      };
 
       if (consults.length > 0) {
         const consultsWithoutId = consults.filter(consult => consult.id === undefined);
@@ -264,273 +275,338 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
           if (startDate && endDate) {
             await clientApi.writeConsult({
               consult: consult.consult,
-              client_id: consult.client_id,
+              api_key: api_key,
               doctor_id: consult.doctor_id,
               start_time: startDateToBack,
               end_time: endDateToBack,
             });
-          }
+            getHistoryCarePlans();
+          };
         })
-        getHistoryCarePlans();
-      }
-
+      };
       createCarePlane(startDate, endDate);
       getCarePlanDate();
+      getHistoryCarePlans();
     }
-  }
+  };
 
   return (
     <>
-    <div className="visitHistory_table">
+      <div className="visitHistory_table">
             <table className="table">
               <tr className="tableHeader">
-                <th className="date">Start Date</th>
-                <th className="service">End Date</th>
-                <th className="practitioner">Practitioner</th>
+                <th className="date">Date</th>
+                {/* <th className="service">End Date</th> */}
+                {/* <th className="practitioner">Practitioner</th> */}
               </tr>
-                {carePlans.map((carePlan, index) => {
-                    return (
-                      <>
-                        <tr key={index} className="tableRow" onClick={(e) => {
-                            setCarePlanId(carePlan.id);
-                            if (carePlan.progress_date) setProgressDate(convertDateToString(new Date(Date.parse(carePlan.progress_date.split(",")[0]))));
-                            setTypeInput("text");
-                            setStartDate(Date.parse(carePlan.start_time));
-                            if (carePlan.end_time) setEndDate(Date.parse(carePlan.end_time));
-                            setCarePlanLength(carePlan.care_plan);
-                            setFrequency(carePlan.frequency)
-                            setModalOpen(carePlan.id);
-                            if(carePlan.tests.length > 0) setTestId(carePlan.tests[carePlan.tests.length - 1].id)
-                            setTests(carePlan.tests);
-                            setNotes(carePlan.notes);
-                            setConsults(carePlan.consults);
-                          }}>
-                          <td>{carePlan.start_time.split(",")[0]}</td>
-                          {carePlan.end_time && <td>{carePlan.end_time.split(",")[0]}</td>}
-                          <td>{carePlan.doctor_name}</td>
-                        </tr>
-                        <div
-                          id="myModal"
-                          className={
-                            isModalOpen === carePlan.id && isModalOpen !== 0 ? "modalOpen" : "modal"
-                          }>
-                          <div className="modal-content modalContent">
-                            <span
-                              className="close"
-                              onClick={() => setModalOpen(0)}
-                            >
-                              &times;
-                            </span>
+              {carePlans.map((carePlan, index) => {
+                  return (
+                    <>
+                      <tr key={index} className="tableRow" onClick={(e) => {
+                          setCarePlanId(carePlan.id);
+                          if (carePlan.progress_date) setProgressDate(convertDateToString(new Date(Date.parse(carePlan.progress_date.split(",")[0]))));
+                          setTypeInput("text");
+                          if (carePlan.start_time) setStartDate(Date.parse(carePlan.start_time));
+                          if (carePlan.end_time) setEndDate(Date.parse(carePlan.end_time));
+                          setCarePlanLength(carePlan.care_plan);
+                          setFrequency(carePlan.frequency)
+                          setModalOpen(carePlan.id);
+                          if(carePlan.tests.length > 0) setTestId(carePlan.tests[carePlan.tests.length - 1].id)
+                          setTests(carePlan.tests);
+                          setNotes(carePlan.notes);
+                          setConsults(carePlan.consults);
 
-                            {
-                              isModalBtnsOpen
-                              ?
-                              <div className="btns-content">
-                                <div className="modalText">
-                                  Are you sure you want to remove this care plan?
-                                </div>
-                                <div className="btnsModal">
-                                  <div
-                                    className="btnModalOk"
-                                    onClick={() => {
-                                      clientApi.deleteCarePlan({
-                                        id: carePlan.id,
-                                        api_key: api_key,
-                                      });
-                                      removeCarePlan(index);
-                                      getCarePlanDate();
-                                      setModalOpen(0);
-                                    }}
-                                  >
-                                    Ok
-                                  </div>
-                                  <div onClick={() => setModelBtnsOpen(0)}>Cancel</div>
-                                </div>
-                              </div>
-                              :
-                              null
-                            }
+                          setVisits([...carePlan.visits_with_end_date, ...carePlan.visits_without_end_date]);
+                          // setVisitsWithEndDate(carePlan.visits_with_end_date);
+                          // setVisitsWithoutEndDate(carePlan.visits_without_end_date);
+                        }}>
+                        <td>{index+1}). {carePlan.start_time.split(",")[0]}</td>
+                        {/* {carePlan.end_time && <td>{carePlan.end_time.split(",")[0]}</td>} */}
+                        {/* <td>{carePlan.doctor_name}</td> */}
+                      </tr>
+                      <div
+                        id="myModal"
+                        className={
+                          isModalOpen === carePlan.id && isModalOpen !== 0 ? "modalOpen" : "modal"
+                        }>
+                        <div className="modal-content modalContent">
+                          <span
+                            className="close"
+                            onClick={() => {
+                              setModalOpen(0);
+                              setVisit("");
+                            }}
+                          >
+                            &times;
+                          </span>
 
-                            <div className="infoCarePlanContainer">
-                              <div className="infoCarePlanContainer_header">Care Plan # {index + 1}</div>
-                              <div className="data">
-                                <div className="inputDate">
-                                  <div className="text">Start date</div>
-                                  <DatePicker
-                                    dateFormat="MM/dd/yyyy h:mm aa"
-                                    className="date"
-                                    selected={startDate}
-                                    onChange={(data) => {setStartDate(data)}}
-                                    selectsStart
-                                    showTimeInput
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    placeholderText= "Start date"
-                                  />
-                                </div>
-                                <div className="inputDate">
-                                <div className="text">End date</div>
-                                  <DatePicker
-                                    dateFormat="MM/dd/yyyy h:mm aa"
-                                    className="date"
-                                    selected={endDate}
-                                    onChange={(data) => {setEndDate(data)}}
-                                    selectsEnd
-                                    showTimeInput
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    minDate={startDate}
-                                    placeholderText="End date"
-                                  />
-                                </div>
+                          {
+                            isModalBtnsOpen === carePlan.id
+                            ?
+                            <div className="btns-content">
+                              <div className="modalText">
+                                Are you sure you want to remove this care plan?
                               </div>
-                              <div className="data">
-                                <div className="inputDate">
-                                  <div className="text">Care plan length</div>
-                                  <input type="text" className="date" value={carePlanLength} onChange={carePlanLengthChange}/>
+                              <div className="btnsModal">
+                                <div
+                                  className="btnModalOk"
+                                  onClick={() => {
+                                    clientApi.deleteCarePlan({
+                                      id: carePlan.id,
+                                      api_key: api_key,
+                                    });
+                                    removeCarePlan(index);
+                                    getCarePlanDate();
+                                    setModalOpen(0);
+                                  }}
+                                >
+                                  Ok
                                 </div>
-                                <div className="inputDate">
-                                  <div className="text">Frequency</div>
-                                  <input type="text" className="date" value={frequency} onChange={frequencyChange}/>
-                                </div>
-                              </div>
-                              <div className="data">
-                                <div className="inputDate">
-                                  <div className="text">Progress date</div>
-                                  <input className="date"
-                                    type={typeInput}
-                                    value={modifyProgressDate(progressDate)}
-                                    onChange={progressDateChange}
-                                    onBlur={() => setTypeInput("date")}
-                                    onFocus={() => setTypeInput("date")}
-                                    placeholder={progressDate}
-                                  />
-                                </div>
-                              </div>
-                              <div className="data">
-                                <div className="inputDate">
-                                  <div className="text">Tests</div>
-                                  <div className="date">
-                                      {
-                                        carePlan.tests.length > 0 && tests.map((test, i) => {
-                                          const dateTest = test.date.split("T");
-                                          return (
-                                            <>
-                                              <div key={test.id} className="dateContainer" >
-
-                                                <span className="dateNote">{i+1}). {dateTest[0]}, {dateTest[1]}
-                                                  <sup
-                                                    className="deleteCross deleteCrossNote"
-                                                    title="delete note"
-                                                    onClick={() => removeTest(i)}
-                                                  >
-                                                    x
-                                                  </sup>
-                                                </span>
-                                              </div>
-                                            </>
-                                            )
-                                          })
-                                      }
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="data">
-                                <div className="inputDate inputDateString">
-                                  <div className="text">Notes</div>
-                                  <div className="date dateString">
-                                      {
-                                        notes.length > 0 && notes.map((note, i) => {
-                                          return (
-                                            <>
-                                              <div key={note.id} className="dateContainer">
-                                                <span className="dateNote">{note.note}
-                                                  <sup
-                                                    className="deleteCross deleteCrossNote"
-                                                    title="delete note"
-                                                    onClick={() => removeNote(i)}
-                                                  >
-                                                    x
-                                                  </sup>
-                                                </span>
-                                              </div>
-                                            </>
-                                            )
-                                          })
-                                      }
-                                  </div>
-                                </div>
-                                <div className="inputDate inputDateContainer">
-                                  <div className="text">Add new note</div>
-                                  <input className="date" type="text" value={newNote} onChange={noteChange}/>
-                                  <div className="sendArrow"><img src={sendArrow} alt="sendArrow2" onClick={() => {
-                                        setNotes(prev => [...prev, {
-                                          "client_id": carePlan.id,
-                                          "doctor_id": carePlan.doctor_id,
-                                          "note": newNote,
-                                        }])
-                                        setNewNote("");
-                                  }}/></div>
-                                </div>
-                              </div>
-                              <div className="data">
-                                <div className="inputDate inputDateString">
-                                  <div className="text">Consults</div>
-                                  <div className="date dateString">
-                                      {
-                                        consults.length > 0 && consults.map((consult, i) => {
-                                          return (
-                                            <>
-                                              <div key={consult.id} className="dateContainer">
-                                                <span className="dateNote">{consult.consult}
-                                                  <sup
-                                                    className="deleteCross deleteCrossNote"
-                                                    title="delete note"
-                                                    onClick={() => removeConsult(i)}
-                                                  >
-                                                    x
-                                                  </sup>
-                                                </span>
-                                              </div>
-                                            </>
-                                            )
-                                          })
-                                      }
-                                  </div>
-
-                                </div>
-
-                                <div className="inputDate inputDateContainer">
-                                  <div className="text">Write consult</div>
-                                  <input className="date" type="text" value={newConsult} onChange={consultChange}/>
-                                  <div className="sendArrow"><img src={sendArrow} alt="sendArrow2" onClick={() => {
-                                        setConsults(prev => [...prev, {
-                                          "client_id": carePlan.id,
-                                          "doctor_id": carePlan.doctor_id,
-                                          "consult": newConsult,
-                                        }])
-                                        setNewConsult("");
-                                  }}/></div>
-                                </div>
+                                <div onClick={() => setModelBtnsOpen(null)}>Cancel</div>
                               </div>
                             </div>
+                            :
+                            null
+                          }
 
-                            <div className="btnsModal">
-                              <div className="saveChanges" onClick={() => {
-                                  saveChangesCarePlan(carePlan.id, startDate, endDate, progressDate);
-                                  setModalOpen(0);
-                                }}>
-                                  save changes
+                          <div className="infoCarePlanContainer">
+                            <div className="infoCarePlanContainer_header">Care Plan # {index + 1}</div>
+                            <div className="data">
+                              <div className="inputDate">
+                                <div className="text">Start date</div>
+                                <DatePicker
+                                  dateFormat="MM/dd/yyyy h:mm aa"
+                                  className="date"
+                                  selected={startDate}
+                                  onChange={(data) => {setStartDate(data)}}
+                                  selectsStart
+                                  showTimeInput
+                                  startDate={startDate}
+                                  endDate={endDate}
+                                  placeholderText= "Start date"
+                                />
                               </div>
-                              <div className="delete" onClick={() => setModelBtnsOpen(carePlan.id)}>delete</div>
+                              <div className="inputDate">
+                              <div className="text">End date</div>
+                                <DatePicker
+                                  dateFormat="MM/dd/yyyy h:mm aa"
+                                  className="date"
+                                  selected={endDate}
+                                  onChange={(data) => {setEndDate(data)}}
+                                  selectsEnd
+                                  showTimeInput
+                                  startDate={startDate}
+                                  endDate={endDate}
+                                  minDate={startDate}
+                                  placeholderText="End date"
+                                />
+                              </div>
+                            </div>
+                            <div className="data">
+                              <div className="inputDate">
+                                <div className="text">Care plan length</div>
+                                <input type="text" className="date" value={carePlanLength} onChange={carePlanLengthChange}/>
+                              </div>
+                              <div className="inputDate">
+                                <div className="text">Frequency</div>
+                                <input type="text" className="date" value={frequency} onChange={frequencyChange}/>
+                              </div>
+                            </div>
+                            <div className="data">
+                              <div className="inputDate">
+                                <div className="text">Progress date</div>
+                                <input className="date"
+                                  type={typeInput}
+                                  value={modifyProgressDate(progressDate)}
+                                  onChange={progressDateChange}
+                                  onBlur={() => setTypeInput("date")}
+                                  onFocus={() => setTypeInput("date")}
+                                  placeholder={progressDate}
+                                />
+                              </div>
+                            </div>
+                            <div className="data visitData">
+                              <div className="inputDate visitInputDate">
+                                <label className="text textVisits" htmlFor="visitsCarePlan">Visits:</label>
+                                <select
+                                  name="visitsCarePlan"
+                                  id="visitsCarePlan"
+                                  className="date"
+                                  onChange={(event)=> setVisit(event.currentTarget.value)}
+                                  value={visit}
+                                >
+                                  <option className="date visitData" key={index} value="">
+                                      choose date
+                                  </option>
+                                  {
+                                    visits.length > 0 && visits.map((visit, index) => {
+                                      return (
+                                          <option className="date visitData" key={index+1} value={visit.date}>
+                                            {visit.date}
+                                          </option>
+                                      )
+                                    })
+                                  }
+                                </select>
+                              </div>
+                            </div>
+                            { visit.length > 0 &&
+                              (
+                                <>
+                                  <div className="data">
+                                    <div className="inputDate">
+                                      <div className="text">Tests</div>
+                                      <div className="date">
+                                          {
+                                            carePlan.tests.length > 0 && tests.map((test, i) => {
+                                              const dateTest = test.date.split("T");
+
+                                              const testDate = test.date.split("T")[0].split("-");
+                                              const date = `${testDate[1]}/${testDate[2]}/${testDate[0]}`
+                                              return (
+                                                <>
+                                                  <div key={test.id} className="dateContainer" >
+                                                    {
+                                                      visit === date && (
+                                                        <span className="dateNote">{i+1}). {dateTest[0]}, {dateTest[1]}
+                                                          <sup
+                                                            className="deleteCross deleteCrossNote"
+                                                            title="delete note"
+                                                            onClick={() => removeTest(i)}
+                                                          >
+                                                            x
+                                                          </sup>
+                                                        </span>
+                                                      )
+                                                    }
+                                                  </div>
+                                                </>
+                                                )
+                                              })
+                                          }
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="data">
+                                    <div className="inputDate inputDateString">
+                                      <div className="text">Notes</div>
+                                      <div className="date dateString">
+                                          {
+                                            notes.length > 0 && notes.map((note, i) => {
+                                              const noteDate = note.date !== undefined ?  note.date.split("-") : "";
+                                              const date = `${noteDate[1]}/${noteDate[2]}/${noteDate[0]}`;
+                                              return (
+                                                <>
+                                                  <div key={note.id} className="dateContainer">
+                                                    {
+                                                      visit === date && (
+                                                        <span className="dateNote">{note.notes}
+                                                          <sup
+                                                            className="deleteCross deleteCrossNote"
+                                                            title="delete note"
+                                                            onClick={() => removeNote(i)}
+                                                          >
+                                                            x
+                                                          </sup>
+                                                        </span>
+                                                      )
+                                                    }
+                                                  </div>
+                                                </>
+                                                )
+                                              })
+                                          }
+                                      </div>
+                                    </div>
+                                    <div className="inputDate inputDateContainer">
+                                      <div className="text">Add new note</div>
+                                      <input className="date" type="text" value={newNote} onChange={noteChange}/>
+                                      <div className="sendArrow">
+                                        <img src={sendArrow} alt="sendArrow2" onClick={() => {
+                                            setNotes(prev => [...prev, {
+                                              "api_key": api_key,
+                                              "doctor_id": carePlan.doctor_id,
+                                              "notes": newNote,
+                                            }])
+                                            setNewNote("");
+                                        }}/>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="data">
+                                    <div className="inputDate inputDateString">
+                                      <div className="text">Consults</div>
+                                      <div className="date dateString">
+                                          {
+                                            consults.length > 0 && consults.map((consult, i) => {
+                                              const consultDate = consult.date !== undefined ?  consult.date.split("-") : "";
+                                              const date = `${consultDate[1]}/${consultDate[2]}/${consultDate[0]}`;
+                                              console.log("!consultDate =>", date);
+                                              return (
+                                                <>
+                                                  <div key={consult.id} className="dateContainer">
+                                                    {
+                                                      visit === date && (
+                                                        <span className="dateNote">{consult.consult}
+                                                          <sup
+                                                            className="deleteCross deleteCrossNote"
+                                                            title="delete note"
+                                                            onClick={() => removeConsult(i)}
+                                                          >
+                                                            x
+                                                          </sup>
+                                                        </span>
+                                                      )
+                                                    }
+                                                  </div>
+                                                </>
+                                                )
+                                              })
+                                          }
+                                      </div>
+
+                                    </div>
+
+                                    <div className="inputDate inputDateContainer">
+                                      <div className="text">Write consult</div>
+                                      <input className="date" type="text" value={newConsult} onChange={consultChange}/>
+                                      <div className="sendArrow"><img src={sendArrow} alt="sendArrow2" onClick={() => {
+                                            setConsults(prev => [...prev, {
+                                              "api_key": api_key,
+                                              "doctor_id": carePlan.doctor_id,
+                                              "consult": newConsult,
+                                            }])
+                                            setNewConsult("");
+                                      }}/></div>
+                                    </div>
+                                  </div>
+
+                                </>
+                              )
+                            }
+                          </div>
+
+                          <div className="btnsModal">
+                            <div className="saveChanges" onClick={() => {
+                                saveChangesCarePlan(carePlan.id, startDate, endDate, progressDate);
+                                setModalOpen(0);
+                                setVisit("");
+                              }}>
+                                save changes
+                            </div>
+                            <div className="delete" onClick={() => {
+                                setModelBtnsOpen(carePlan.id);
+                                setVisit("");
+                              }}>
+                              delete
                             </div>
                           </div>
                         </div>
-                      </>
-
-                    );
-                  })
-                }
+                      </div>
+                    </>
+                  );
+                })
+              }
             </table>
       </div>
       <div className="visitHistory_inputs">
@@ -584,5 +660,4 @@ export default function AccountClientCarePlan(props: {api_key: string}): ReactEl
           </div>
         </div>
     </>
-
-  )}
+  )};
