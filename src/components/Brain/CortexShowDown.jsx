@@ -26,24 +26,16 @@ export function CortexShowDonut(props) {
         width: "45vw",
       }}
     >
-      {/* <Canvas dpr={[1, 2]} shadows>
-        <pointLight position={[10, 10, 10]} intensity={1.3} />
-        <Suspense fallback={null}>
-          <CortexModel/>
-          <Environment preset="city" />
-        </Suspense>
-        <DeviceOrientationControls />
-        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
-        <TransformControls mode="translate" />
-      </Canvas> */}
-
       <Canvas camera={{ position: [10, 18, 23], fov: 0.5 }}>
         <pointLight position={[10, 10, 10]} intensity={1.3} />
+        <ambientLight intensity={0.2} />
+        <ambientLight intensity={0.1} />
+        <directionalLight intensity={0.4} />
         <Suspense fallback={null}>
           <CortexModel/>
         </Suspense>
         <OrbitControls makeDefault />
-        <TransformControls mode="translate" />
+        {/* <TransformControls mode="translate" /> */}
       </Canvas>
     </div>
   );
