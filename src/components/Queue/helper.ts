@@ -1,22 +1,5 @@
 import { Test } from "../../types/patientsTypes";
 
-export const isRegToday = (reg_date: string | null, visits: Array<any>): boolean => {
-    if (reg_date) {
-        const today = new Date();
-        const registrationData = new Date(reg_date)
-        const dateInQueue = new Date(registrationData.setHours(registrationData.getHours() + 24));
-        if (dateInQueue > today) {
-            return true;
-        };
-    };
-
-    if (visits.length > 0) {
-        const visitWithEndTime = visits.filter(visit => {if (visit.end_time) return visit});
-        if(visitWithEndTime.length > 0) return false
-    };
-
-    return false;
-};
 
 export const getFormattedDate = (date: Date) => {
     const year = date.getFullYear();
@@ -26,6 +9,26 @@ export const getFormattedDate = (date: Date) => {
     day = day.length > 1 ? day : '0' + day;
     return month + '/' + day + '/' + year;
 };
+
+export const isRegToday = (reg_date: string | null, visits: Array<any>): boolean => {
+    if (reg_date) {
+        const today = new Date();
+        const registrationData = new Date(reg_date)
+        const dateInQueue = new Date(registrationData.setHours(registrationData.getHours() + 24));
+        if (visits.length > 0) {
+            const visitWithStartTimeToday = visits.filter(visit => {
+                if (getFormattedDate(new Date(visit.start_time)) === getFormattedDate(today)) {return visit}
+        });
+            if(visitWithStartTimeToday.length > 0) return false
+        };
+        if (dateInQueue > today) {
+            return true;
+        };
+    };
+
+    return false;
+};
+
 
 const plusDayToDate = (progressDate: string, day: number) => {
     return Math.floor(new Date(new Date(progressDate).setDate(new Date().getDate() + day)).getTime()/1000);
