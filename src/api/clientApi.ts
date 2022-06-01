@@ -253,7 +253,8 @@ export const clientApi = {
 
   writeNote: async (data_note: {
     notes: string;
-    client_id: number;
+    // client_id: number;
+    api_key: string;
     doctor_id: number;
     visit_id?: number;
     start_time?: string,
@@ -276,7 +277,8 @@ export const clientApi = {
 
   writeConsult: async (data_consult: {
     consult: string;
-    client_id: number;
+    api_key: string;
+    // client_id: number;
     doctor_id: number;
     visit_id?: number;
     start_time?: string;
@@ -299,7 +301,7 @@ export const clientApi = {
 
   deleteNote: async (data_delete_note: {
     id: number;
-    client_id: number;
+    api_key: string;
     doctor_id: number;
     visit_id: number;
   }): Promise<void> => {
@@ -325,7 +327,8 @@ export const clientApi = {
 
   deleteConsult: async (data_delete_consult: {
     id: number;
-    client_id: number;
+    api_key: string;
+    // client_id: number;
     doctor_id: number;
     visit_id: number;
   }): Promise<void> => {

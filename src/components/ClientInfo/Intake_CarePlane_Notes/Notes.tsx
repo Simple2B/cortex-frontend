@@ -83,7 +83,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
 
   const deleteNote = (deleteNoteData: {
     id: number;
-    client_id: number;
+    api_key: string;
     doctor_id: number;
     visit_id: number;
   }) => {
@@ -99,7 +99,8 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
     if (visit && client.id && visit.doctor_id && visit.id && value) {
       clientApi.writeNote({
         notes: value,
-        client_id: client.id,
+        // client_id: client.id,
+        api_key: api_key,
         doctor_id: visit.doctor_id,
         visit_id: visit.id,
       });
@@ -131,7 +132,7 @@ export function Notes(props: { activeBtnRogueMode: string }): ReactElement {
                           onClick={() => {
                             deleteNote({
                               id: note.id,
-                              client_id: note.client_id,
+                              api_key: api_key,
                               doctor_id: note.doctor_id,
                               visit_id: note.visit_id,
                             });

@@ -51,11 +51,11 @@ export default function Queue(): ReactElement {
       const response = await instance().get("api/client/queue");
       console.log("!!! getClientsForQueue: clients in queue => ", response);
       setQueue(response.data);
-      // if (response.data.length > 0) {
-      //   response.data.map((client_queue: { api_key: string; })=> {
-      //      getCarePlanDate(client_queue.api_key)
-      //   })
-      // }
+      if (response.data.length > 0) {
+        response.data.map((client_queue: { api_key: string; })=> {
+           getCarePlanDate(client_queue.api_key)
+        })
+      }
     } catch (error: any) {
       console.log("GET: error message =>  ", new Error(error.message));
       throw new Error(error.message);
@@ -96,10 +96,10 @@ export default function Queue(): ReactElement {
 
   useEffect(() => {
     getClientsForQueue();
-    const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
-    return () => {
-      clearInterval(intervalId);
-    };
+    // const intervalId = setInterval(getClientsForQueue, QUEUE_INTERVAL);
+    // return () => {
+    //   clearInterval(intervalId);
+    // };
   }, []);
 
   useEffect(() => {

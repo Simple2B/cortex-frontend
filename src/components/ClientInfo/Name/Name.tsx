@@ -4,6 +4,7 @@ import { ReactComponent as IntakeAlpha } from "../../../images/intake_alpha.svg"
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
 import { Alpha } from "../Alpha/Alpha";
+import { LargeCortexShowDonut } from "../../Brain/LargeCortexShowDown";
 
 export default function Name(): ReactElement {
   const [activeBtnAtlas, setActiveBtnAtlas] = useState("X");
@@ -139,7 +140,7 @@ export default function Name(): ReactElement {
           </div>
 
           <div className="brain">
-            <Brain />
+            <LargeCortexShowDonut/>
           </div>
 
           <div className="intakeInfoText_results">

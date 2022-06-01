@@ -7,11 +7,10 @@ import { useGLTF } from "@react-three/drei";
 
 export default function CortexModel(props) {
   const group = useRef();
-  const { nodes, materials } = useGLTF("/Brain_Final_03_05_2022.gltf");
-
+  const { nodes, materials } = useGLTF("/large_size_3d_model.gltf");
   return (
     <group ref={group} {...props} dispose={null}>
-      <group position={[-0.0028409, 0.0979605, 0]} scale={0.0011617}>
+      <group position={[-0.0087343, -0.0022007, 0]} scale={0.0068793}>
         <mesh
           castShadow
           receiveShadow
@@ -19,7 +18,7 @@ export default function CortexModel(props) {
           material={nodes["mid-Mat"].material}
         />
       </group>
-      <group position={[-0.0033339, 0.0979605, 0]} scale={0.0011617}>
+      <group position={[-0.0099022, -0.0022007, 0]} scale={0.0068793}>
         <mesh
           castShadow
           receiveShadow
@@ -51,7 +50,7 @@ export default function CortexModel(props) {
           material={nodes.mid_down.material}
         />
       </group>
-      <group position={[0.005371, 0.0979605, 0]} scale={0.0011617}>
+      <group position={[0.010717, -0.0022007, 0]} scale={0.0068793}>
         <mesh
           castShadow
           receiveShadow
@@ -88,19 +87,19 @@ export default function CortexModel(props) {
         receiveShadow
         geometry={nodes.Spinal_cord.geometry}
         material={nodes.Spinal_cord.material}
-        position={[-0.0007454, 0.0979605, 0]}
-        scale={0.0011617}
+        position={[-0.0037707, -0.0022007, 0]}
+        scale={0.0068793}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Cerebellum.geometry}
         material={nodes.Cerebellum.material}
-        position={[-0.0007454, 0.0979605, 0]}
-        scale={0.0011617}
+        position={[-0.0037707, -0.0022007, 0]}
+        scale={0.0068793}
       />
     </group>
   );
 }
 
-useGLTF.preload("/Brain_Final_03_05_2022.gltf");
+useGLTF.preload("/large_size_3d_model.gltf");

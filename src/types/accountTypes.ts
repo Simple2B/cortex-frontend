@@ -8,9 +8,9 @@ export interface ITest {
 
 export interface INote {
     id?: number,
-    client_id: number,
+    api_key: string,
     doctor_id: number,
-    note: string,
+    notes: string,
     date?: string,
     visit_id?: number,
     start_time?: string,
@@ -19,13 +19,23 @@ export interface INote {
 
 export interface IConsult {
     id?: number,
-    client_id: number,
+    api_key: string,
     doctor_id: number,
     consult: string,
     date?: string,
     visit_id?: number,
     start_time?: string,
     end_time?: string,
+};
+
+export interface IVisit {
+    id: number,
+    date: string,
+    start_time: string,
+    end_time: string,
+    rougue_mode: boolean,
+    client_id: number,
+    doctor_id: number,
 };
 
 export interface ICarePlan {
@@ -42,4 +52,6 @@ export interface ICarePlan {
     tests: ITest[],
     notes: INote[],
     consults: IConsult[]
+    visits_with_end_date: IVisit[],
+    visits_without_end_date: IVisit[],
 };

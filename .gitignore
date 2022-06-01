@@ -24,11 +24,8 @@ yarn-error.log*
 
 node_modules
 /src/domain.json
-<<<<<<< HEAD
-/public/CortexModel.gltf
-/public/Brain_Final_03_05_2022.gltf
-build
-=======
 /public/BrainModel.gltf
 /public/Brain_Final_03_05_2022.gltf
->>>>>>> 82dd97e54c2a0af326b819f96cbb8549fa11cf9c
+/public/medium_size_3d_model.gltf
+/public/large_size_3d_model.gltf
+/public/mediumModel.glb

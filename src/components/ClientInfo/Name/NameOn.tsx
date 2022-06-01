@@ -4,6 +4,7 @@ import "./name.sass";
 import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
 import { Alpha } from "../Alpha/Alpha";
+import { LargeCortexShowDonut } from "../../Brain/LargeCortexShowDown";
 
 export default function NameOn(): ReactElement {
   const location = useLocation();
@@ -150,7 +151,7 @@ export default function NameOn(): ReactElement {
             </div>
 
             <div className="brain">
-              <Brain />
+              <LargeCortexShowDonut/>
             </div>
 
             <div className="intakeInfoText_results "></div>
