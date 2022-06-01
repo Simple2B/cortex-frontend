@@ -1,10 +1,10 @@
 import React, { ReactElement, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./name.sass";
-import { ReactComponent as Brain } from "../../../images/brain.svg";
+// import { ReactComponent as Brain } from "../../../images/brain.svg";
 import Dashboards from "../Dashboard/Dashboards";
 import { Alpha } from "../Alpha/Alpha";
-import { LargeCortexShowDonut } from "../../Brain/LargeCortexShowDown";
+import { LargeCortexShowDown } from "../../Brain/LargeCortexShowDown";
 
 export default function NameOn(): ReactElement {
   const location = useLocation();
@@ -50,19 +50,19 @@ export default function NameOn(): ReactElement {
                 <div className="btnContainer btnAtlasShortLeg">
                   <div
                     onClick={handleChangeBtn}
-                    className={activeBtnAtlas == "L" ? "btnActive" : "name_btn"}
+                    className={activeBtnAtlas === "L" ? "btnActive" : "name_btn"}
                   >
                     L
                   </div>
                   <div
                     onClick={handleChangeBtn}
-                    className={activeBtnAtlas == "X" ? "btnActive" : "name_btn"}
+                    className={activeBtnAtlas === "X" ? "btnActive" : "name_btn"}
                   >
                     X
                   </div>
                   <div
                     onClick={handleChangeBtn}
-                    className={activeBtnAtlas == "R" ? "btnActive" : "name_btn"}
+                    className={activeBtnAtlas === "R" ? "btnActive" : "name_btn"}
                   >
                     R
                   </div>
@@ -74,7 +74,7 @@ export default function NameOn(): ReactElement {
                   <div
                     onClick={handleChangeBtnShortLeg}
                     className={
-                      activeBtnShortLeg == "L" ? "btnActive" : "name_btn"
+                      activeBtnShortLeg === "L" ? "btnActive" : "name_btn"
                     }
                   >
                     L
@@ -82,7 +82,7 @@ export default function NameOn(): ReactElement {
                   <div
                     onClick={handleChangeBtnShortLeg}
                     className={
-                      activeBtnShortLeg == "X" ? "btnActive" : "name_btn"
+                      activeBtnShortLeg === "X" ? "btnActive" : "name_btn"
                     }
                   >
                     X
@@ -90,7 +90,7 @@ export default function NameOn(): ReactElement {
                   <div
                     onClick={handleChangeBtnShortLeg}
                     className={
-                      activeBtnShortLeg == "R" ? "btnActive" : "name_btn"
+                      activeBtnShortLeg === "R" ? "btnActive" : "name_btn"
                     }
                   >
                     R
@@ -133,7 +133,7 @@ export default function NameOn(): ReactElement {
                   <div
                     onClick={handleChangeBtnRogueMode}
                     className={
-                      activeBtnRogueMode == "on" ? "btnActive" : "name_btn"
+                      activeBtnRogueMode === "on" ? "btnActive" : "name_btn"
                     }
                   >
                     on
@@ -141,7 +141,7 @@ export default function NameOn(): ReactElement {
                   <div
                     onClick={handleChangeBtnRogueMode}
                     className={
-                      activeBtnRogueMode == "off" ? "btnActive" : "name_btn"
+                      activeBtnRogueMode === "off" ? "btnActive" : "name_btn"
                     }
                   >
                     off
@@ -151,7 +151,7 @@ export default function NameOn(): ReactElement {
             </div>
 
             <div className="brain">
-              <LargeCortexShowDonut/>
+              <LargeCortexShowDown/>
             </div>
 
             <div className="intakeInfoText_results "></div>
