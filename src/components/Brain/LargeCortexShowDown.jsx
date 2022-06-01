@@ -16,6 +16,7 @@ import LargeCortexModel from "./LargeCortexModel";
 // }
 
 export function LargeCortexShowDonut(props) {
+  console.log("!!!!!!!!!LargeCortexModel => ", LargeCortexModel)
   return (
     <div
       style={{
@@ -26,10 +27,16 @@ export function LargeCortexShowDonut(props) {
         width: "45vw",
       }}
     >
+      {/* <Canvas>
+        <Suspense fallback={null}>
+          <LargeCortexModel />
+          <Environment preset="sunset" background />
+        </Suspense>
+      </Canvas> */}
       {/* <Canvas dpr={[1, 2]} shadows>
         <pointLight position={[10, 10, 10]} intensity={1.3} />
         <Suspense fallback={null}>
-          <CortexModel/>
+          <LargeCortexModel/>
           <Environment preset="city" />
         </Suspense>
         <DeviceOrientationControls />
@@ -37,18 +44,24 @@ export function LargeCortexShowDonut(props) {
         <TransformControls mode="translate" />
       </Canvas> */}
 
-      <Canvas camera={{ position: [10, 18, 23], fov: 0.5 }}>
-        <pointLight position={[10, 10, 10]} intensity={1.3} />
+      <Canvas frameloop="demand">
+        {/* <pointLight position={[10, 10, 10]} intensity={0.3} /> */}
 
-        <ambientLight intensity={0.2} />
-        <ambientLight intensity={0.1} />
-        <directionalLight intensity={0.4} />
+        {/* <ambientLight intensity={0.2} /> */}
+        {/* <ambientLight intensity={0.1} /> */}
+        {/* <directionalLight intensity={0.4} /> */}
 
-        <Suspense fallback={null}>
+        {/* <Suspense fallback={null}>
           <LargeCortexModel/>
         </Suspense>
-        <OrbitControls makeDefault />
+        <OrbitControls makeDefault /> */}
         {/* <TransformControls mode="translate" /> */}
+
+        {/* <pointLight position={[10, 10, 10]} />
+        <ambientLight intensity={0.4} /> */}
+        <Suspense fallback={null}>
+          <LargeCortexModel url="mediumModel.glb" />
+        </Suspense>
       </Canvas>
     </div>
   );
