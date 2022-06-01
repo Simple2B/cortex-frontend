@@ -30,3 +30,4 @@ node_modules
 /public/large_size_3d_model.gltf
 /public/mediumModel.glb
 /public/largeModel.glb
+/public/BrainModel.glb
