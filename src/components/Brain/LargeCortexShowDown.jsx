@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import {
   OrbitControls,
   Environment,
@@ -8,60 +8,47 @@ import {
 import { Canvas } from "@react-three/fiber";
 // import { Html, useProgress } from "@react-three/drei";
 // import { MeshReflectorMaterial } from "./drei/MeshReflectorMaterial";
-import LargeCortexModel from "./LargeCortexModel";
+// import LargeCortexModel from "./LargeCortexModel";
+
+import CortexModelGLB from "./CortexModelGLB";
 
 // function Loader() {
 //   const { progress } = useProgress();
 //   return <Html center>{progress} % loaded</Html>;
 // }
 
-export function LargeCortexShowDonut(props) {
-  console.log("!!!!!!!!!LargeCortexModel => ", LargeCortexModel)
+export function LargeCortexShowDown(props) {
+
+  // useEffect(() => {
+  //   AFRAME.scenes[0].renderer.renderLists.dispose()
+  // }, [])
   return (
     <div
       style={{
         display: "flex",
         justifyContent: "center",
         elignItem: "center",
-        height: "55vh",
-        width: "45vw",
+        height: "57vh",
+        width: "47vw",
       }}
     >
-      {/* <Canvas>
-        <Suspense fallback={null}>
-          <LargeCortexModel />
-          <Environment preset="sunset" background />
-        </Suspense>
-      </Canvas> */}
-      {/* <Canvas dpr={[1, 2]} shadows>
+      <Canvas camera={{ position: [10, 18, 23], fov: 0.6 }}>
         <pointLight position={[10, 10, 10]} intensity={1.3} />
-        <Suspense fallback={null}>
-          <LargeCortexModel/>
-          <Environment preset="city" />
-        </Suspense>
-        <DeviceOrientationControls />
-        <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
-        <TransformControls mode="translate" />
-      </Canvas> */}
-
-      <Canvas frameloop="demand">
-        {/* <pointLight position={[10, 10, 10]} intensity={0.3} /> */}
-
-        {/* <ambientLight intensity={0.2} /> */}
+        {/* <spotLight
+          position={[10, 10, 10]}
+          angle={0.7}
+          penumbra={1}
+          intensity={2}
+          castShadow
+        /> */}
+        <ambientLight intensity={0.2} />
         {/* <ambientLight intensity={0.1} /> */}
         {/* <directionalLight intensity={0.4} /> */}
-
-        {/* <Suspense fallback={null}>
-          <LargeCortexModel/>
-        </Suspense>
-        <OrbitControls makeDefault /> */}
-        {/* <TransformControls mode="translate" /> */}
-
-        {/* <pointLight position={[10, 10, 10]} />
-        <ambientLight intensity={0.4} /> */}
         <Suspense fallback={null}>
-          <LargeCortexModel url="mediumModel.glb" />
+          <CortexModelGLB />
         </Suspense>
+        <OrbitControls makeDefault />
+        {/* <TransformControls mode="translate" /> */}
       </Canvas>
     </div>
   );

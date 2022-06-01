@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { OrbitControls, TransformControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import BrainModel from "./BrainModel";
+import BrainModelGLB from "./BrainModelGLB";
 
 export function ShowDonut(props) {
   return (
@@ -27,7 +27,7 @@ export function ShowDonut(props) {
         <ambientLight intensity={0.1} />
         <directionalLight intensity={0.4} />
         <Suspense fallback={null}>
-          <BrainModel />
+          <BrainModelGLB />
         </Suspense>
         <OrbitControls makeDefault />
         {/* <TransformControls mode="translate" /> */}

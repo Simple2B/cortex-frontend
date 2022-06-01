@@ -11,7 +11,7 @@ import DashboardTheta from "./DashboardsBrainWaves/DashboardTheta";
 import DashboardVeryLowFrequency from "./DashboardsHRV/DashboardVeryLowFrequency";
 import DashboardLowFrequency from "./DashboardsHRV/DashboardLowFrequency";
 import DashboardHightFrequency from "./DashboardsHRV/DashboardHightFrequency";
-import { CortexShowDonut } from "../../../Brain/CortexShowDown";
+import { CortexShowDown } from "../../../Brain/CortexShowDown";
 import { ShowDonut } from "../../../Brain/ShowDown";
 
 interface ITest {
@@ -247,7 +247,7 @@ export default function ViewReport(): ReactElement {
       <div className="containerViewReport_report">
         {activeBtn === "Brain" && (
           <div className="containerViewReport_dashboards">
-            <div className="exampleBrain"><CortexShowDonut/></div>
+            <div className="exampleBrain"><CortexShowDown/></div>
             <div className="patientBrain"><ShowDonut/></div>
           </div>
         )}
